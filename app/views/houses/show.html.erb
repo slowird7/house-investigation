@@ -1,0 +1,28 @@
+<h2><%= @house.house_name %></h2>
+<p>
+  <%= link_to '編集', edit_house_path, :class=>"btn btn-default" %>
+  <%= link_to '戻る', :back, :class=>"btn btn-default" %>
+</p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center">ID</th>
+    <td class="text-center align-middle"><%= @house.id %></td>
+  </tr>
+  <tr>
+    <th class="text-center">都道府県</th>
+    <td class="text-center align-middle"><%= @house.prefectures %></td>
+  </tr>
+  <tr>
+    <th class="text-center">市区町村</th>
+    <td class="text-center align-middle"><%= @house.city %></td>
+  </tr> 
+  <tr>
+    <th class="text-center">番地</th>
+    <td class="text-center align-middle"><%= @house.block %></td>
+  </tr>
+  <tr>
+    <th class="text-center">所有者名</th>
+    <td class="text-center align-middle"><%= @house.owner %></td>
+  </tr>  
+</table>

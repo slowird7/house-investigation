@@ -1,0 +1,55 @@
+<h2><%= @investigation.construction_name %></h2>
+<p>
+  <%= link_to '編集', edit_investigation_path, :class=>"btn btn-default" %>
+  <%= link_to '一覧に戻る', investigations_path, :class=>"btn btn-default" %>
+</p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center">ID</th>
+    <th class="text-center">調査内容</th>
+    <th class="text-center">施工者</th>
+    <th class="text-center">調査場所</th>
+    <th class="text-center">調査機関</th>
+  </tr>
+  
+  <tr>
+    <td class="text-center align-middle"><%= @investigation.id %></td>
+    <td class="text-center align-middle"><%= @investigation.content %></td>
+    <td class="text-center align-middle"><%= @investigation.builder %></td>
+    <td class="text-center align-middle"><%= @investigation.place %></td>
+    <td class="text-center align-middle"><%= @investigation.investigator %></td>
+  </tr>
+</table>
+
+
+<h2>家屋一覧</h2>
+<p><%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-default" %></p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center">ID</th>
+    <th class="text-center">家屋名（居住者名）</th>
+    <th class="text-center">建物所在地</th>
+    <th class="text-center">所有者名</th>
+    <th class="text-center">事前調査日</th>
+    <th class="text-center">事中調査日</th>
+    <th class="text-center">事後調査日</th>
+    <th class="text-center"></th>
+    <th class="text-center"></th>    
+  </tr>
+  
+  <% @houses.each do |house| %>
+      <tr>
+        <td class="text-center align-middle"><%= house.id %></td>
+        <td class="text-center align-middle"><%= house.house_name %></td>
+        <td class="text-center align-middle"><%= house.prefectures %><%= house.city %><%= house.city %><%= house.block %></td>
+        <td class="text-center align-middle"><%= house.owner %></td>
+        <td class="text-center align-middle"></td>
+        <td class="text-center align-middle"></td>
+        <td class="text-center align-middle"></td>
+        <td class="text-center align-middle"><%= link_to "詳細", house, :class=>"btn btn-default" %></td>
+        <td class="text-center align-middle"><%= link_to "削除", house, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+      </tr>
+  <% end %>  
+</table>

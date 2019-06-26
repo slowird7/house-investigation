@@ -1,0 +1,61 @@
+class InvestigationsController < ApplicationController
+  before_action :require_user_logged_in
+  
+  def index
+    @investigations = Investigation.all
+  end
+
+  def show
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses
+  end
+
+  def new
+    @investigation = Investigation.new
+  end
+
+  def create
+    @investigation = Investigation.new(investigation_params)
+
+    # binding.pry
+
+    if @investigation.save
+      flash[:success] = '正常に登録されました'
+      redirect_to @investigation
+    else
+      flash.now[:danger] = '登録されませんでした'
+      render :new
+    end
+  end
+
+  def edit
+    @investigation = Investigation.find(params[:id])
+  end
+
+  def update
+    @investigation = Investigation.find(params[:id])
+
+    if @investigation.update(investigation_params)
+      flash[:success] = '正常に更新されました。'
+      redirect_to root_url
+    else
+      flash.now[:danger] = '更新に失敗しました。'
+      render :show
+    end    
+  end
+
+  def destroy
+    @investigation = Investigation.find(params[:id])
+    @investigation.destroy
+
+    flash[:success] = '正常に削除されました'
+    redirect_to investigations_url
+  end
+  
+  private
+
+  # Strong Parameter
+  def investigation_params
+    params.require(:investigation).permit(:content, :construction_name, :builder, :place, :investigator)
+  end
+end

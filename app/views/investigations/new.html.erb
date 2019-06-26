@@ -1,0 +1,34 @@
+<div class="text-center">
+  <h2>新規登録</h2>
+  <%= link_to '戻る', :back, :class=>"btn btn-default" %>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <%= form_for(@investigation) do |f| %>
+      <div class="form-group">
+        <%= f.label :content, '調査内容' %>
+        <%= f.text_field :content, :class=>"form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :construction_name, '工事名' %>
+        <%= f.text_field :construction_name, :class=>"form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :builder, '施工者' %>
+        <%= f.text_field :builder, :class=>"form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :place, '調査場所' %>
+        <%= f.text_field :place, :class=>"form-control" %>
+      </div> 
+      <div class="form-group">
+        <%= f.label :investigator, '調査機関' %>
+        <%= f.text_field :investigator, :class=>"form-control" %>
+      </div>    
+    
+      <%= f.submit '登録', :class=>"btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
