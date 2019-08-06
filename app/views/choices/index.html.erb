@@ -17,16 +17,5 @@
     <% end %>
   </tr>
   
-  <% @choices.each do |choice| %>
-    <tr>
-      <td class="align-middle"><%= choice.id %></td>
-      <td class="align-middle"><%= choice.name %></td>
-      <td class="align-middle"><%= disp_choice_category(choice.category) %></td>
-      <td class="align-middle"><%= link_to "編集", edit_choice_path(choice.id), :class=>"btn btn-default" %></td>
-      <% if current_user.role == "superuser" || current_user.role == "admin" %>
-        <td class="align-middle"><%= link_to "削除", choice, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
-      <% end %>
-    </tr>
-  <% end %>
 </table>
 
