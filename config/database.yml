@@ -47,11 +47,6 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-# production:
-#   <<: *default
-#   database: house-investigation_production
-#   username: house-investigation
-#   password: <%= ENV['HOUSE-INVESTIGATION_DATABASE_PASSWORD'] %>
 production:
   adapter: postgresql
   encoding: unicode
