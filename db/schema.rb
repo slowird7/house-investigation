@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190626122826) do
+ActiveRecord::Schema.define(version: 20190718141956) do
+
+  create_table "choices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.integer  "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "houses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "house_name"
+    t.string   "phone_number"
+    t.string   "post_code"
     t.string   "prefectures"
     t.string   "city"
     t.string   "block"
@@ -34,6 +43,14 @@ ActiveRecord::Schema.define(version: 20190626122826) do
     t.datetime "updated_at",        null: false
   end
 
+  create_table "surveys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "type"
+    t.integer  "house_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_id"], name: "index_surveys_on_house_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "role"
     t.string   "email"
@@ -43,4 +60,5 @@ ActiveRecord::Schema.define(version: 20190626122826) do
   end
 
   add_foreign_key "houses", "investigations"
+  add_foreign_key "surveys", "houses"
 end

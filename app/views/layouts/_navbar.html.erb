@@ -8,18 +8,25 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">家屋調査</a>
+        <a class="navbar-brand" href="/">KHS <span style="font-size: 1.0rem;">KINSOKU House-Investigated System</span></a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
-            <% if current_user.role == "admin" || current_user.role == "superuser" %>
-              <li><%= link_to 'ユーザー管理', users_path %></li>
-            <% end %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <% if current_user.role == "admin" || current_user.role == "superuser" %>
+                  <li><%= link_to 'ユーザー管理', users_path %></li>
+                  <li role="separator" class="divider"></li>
+                <% end %>
+                <li><%= link_to 'マスター管理', choices_path %></li>
+              </ul>
+            </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><%= link_to 'パスワード変更', edit_user_path(current_user) %></li>
+                <li><%= link_to '編集', edit_user_path(current_user) %></li>
                 <li role="separator" class="divider"></li>
                 <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
               </ul>
@@ -32,6 +39,3 @@
     </div>
   </nav>
 </header>
-
-
-

@@ -40,7 +40,7 @@ class InvestigationsController < ApplicationController
       redirect_to root_url
     else
       flash.now[:danger] = '更新に失敗しました。'
-      render :show
+      render :edit
     end    
   end
 
@@ -56,6 +56,6 @@ class InvestigationsController < ApplicationController
 
   # Strong Parameter
   def investigation_params
-    params.require(:investigation).permit(:content, :construction_name, :builder, :place, :investigator)
+    params.require(:investigation).permit(:content, :construction_name, :builder, :builder_id, :place, :investigator)
   end
 end

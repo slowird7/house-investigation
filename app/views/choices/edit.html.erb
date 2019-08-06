@@ -1,8 +1,9 @@
 <ol class="breadcrumb">
   <li><%= link_to 'HOME', root_path %></li>
-  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to 'マスター一覧', choices_path %></li>
   <li class="active">編集</li>
 </ol>
 
 <h2 class="text-center">編集</h2>
-<%= render 'investigations/form' %>
+
+<%= render 'choices/form' %>

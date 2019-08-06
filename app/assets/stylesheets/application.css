@@ -13,6 +13,66 @@
  *= require_tree .
  *= require_self
  */
- .align-middle {
-   vertical-align: middle !important;
- }
+ 
+html,
+body {
+  height: 100%;
+  /* html と body 要素はパディングやマージンを持てません。*/
+}
+
+/* フッターを下部へ押しやるための、コンテンツのラッパー */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* フッターの高さ分だけ、ネガティブインデントを指定 */
+  margin: 0 auto -60px;
+  /* フッターの高さ分だけ、パディングを指定 */
+  padding: 0 0 60px;
+}
+
+/* ここでフッターの高さを指定 */
+#footer {
+  height: 60px;
+  background-color: #000;
+  margin-top: 60px;
+  padding: 10px;
+}
+
+.background-image {
+  background-image: url("GraphPaper.jpg");
+}
+.background-color_white {
+  background-color: #ffffff;
+}
+.align-middle {
+  vertical-align: middle !important;
+}
+   
+.top-down_padding {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+   
+.inline-block {
+  display: inline-block;
+}
+
+.align-middle {
+  vertical-align: middle !important;
+}
+
+hr {
+  height: 1px;
+  border: none;
+  border-top: 2px #dcdcdc solid;
+  margin: 50px 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* bootstrapカスタム */
+.breadcrumb > li + li:before {
+  content: ">";
+}

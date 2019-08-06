@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <%= form_for(@choice) do |f| %>
+    
+      <p class="text-right">*必須</p>
+    
+      <div class="form-group">
+        <%= f.label :name, 'マスター名*' %>
+        <%= f.text_field :name, :class=>"form-control" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :category, 'カテゴリー*：' %>
+        <%= f.select :category, $CHOICE_CATEGORY, :prompt => "選択してください", :class=>"form-control" %>
+      </div>
+    
+      <%= f.submit '登録', :class=>"btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

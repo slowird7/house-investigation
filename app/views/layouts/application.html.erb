@@ -4,8 +4,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- クローラーにクロールされないようにする -->
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
     
-    <title>家屋調査</title>
+    <title>KHS</title>
     <%= csrf_meta_tags %>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -14,13 +18,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
 
-  <body>
-    <%= render 'layouts/navbar' %>
-
-    <div class="container">
-      <%= render 'layouts/flash_messages' %>
-
-      <%= yield %>
+  <body class="background-image">
+    <!-- ページのコンテンツすべてをwrapする（フッター以外） -->
+    <div id="wrap">
+      <%= render 'layouts/navbar' %>
+  
+      <div class="container top-down_padding background-color_white">
+        <%= render 'layouts/flash_messages' %>
+  
+        <%= yield %>
+      </div>
+    </div>
+    
+    <!-- フッターは#wrapの外に -->
+    <div id="footer">
+      <%= render 'layouts/footer' %>
     </div>
   </body>
 </html>

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     root to: 'investigations#index'
   end
   # ログインしてない時のパス
-  root to: 'toppages#index'
+  root to: 'sessions#new'
   
   # セッション
   get 'login', to: 'sessions#new'
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :users
     
   resources :investigations
-  
-  resources :houses, only: [:new, :show, :create, :edit, :update, :destroy]
+  resources :houses, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :surveys, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :choices, only: [:index, :new, :create, :edit, :update, :destroy]
 end

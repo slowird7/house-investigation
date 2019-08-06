@@ -24,10 +24,12 @@ class HousesController < ApplicationController
 
   def show
     @house = House.find(params[:id])
+    @investigation = @house.investigation
   end
   
   def edit
     @house = House.find(params[:id])
+    @investigation = @house.investigation    
   end
 
   def update
