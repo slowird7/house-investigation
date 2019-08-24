@@ -12,16 +12,4 @@ module ApplicationHelper
       return "unknown"
     end
   end
-  
-  def disp_choice_category(category)
-    if category == 0
-      return "その他"
-    elsif category == 1
-      return "施工者"
-    elsif category == 2
-      return "調査機関"
-    else
-      return "unknown"
-    end
-  end
 end

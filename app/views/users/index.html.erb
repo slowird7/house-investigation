@@ -9,7 +9,7 @@
 <table class="table table-striped table-hover">
   <tr>
     <th>ID</th>
-    <th>メールアドレス</th>
+    <th>ユーザー名</th>
     <th>権限グループ</th>
     <th></th>
     <th></th>
@@ -18,7 +18,7 @@
   <% @users.each do |user| %>
     <tr>
       <td class="align-middle"><%= user.id %></td>
-      <td class="align-middle"><%= user.email %></td>
+      <td class="align-middle"><%= user.user_name %></td>
       <td class="align-middle"><%= disp_user_role(user.role) %></td>
       <td class="align-middle"><%= link_to "編集", edit_user_url(user.id), :class=>"btn btn-default" %></td>
       <td class="align-middle"><%= link_to "削除", user, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>

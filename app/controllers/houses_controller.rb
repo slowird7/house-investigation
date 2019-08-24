@@ -7,8 +7,6 @@ class HousesController < ApplicationController
   end
 
   def create
-    # binding.pry
-    
     @investigation = Investigation.find(house_params[:investigation_id])
     
     @house = @investigation.houses.build(house_params)
@@ -18,13 +16,14 @@ class HousesController < ApplicationController
     else
       @houses = @investigation.houses.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
-      render @investigation
+      render :new
     end    
   end
 
   def show
     @house = House.find(params[:id])
     @investigation = @house.investigation
+    @surveys = @house.surveys
   end
   
   def edit
@@ -58,6 +57,8 @@ class HousesController < ApplicationController
   private
 
   def house_params
-    params.require(:house).permit(:house_name, :prefectures, :city, :block, :owner, :investigation_id)
+    params.require(:house).permit(:investigation_id, :house_name, :prefectures, :city, :block, :resident_phone_number, 
+                                  :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
+                                  :construction, :floors, :area, :use)
   end  
 end

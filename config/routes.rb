@@ -17,5 +17,7 @@ Rails.application.routes.draw do
   resources :investigations
   resources :houses, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :surveys, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :points, only: [:show, :new, :create, :edit, :update, :destroy]
+  
   resources :choices, only: [:index, :new, :create, :edit, :update, :destroy]
 end

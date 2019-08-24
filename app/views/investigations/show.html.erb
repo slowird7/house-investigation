@@ -42,11 +42,10 @@
   <tr>
     <th class="text-center">ID</th>
     <th class="text-center">家屋名（居住者名）</th>
+    <th class="text-center">居住者電話番号</th>
     <th class="text-center">建物所在地</th>
     <th class="text-center">所有者名</th>
-    <th class="text-center">事前調査日</th>
-    <th class="text-center">事中調査日</th>
-    <th class="text-center">事後調査日</th>
+    <th class="text-center">所有者電話番号</th>
     <th class="text-center"></th>
     <th class="text-center"></th>    
   </tr>
@@ -55,11 +54,10 @@
       <tr>
         <td class="text-center align-middle"><%= house.id %></td>
         <td class="text-center align-middle"><%= house.house_name %></td>
+        <td class="text-center align-middle"><%= house.resident_phone_number %></td>
         <td class="text-center align-middle"><%= house.prefectures %><%= house.city %><%= house.block %></td>
-        <td class="text-center align-middle"><%= house.owner %></td>
-        <td class="text-center align-middle"></td>
-        <td class="text-center align-middle"></td>
-        <td class="text-center align-middle"></td>
+        <td class="text-center align-middle"><%= house.owner_name %></td>
+        <td class="text-center align-middle"><%= house.owner_phone_number %></td>
         <td class="text-center align-middle"><%= link_to "詳細", house, :class=>"btn btn-default" %></td>
         <td class="text-center align-middle"><%= link_to "削除", house, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
       </tr>

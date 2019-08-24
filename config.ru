@@ -4,28 +4,63 @@ require_relative 'config/environment'
 
 ############### サーバー起動直前に実施 ###############
 # 参考）https://qiita.com/qpSHiNqp/items/254ff427bc1487e082bc
-user=User.find_by(email: 'eishi.asao@bicyear.net')
+user=User.find_by(user_name: 'asao')
 if user.blank?
-  user = User.new(role: 'superuser', email: 'eishi.asao@bicyear.net', password: 'yousei0930')
+  user = User.new(role: 'superuser', user_name: 'asao', password: 'yousei0930')
   user.save
 end
 
-user=User.find_by(email: 't-tanaka@kinsoku.com')
+user=User.find_by(user_name: 'tanaka')
 if user.blank?
-  user = User.new(role: 'admin', email: 't-tanaka@kinsoku.com', password: 'password')
+  user = User.new(role: 'admin', user_name: 'tanaka', password: 'password')
   user.save
 end
 
-user=User.find_by(email: 'h_tsubokura@kinsoku.net')
+user=User.find_by(user_name: 'tsubokura')
 if user.blank?
-  user = User.new(role: 'operator', email: 'h_tsubokura@kinsoku.net', password: 'password')
+  user = User.new(role: 'operator', user_name: 'tsubokura', password: 'password')
   user.save
 end
 
-user=User.find_by(email: 'k_fujita@kinsoku.net')
+user=User.find_by(user_name: 'fujita')
 if user.blank?
-  user = User.new(role: 'operator', email: 'k_fujita@kinsoku.net', password: 'password')
+  user = User.new(role: 'operator', user_name: 'fujita', password: 'password')
   user.save
+end
+
+choice=Choice.find_by(name: '戸田・ハンシン特定建設共同企業体')
+if choice.blank?
+  choice = Choice.new(name: '戸田・ハンシン特定建設共同企業体', category: '施工者')
+  choice.save
+end
+
+choice=Choice.find_by(name: '株式会社きんそく')
+if choice.blank?
+  choice = Choice.new(name: '株式会社きんそく', category: '調査機関')
+  choice.save
+end
+
+choice=Choice.find_by(name: '株式会社きんそく家屋調査')
+if choice.blank?
+  choice = Choice.new(name: '株式会社きんそく家屋調査', category: '調査機関')
+  choice.save
+end
+
+investigation=Investigation.find_by(construction_name: '寝屋川市秦高宮雨水幹線建設工事')
+if investigation.blank?
+  investigation = Investigation.new(construction_name: '寝屋川市秦高宮雨水幹線建設工事', content: "沿道家屋事後", 
+                                    builder: "戸田・ハンシン特定建設共同企業体", investigator: "株式会社きんそく家屋調査", 
+                                    place: "大阪府寝屋川市高宮地内")
+  investigation.save
+end
+
+house= House.find_by(house_name: 'うしとら商店')
+if house.blank?
+  house = investigation.houses.build(house_name: 'うしとら商店', prefectures: '大阪府', city: '寝屋川市高宮', block: '2-21-3',
+                                    resident_phone_number: '090-1899-7408', owner_name: '良　姫子', owner_prefectures: '大阪府',
+                                    owner_city: '寝屋川市明和', owner_block: '1-14-21', owner_phone_number: '072-821-4340',
+                                    construction: '鉄骨造', floors: '1階建', area: '159.89', use: '倉庫')
+  house.save
 end
 
 run Rails.application

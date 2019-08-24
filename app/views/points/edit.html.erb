@@ -1,0 +1,9 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li><%= link_to @survey.survey_name, @survey %></li>
+  <li class="active"><%= @point.id %></li>
+</ol>
+
+<%= render 'points/form' %>

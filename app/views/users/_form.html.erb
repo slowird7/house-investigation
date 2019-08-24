@@ -5,10 +5,10 @@
       <%= render 'layouts/error_messages', model: f.object %>
       
       <p class="text-right">*必須</p>
-
+      
       <div class="form-group">
-        <%= f.label :email, 'メールアドレス*' %>
-        <%= f.email_field :email, class: 'form-control' %>
+        <%= f.label :user_name, 'ユーザー名*' %>
+        <%= f.text_field :user_name, class: 'form-control' %>
       </div>
 
       <div class="form-group">

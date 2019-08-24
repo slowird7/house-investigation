@@ -1,0 +1,10 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li><%= link_to @survey.survey_name, @survey %></li>
+  <li class="active">新規測点登録</li>
+</ol>
+
+<h2 class="text-center">新規測点登録</h2>
+<%= render 'points/form' %>

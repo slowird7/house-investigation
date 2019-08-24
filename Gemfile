@@ -55,8 +55,13 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # 追記↓
 gem 'pry-byebug', group: :development   # debugger
 gem 'thinreports'   # Thinreports Generator
+gem 'carrierwave'   # 画像アップローダー
+gem 'rmagick'   # 画像加工
 
 group :production do
   gem 'pg', '0.21.0'
   gem 'rails_12factor'
 end
+
+gem 'fog-aws'
+gem 'dotenv-rails'   # 環境変数の設定

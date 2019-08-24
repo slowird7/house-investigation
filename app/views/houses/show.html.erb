@@ -17,7 +17,63 @@
     <td class="align-middle"><%= @house.prefectures %><%= @house.city %><%= @house.block %></td>
   </tr>
   <tr>
-    <th>所有者名</th>
-    <td class="align-middle"><%= @house.owner %></td>
+    <th>居住者電話番号</th>
+    <td class="align-middle"><%= @house.resident_phone_number %></td>
   </tr>  
+  <tr>
+    <th>構造</th>
+    <td class="align-middle"><%= @house.construction %></td>
+  </tr>  
+  <tr>
+    <th>階数</th>
+    <td class="align-middle"><%= @house.floors %></td>
+  </tr>
+  <tr>
+    <th>延面積(m2)</th>
+    <td class="align-middle"><%= @house.area %></td>
+  </tr>
+  <tr>
+    <th>用途</th>
+    <td class="align-middle"><%= @house.use %></td>
+  </tr>
+  
+  <tr>
+    <th>所有者名</th>
+    <td class="align-middle"><%= @house.owner_name %></td>
+  </tr>
+  <tr>
+    <th>所有者住所</th>
+    <td class="align-middle"><%= @house.owner_prefectures %><%= @house.owner_city %><%= @house.owner_block %></td>
+  </tr>  
+  <tr>
+    <th>所有者電話番号</th>
+    <td class="align-middle"><%= @house.owner_phone_number %></td>
+  </tr>    
+</table>
+
+<hr/>
+
+<h2>調査一覧</h2>
+<p><%= link_to '新規登録', new_survey_path(house_id: @house.id), :class=>"btn btn-default" %></p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center">ID</th>
+    <th class="text-center">調査名</th>
+    <th class="text-center">建物概要</th>
+    <th class="text-center">調査範囲</th>
+    <th class="text-center"></th>
+    <th class="text-center"></th>    
+  </tr>
+  
+  <% @surveys.each do |survey| %>
+      <tr>
+        <td class="text-center align-middle"><%= survey.id %></td>
+        <td class="text-center align-middle"><%= survey.survey_name %></td>
+        <td class="text-center align-middle"><%= survey.overview %></td>
+        <td class="text-center align-middle"><%= survey.range %></td>
+        <td class="text-center align-middle"><%= link_to "詳細", survey, :class=>"btn btn-default" %></td>
+        <td class="text-center align-middle"><%= link_to "削除", survey, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+      </tr>
+  <% end %>
 </table>

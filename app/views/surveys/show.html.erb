@@ -1,0 +1,45 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active"><%= @survey.survey_name %></li>
+</ol>
+
+<h2><%= @survey.survey_name %></h2>
+<p><%= link_to '編集', edit_survey_path, :class=>"btn btn-default" %></p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th>ID</th>
+    <td class="align-middle"><%= @survey.id %></td>
+  </tr>
+  <tr>
+    <th>建物概要</th>
+    <td class="align-middle"><%= @survey.overview %></td>
+  </tr>
+  <tr>
+    <th>調査範囲</th>
+    <td class="align-middle"><%= @survey.range %></td>
+  </tr>
+</table>
+
+<hr/>
+
+<h2>測点一覧</h2>
+<p><%= link_to '新規登録', new_point_path(survey_id: @survey.id), :class=>"btn btn-default" %></p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center">ID</th>
+    <th class="text-center"></th>
+    <th class="text-center"></th>    
+  </tr>
+  
+  <% @points.each do |point| %>
+      <tr>
+        <td class="text-center align-middle"><%= point.id %></td>
+        <td class="text-center align-middle"><%= link_to "詳細", point, :class=>"btn btn-default" %></td>
+        <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+      </tr>
+  <% end %>
+</table>
