@@ -31,6 +31,7 @@
 <table class="table table-striped table-hover">
   <tr>
     <th class="text-center">ID</th>
+    <th class="text-center">写真</th>
     <th class="text-center"></th>
     <th class="text-center"></th>    
   </tr>
@@ -38,6 +39,7 @@
   <% @points.each do |point| %>
       <tr>
         <td class="text-center align-middle"><%= point.id %></td>
+        <td class="text-center align-middle"><%= image_tag point.image1, :size => "200x200", :class => "media-object img-rounded img-responsive" %></td>
         <td class="text-center align-middle"><%= link_to "詳細", point, :class=>"btn btn-default" %></td>
         <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
       </tr>

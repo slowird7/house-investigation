@@ -28,6 +28,9 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
 
+  # 高さを最大 800px、横 を最大 600 pxに調整
+  process resize_to_limit: [800, 600]
+
   # Process files as they are uploaded:
   # process scale: [200, 300]
   #
@@ -54,9 +57,9 @@ class ImageUploader < CarrierWave::Uploader::Base
     "#{secure_token}.#{'jpg'}" if original_filename.present?
   end
   
-  # ～10MB
+  # ～4MB
   def size_range
-    1..10.megabytes
+    1..4.megabytes
   end  
   
   protected
