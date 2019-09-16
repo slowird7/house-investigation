@@ -11,8 +11,14 @@ class PointsController < ApplicationController
   def new
     @survey = Survey.find(params[:survey_id])
     @house = @survey.house
+    
+    @pre_survey = @house.surveys.find_by(survey_name: "事前調査")
+    @ongoing_survey = @house.surveys.find_by(survey_name: "事中調査")
+    @after_survey = @house.surveys.find_by(survey_name: "事後調査")
+    @other_survey = @house.surveys.find_by(survey_name: "その他")
+    
     @investigation = @house.investigation
-    @point = @survey.points.build        
+    @point = @survey.points.build
   end
 
   def create

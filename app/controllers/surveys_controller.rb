@@ -20,7 +20,7 @@ class SurveysController < ApplicationController
     
     @survey = @house.surveys.build(survey_params)
     if @survey.save
-      flash[:success] = '正常に家屋を登録しました。'
+      flash[:success] = '正常に調査を登録しました。'
       redirect_to @house
     else
       @surveys = @house.surveys.order('created_at DESC')

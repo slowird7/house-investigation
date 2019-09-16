@@ -7,13 +7,14 @@
       <table class="form-group">
         <tr>
           <td>
-            <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
-            <%= f.hidden_field :image1_cache %>
-          </td>
-          <td>
+            <%= image_tag src="/assets/sampleImage.jpg", :size => "200x200" %>
             <% if @point.image1? %>
               <%= image_tag @point.image1, :size => "200x200", :class => "media-object img-rounded img-responsive" %>
             <% end %>
+          </td>
+          <td>
+            <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+            <%= f.hidden_field :image1_cache %>
           </td>
         </tr>
       </table>
