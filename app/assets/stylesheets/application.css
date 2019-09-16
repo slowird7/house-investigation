@@ -76,3 +76,26 @@ ul {
 .breadcrumb > li + li:before {
   content: ">";
 }
+
+.preview-area {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;  
+}
+
+.preview-area img {
+  position: absolute;
+  left: 25%;
+  top: 50%;
+  width: 50%;
+  height: auto;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);  
+}
+
+#preview {
+  left: 75%;
+}
