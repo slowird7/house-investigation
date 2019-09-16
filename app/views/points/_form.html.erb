@@ -11,16 +11,11 @@
             <%= image_tag "sampleImage.jpg", width: "50%" %>
           </td>
           <td>
-            <%= image_tag @point.image1, width: "50%", id: :img_prev if @point.image1? %>
+            <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera', style: "height:300px" %>
           </td>
         </tr>
       </table>
 
-      <div class="form-group">
-        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
-        <%= f.hidden_field :image1_cache %>
-      </div>
-      
       <div class="form-group">
         <%= f.label :genkyo, '現況' %><%= f.check_box :genkyo, {}, "true", "false" %>
         <%= f.label :sukima, '隙間' %><%= f.check_box :sukima, {}, "true", "false" %>
