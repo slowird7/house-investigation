@@ -5,17 +5,21 @@
       <p class="text-right">*必須</p>
       <%= f.hidden_field :survey_id, :value => @survey.id %>
 
-      <table class="form-group">
+      <table>
         <tr>
           <td>
             <%= image_tag "sampleImage.jpg", width: "50%" %>
           </td>
           <td>
-            <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera', width: "50%" %>
-            <%= f.hidden_field :image1_cache %>
+            <%= image_tag @point.image1, width: "50%", id: :img_prev if @point.image1? %>
           </td>
         </tr>
       </table>
+
+      <div class="form-group">
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+        <%= f.hidden_field :image1_cache %>
+      </div>
       
       <div class="form-group">
         <%= f.label :genkyo, '現況' %><%= f.check_box :genkyo, {}, "true", "false" %>
@@ -50,3 +54,20 @@
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript">
+$(function() {
+ function readURL(input) {
+   if (input.files && input.files[0]) {
+     var reader = new FileReader();
+     reader.onload = function (e) {
+       $('#img_prev').attr('src', e.target.result);
+     }
+     reader.readAsDataURL(input.files[0]);
+   }
+ }
+ $("#book_img").change(function(){
+   readURL(this);
+ });
+});
+</script>
