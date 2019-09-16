@@ -28,7 +28,7 @@ class PointsController < ApplicationController
     
     @point = @survey.points.build(point_params)
     if @point.save
-      flash[:success] = '正常に家屋を登録しました。'
+      flash[:success] = '正常に測点を登録しました。'
       redirect_to @survey
     else
       @points = @survey.points.order('created_at DESC')
