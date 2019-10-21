@@ -1,42 +1,59 @@
 class PointsController < ApplicationController
   before_action :require_user_logged_in  
   
+=begin 
+  # 使ってない
   def show
     @point = Point.find(params[:id])
-    @survey = @point.survey
-    @house = @survey.house
-    @investigation = @house.investigation    
+    @house = @point.house
+    @investigation = @house.investigation
   end
 
   def new
-    @survey = Survey.find(params[:survey_id])
-    @house = @survey.house
-    
-    @pre_survey = @house.surveys.find_by(survey_name: "事前調査")
-    @ongoing_survey = @house.surveys.find_by(survey_name: "事中調査")
-    @after_survey = @house.surveys.find_by(survey_name: "事後調査")
-    @other_survey = @house.surveys.find_by(survey_name: "その他")
-    
+    @house = House.find(params[:house_id])
     @investigation = @house.investigation
-    @point = @survey.points.build
+    @point = @house.points.build
+    @post = @point.posts.build
   end
-
+=end
+  
   def create
-    @survey = Survey.find(point_params[:survey_id])
-    @house = @survey.house
+    @house = House.find(params[:house_id])
     @investigation = @house.investigation
+
+    @point = @house.points.build
+    last_point = @house.points.order('created_at DESC').first
     
-    @point = @survey.points.build(point_params)
-    if @point.save
-      flash[:success] = '正常に測点を登録しました。'
-      redirect_to @survey
+    if last_point != nil
+      number = last_point.number + 1
     else
-      @points = @survey.points.order('created_at DESC')
-      flash.now[:danger] = '失敗しました。'
-      render :new
+      number = 1
     end
+    
+    @point.number = number
+    if @point.save
+      post = @point.posts.build
+      post.survey_type = "pre"
+      post.save
+      
+      post = @point.posts.build
+      post.survey_type = "ongoing"
+      post.save
+      
+      post = @point.posts.build
+      post.survey_type = "after"
+      post.save
+      
+      flash[:success] = '正常に測点を登録しました。'
+    else
+      @points = @house.points.order('created_at DESC')
+      flash.now[:danger] = '失敗しました。'
+    end
+    redirect_to @house
   end
 
+=begin 
+  # 使ってない
   def edit
     @point = Point.find(params[:id])
     @survey = @point.survey
@@ -55,24 +72,27 @@ class PointsController < ApplicationController
       render :edit
     end       
   end
+=end 
 
   def destroy
     @point = Point.find(params[:id])
-    @survey = @point.survey
-    @house = @survey.house
+    @house = @point.house
     @investigation = @house.investigation
     
+    @posts = @point.posts.destroy_all
     @point.destroy
 
     flash[:success] = '正常に削除されました'
-    redirect_to @survey     
+    redirect_to @house     
   end
-  
+
+=begin 
+  # 使ってない
   private
 
   def point_params
-    params.require(:point).permit(:survey_id, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :sokuten, :crack, :tile, :kire, :uki, :suhon, :zenshu,
-                                  :suichokukeisya, :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :suiheikeisya, :wide, :height, :length, :comment,
-                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache)
-  end    
+    params.require(:point).permit(:house_id, :number)
+  end
+=end
+
 end

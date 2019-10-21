@@ -9,11 +9,11 @@
 <table class="table table-striped table-hover">
   <tr>
     <th class="text-center">ID</th>
-    <th class="text-center">調査内容</th>
     <th class="text-center">工事名</th>
     <th class="text-center">施工者</th>
-    <th class="text-center">調査場所</th>
-    <th class="text-center">調査機関</th>
+    <th class="text-center">調査機関（事前）</th>
+    <th class="text-center">調査機関（事中）</th>
+    <th class="text-center">調査機関（事後）</th>    
     <th class="text-center"></th>
     <th class="text-center"></th>
   </tr>
@@ -21,11 +21,11 @@
   <% @investigations.each do |investigation| %>
       <tr>
         <td class="text-center align-middle"><%= investigation.id %></td>
-        <td class="text-center align-middle"><%= investigation.content %></td>
         <td class="text-center align-middle"><%= investigation.construction_name %></td>
         <td class="text-center align-middle"><%= investigation.builder %></td>
-        <td class="text-center align-middle"><%= investigation.place %></td>
-        <td class="text-center align-middle"><%= investigation.investigator %></td>
+        <td class="text-center align-middle"><%= investigation.investigator_pre_survey %></td>
+        <td class="text-center align-middle"><%= investigation.investigator_ongoing_survey %></td>
+        <td class="text-center align-middle"><%= investigation.investigator_after_survey %></td>
         <td class="text-center align-middle"><%= link_to "詳細", investigation, :class=>"btn btn-default" %></td>
         <td class="text-center align-middle"><%= link_to "削除", investigation, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
       </tr>

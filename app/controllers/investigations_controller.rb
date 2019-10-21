@@ -16,9 +16,6 @@ class InvestigationsController < ApplicationController
 
   def create
     @investigation = Investigation.new(investigation_params)
-
-    # binding.pry
-
     if @investigation.save
       flash[:success] = '正常に登録されました'
       redirect_to @investigation
@@ -52,10 +49,25 @@ class InvestigationsController < ApplicationController
     redirect_to investigations_url
   end
   
+  def pdf_pre_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses
+  end
+  
+  def pdf_ongoing_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses    
+  end
+  
+  def pdf_after_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses    
+  end  
+  
   private
 
   # Strong Parameter
   def investigation_params
-    params.require(:investigation).permit(:content, :construction_name, :builder, :builder_id, :place, :investigator)
+    params.require(:investigation).permit(:content, :construction_name, :builder, :builder_id, :place, :investigator_pre_survey, :investigator_ongoing_survey, :investigator_after_survey)
   end
 end

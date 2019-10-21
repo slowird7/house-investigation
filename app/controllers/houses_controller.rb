@@ -23,7 +23,7 @@ class HousesController < ApplicationController
   def show
     @house = House.find(params[:id])
     @investigation = @house.investigation
-    @surveys = @house.surveys
+    @points = @house.points
   end
   
   def edit

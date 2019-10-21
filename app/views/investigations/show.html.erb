@@ -26,17 +26,35 @@
     <th>調査場所</th>
     <td class="align-middle"><%= @investigation.place %></td>
   </tr>
+
+</table>
+
+<hr/>
+
+<table class="table table-hover">
+  <tr>
+    <th class="text-center">事前調査</th>
+    <th class="text-center">事中調査</th>
+    <th class="text-center">事後調査</th>
+  </tr>
+
+  <tr>
+    <td class="text-center"><%= @investigation.investigator_pre_survey %></td>
+    <td class="text-center"><%= @investigation.investigator_ongoing_survey %></td>
+    <td class="text-center"><%= @investigation.investigator_after_survey %></td>    
+  </tr>
   
   <tr>
-    <th>調査機関</th>
-    <td class="align-middle"><%= @investigation.investigator %></td>
+    <td class="text-center"><%= link_to '印刷', pdf_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %></td>
+    <td class="text-center"><%= link_to '印刷', pdf_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %></td>
+    <td class="text-center"><%= link_to '印刷', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %></td>    
   </tr>
 </table>
 
 <hr/>
 
 <h2>家屋一覧</h2>
-<p><%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-default" %></p>
+<p><%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-primary" %></p>
 
 <table class="table table-striped table-hover">
   <tr>

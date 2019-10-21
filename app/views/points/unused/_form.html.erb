@@ -1,10 +1,15 @@
 <div class="row">
   <div style="margin: 10px;">
     <%= form_for(@point) do |f| %>
-      <p class="text-right">*必須</p>
-      <%= f.hidden_field :survey_id, :value => @survey.id %>
-      <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera', :id => "image1" %>
+      <%= f.hidden_field :point_id, :value => @point.id %>
       
+      <div class="form-group">
+        <%= f.label :number, '測点No' %>
+        <%= f.text_field :number, :class=>"form-control", :value=>@house.points.length %>
+      </div>
+      
+      <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera', :id => "image1" %>
+
       <div class="preview-area">
         <%= image_tag "sampleImage.jpg" %>
         <img id="preview">

@@ -84,7 +84,7 @@ ul {
   overflow: hidden;  
 }
 
-.preview-area img {
+.preview-area img, .preview-area canvas {
   position: absolute;
   left: 25%;
   top: 50%;
@@ -98,4 +98,46 @@ ul {
 
 #preview {
   left: 75%;
+}
+
+
+/*-- チェックボック自体は非表示 --*/
+.switch_set input {
+  display: none;
+}
+/*-- ボタンの本体 --*/
+.switch_set input+label {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 30px;
+  padding: 5px 5px 2px 5px;
+  text-align: center; 
+  line-height: 1.5; 
+  border-radius: 40px; 
+  background: #ccc; 
+  cursor: pointer;
+}
+/*-- ボタンのラベル --*/
+.switch_set input+label::before {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 7px;
+  content: attr(data-off-label);
+  width: 100%;
+  font-size: 1.4rem;
+  color: #666;
+}
+/*-- チェックでボタンを変更 --*/
+.switch_set input:checked+label { 
+  background: orange;
+}
+.switch_set input:checked+label::before {
+  content: attr(data-on-label); 
+  color: #fff; 
+}
+/*-- チェックできないように --*/
+.disabled label {
+  pointer-events: none;
 }

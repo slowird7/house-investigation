@@ -1,0 +1,80 @@
+<% if survey_type == "pre" %>
+  <% survey_name = "事前" %>
+<% elsif survey_type == "ongoing" %>
+  <% survey_name = "事中" %>
+<% elsif survey_type == "after" %>
+  <% survey_name = "事後" %>
+<% end %>
+
+<% @houses.each do |house| %>
+  <div class="page">
+    <p class="text-right">[<%= survey_name %>調査用]</p>
+    <p class="text-right">家屋番号：<%= house.id %></p>
+    <h1 class="text-center">家屋調査承諾書（及び不要承諾書）</h1>
+    <p>工事名：<%= @investigation.construction_name %></p>
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td>調査日</td>
+        <td colspan="2"></td>
+        <td>ご承諾印</td>        
+      </tr>
+      <tr>
+        <td>所在地</td>
+        <td colspan="3"><%= house.city %><%= house.block %></td>
+      </tr>
+      <tr>
+        <td>現住居者氏名（承諾者）</td>
+        <td></td>
+        <td>TEL</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>所有者氏名</td>
+        <td><%= house.owner_name %></td>
+        <td>TEL</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>調査範囲</td>
+        <td colspan="3"></td>
+      </tr>        
+    </table>
+    <p>下記目的のための調査を承諾します。</p>
+    
+    <h2 class="text-center">調査目的</h2>
+    <p>この度、工事の施工に際しまして、近隣の皆様の家屋等に損傷を及ぼす事の無い様に細心の注意を払って施工にあたりますが、万が一にも工事に起因して何等かの問題が生じました時に対処する為に、現在における皆様の家屋等現状を調査（写真撮影等）させて頂き、実際に問題が発生した場合は、近隣の皆様とお互いに納得できる話し合いをさせて頂く為、一つの参考資料の作成を目的とします。</p>
+    <p>なお、調査資料は上記の目的以外に一切使用することはありませんので、ご協力頂きますようお願い申し上げます。</p>
+  
+    <h2 class="text-center">建物等概要</h2>
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td>構造</td>
+        <td><%= house.construction %></td>
+      </tr>
+      <tr>
+        <td>用途</td>
+        <td><%= house.use %></td>
+      </tr>
+      <tr>
+        <td>階数</td>
+        <td><%= house.floors %></td>
+      </tr>
+      <tr>
+        <td>建築年数</td>
+        <td>築後　約　　　年</td>
+      </tr>
+      <tr>
+        <td>延べ面積</td>
+        <td><%= house.area %></td>
+      </tr>      
+    </table>
+    <p class="text-center">施工者：<%= @investigation.builder %></p>
+    <% if survey_name == "事前" %>
+      <p class="text-center">調査機関：<%= @investigation.investigator_pre_survey %></p>
+    <% elsif survey_name == "事中" %>
+      <p class="text-center">調査機関：<%= @investigation.investigator_ongoing_survey %></p>
+    <% else %>
+      <p class="text-center">調査機関：<%= @investigation.investigator_after_survey %></p>
+    <% end %>
+  </div>
+<% end %>

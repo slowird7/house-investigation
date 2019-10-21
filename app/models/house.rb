@@ -18,5 +18,5 @@ class House < ApplicationRecord
   validates :area, length: { maximum: 255 }
   validates :use, length: { maximum: 255 }
   
-  has_many :surveys
+  has_many :points
 end

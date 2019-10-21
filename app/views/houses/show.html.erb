@@ -7,6 +7,7 @@
 <h2><%= @house.house_name %></h2>
 <p><%= link_to '編集', edit_house_path, :class=>"btn btn-default" %></p>
 
+<p>家屋詳細</p>
 <table class="table table-striped table-hover">
   <tr>
     <th>ID</th>
@@ -48,32 +49,92 @@
   <tr>
     <th>所有者電話番号</th>
     <td class="align-middle"><%= @house.owner_phone_number %></td>
-  </tr>    
+  </tr>
+</table>
+<hr/>
+<p>事前調査</p>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>建物概算</th>
+    <td class="align-middle"><%= @house.overview_pre_survey %></td>
+  </tr> 
+  <tr>
+    <th>調査範囲</th>
+    <td class="align-middle"><%= @house.range_pre_survey %></td>
+  </tr>   
+</table>
+<hr/>
+<p>事中調査</p>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>建物概算</th>
+    <td class="align-middle"><%= @house.overview_ongoing_survey %></td>
+  </tr> 
+  <tr>
+    <th>調査範囲</th>
+    <td class="align-middle"><%= @house.range_ongoing_survey %></td>
+  </tr>   
+</table>
+<hr/>
+<p>事後調査</p>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>建物概算</th>
+    <td class="align-middle"><%= @house.overview_after_survey %></td>
+  </tr> 
+  <tr>
+    <th>調査範囲</th>
+    <td class="align-middle"><%= @house.range_after_survey %></td>
+  </tr>   
 </table>
 
 <hr/>
 
-<h2>調査一覧</h2>
-<p><%= link_to '新規登録', new_survey_path(house_id: @house.id), :class=>"btn btn-default" %></p>
+<h2>測点一覧</h2>
+<p>
+  <%= form_tag points_path do %>
+    <%= hidden_field_tag :house_id, @house.id %>
+    <%= submit_tag "測点の追加", :class => "btn btn-primary" %>
+  <% end %>
+</p>
 
 <table class="table table-striped table-hover">
   <tr>
-    <th class="text-center">ID</th>
-    <th class="text-center">調査名</th>
-    <th class="text-center">建物概要</th>
-    <th class="text-center">調査範囲</th>
-    <th class="text-center"></th>
+    <th class="text-center">No</th>
+    <th class="text-center">事前調査</th>
+    <th class="text-center">事中調査</th>
+    <th class="text-center">事後調査</th>
     <th class="text-center"></th>    
   </tr>
   
-  <% @surveys.each do |survey| %>
-      <tr>
-        <td class="text-center align-middle"><%= survey.id %></td>
-        <td class="text-center align-middle"><%= survey.survey_name %></td>
-        <td class="text-center align-middle"><%= survey.overview %></td>
-        <td class="text-center align-middle"><%= survey.range %></td>
-        <td class="text-center align-middle"><%= link_to "詳細", survey, :class=>"btn btn-default" %></td>
-        <td class="text-center align-middle"><%= link_to "削除", survey, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
-      </tr>
+  <% @points.each do |point| %>
+    <tr>
+      <td class="text-center align-middle"><%= point.number %></td>
+      <td class="text-center align-middle">
+        <% if point.posts.find_by(survey_type: "pre").image1? %>
+          <% pre_post = point.posts.find_by(survey_type: "pre") %>
+          <%= link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if point.posts.find_by(survey_type: "ongoing").image1? %>
+          <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
+          <%= link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if point.posts.find_by(survey_type: "after").image1? %>
+          <% after_post = point.posts.find_by(survey_type: "after") %>
+          <%= link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+    </tr>
   <% end %>
 </table>

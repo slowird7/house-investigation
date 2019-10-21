@@ -1,0 +1,53 @@
+<% 
+  survey_type = @post.survey_type
+  if survey_type == "pre"
+    survey_type_name = "事前調査"
+  elsif survey_type == "ongoing"
+    survey_type_name = "事中調査"
+  elsif survey_type == "after"
+    survey_type_name = "事後調査"
+  else
+    survey_type_name = "その他"
+  end
+%>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active">測点No.<%= @point.number %>（<%= survey_type_name %>）</li>
+</ol>
+
+<p class="text-center"><%= image_tag @post.image1 %></p>
+
+<%= form_for(@post) do |f| %>
+  <div class="form-group"  style="margin-top: 20px;">
+    <div class="switch_set disabled">
+      <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
+      <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
+      <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
+      <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
+      <%= f.check_box :amimejyo, {}, "true", "false" %><%= f.label :amimejyo, '網目状' %>
+      <%= f.check_box :zencho, {}, "true", "false" %><%= f.label :zencho, '全長' %>
+      <%= f.check_box :sokuten, {}, "true", "false" %><%= f.label :sokuten, '測点' %>
+      <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
+      <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
+      <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
+      <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
+      <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
+      <%= f.check_box :zenshu, {}, "true", "false" %><%= f.label :zenshu, '全周' %>
+      <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
+      <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
+      <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
+      <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
+      <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
+      <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
+      <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
+      <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
+    </div>
+  </div>
+<% end %>
+
+<p>幅：<%= @post.wide %> mm</p>
+<p>長さ：<%= @post.length %> cm</p>
+<p>コメント：<%= @post.comment %></p>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190822085653) do
+ActiveRecord::Schema.define(version: 20191004110308) do
 
   create_table "choices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -34,9 +34,15 @@ ActiveRecord::Schema.define(version: 20190822085653) do
     t.string   "floors"
     t.string   "area"
     t.string   "use"
+    t.string   "overview_pre_survey"
+    t.string   "overview_ongoing_survey"
+    t.string   "overview_after_survey"
+    t.string   "range_pre_survey"
+    t.string   "range_ongoing_survey"
+    t.string   "range_after_survey"
     t.integer  "investigation_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["investigation_id"], name: "index_houses_on_investigation_id", using: :btree
   end
 
@@ -44,13 +50,30 @@ ActiveRecord::Schema.define(version: 20190822085653) do
     t.string   "content"
     t.string   "construction_name"
     t.string   "builder"
-    t.string   "investigator"
+    t.string   "investigator_pre_survey"
+    t.string   "investigator_ongoing_survey"
+    t.string   "investigator_after_survey"
     t.string   "place"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.date     "start_pre_survey"
+    t.date     "start_ongoing_survey"
+    t.date     "start_after_survey"
+    t.date     "stop_pre_survey"
+    t.date     "stop_ongoing_survey"
+    t.date     "stop_after_survey"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "number"
+    t.integer  "house_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_id"], name: "index_points_on_house_id", using: :btree
+  end
+
+  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "survey_type"
     t.boolean  "genkyo",         default: false
     t.boolean  "sukima",         default: false
     t.boolean  "ware",           default: false
@@ -79,20 +102,11 @@ ActiveRecord::Schema.define(version: 20190822085653) do
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
-    t.integer  "survey_id"
+    t.string   "image_url"
+    t.integer  "point_id"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.index ["survey_id"], name: "index_points_on_survey_id", using: :btree
-  end
-
-  create_table "surveys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "survey_name"
-    t.string   "overview"
-    t.string   "range"
-    t.integer  "house_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["house_id"], name: "index_surveys_on_house_id", using: :btree
+    t.index ["point_id"], name: "index_posts_on_point_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -105,6 +119,6 @@ ActiveRecord::Schema.define(version: 20190822085653) do
   end
 
   add_foreign_key "houses", "investigations"
-  add_foreign_key "points", "surveys"
-  add_foreign_key "surveys", "houses"
+  add_foreign_key "points", "houses"
+  add_foreign_key "posts", "points"
 end

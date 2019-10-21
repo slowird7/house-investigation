@@ -1,0 +1,149 @@
+<div class="row">
+  <div style="margin: 10px;">
+    <%= form_for(@post) do |f| %>
+      <%= f.hidden_field :point_id, :value => @point.id %>
+      <%= f.hidden_field :survey_type, :value => @post.survey_type %>
+      <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+      <%= f.hidden_field :image_url %>
+
+      <div class="preview-area">
+        <% unless @preview_post.image1? %>
+          <%= image_tag "bg_img.jpg" %>
+        <% else %>
+          <%= image_tag @preview_post.image1 %>
+        <% end %>
+        <canvas id="preview"></canvas>
+      </div>
+          
+      <div class="form-group" style="margin-top: 20px;">
+        <div class="switch_set">
+          <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
+          <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
+          <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
+          <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
+          <%= f.check_box :amimejyo, {}, "true", "false" %><%= f.label :amimejyo, '網目状' %>
+          <%= f.check_box :zencho, {}, "true", "false" %><%= f.label :zencho, '全長' %>
+          <%= f.check_box :sokuten, {}, "true", "false" %><%= f.label :sokuten, '測点' %>
+          <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
+          <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
+          <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
+          <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
+          <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
+          <%= f.check_box :zenshu, {}, "true", "false" %><%= f.label :zenshu, '全周' %>
+          <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
+          <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
+          <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
+          <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
+          <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
+          <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
+          <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
+          <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :wide, '幅（mm）' %>
+        <%= f.text_field :wide, :class=>"form-control" %>
+      </div> 
+
+      <div class="form-group">
+        <%= f.label :length, '長さ（cm）' %>
+        <%= f.text_field :length, :class=>"form-control" %>
+      </div>       
+      
+      <div class="form-group">
+        <%= f.label :comment, 'コメント' %>
+        <%= f.text_area :comment, :class=>"form-control" %>
+      </div>
+      <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // グローバル変数
+  var canvas = document.getElementById('preview');
+  var ctx = canvas.getContext('2d');
+  var canvasWidth, canvasHeight;
+  var img = new Image();
+  var tapCount = 0;  
+
+  $('#post_image1').on('change', function (e) {
+    var rate;
+    var reader = new FileReader();
+    
+    reader.onload = function (e) {
+      img.src = e.target.result;
+      rate = img.width / canvas.clientWidth;
+      canvasWidth = canvas.clientWidth;
+      canvasHeight = img.height / rate;
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      
+      // 画像を描画
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+      }
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  });
+  
+  // ダブルクリックで初期化
+  canvas.addEventListener( "touchstart", function(e) {
+  	// シングルタップ判定
+  	if( !tapCount ) {
+  		++tapCount ;
+  
+  		setTimeout( function() {
+  			tapCount = 0 ;
+  		}, 350 ) ;
+
+  	// ダブルタップ判定
+  	} else {
+      // 初期化
+      ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+      
+  		e.preventDefault() ;
+  		tapCount = 0 ;
+  	}
+  });
+  
+  canvas.addEventListener('click', function(e){
+    // 初期化
+    ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+    
+    // 実際の画像サイズと描画領域の倍率を算出
+    var rate = canvas.width / canvas.clientWidth;
+    let offsetX = e.offsetX * rate; // =>要素左上からのx座標
+    let offsetY = e.offsetY * rate; // =>要素左上からのy座標
+
+    var w=40,h=40,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
+    // 矢印描画     
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.translate(x,y);
+     
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.moveTo(-w0,-h0);
+    ctx.lineTo(0,-h0);
+    ctx.lineTo(0,-w0);
+    ctx.lineTo(w0,0);
+    ctx.lineTo(0,w0);
+    ctx.lineTo(0,h0);
+    ctx.lineTo(-w0,h0);
+    ctx.lineTo(-w0,-h0);
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+     
+    ctx.setTransform(1,0,0,1,0,0);
+  });
+
+  $('#submit').on('mousedown', function (e) {
+    // 画像化
+    var canvas_data = canvas.toDataURL('image/jpg');
+    
+    $("#post_image1").val(""); //画像データを二重に送信するのを防ぐ
+    $("#post_image_url").val(canvas_data);
+  });
+</script>

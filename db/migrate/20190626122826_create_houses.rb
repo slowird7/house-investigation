@@ -18,6 +18,27 @@ class CreateHouses < ActiveRecord::Migration[5.0]
       t.string :area  #延面積
       t.string :use # 用途
       
+      # 事前、事中、事後調査
+#      t.boolean :pre_survey, default: false
+#      t.boolean :ongoing_survey, default: false
+#      t.boolean :after_survey, default: false
+      # 建物概要（概査、精査）
+      t.string :overview_pre_survey
+      t.string :overview_ongoing_survey
+      t.string :overview_after_survey
+      # 調査範囲
+      t.string :range_pre_survey
+      t.string :range_ongoing_survey
+      t.string :range_after_survey
+      # 調査開始日
+#      t.date :start_pre_survey, default: nil
+#      t.date :start_ongoing_survey, default: nil
+#      t.date :start_after_survey, default: nil
+      # 調査終了日
+#      t.date :stop_pre_survey, default: nil
+#      t.date :stop_ongoing_survey, default: nil
+#      t.date :stop_after_survey, default: nil
+      
       t.references :investigation, foreign_key: true
 
       t.timestamps

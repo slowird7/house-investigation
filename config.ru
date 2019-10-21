@@ -48,8 +48,8 @@ end
 
 investigation=Investigation.find_by(construction_name: '寝屋川市秦高宮雨水幹線建設工事')
 if investigation.blank?
-  investigation = Investigation.new(construction_name: '寝屋川市秦高宮雨水幹線建設工事', content: "沿道家屋事後", 
-                                    builder: "戸田・ハンシン特定建設共同企業体", investigator: "株式会社きんそく家屋調査", 
+  investigation = Investigation.new(construction_name: '寝屋川市秦高宮雨水幹線建設工事', content: "沿道家屋", 
+                                    builder: "戸田・ハンシン特定建設共同企業体", investigator_pre_survey: "株式会社きんそく家屋調査", 
                                     place: "大阪府寝屋川市高宮地内")
   investigation.save
 end

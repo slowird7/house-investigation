@@ -1,0 +1,79 @@
+<% @houses.each do |house| %>
+  <div class="page">
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td colspan="4">建物水準測量結果表</td>
+        <td>家屋番号：<%= house.id %></td>
+      </tr>
+      <tr>
+        <td>測点</td>
+        <td>場所</td>
+        <td>事前調査測定値（mm）</td>
+        <td>事後調査測定値（mm）</td>
+        <td>変化量（mm）</td>
+      </tr>
+      <% points = house.points %>
+      <% points.each do |point| %>        
+        <tr>
+          <td><%= point.number %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </table>
+    <p class="text-right"><%= @investigation.investigator_pre_survey %></p>
+  </div>
+
+  <% points = house.points %>
+  <% num = 0 %>
+  <% while num < points.length do %>
+    <div class="page">
+      <table class="table table-bordered" style="font-size:10px;">
+        <% point = points[num] %>
+        <% pre_post = point.posts.find_by(survey_type: survey_type) %>
+        <% if pre_post != nil %>
+          <% num = num + 1 %>
+          <tr>
+            <td class="table-img"><%= image_tag pre_post.image1 %></td>
+            <td>測点：<%= point.number %></td>
+          </tr>
+        <% end %>
+        <% if num < points.length %>      
+          <% point = points[num] %>
+          <% pre_post = point.posts.find_by(survey_type: survey_type) %>
+          <% if pre_post != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td class="table-img"><%= image_tag pre_post.image1 %></td>
+              <td>測点：<%= point.number %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        <% if num < points.length %>      
+          <% point = points[num] %>
+          <% pre_post = point.posts.find_by(survey_type: survey_type) %>
+          <% if pre_post != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td class="table-img"><%= image_tag pre_post.image1 %></td>
+              <td>測点：<%= point.number %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>
+
+<style>
+.table-img {
+  vertical-align: top;
+  width: 500px;
+  height: 400px;
+}
+.table-img > img{
+  width: 100%;
+}  
+</style>
