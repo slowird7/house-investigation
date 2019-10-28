@@ -66,20 +66,30 @@
   var ctx = canvas.getContext('2d');
   var canvasWidth, canvasHeight;
   var img = new Image();
+  var reader = new FileReader();
   var tapCount = 0;  
 
   $('#post_image1').on('change', function (e) {
-    var rate;
-    var reader = new FileReader();
-    
     reader.onload = function (e) {
       img.src = e.target.result;
-      rate = img.width / canvas.clientWidth;
+      // iPad 第6世代
+      img.width = 3264;
+      img.height = 2448;
+
+      var rate = img.width / canvas.clientWidth;
       canvasWidth = canvas.clientWidth;
       canvasHeight = img.height / rate;
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
-      
+/*      
+      console.log("img：" + img);
+      console.log("img.src：" + img.src);
+      console.log("img.width：" + img.width);
+      console.log("canvas.clientWidth：" + canvas.clientWidth);
+      console.log("rate：" + rate);
+      console.log("canvasWidth：" + canvasWidth);
+      console.log("canvasHeight：" + canvasHeight);
+*/      
       // 画像を描画
       img.onload = function() {
         ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
@@ -87,7 +97,7 @@
     }
     reader.readAsDataURL(e.target.files[0]);
   });
-  
+
   // ダブルクリックで初期化
   canvas.addEventListener( "touchstart", function(e) {
   	// シングルタップ判定
@@ -138,6 +148,7 @@
      
     ctx.setTransform(1,0,0,1,0,0);
   });
+
 
   $('#submit').on('mousedown', function (e) {
     // 画像化
