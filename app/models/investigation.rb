@@ -4,5 +4,5 @@ class Investigation < ApplicationRecord
   validates :builder, presence: true, length: { maximum: 255 }
   validates :place, presence: true, length: { maximum: 255 }
 
-  has_many :houses
+  has_many :houses, dependent: :destroy
 end

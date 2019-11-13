@@ -22,7 +22,7 @@ class House < ApplicationRecord
   mount_uploader :sign_ongoing_survey, ImageUploader    # carrierwave
   mount_uploader :sign_after_survey, ImageUploader    # carrierwave    
   
-  has_many :points  # 測点（レベル）
-  has_many :sonsyos # 損傷
-  has_many :keisyas # 傾斜
+  has_many :points, dependent: :destroy  # 測点（レベル）
+  has_many :sonsyos, dependent: :destroy # 損傷
+  has_many :keisyas, dependent: :destroy # 傾斜
 end
