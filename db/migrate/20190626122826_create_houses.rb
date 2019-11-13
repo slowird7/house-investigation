@@ -17,6 +17,10 @@ class CreateHouses < ActiveRecord::Migration[5.0]
       t.string :floors  # 階数
       t.string :area  #延面積
       t.string :use # 用途
+      # 承諾書サイン
+      t.string :sign_pre_survey, default: nil   #事前
+      t.string :sign_ongoing_survey, default: nil   #事中
+      t.string :sign_after_survey, default: nil   #事後
       
       # 事前、事中、事後調査
 #      t.boolean :pre_survey, default: false

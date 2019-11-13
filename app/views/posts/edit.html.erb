@@ -15,8 +15,8 @@
   <li><%= link_to 'HOME', root_path %></li>
   <li><%= link_to @investigation.construction_name, @investigation %></li>
   <li><%= link_to @house.house_name, @house %></li>
-  <li class="active">測点No.<%= @point.number %>の撮影（<%= survey_type_name %>）</li>
+  <li class="active">測点：P.<%= @point.number %>の撮影（<%= survey_type_name %>）</li>
 </ol>
 
-<h2 class="text-center">測点No.<%= @point.number %>の撮影（<%= survey_type_name %>）</h2>
+<h2 class="text-center">測点：P.<%= @point.number %>の撮影（<%= survey_type_name %>）</h2>
 <%= render 'posts/form' %>

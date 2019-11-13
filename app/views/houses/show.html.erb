@@ -51,7 +51,9 @@
     <td class="align-middle"><%= @house.owner_phone_number %></td>
   </tr>
 </table>
+
 <hr/>
+
 <p>事前調査</p>
 <table class="table table-striped table-hover">
   <tr>
@@ -63,7 +65,17 @@
     <td class="align-middle"><%= @house.range_pre_survey %></td>
   </tr>   
 </table>
+
+<div>
+  <% if @house.sign_pre_survey.file == nil %>
+    <%= link_to '承諾書（未サイン）', syodakusyo_new_pre_survey_house_path, :class=>"btn btn-primary" %>
+  <% else %>
+    <%= link_to '承諾書（サイン済み）', syodakusyo_show_pre_survey_house_path, :class=>"btn btn-default" %>
+  <% end %>
+</div>
+
 <hr/>
+
 <p>事中調査</p>
 <table class="table table-striped table-hover">
   <tr>
@@ -75,7 +87,16 @@
     <td class="align-middle"><%= @house.range_ongoing_survey %></td>
   </tr>   
 </table>
+<div>
+  <% if @house.sign_ongoing_survey.file == nil %>
+    <%= link_to '承諾書（未サイン）', syodakusyo_new_ongoing_survey_house_path, :class=>"btn btn-primary" %>
+  <% else %>
+    <%= link_to '承諾書（サイン済み）', syodakusyo_show_ongoing_survey_house_path, :class=>"btn btn-default" %>
+  <% end %>
+</div>
+
 <hr/>
+
 <p>事後調査</p>
 <table class="table table-striped table-hover">
   <tr>
@@ -87,20 +108,29 @@
     <td class="align-middle"><%= @house.range_after_survey %></td>
   </tr>   
 </table>
+<div>
+  <% if @house.sign_after_survey.file == nil %>
+    <%= link_to '承諾書（未サイン）', syodakusyo_new_after_survey_house_path, :class=>"btn btn-primary" %>
+  <% else %>
+    <%= link_to '承諾書（サイン済み）', syodakusyo_show_after_survey_house_path, :class=>"btn btn-default" %>
+  <% end %>
+</div>
 
 <hr/>
 
-<h2>測点一覧</h2>
+<h2>測点（レベル）一覧</h2>
 <p>
   <%= form_tag points_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
+    <%= select_tag('room_name',options_for_select($ROOM_NAME))%>
     <%= submit_tag "測点の追加", :class => "btn btn-primary" %>
   <% end %>
 </p>
 
 <table class="table table-striped table-hover">
   <tr>
-    <th class="text-center">No</th>
+    <th class="text-center"></th>
+    <th class="text-center">調査箇所</th>
     <th class="text-center">事前調査</th>
     <th class="text-center">事中調査</th>
     <th class="text-center">事後調査</th>
@@ -109,7 +139,8 @@
   
   <% @points.each do |point| %>
     <tr>
-      <td class="text-center align-middle"><%= point.number %></td>
+      <td class="text-center align-middle">P.<%= point.number %></td>
+      <td class="text-center align-middle"><%= point.room_name %></td>
       <td class="text-center align-middle">
         <% if point.posts.find_by(survey_type: "pre").image1? %>
           <% pre_post = point.posts.find_by(survey_type: "pre") %>
@@ -135,6 +166,114 @@
         <% end %>
       </td>
       <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<hr/>
+
+<h2>損傷一覧</h2>
+<p>
+  <%= form_tag sonsyos_path do %>
+    <%= hidden_field_tag :house_id, @house.id %>
+    <%= select_tag('room_name',options_for_select($ROOM_NAME))%>    
+    <%= submit_tag "損傷の追加", :class => "btn btn-primary" %>
+  <% end %>
+</p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center"></th>
+    <th class="text-center">調査箇所</th>    
+    <th class="text-center">事前調査</th>
+    <th class="text-center">事中調査</th>
+    <th class="text-center">事後調査</th>
+    <th class="text-center"></th>    
+  </tr>
+  
+  <% @sonsyos.each do |sonsyo| %>
+    <tr>
+      <td class="text-center align-middle">No.<%= sonsyo.number %></td>
+      <td class="text-center align-middle"><%= sonsyo.room_name %></td>
+      <td class="text-center align-middle">
+        <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
+          <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
+          <%= link_to pre_damage.updated_at.strftime('%Y/%m/%d'), pre_damage, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
+          <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
+          <%= link_to ongoing_damage.updated_at.strftime('%Y/%m/%d'), ongoing_damage, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <%= link_to after_damage.updated_at.strftime('%Y/%m/%d'), after_damage, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<hr/>
+
+<h2>傾斜一覧</h2>
+<p>
+  <%= form_tag keisyas_path do %>
+    <%= hidden_field_tag :house_id, @house.id %>
+    <%= select_tag('room_name',options_for_select($ROOM_NAME))%>    
+    <%= submit_tag "傾斜の追加", :class => "btn btn-primary" %>
+  <% end %>
+</p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center"></th>
+    <th class="text-center">調査箇所</th>    
+    <th class="text-center">事前調査</th>
+    <th class="text-center">事中調査</th>
+    <th class="text-center">事後調査</th>
+    <th class="text-center"></th>    
+  </tr>
+  
+  <% @keisyas.each do |keisya| %>
+    <tr>
+      <td class="text-center align-middle"><%= disp_alphabet(keisya.number) %></td>
+      <td class="text-center align-middle"><%= keisya.room_name %></td>
+      <td class="text-center align-middle">
+        <% if keisya.slopes.find_by(survey_type: "pre").image1? %>
+          <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
+          <%= link_to pre_slope.updated_at.strftime('%Y/%m/%d'), pre_slope, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if keisya.slopes.find_by(survey_type: "ongoing").image1? %>
+          <% ongoing_slope = keisya.slopes.find_by(survey_type: "ongoing") %>
+          <%= link_to ongoing_slope.updated_at.strftime('%Y/%m/%d'), ongoing_slope, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if keisya.slopes.find_by(survey_type: "after").image1? %>
+          <% after_slope = keisya.slopes.find_by(survey_type: "after") %>
+          <%= link_to after_slope.updated_at.strftime('%Y/%m/%d'), after_slope, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle"><%= link_to "削除", keisya, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
     </tr>
   <% end %>
 </table>

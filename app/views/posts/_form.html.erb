@@ -14,42 +14,18 @@
         <% end %>
         <canvas id="preview"></canvas>
       </div>
-          
-      <div class="form-group" style="margin-top: 20px;">
-        <div class="switch_set">
-          <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
-          <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
-          <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
-          <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
-          <%= f.check_box :amimejyo, {}, "true", "false" %><%= f.label :amimejyo, '網目状' %>
-          <%= f.check_box :zencho, {}, "true", "false" %><%= f.label :zencho, '全長' %>
-          <%= f.check_box :sokuten, {}, "true", "false" %><%= f.label :sokuten, '測点' %>
-          <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
-          <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
-          <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
-          <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
-          <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
-          <%= f.check_box :zenshu, {}, "true", "false" %><%= f.label :zenshu, '全周' %>
-          <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
-          <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
-          <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
-          <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
-          <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
-          <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
-          <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
-          <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
-        </div>
-      </div>
       
-      <div class="form-group">
-        <%= f.label :wide, '幅（mm）' %>
-        <%= f.text_field :wide, :class=>"form-control" %>
-      </div> 
-
-      <div class="form-group">
-        <%= f.label :length, '長さ（cm）' %>
-        <%= f.text_field :length, :class=>"form-control" %>
-      </div>       
+      <div class="form-group">      
+        ホワイトボードの配置：
+        <label><%= f.radio_button :position_wb, "0", checked: true %>左</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "1" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "2" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "3" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "4" %>右</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "5" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "6" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "7" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
       
       <div class="form-group">
         <%= f.label :comment, 'コメント' %>
@@ -148,7 +124,6 @@
      
     ctx.setTransform(1,0,0,1,0,0);
   });
-
 
   $('#submit').on('mousedown', function (e) {
     // 画像化

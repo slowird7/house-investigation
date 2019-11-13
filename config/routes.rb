@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     
   get 'signup', to: 'users#new'
   resources :users
+
+  resources :choices, only: [:index, :new, :create, :edit, :update, :destroy]
     
   resources :investigations do
     member do
@@ -21,8 +23,25 @@ Rails.application.routes.draw do
       get :pdf_after_survey
     end
   end
-  resources :houses, only: [:show, :new, :create, :edit, :update, :destroy]
+  
+  resources :houses, only: [:show, :new, :create, :edit, :update, :destroy] do
+    member do
+      get :syodakusyo_new_pre_survey
+      get :syodakusyo_new_ongoing_survey
+      get :syodakusyo_new_after_survey
+      get :syodakusyo_show_pre_survey
+      get :syodakusyo_show_ongoing_survey
+      get :syodakusyo_show_after_survey
+    end
+  end
+  
+  # 測点（レベル）
   resources :points, only: [:create, :destroy]
-  resources :choices, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :posts, only: [:show, :edit, :update]
+  # 損傷
+  resources :sonsyos, only: [:create, :destroy]  
+  resources :damages, only: [:show, :edit, :update]
+  # 傾斜
+  resources :keisyas, only: [:create, :destroy]  
+  resources :slopes, only: [:show, :edit, :update]
 end

@@ -1,0 +1,62 @@
+<% 
+  survey_type = @slope.survey_type
+  if survey_type == "pre"
+    survey_type_name = "事前調査"
+  elsif survey_type == "ongoing"
+    survey_type_name = "事中調査"
+  elsif survey_type == "after"
+    survey_type_name = "事後調査"
+  else
+    survey_type_name = "その他"
+  end
+  
+  position_wb = @slope.position_wb
+  if position_wb == 0
+    position_wb_name = "左"
+  elsif position_wb == 1
+    position_wb_name = "左上"
+  elsif position_wb == 2
+    position_wb_name = "上"
+  elsif position_wb == 3
+    position_wb_name = "右上"
+  elsif position_wb == 4
+    position_wb_name = "右"
+  elsif position_wb == 5
+    position_wb_name = "右下"
+  elsif position_wb == 6
+    position_wb_name = "下"
+  elsif position_wb == 7
+    position_wb_name = "左下"
+  else
+    position_wb_name = "その他"
+  end  
+%>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active"><%= disp_alphabet(@keisya.number) %>（<%= survey_type_name %>）</li>
+</ol>
+
+<h2 class="text-center">傾斜：<%= disp_alphabet(@keisya.number) %>の撮影（<%= survey_type_name %>）</h2>
+<%= link_to '編集', edit_slope_path(keisya_id: @keisya.id, survey_type: survey_type), :class=>"btn btn-primary" %>
+
+<p class="text-center"><%= image_tag @slope.image1 %></p>
+<p>ホワイトボードの配置：<%= position_wb_name %></p>
+
+<%= form_for(@slope) do |f| %>
+  <div class="form-group"  style="margin-top: 20px;">
+    <div class="switch_set disabled">
+      <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
+      <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
+    </div>
+  </div>
+<% end %>
+
+<p>東：<%= @slope.east %></p>
+<p>西：<%= @slope.west %></p>
+<p>南：<%= @slope.south %></p>
+<p>北：<%= @slope.north %></p>
+
+<p>コメント：<%= @slope.comment %></p>

@@ -24,6 +24,10 @@ class HousesController < ApplicationController
     @house = House.find(params[:id])
     @investigation = @house.investigation
     @points = @house.points
+    @sonsyos = @house.sonsyos
+    @keisyas = @house.keisyas
+    
+    #binding.pry
   end
   
   def edit
@@ -33,8 +37,23 @@ class HousesController < ApplicationController
 
   def update
     @house = House.find(params[:id])
-
-    if @house.update(house_params)
+    
+    tmp_house_params = house_params
+    
+    if tmp_house_params[:sign_pre_survey] != nil
+      image_data = base64_conversion(tmp_house_params[:sign_pre_survey])
+      tmp_house_params[:sign_pre_survey] = image_data
+    elsif tmp_house_params[:sign_ongoing_survey] != nil 
+      image_data = base64_conversion(tmp_house_params[:sign_ongoing_survey])
+      tmp_house_params[:sign_ongoing_survey] = image_data
+      
+      binding.pry
+    elsif tmp_house_params[:sign_after_survey] != nil 
+      image_data = base64_conversion(tmp_house_params[:sign_after_survey])
+      tmp_house_params[:sign_after_survey] = image_data
+    end
+      
+    if @house.update(tmp_house_params)
       flash[:success] = '正常に更新されました。'
       redirect_to @house
     else
@@ -44,8 +63,6 @@ class HousesController < ApplicationController
   end
 
   def destroy
-    # binding.pry
-    
     @house = House.find(params[:id])
     @investigation = @house.investigation
     @house.destroy
@@ -54,11 +71,74 @@ class HousesController < ApplicationController
     redirect_to @investigation
   end
   
+  def syodakusyo_new
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+    @survey_type = params[:survey_type]
+  end
+  
+  def syodakusyo_new_pre_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  
+  def syodakusyo_new_ongoing_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  
+  def syodakusyo_new_after_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  
+  def syodakusyo_show_pre_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  
+  def syodakusyo_show_ongoing_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  
+  def syodakusyo_show_after_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end  
+  
   private
 
   def house_params
     params.require(:house).permit(:investigation_id, :house_name, :prefectures, :city, :block, :resident_phone_number, 
                                   :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
-                                  :construction, :floors, :area, :use)
+                                  :construction, :floors, :area, :use, :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey)
+  end  
+  
+  def base64_conversion(uri_str, filename = 'base64')
+    image_data = split_base64(uri_str)
+    image_data_string = image_data[:data]
+    image_data_binary = Base64.decode64(image_data_string)
+
+    temp_img_file = Tempfile.new(filename)
+    temp_img_file.binmode
+    temp_img_file << image_data_binary
+    temp_img_file.rewind
+
+    img_params = {:filename => "#{filename}.#{image_data[:extension]}", :type => image_data[:type], :tempfile => temp_img_file}
+    ActionDispatch::Http::UploadedFile.new(img_params)
+  end
+
+  def split_base64(uri_str)
+    if uri_str.match(%r{data:(.*?);(.*?),(.*)$})
+      uri = Hash.new
+      uri[:type] = $1
+      uri[:encoder] = $2
+      uri[:data] = $3
+      uri[:extension] = $1.split('/')[1]
+      return uri
+    else
+      return nil
+    end
   end  
 end

@@ -78,15 +78,13 @@ class PostsController < ApplicationController
     else
       flash.now[:danger] = '更新に失敗しました。'
       render :edit
-    end    
+    end  
   end
   
   private
 
   def post_params
-    params.require(:post).permit(:point_id, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :sokuten, :crack, :tile, :kire, :uki, :suhon, :zenshu,
-                                  :suichokukeisya, :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :suiheikeisya, :wide, :height, :length, :comment,
-                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url)
+    params.require(:post).permit(:point_id, :position_wb, :comment, :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url)
   end
 
   def base64_conversion(uri_str, filename = 'base64')

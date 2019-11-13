@@ -10,13 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191004110308) do
+ActiveRecord::Schema.define(version: 20191107125835) do
 
   create_table "choices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "damages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "survey_type"
+    t.integer  "position_wb",            default: 0
+    t.boolean  "genkyo",                 default: false
+    t.boolean  "sukima",                 default: false
+    t.boolean  "ware",                   default: false
+    t.boolean  "kake",                   default: false
+    t.boolean  "amimejyo",               default: false
+    t.boolean  "zencho",                 default: false
+    t.boolean  "crack",                  default: false
+    t.boolean  "tile",                   default: false
+    t.boolean  "kire",                   default: false
+    t.boolean  "uki",                    default: false
+    t.boolean  "suhon",                  default: false
+    t.boolean  "zenshu",                 default: false
+    t.boolean  "chirigire",              default: false
+    t.boolean  "cross",                  default: false
+    t.boolean  "meji",                   default: false
+    t.boolean  "tategu",                 default: false
+    t.boolean  "tasu",                   default: false
+    t.boolean  "kakusyo",                default: false
+    t.float    "wide",        limit: 24
+    t.float    "length",      limit: 24
+    t.float    "width",       limit: 24
+    t.float    "height",      limit: 24
+    t.string   "comment"
+    t.string   "image1"
+    t.string   "image2"
+    t.string   "image3"
+    t.string   "image_url"
+    t.integer  "sonsyo_id"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.index ["sonsyo_id"], name: "index_damages_on_sonsyo_id", using: :btree
   end
 
   create_table "houses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -34,6 +70,9 @@ ActiveRecord::Schema.define(version: 20191004110308) do
     t.string   "floors"
     t.string   "area"
     t.string   "use"
+    t.string   "sign_pre_survey"
+    t.string   "sign_ongoing_survey"
+    t.string   "sign_after_survey"
     t.string   "overview_pre_survey"
     t.string   "overview_ongoing_survey"
     t.string   "overview_after_survey"
@@ -64,8 +103,18 @@ ActiveRecord::Schema.define(version: 20191004110308) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "keisyas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "number"
+    t.string   "room_name"
+    t.integer  "house_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_id"], name: "index_keisyas_on_house_id", using: :btree
+  end
+
   create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "number"
+    t.string   "room_name"
     t.integer  "house_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -74,39 +123,45 @@ ActiveRecord::Schema.define(version: 20191004110308) do
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
-    t.boolean  "genkyo",         default: false
-    t.boolean  "sukima",         default: false
-    t.boolean  "ware",           default: false
-    t.boolean  "kake",           default: false
-    t.boolean  "amimejyo",       default: false
-    t.boolean  "zencho",         default: false
-    t.boolean  "sokuten",        default: false
-    t.boolean  "crack",          default: false
-    t.boolean  "tile",           default: false
-    t.boolean  "kire",           default: false
-    t.boolean  "uki",            default: false
-    t.boolean  "suhon",          default: false
-    t.boolean  "zenshu",         default: false
-    t.boolean  "suichokukeisya", default: false
-    t.boolean  "chirigire",      default: false
-    t.boolean  "cross",          default: false
-    t.boolean  "meji",           default: false
-    t.boolean  "tategu",         default: false
-    t.boolean  "tasu",           default: false
-    t.boolean  "kakusyo",        default: false
-    t.boolean  "suiheikeisya",   default: false
-    t.integer  "wide"
-    t.integer  "height"
-    t.integer  "length"
+    t.integer  "position_wb", default: 0
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
     t.integer  "point_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["point_id"], name: "index_posts_on_point_id", using: :btree
+  end
+
+  create_table "slopes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "survey_type"
+    t.integer  "position_wb",               default: 0
+    t.boolean  "suichokukeisya",            default: false
+    t.boolean  "suiheikeisya",              default: false
+    t.float    "east",           limit: 24
+    t.float    "west",           limit: 24
+    t.float    "north",          limit: 24
+    t.float    "south",          limit: 24
+    t.string   "comment"
+    t.string   "image1"
+    t.string   "image2"
+    t.string   "image3"
+    t.string   "image_url"
+    t.integer  "keisya_id"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.index ["keisya_id"], name: "index_slopes_on_keisya_id", using: :btree
+  end
+
+  create_table "sonsyos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "number"
+    t.string   "room_name"
+    t.integer  "house_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["house_id"], name: "index_sonsyos_on_house_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -118,7 +173,11 @@ ActiveRecord::Schema.define(version: 20191004110308) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "damages", "sonsyos"
   add_foreign_key "houses", "investigations"
+  add_foreign_key "keisyas", "houses"
   add_foreign_key "points", "houses"
   add_foreign_key "posts", "points"
+  add_foreign_key "slopes", "keisyas"
+  add_foreign_key "sonsyos", "houses"
 end

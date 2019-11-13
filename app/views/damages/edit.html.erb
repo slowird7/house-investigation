@@ -1,0 +1,22 @@
+<% 
+  survey_type = @damage.survey_type
+  if survey_type == "pre"
+    survey_type_name = "事前調査"
+  elsif survey_type == "ongoing"
+    survey_type_name = "事中調査"
+  elsif survey_type == "after"
+    survey_type_name = "事後調査"
+  else
+    survey_type_name = "その他"
+  end
+%>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</li>
+</ol>
+
+<h2 class="text-center">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</h2>
+<%= render 'damages/form' %>

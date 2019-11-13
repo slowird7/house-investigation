@@ -1,0 +1,210 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>  
+  <li class="active">家屋調査承諾書（及び不要承諾書）</li>
+</ol>
+
+<p class="text-right">[事中調査用]</p>
+<p class="text-right">家屋番号：<%= @house.id %></p>
+<h1 class="text-center">家屋調査承諾書（及び不要承諾書）</h1>
+<p>工事名：<%= @investigation.construction_name %></p>
+<table class="table table-bordered" style="font-size:10px;">
+  <tr>
+    <td>調査日</td>
+    <td colspan="2"></td>
+    <td>ご承諾印</td>        
+  </tr>
+  <tr>
+    <td>所在地</td>
+    <td colspan="3"><%= @house.city %><%= @house.block %></td>
+  </tr>
+  <tr>
+    <td>現住居者氏名（承諾者）</td>
+    <td></td>
+    <td>TEL</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>所有者氏名</td>
+    <td><%= @house.owner_name %></td>
+    <td>TEL</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>調査範囲</td>
+    <td colspan="3"></td>
+  </tr>        
+</table>
+<p>下記目的のための調査を承諾します。</p>
+
+<h2 class="text-center">調査目的</h2>
+<p>この度、工事の施工に際しまして、近隣の皆様の家屋等に損傷を及ぼす事の無い様に細心の注意を払って施工にあたりますが、万が一にも工事に起因して何等かの問題が生じました時に対処する為に、現在における皆様の家屋等現状を調査（写真撮影等）させて頂き、実際に問題が発生した場合は、近隣の皆様とお互いに納得できる話し合いをさせて頂く為、一つの参考資料の作成を目的とします。</p>
+<p>なお、調査資料は上記の目的以外に一切使用することはありませんので、ご協力頂きますようお願い申し上げます。</p>
+
+<h2 class="text-center">建物等概要</h2>
+<table class="table table-bordered" style="font-size:10px;">
+  <tr>
+    <td>構造</td>
+    <td><%= @house.construction %></td>
+  </tr>
+  <tr>
+    <td>用途</td>
+    <td><%= @house.use %></td>
+  </tr>
+  <tr>
+    <td>階数</td>
+    <td><%= @house.floors %></td>
+  </tr>
+  <tr>
+    <td>建築年数</td>
+    <td>築後　約　　　年</td>
+  </tr>
+  <tr>
+    <td>延べ面積</td>
+    <td><%= @house.area %></td>
+  </tr>      
+</table>
+
+<!-- サイン -->
+<%= form_for(@house) do |f| %>
+  <div style="text-align: center;">
+    <canvas id="myCanvas" width="700" height="400"></canvas>
+  </div>
+  <%= f.hidden_field :sign_ongoing_survey %>
+  <div id="canvasmenu" style="text-align: center;">
+    <button class="menuicon btn btn-default" id="clear">クリア</button>
+    <%= f.submit '保存', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+  </div>
+<% end %>
+
+<div style="margin-top:30px;">
+  <p class="text-center">施工者：<%= @investigation.builder %></p>
+  <p class="text-center">調査機関：<%= @investigation.investigator_ongoing_survey %></p>
+</div>
+
+<script>
+// グローバル変数
+var canvas = document.getElementById('myCanvas');
+(function() {
+  //HTML上の canvas タグを取得
+  var canvas = document.getElementById('myCanvas');
+
+  //レスポンシブ対応 画面サイズでキャンバスサイズを調整します
+  if (screen.width < 860) {
+    canvas.width = 700 * screen.width / 860;
+    canvas.height = 400 * screen.width / 860;
+  }
+
+  //キャンバスの背景カラーを決定。 fillRectは長方形に塗るメソッド
+  var ctx = canvas.getContext('2d');
+  ctx.beginPath();
+  ctx.fillStyle = "#f5f5f5";
+  ctx.fillRect(0, 0, 700, 400);
+
+  //初期値（サイズ、色、アルファ値）の決定
+  var defosize = 3;
+  var defocolor = "#555555";
+  var defoalpha = 1.0;
+
+  //マウス継続値の初期値、ここがポイント
+  var mouseX = "";
+  var mouseY = "";
+
+  //各イベントに紐づけ
+  canvas.addEventListener('mousemove', onMove, false);
+  canvas.addEventListener('mousedown', onClick, false);
+  canvas.addEventListener('mouseup', drawEnd, false);
+  canvas.addEventListener('mouseout', drawEnd, false);
+
+  //マウス動いていて、かつ左クリック時に発火。
+  function onMove(e) {
+    if (e.buttons === 1 || e.witch === 1) {
+      var rect = e.target.getBoundingClientRect();
+      var X = ~~(e.clientX - rect.left);
+      var Y = ~~(e.clientY - rect.top);
+      //draw 関数にマウスの位置を渡す
+      draw(X, Y);
+    };
+  };
+
+  //マウスが左クリックされると発火。
+  function onClick(e) {
+    if (e.button === 0) {
+      var rect = e.target.getBoundingClientRect();
+      var X = ~~(e.clientX - rect.left);
+      var Y = ~~(e.clientY - rect.top);
+      //draw 関数にマウスの位置を渡す
+      draw(X, Y);
+    }
+  };
+
+  //渡されたマウス位置を元に直線を描く関数
+  function draw(X, Y) {
+    ctx.beginPath();
+    ctx.globalAlpha = defoalpha;
+    //マウス継続値によって場合分け、直線の moveTo（スタート地点）を決定
+    if (mouseX === "") {
+      //継続値が初期値の場合は、現在のマウス位置をスタート位置とする
+      ctx.moveTo(X, Y);
+    } else {
+      //継続値が初期値ではない場合は、前回のゴール位置を次のスタート位置とする
+      ctx.moveTo(mouseX, mouseY);
+    }
+    //lineTo（ゴール地点）の決定、現在のマウス位置をゴール地点とする
+    ctx.lineTo(X, Y);
+    //直線の角を「丸」、サイズと色を決める
+    ctx.lineCap = "round";
+    ctx.lineWidth = defosize * 2;
+    ctx.strokeStyle = defocolor;
+    ctx.stroke();
+    //マウス継続値に現在のマウス位置、つまりゴール位置を代入
+    mouseX = X;
+    mouseY = Y;
+  };
+
+  //左クリック終了、またはマウスが領域から外れた際、継続値を初期値に戻す
+  function drawEnd() {
+    mouseX = "";
+    mouseY = "";
+  }
+
+  //メニューのアイコン関係
+  var menuIcon = document.getElementsByClassName("menuicon");
+  for (i = 0; i < menuIcon.length; i++) {
+    menuIcon[i].addEventListener("click", canvasMenu, false)
+  }
+
+  //メニューボタン管理
+  function canvasMenu() {
+    //id 値によって場合分け
+    var thisId = this.id;
+    if (thisId.indexOf("size") + 1) {
+      defosize = ~~this.id.slice(4, this.id.length);
+    }
+    if (thisId.indexOf("color") + 1) {
+      defocolor = "#" + this.id.slice(5, this.id.length);
+    }
+    if (thisId.indexOf("alpha") + 1) {
+      defoalpha = (~~this.id.slice(5, this.id.length)) / 10;
+    }
+    if (thisId.indexOf("clear") + 1) {
+      //全消しボタン、OKされた場合は fillRect 長方形で覆います
+      if (confirm("すべて消去しますか？")) {
+        ctx.beginPath();
+        ctx.fillStyle = "#f5f5f5";
+        ctx.globalAlpha = 1.0;
+        ctx.fillRect(0, 0, 700, 400);
+      }
+    }
+  }
+})();
+
+$('#submit').on('mousedown', function (e) {
+  // 画像化
+  var canvas_data = canvas.toDataURL('image/jpg');
+  
+  $("#house_sign_ongoing_survey").val(""); //画像データを二重に送信するのを防ぐ
+  $("#house_sign_ongoing_survey").val(canvas_data);
+});
+</script>

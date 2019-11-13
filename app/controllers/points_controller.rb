@@ -1,5 +1,5 @@
 class PointsController < ApplicationController
-  before_action :require_user_logged_in  
+  before_action :require_user_logged_in
   
 =begin 
   # 使ってない
@@ -31,6 +31,7 @@ class PointsController < ApplicationController
     end
     
     @point.number = number
+    @point.room_name = params[:room_name]
     if @point.save
       post = @point.posts.build
       post.survey_type = "pre"
@@ -44,7 +45,7 @@ class PointsController < ApplicationController
       post.survey_type = "after"
       post.save
       
-      flash[:success] = '正常に測点を登録しました。'
+      flash[:success] = '正常に測点（レベル）を登録しました。'
     else
       @points = @house.points.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
