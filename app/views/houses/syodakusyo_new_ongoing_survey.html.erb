@@ -72,11 +72,13 @@
     <canvas id="myCanvas" width="700" height="400"></canvas>
   </div>
   <%= f.hidden_field :sign_ongoing_survey %>
-  <div id="canvasmenu" style="text-align: center;">
-    <button class="menuicon btn btn-default" id="clear">クリア</button>
+  <div style="text-align: center;">
     <%= f.submit '保存', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
   </div>
 <% end %>
+<div id="canvasmenu" style="text-align: center; margin-top:20px;">
+  <button class="menuicon btn btn-default" id="clear">クリア</button>
+</div>
 
 <div style="margin-top:30px;">
   <p class="text-center">施工者：<%= @investigation.builder %></p>

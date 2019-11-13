@@ -46,8 +46,6 @@ class HousesController < ApplicationController
     elsif tmp_house_params[:sign_ongoing_survey] != nil 
       image_data = base64_conversion(tmp_house_params[:sign_ongoing_survey])
       tmp_house_params[:sign_ongoing_survey] = image_data
-      
-      binding.pry
     elsif tmp_house_params[:sign_after_survey] != nil 
       image_data = base64_conversion(tmp_house_params[:sign_after_survey])
       tmp_house_params[:sign_after_survey] = image_data
