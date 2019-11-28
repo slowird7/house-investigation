@@ -56,7 +56,8 @@ class DamagesController < ApplicationController
       @investigation.save
 
       flash[:success] = '正常に更新されました。'
-      redirect_to @house
+      #redirect_to @house
+      redirect_to house_path(@house, anchor: 'sonsyo')
     else
       flash.now[:danger] = '更新に失敗しました。'
       render :edit

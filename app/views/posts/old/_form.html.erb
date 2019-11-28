@@ -1,0 +1,136 @@
+<div class="row">
+  <div style="margin: 10px;">
+    <%= form_for(@post) do |f| %>
+      <%= f.hidden_field :point_id, :value => @point.id %>
+      <%= f.hidden_field :survey_type, :value => @post.survey_type %>
+      <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+      <%= f.hidden_field :image_url %>
+
+      <div class="preview-area">
+        <% unless @preview_post.image1? %>
+          <%= image_tag "bg_img.jpg" %>
+        <% else %>
+          <%= image_tag @preview_post.image1 %>
+        <% end %>
+        <canvas id="preview"></canvas>
+      </div>
+      
+      <div class="form-group">      
+        ホワイトボードの配置：
+        <label><%= f.radio_button :position_wb, "0", checked: true %>左</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "1" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "2" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "3" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "4" %>右</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "5" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "6" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><%= f.radio_button :position_wb, "7" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :comment, 'コメント' %>
+        <%= f.text_area :comment, :class=>"form-control" %>
+      </div>
+      <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // グローバル変数
+  var canvas = document.getElementById('preview');
+  var ctx = canvas.getContext('2d');
+  var canvasWidth, canvasHeight;
+  var img = new Image();
+  var reader = new FileReader();
+  var tapCount = 0;  
+
+  $('#post_image1').on('change', function (e) {
+    reader.onload = function (e) {
+      img.src = e.target.result;
+      // iPad 第6世代
+      img.width = 3264;
+      img.height = 2448;
+
+      var rate = img.width / canvas.clientWidth;
+      canvasWidth = canvas.clientWidth;
+      canvasHeight = img.height / rate;
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+/*      
+      console.log("img：" + img);
+      console.log("img.src：" + img.src);
+      console.log("img.width：" + img.width);
+      console.log("canvas.clientWidth：" + canvas.clientWidth);
+      console.log("rate：" + rate);
+      console.log("canvasWidth：" + canvasWidth);
+      console.log("canvasHeight：" + canvasHeight);
+*/      
+      // 画像を描画
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+      }
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  });
+
+  /* ダブルクリックで初期化
+  canvas.addEventListener( "touchstart", function(e) {
+  	// シングルタップ判定
+  	if( !tapCount ) {
+  		++tapCount ;
+  
+  		setTimeout( function() {
+  			tapCount = 0 ;
+  		}, 350 ) ;
+
+  	// ダブルタップ判定
+  	} else {
+      // 初期化
+      ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+      
+  		e.preventDefault() ;
+  		tapCount = 0 ;
+  	}
+  });
+  */
+  
+  canvas.addEventListener('click', function(e){
+    // 初期化
+    ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+    
+    // 実際の画像サイズと描画領域の倍率を算出
+    var rate = canvas.width / canvas.clientWidth;
+    let offsetX = e.offsetX * rate; // =>要素左上からのx座標
+    let offsetY = e.offsetY * rate; // =>要素左上からのy座標
+
+    var w=40,h=40,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
+    // 矢印描画     
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.translate(x,y);
+     
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.moveTo(-w0,-h0);
+    ctx.lineTo(0,-h0);
+    ctx.lineTo(0,-w0);
+    ctx.lineTo(w0,0);
+    ctx.lineTo(0,w0);
+    ctx.lineTo(0,h0);
+    ctx.lineTo(-w0,h0);
+    ctx.lineTo(-w0,-h0);
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+     
+    ctx.setTransform(1,0,0,1,0,0);
+  });
+
+  $('#submit').on('mousedown', function (e) {
+    // 画像化
+    var canvas_data = canvas.toDataURL('image/jpg');
+    
+    $("#post_image1").val(""); //画像データを二重に送信するのを防ぐ
+    $("#post_image_url").val(canvas_data);
+  });
+</script>

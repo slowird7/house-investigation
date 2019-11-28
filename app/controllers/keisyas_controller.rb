@@ -15,7 +15,13 @@ class KeisyasController < ApplicationController
     end
     
     @keisya.number = number
-    @keisya.room_name = params[:room_name]    
+#    @keisya.room_name = params[:room_name]
+    if params[:area4] == "その他"
+      @keisya.room_name = params[:other]
+    else   
+      @keisya.room_name = params[:area4]
+    end
+    
     if @keisya.save
       slope = @keisya.slopes.build
       slope.survey_type = "pre"
@@ -34,7 +40,8 @@ class KeisyasController < ApplicationController
       @keisya = @house.keisya.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
     end
-    redirect_to @house
+    #redirect_to @house
+    redirect_to house_path(@house, anchor: 'keisya')
   end
 
   def destroy
@@ -46,6 +53,7 @@ class KeisyasController < ApplicationController
     @keisya.destroy
 
     flash[:success] = '正常に削除されました'
-    redirect_to @house     
+    #redirect_to @house
+    redirect_to house_path(@house, anchor: 'keisya')
   end
 end

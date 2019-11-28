@@ -42,7 +42,34 @@
 <h2 class="text-center">測点：P.<%= @point.number %>の撮影（<%= survey_type_name %>）</h2>
 <%= link_to '編集', edit_post_path(point_id: @point.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 
-<p class="text-center"><%= image_tag @post.image1 %></p>
-<p>ホワイトボードの配置：<%= position_wb_name %></p>
-
-<p>コメント：<%= @post.comment %></p>
+<table style="margin-top:10px;">
+  <tr>
+    <td><%= image_tag @post.image1 %></td>
+    <td>
+      <table class="table table-bordered" style="margin:10px;">
+        <tr>
+          <td>調査日</td>
+          <td style="min-width: 350px;" colspan="3"><%= @post.updated_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <td>家屋名</td>
+          <td colspan="3"><%= @house.house_name %></td>
+        </tr>
+        <tr>
+          <td>家屋No.</td>
+          <td><%= @house.id %></td>
+          <td>写真No.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>調査箇所</td>
+          <td colspan="3"><%= @point.room_name %></td>
+        </tr>
+        <tr>
+          <td>コメント</td>
+          <td colspan="3"><%= @post.comment %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

@@ -15,7 +15,13 @@ class SonsyosController < ApplicationController
     end
     
     @sonsyo.number = number
-    @sonsyo.room_name = params[:room_name] 
+#    @sonsyo.room_name = params[:room_name]
+    if params[:area2] == "その他"
+      @sonsyo.room_name = params[:other]
+    else
+      @sonsyo.room_name = params[:area2]
+    end
+    
     if @sonsyo.save
       damage = @sonsyo.damages.build
       damage.survey_type = "pre"
@@ -34,7 +40,7 @@ class SonsyosController < ApplicationController
       @sonsyos = @house.sonsyos.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
     end
-    redirect_to @house
+    redirect_to house_path(@house, anchor: 'sonsyo')
   end
 
   def destroy
@@ -46,7 +52,8 @@ class SonsyosController < ApplicationController
     @sonsyo.destroy
 
     flash[:success] = '正常に削除されました'
-    redirect_to @house     
+    #redirect_to @house
+    redirect_to house_path(@house, anchor: 'sonsyo')
   end
 
 end

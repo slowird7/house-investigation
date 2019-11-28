@@ -1,0 +1,20 @@
+<div class="row">
+  <div style="margin: 10px;">
+    <%= form_for(@damage) do |f| %>
+      <%= f.hidden_field :sonsyo_id, :value => @sonsyo.id %>
+      <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
+
+      <div class="preview-area">
+        <% unless @preview_damage.image1? %>
+          <%= image_tag "bg_img.jpg" %>
+        <% else %>
+          <%= image_tag @preview_damage.image1 %>
+        <% end %>
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+        <%= f.hidden_field :image1_cache %>
+      </div>
+
+      <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+    <% end %>
+  </div>
+</div>

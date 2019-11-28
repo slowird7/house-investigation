@@ -42,21 +42,56 @@
 <h2 class="text-center">傾斜：<%= disp_alphabet(@keisya.number) %>の撮影（<%= survey_type_name %>）</h2>
 <%= link_to '編集', edit_slope_path(keisya_id: @keisya.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 
-<p class="text-center"><%= image_tag @slope.image1 %></p>
-<p>ホワイトボードの配置：<%= position_wb_name %></p>
-
-<%= form_for(@slope) do |f| %>
-  <div class="form-group"  style="margin-top: 20px;">
-    <div class="switch_set disabled">
-      <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
-      <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
-    </div>
-  </div>
-<% end %>
-
-<p>東：<%= @slope.east %></p>
-<p>西：<%= @slope.west %></p>
-<p>南：<%= @slope.south %></p>
-<p>北：<%= @slope.north %></p>
-
-<p>コメント：<%= @slope.comment %></p>
+<table style="margin-top:10px;">
+  <tr>
+    <td><%= image_tag @slope.image1 %></td>
+    <td>
+      <table class="table table-bordered" style="margin:10px;">
+        <tr>
+          <td>調査日</td>
+          <td style="min-width: 350px;" colspan="7"><%= @slope.updated_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <td>家屋名</td>
+          <td colspan="7"><%= @house.house_name %></td>
+        </tr>
+        <tr>
+          <td>家屋No.</td>
+          <td colspan="3"><%= @house.id %></td>
+          <td>写真No.</td>
+          <td colspan="3"></td>
+        </tr>
+        <tr>
+          <td>調査箇所</td>
+          <td colspan="7"><%= @keisya.room_name %></td>
+        </tr>
+        <tr>
+          <td colspan="8">
+            <%= form_for(@slope) do |f| %>
+              <div class="form-group"  style="margin-top: 20px;">
+                <div class="switch_set disabled">
+                  <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
+                  <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
+                </div>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>東</td>
+          <td><%= @slope.east %></td>
+          <td>西</td>
+          <td><%= @slope.west %></td>
+          <td>南</td>
+          <td><%= @slope.south %></td>
+          <td>北</td>
+          <td><%= @slope.north %></td>          
+        </tr>
+        <tr>
+          <td>コメント</td>
+          <td colspan="7"><%= @slope.comment %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

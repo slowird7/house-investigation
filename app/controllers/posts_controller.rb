@@ -23,24 +23,6 @@ class PostsController < ApplicationController
     end
   end
   
-=begin 
-  def create
-    @point = Point.find(post_params[:point_id])
-    @house = @point.house
-    @investigation = @house.investigation
-    
-    @post = @point.posts.build(post_params)
-    if @post.save
-      flash[:success] = '正常に測点を登録しました。'
-      redirect_to @house
-    else
-      @points = @house.points
-      flash.now[:danger] = '失敗しました。'
-      render :new
-    end
-  end
-=end
-
   def update
     @post = Post.find(params[:id])
     @point = @post.point
@@ -74,7 +56,8 @@ class PostsController < ApplicationController
       @investigation.save
 
       flash[:success] = '正常に更新されました。'
-      redirect_to @house
+      #redirect_to @house
+      redirect_to house_path(@house, anchor: 'point')
     else
       flash.now[:danger] = '更新に失敗しました。'
       render :edit

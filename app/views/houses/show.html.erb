@@ -37,7 +37,6 @@
     <th>用途</th>
     <td class="align-middle"><%= @house.use %></td>
   </tr>
-  
   <tr>
     <th>所有者名</th>
     <td class="align-middle"><%= @house.owner_name %></td>
@@ -65,7 +64,6 @@
     <td class="align-middle"><%= @house.range_pre_survey %></td>
   </tr>   
 </table>
-
 <div>
   <% if @house.sign_pre_survey.file == nil %>
     <%= link_to '承諾書（未サイン）', syodakusyo_new_pre_survey_house_path, :class=>"btn btn-primary" %>
@@ -118,66 +116,90 @@
 
 <hr/>
 
-<h2>測点（レベル）一覧</h2>
-<p>
-  <%= form_tag points_path do %>
-    <%= hidden_field_tag :house_id, @house.id %>
-    <%= select_tag('room_name',options_for_select($ROOM_NAME))%>
-    <%= submit_tag "測点の追加", :class => "btn btn-primary" %>
-  <% end %>
-</p>
-
-<table class="table table-striped table-hover">
-  <tr>
-    <th class="text-center"></th>
-    <th class="text-center">調査箇所</th>
-    <th class="text-center">事前調査</th>
-    <th class="text-center">事中調査</th>
-    <th class="text-center">事後調査</th>
-    <th class="text-center"></th>    
-  </tr>
-  
-  <% @points.each do |point| %>
-    <tr>
-      <td class="text-center align-middle">P.<%= point.number %></td>
-      <td class="text-center align-middle"><%= point.room_name %></td>
-      <td class="text-center align-middle">
-        <% if point.posts.find_by(survey_type: "pre").image1? %>
-          <% pre_post = point.posts.find_by(survey_type: "pre") %>
-          <%= link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if point.posts.find_by(survey_type: "ongoing").image1? %>
-          <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
-          <%= link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if point.posts.find_by(survey_type: "after").image1? %>
-          <% after_post = point.posts.find_by(survey_type: "after") %>
-          <%= link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
-    </tr>
-  <% end %>
-</table>
-
-<hr/>
-
-<h2>損傷一覧</h2>
+<h2 id="sonsyo">損傷一覧</h2>
 <p>
   <%= form_tag sonsyos_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
-    <%= select_tag('room_name',options_for_select($ROOM_NAME))%>    
     <%= submit_tag "損傷の追加", :class => "btn btn-primary" %>
+    <!--
+    <br/>
+    <table>
+      <tr>
+        <td rowspan="2">調査箇所&nbsp;&nbsp;</td>
+        <td>外部&nbsp;&nbsp;</td>
+        <td>
+          <label><input type="radio" name="area2" value="外部北面">外部北面&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="外部東面">外部東面&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="外部南面">外部南面&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="外部西面">外部西面&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀北">塀北&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀北（内）">塀北（内）&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀東">塀東&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀東（内）">塀東（内）&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀南">塀南&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀南（内）">塀南（内）&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀西">塀西&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="塀西（内）">塀西（内）&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="擁壁">擁壁&nbsp;&nbsp;</label>
+        </td>
+      </tr>
+      <tr>
+        <td>内部</td>
+        <td>
+          <label><input type="radio" name="area2" value="玄関">玄関&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="エントランス">エントランス&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="入口">入口&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="踏込">踏込&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="ホール">ホール&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="居間">居間&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="リビング">リビング&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="廊下">廊下&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="洋室">洋室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="洋室②">洋室②&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="洋室③">洋室③&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="洋室④">洋室④&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="洋間">洋間&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="板間">板間&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="和室">和室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="和室①">和室①&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="和室②">和室②&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="和室③">和室③&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="和室④">和室④&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="1-2F階段室">1-2F階段室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="2-3F階段室">2-3F階段室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="縁側">縁側&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="広緑">広緑&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="便所">便所&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="洗面所">洗面所&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="脱衣所">脱衣所&nbsp;&nbsp;</label>          
+          <label><input type="radio" name="area2" value="浴室">浴室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="勝手口">勝手口&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="DK">DK&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="台所">台所&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="LDK">LDK&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="物置">物置&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="納戸">納戸&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="倉庫">倉庫&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="店舗">店舗&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="事務所">事務所&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="事務室">事務室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="湯沸室">湯沸室&nbsp;&nbsp;</label>
+          <label><input type="radio" name="area2" value="給湯室">給湯室&nbsp;&nbsp;</label>      
+          <label><input type="radio" name="area2" value="土間">土間&nbsp;&nbsp;</label>
+        </td>
+      </tr>      
+    </table>
+    -->
+    >> 調査箇所：
+    <select name="area1" id="area1">
+      <option data-subgroup=""></option>
+      <option data-subgroup="outter">外部</option>
+      <option data-subgroup="inner">内部</option>
+    </select>
+    <select name="area2" id="area2">
+      <%= render 'houses/select_option' %>
+    </select>
+    <input type="text" name="other" placeholder="その他の内容を記入"></p>
   <% end %>
 </p>
 
@@ -226,12 +248,21 @@
 
 <hr/>
 
-<h2>傾斜一覧</h2>
+<h2 id="keisya">傾斜一覧</h2>
 <p>
   <%= form_tag keisyas_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
-    <%= select_tag('room_name',options_for_select($ROOM_NAME))%>    
     <%= submit_tag "傾斜の追加", :class => "btn btn-primary" %>
+    >> 調査箇所：
+    <select name="area3" id="area3">
+      <option data-subgroup=""></option>
+      <option data-subgroup="outter">外部</option>
+      <option data-subgroup="inner">内部</option>
+    </select>
+    <select name="area4" id="area4">
+      <%= render 'houses/select_option' %>
+    </select>
+    <input type="text" name="other" placeholder="その他の内容を記入"></p>
   <% end %>
 </p>
 
@@ -277,3 +308,96 @@
     </tr>
   <% end %>
 </table>
+
+<hr/>
+
+<h2 id="point">測点（レベル）一覧</h2>
+<p>
+  <%= form_tag points_path do %>
+    <%= hidden_field_tag :house_id, @house.id %>
+    <%= submit_tag "測点の追加", :class => "btn btn-primary" %>
+    >> 調査箇所：<%= select_tag('room_name',options_for_select($OUTSIDE_NAME))%>
+    <input type="text" name="other" placeholder="その他の内容を記入"></p>
+  <% end %>
+</p>
+
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="text-center"></th>
+    <th class="text-center">調査箇所</th>
+    <th class="text-center">事前調査</th>
+    <th class="text-center">事中調査</th>
+    <th class="text-center">事後調査</th>
+    <th class="text-center"></th>    
+  </tr>
+  
+  <% @points.each do |point| %>
+    <tr>
+      <td class="text-center align-middle">P.<%= point.number %></td>
+      <td class="text-center align-middle"><%= point.room_name %></td>
+      <td class="text-center align-middle">
+        <% if point.posts.find_by(survey_type: "pre").image1? %>
+          <% pre_post = point.posts.find_by(survey_type: "pre") %>
+          <%= link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if point.posts.find_by(survey_type: "ongoing").image1? %>
+          <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
+          <%= link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle">
+        <% if point.posts.find_by(survey_type: "after").image1? %>
+          <% after_post = point.posts.find_by(survey_type: "after") %>
+          <%= link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
+        <% else %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary" %>
+        <% end %>
+      </td>
+      <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<script>
+//セレクトボックスイベント設定
+setHierarchySelectEvent('#area1', '#area2');
+setHierarchySelectEvent('#area3', '#area4');
+/**
+ * 階層のあるプルダウンのイベントを設定します.
+ * 親のselectタグには属性data-subgroupが設定されている必要があります。
+ * 子のselectタグには属性data-groupが設定されている必要があります。
+ * @param parentSelect 親となるselectタグのセレクタ
+ * @param childSelect 子となるselectタグのセレクタ
+ */
+function setHierarchySelectEvent(parentSelect, childSelect){
+  var initCategorySmallHtml = $(childSelect).html();
+  $(parentSelect).change(function(){
+    if( 1 < $(this).find('option:selected').length ){//複数選択時に処理
+      $(childSelect).find("option").each(function(index, element){
+        $(element).remove();
+      });
+    }else{
+      var subgroup =  $(this).find('option:selected').attr('data-subgroup');
+      $(childSelect).html(initCategorySmallHtml);
+      $(childSelect).find("option").each(function(index, element){
+          var group = $(element).attr('data-group');
+          if( group ){
+            if( subgroup == group ){
+              //$(element).css('display', 'block');//IEではoptionタグに対してdisplayは効かないため
+            }else{
+              //$(element).css('display', 'none');//IEではoptionタグに対してdisplayは効かないため
+              $(element).remove();
+            }
+          }
+      });
+    }
+    $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
+  });
+}
+</script>

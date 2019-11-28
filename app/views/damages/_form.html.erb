@@ -5,35 +5,40 @@
       <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
       <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
       <%= f.hidden_field :image_url %>
-
-      <div class="preview-area">
-        <% unless @preview_damage.image1? %>
-          <%= image_tag "bg_img.jpg" %>
-        <% else %>
-          <%= image_tag @preview_damage.image1 %>
-        <% end %>
-        <canvas id="preview"></canvas>
+      
+      <div class="form-group" style="margin-top: 10px; padding: 10px; background: #eee;">    
+        ホワイトボードの配置：
+        <label id="wb_left-top"><%= f.radio_button :position_wb, "0" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label id="wb_top"><%= f.radio_button :position_wb, "1" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label id="wb_right-top"><%= f.radio_button :position_wb, "2" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label id="wb_right-under"><%= f.radio_button :position_wb, "3" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label id="wb_under"><%= f.radio_button :position_wb, "4" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label id="wb_left-under"><%= f.radio_button :position_wb, "5" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       
-      <div class="form-group">    
-        ホワイトボードの配置：
-        <label><%= f.radio_button :position_wb, "0", checked: true %>左</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "1" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "2" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "3" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "4" %>右</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "5" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "6" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><%= f.radio_button :position_wb, "7" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>      
+      <table class="preview-area">
+        <tr>
+          <td>
+            <% unless @preview_damage.image1? %>
+              <%= image_tag "bg_img.jpg" %>
+            <% else %>
+              <%= image_tag @preview_damage.image1 %>
+            <% end %>
+          </td>
+          <td>
+            <canvas id="liveview"></canvas>
+            <canvas id="liveview2"></canvas>
+          </td>
+        </tr>
+      </table>
 
-      <div class="form-group">
+      <div class="form-group" style="margin-top: 10px; padding: 10px; background: #eee;">
         矢印の向き：
-        <label><input id="up" type="radio" checked="checked" name="direction">上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="right" type="radio" name="direction">右</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="down" type="radio" name="direction">下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="left" type="radio" name="direction">左</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="clean" type="radio" name="direction">クリア</label>
+        <label><input id="arrow_up" type="radio" checked="checked" name="direction">上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input id="arrow_right" type="radio" name="direction">右</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input id="arrow_down" type="radio" name="direction">下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input id="arrow_left" type="radio" name="direction">左</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input id="arrow_clean" type="radio" name="direction">クリア</label>
       </div>
       
       <div class="form-group" style="margin-top: 20px;">
@@ -79,124 +84,150 @@
 
 <script>
   // グローバル変数
-  var canvas = document.getElementById('preview');
+  var canvas = document.getElementById('liveview');
   var ctx = canvas.getContext('2d');
+  var canvas2 = document.getElementById('liveview2');
+  var ctx2 = canvas2.getContext('2d');
   var canvasWidth, canvasHeight;
   var img = new Image();
+  //var imgData = ctx.createImageData(10, 10);
   var reader = new FileReader();
-  var tapCount = 0;  
+  var tapCount = 0;
+  var wb_width = 160, wb_height = 200;
+
+  // ホワイトボードの描画
+  function drawWB(x, y, width, height) {
+    /* 初期化 */
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    //ctx.putImageData(imgData, 0, 0);
+    //ctx2.clearRect(0, 0, canvas.width, canvas.height);
+
+    // パスをリセット
+    ctx.beginPath();
+    // レクタングルの座標(x, y)とサイズ(width, height)を指定
+    ctx.rect( x, y, width, height );
+    // 塗りつぶしの色
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    // 塗りつぶしを実行
+    ctx.fill();
+    // 線の色
+    ctx.strokeStyle = "yellow";
+    // 線の太さ
+    ctx.lineWidth = 2;
+    // 線を描画を実行
+    ctx.stroke();
+  }
 
   $('#damage_image1').on('change', function (e) {
     reader.onload = function (e) {
       img.src = e.target.result;
       // iPad 第6世代
-      img.width = 3264;
-      img.height = 2448;
+      //img.width = 3264;
+      //img.height = 2448;
 
-      var rate = img.width / canvas.clientWidth;
-      canvasWidth = canvas.clientWidth;
-      canvasHeight = img.height / rate;
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
-/*      
-      console.log("img：" + img);
-      console.log("img.src：" + img.src);
-      console.log("img.width：" + img.width);
-      console.log("canvas.clientWidth：" + canvas.clientWidth);
-      console.log("rate：" + rate);
-      console.log("canvasWidth：" + canvasWidth);
-      console.log("canvasHeight：" + canvasHeight);
-*/      
-      // 画像を描画
       img.onload = function() {
+        var rate = img.naturalWidth / canvas.clientWidth;
+        canvasWidth = canvas.clientWidth;
+        canvasHeight = img.naturalHeight / rate;
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        // 矢印用キャンバス
+        canvas2.width = canvasWidth;
+        canvas2.height = canvasHeight;
+        
+        // 画像を描画
         ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+        // 画像をデータ化
+        //imgData = ctx.getImageData(0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+        // ホワイトボード描画
+        drawWB(0, 0, wb_width, wb_height);
       }
     }
     reader.readAsDataURL(e.target.files[0]);
   });
-
-  /* ダブルクリックで初期化
-  canvas.addEventListener( "touchstart", function(e) {
-  	// シングルタップ判定
-  	if( !tapCount ) {
-  		++tapCount ;
   
-  		setTimeout( function() {
-  			tapCount = 0 ;
-  		}, 350 ) ;
-
-  	// ダブルタップ判定
-  	} else {
-      // 初期化
-      ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
-      
-  		e.preventDefault() ;
-  		tapCount = 0 ;
-  	}
+  $('#wb_left-top').on('click', function (e) {
+    drawWB(0, 0, wb_width, wb_height);
   });
-  */
+  $('#wb_top').on('click', function (e) {
+    drawWB(canvas.width/2 - wb_width/2, 0, wb_width, wb_height);
+  });
+  $('#wb_right-top').on('click', function (e) {
+    drawWB(canvas.width - wb_width, 0, wb_width, wb_height);
+  });
+  $('#wb_right-under').on('click', function (e) {
+    drawWB(canvas.width - wb_width, canvas.height - wb_height, wb_width, wb_height);
+  });
+  $('#wb_under').on('click', function (e) {
+    drawWB(canvas.width/2 - wb_width/2, canvas.height - wb_height, wb_width, wb_height);
+  });
+  $('#wb_left-under').on('click', function (e) {
+    drawWB(0, canvas.height - wb_height, wb_width, wb_height);
+  });
   
-  canvas.addEventListener('click', function(e){
-    if(document.getElementById( "clean" ).checked) {
+  $('#liveview2').on('click', function(e){
+    if(document.getElementById( "arrow_clean" ).checked) {
       // 初期化
-      ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+      //ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+      ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     } else {
       // 実際の画像サイズと描画領域の倍率を算出
-      var rate = canvas.width / canvas.clientWidth;
+      var rate = canvas2.width / canvas2.clientWidth;
       let offsetX = e.offsetX * rate; // =>要素左上からのx座標
       let offsetY = e.offsetY * rate; // =>要素左上からのy座標
   
       var w=40,h=40,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
       // 矢印描画     
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.translate(x,y);
-      ctx.beginPath();
-      ctx.fillStyle = 'red';
-      if ( document.getElementById( "up" ).checked ) {
+      ctx2.setTransform(1,0,0,1,0,0);
+      ctx2.translate(x,y);
+      ctx2.beginPath();
+      ctx2.fillStyle = 'red';
+      if ( document.getElementById( "arrow_up" ).checked ) {
       	// 上
-        ctx.moveTo(-h0,w0);    	
-      	ctx.lineTo(-h0,0);
-        ctx.lineTo(-w0,0);
-        ctx.lineTo(0,-w0);
-        ctx.lineTo(w0,0);
-        ctx.lineTo(h0,0);
-        ctx.lineTo(h0,w0);
-        ctx.lineTo(-h0,w0);
-      } else if ( document.getElementById( "right" ).checked ) {
+        ctx2.moveTo(-h0,w0);    	
+      	ctx2.lineTo(-h0,0);
+        ctx2.lineTo(-w0,0);
+        ctx2.lineTo(0,-w0);
+        ctx2.lineTo(w0,0);
+        ctx2.lineTo(h0,0);
+        ctx2.lineTo(h0,w0);
+        ctx2.lineTo(-h0,w0);
+      } else if ( document.getElementById( "arrow_right" ).checked ) {
       	// 右
-        ctx.moveTo(-w0,-h0);    	
-      	ctx.lineTo(0,-h0);
-        ctx.lineTo(0,-w0);
-        ctx.lineTo(w0,0);
-        ctx.lineTo(0,w0);
-        ctx.lineTo(0,h0);
-        ctx.lineTo(-w0,h0);
-        ctx.lineTo(-w0,-h0);
-      } else if ( document.getElementById( "down" ).checked ) {
+        ctx2.moveTo(-w0,-h0);    	
+      	ctx2.lineTo(0,-h0);
+        ctx2.lineTo(0,-w0);
+        ctx2.lineTo(w0,0);
+        ctx2.lineTo(0,w0);
+        ctx2.lineTo(0,h0);
+        ctx2.lineTo(-w0,h0);
+        ctx2.lineTo(-w0,-h0);
+      } else if ( document.getElementById( "arrow_down" ).checked ) {
       	// 下
-        ctx.moveTo(-h0,-w0);    	
-      	ctx.lineTo(-h0,0);
-        ctx.lineTo(-w0,0);
-        ctx.lineTo(0,w0);
-        ctx.lineTo(w0,0);
-        ctx.lineTo(h0,0);
-        ctx.lineTo(h0,-w0);
-        ctx.lineTo(-h0,-w0);    	
-      } else if ( document.getElementById( "left" ).checked ) {
+        ctx2.moveTo(-h0,-w0);    	
+      	ctx2.lineTo(-h0,0);
+        ctx2.lineTo(-w0,0);
+        ctx2.lineTo(0,w0);
+        ctx2.lineTo(w0,0);
+        ctx2.lineTo(h0,0);
+        ctx2.lineTo(h0,-w0);
+        ctx2.lineTo(-h0,-w0);    	
+      } else if ( document.getElementById( "arrow_left" ).checked ) {
       	// 左
-        ctx.moveTo(w0,-h0);
-      	ctx.lineTo(0,-h0);
-        ctx.lineTo(0,-w0);
-        ctx.lineTo(-w0,0);
-        ctx.lineTo(0,w0);
-        ctx.lineTo(0,h0);
-        ctx.lineTo(w0,h0);
-        ctx.lineTo(w0,-h0);
+        ctx2.moveTo(w0,-h0);
+      	ctx2.lineTo(0,-h0);
+        ctx2.lineTo(0,-w0);
+        ctx2.lineTo(-w0,0);
+        ctx2.lineTo(0,w0);
+        ctx2.lineTo(0,h0);
+        ctx2.lineTo(w0,h0);
+        ctx2.lineTo(w0,-h0);
       }
-      ctx.stroke();
-      ctx.fill();
-      ctx.closePath();
-      ctx.setTransform(1,0,0,1,0,0);
+      ctx2.stroke();
+      ctx2.fill();
+      ctx2.closePath();
+      ctx2.setTransform(1,0,0,1,0,0);
+      //imgData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
     }
   });
 
