@@ -4,6 +4,11 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.string :survey_type # pre、ongoing after
 
       t.integer :position_wb, default: 0 # 0：左、1：左上、2：上、3：右上、4：右、5：右下、6：下、7：左下
+      # 水準手簿の入力値
+      t.float :ouro_bs
+      t.float :ouro_fs
+      t.float :fukuro_bs
+      t.float :fukuro_fs
       t.string :comment #フリー入力欄
       t.string :image1, default: nil   #写真
       t.string :image2, default: nil   #写真

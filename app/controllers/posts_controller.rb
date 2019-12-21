@@ -67,7 +67,8 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:point_id, :position_wb, :comment, :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url)
+    params.require(:post).permit(:point_id, :position_wb, :comment, :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, 
+                                 :survey_type, :image_url, :ouro_bs, :ouro_fs, :fukuro_bs, :fukuro_fs)
   end
 
   def base64_conversion(uri_str, filename = 'base64')

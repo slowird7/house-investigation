@@ -123,15 +123,19 @@ ActiveRecord::Schema.define(version: 20191107125835) do
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
-    t.integer  "position_wb", default: 0
+    t.integer  "position_wb",            default: 0
+    t.float    "ouro_bs",     limit: 24
+    t.float    "ouro_fs",     limit: 24
+    t.float    "fukuro_bs",   limit: 24
+    t.float    "fukuro_fs",   limit: 24
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
     t.integer  "point_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.index ["point_id"], name: "index_posts_on_point_id", using: :btree
   end
 

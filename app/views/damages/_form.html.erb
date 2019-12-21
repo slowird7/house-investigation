@@ -6,15 +6,17 @@
       <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
       <%= f.hidden_field :image_url %>
       
-      <div class="form-group" style="margin-top: 10px; padding: 10px; background: #eee;">    
-        ホワイトボードの配置：
-        <label id="wb_left-top"><%= f.radio_button :position_wb, "0" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_top"><%= f.radio_button :position_wb, "1" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_right-top"><%= f.radio_button :position_wb, "2" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_right-under"><%= f.radio_button :position_wb, "3" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_under"><%= f.radio_button :position_wb, "4" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_left-under"><%= f.radio_button :position_wb, "5" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-      </div>
+      <% unless @sonsyo.room_name == "全景" %>
+        <div class="form-group" style="margin-top: 10px; padding: 10px; background: #eee;">    
+          ホワイトボードの配置：
+          <label id="wb_left-top"><%= f.radio_button :position_wb, "0" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label id="wb_top"><%= f.radio_button :position_wb, "1" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label id="wb_right-top"><%= f.radio_button :position_wb, "2" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label id="wb_right-under"><%= f.radio_button :position_wb, "3" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label id="wb_under"><%= f.radio_button :position_wb, "4" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label id="wb_left-under"><%= f.radio_button :position_wb, "5" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      <% end %>
       
       <table class="preview-area">
         <tr>
@@ -32,51 +34,54 @@
         </tr>
       </table>
 
-      <div class="form-group" style="margin-top: 10px; padding: 10px; background: #eee;">
-        矢印の向き：
-        <label><input id="arrow_up" type="radio" checked="checked" name="direction">上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="arrow_right" type="radio" name="direction">右</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="arrow_down" type="radio" name="direction">下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="arrow_left" type="radio" name="direction">左</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input id="arrow_clean" type="radio" name="direction">クリア</label>
-      </div>
-      
-      <div class="form-group" style="margin-top: 20px;">
-        <div class="switch_set">
-          <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
-          <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
-          <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
-          <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
-          <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
-          <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
-          <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
-          <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
-          <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
-          <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
-          <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
-          <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
-          <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
-          <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
-          <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
+      <% unless @sonsyo.room_name == "全景" %>  
+        <div class="form-group" style="margin-top: 20px;">
+          <div class="switch_set">
+            <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
+            <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
+            <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
+            <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
+            <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
+            <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
+            <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
+            <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
+            <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
+            <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
+            <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
+            <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
+            <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
+            <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
+            <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
+          </div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <p>面積：<%= f.text_field :width %>&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %></p>
-        <p>幅：<%= f.text_field :wide %></p>
-      </div>
       
-      <div class="form-group">
-        長さ：&nbsp;<label><%= f.check_box :amimejyo, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
-        <label><%= f.check_box :zencho, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
-        <label><%= f.check_box :zenshu, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <%= f.text_field :length %></span>
-      </div>
+        <div class="form-group" style="margin-top: 10px; padding: 10px;">
+          矢印の向き：
+          <label><input id="arrow_up" type="radio" checked="checked" name="direction">上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input id="arrow_right" type="radio" name="direction">右</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input id="arrow_down" type="radio" name="direction">下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input id="arrow_left" type="radio" name="direction">左</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input id="arrow_clean" type="radio" name="direction">クリア</label>
+        </div>
+  
+        <div class="form-group">
+          <p>面積：<%= f.text_field :width %>&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %></p>
+          <p>幅：<%= f.text_field :wide %></p>
+        </div>
+        
+        <div class="form-group">
+          長さ：&nbsp;<label><%= f.check_box :amimejyo, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
+          <label><%= f.check_box :zencho, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
+          <label><%= f.check_box :zenshu, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= f.text_field :length %></span>
+        </div>
+        
+        <div class="form-group">
+          <%= f.label :comment, 'コメント' %>
+          <%= f.text_area :comment, :class=>"form-control" %>
+        </div>
+      <% end %>
       
-      <div class="form-group">
-        <%= f.label :comment, 'コメント' %>
-        <%= f.text_area :comment, :class=>"form-control" %>
-      </div>
       <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
     <% end %>
   </div>
@@ -93,7 +98,7 @@
   //var imgData = ctx.createImageData(10, 10);
   var reader = new FileReader();
   var tapCount = 0;
-  var wb_width = 160, wb_height = 200;
+  var wb_width = 120, wb_height = 150;
 
   // ホワイトボードの描画
   function drawWB(x, y, width, height) {

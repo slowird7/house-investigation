@@ -32,6 +32,22 @@
       </table>
       
       <div class="form-group">
+        往路データ&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.label :ouro_bs, 'BS：' %>
+        <%= f.text_field :ouro_bs %>&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.label :ouro_fs, 'FS：' %>
+        <%= f.text_field :ouro_fs %>        
+      </div>
+      
+      <div class="form-group">
+        復路データ&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.label :fukuro_bs, 'BS：' %>
+        <%= f.text_field :fukuro_bs %>&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.label :fukuro_fs, 'FS：' %>
+        <%= f.text_field :fukuro_fs %>        
+      </div>
+      
+      <div class="form-group">
         <%= f.label :comment, 'コメント' %>
         <%= f.text_area :comment, :class=>"form-control" %>
       </div>
