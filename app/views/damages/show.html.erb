@@ -9,27 +9,6 @@
   else
     survey_type_name = "その他"
   end
-  
-  position_wb = @damage.position_wb
-  if position_wb == 0
-    position_wb_name = "左"
-  elsif position_wb == 1
-    position_wb_name = "左上"
-  elsif position_wb == 2
-    position_wb_name = "上"
-  elsif position_wb == 3
-    position_wb_name = "右上"
-  elsif position_wb == 4
-    position_wb_name = "右"
-  elsif position_wb == 5
-    position_wb_name = "右下"
-  elsif position_wb == 6
-    position_wb_name = "下"
-  elsif position_wb == 7
-    position_wb_name = "左下"
-  else
-    position_wb_name = "その他"
-  end    
 %>
 
 <ol class="breadcrumb">
@@ -42,70 +21,69 @@
 <h2 class="text-center">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</h2>
 <%= link_to '編集', edit_damage_path(sonsyo_id: @sonsyo.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 
-<table style="margin-top:10px;">
-  <tr>
-    <td><%= image_tag @damage.image1 %></td>
-    <td>
-      <table class="table table-bordered" style="margin:10px;">
-        <tr>
-          <td>調査日</td>
-          <td style="min-width: 350px;" colspan="7"><%= @damage.updated_at.strftime('%Y/%m/%d') %></td>
-        </tr>
-        <tr>
-          <td>家屋名</td>
-          <td colspan="7"><%= @house.house_name %></td>
-        </tr>
-        <tr>
-          <td>家屋No.</td>
-          <td colspan="3"><%= @house.id %></td>
-          <td>写真No.</td>
-          <td colspan="3"></td>
-        </tr>
-        <tr>
-          <td>調査箇所</td>
-          <td colspan="7"><%= @sonsyo.room_name %></td>
-        </tr>
-        <tr>
-          <td colspan="8">
-            <%= form_for(@damage) do |f| %>
-              <div class="form-group"  style="margin-top: 20px;">
-                <div class="switch_set disabled">
-                  <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
-                  <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
-                  <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
-                  <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
-                  <%= f.check_box :amimejyo, {}, "true", "false" %><%= f.label :amimejyo, '網目状' %>
-                  <%= f.check_box :zencho, {}, "true", "false" %><%= f.label :zencho, '全長' %>
-                  <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
-                  <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
-                  <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
-                  <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
-                  <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
-                  <%= f.check_box :zenshu, {}, "true", "false" %><%= f.label :zenshu, '全周' %>
-                  <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
-                  <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
-                  <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
-                  <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
-                  <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
-                  <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
-                </div>
-              </div>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>面積</td>
-          <td><%= @damage.width %>×<%= @damage.height %></td>
-          <td>幅</td>
-          <td><%= @damage.wide %> mm</td>
-          <td>長さ</td>
-          <td><%= @damage.length %> cm</td>
-        </tr>
-        <tr>
-          <td>コメント</td>
-          <td colspan="7"><%= @damage.comment %></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<div class="post-img">
+  <%= image_tag @damage.image1 %>
+  <% unless @sonsyo.room_name == "全景" %>
+    <% if @damage.position_wb == 0 %>
+      <!-- 左上 -->
+      <div class="wb_left_top"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>  
+    <% elsif @damage.position_wb == 1 %>
+      <!-- 上 -->
+      <div class="wb_top"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>    
+    <% elsif @damage.position_wb == 2 %>
+      <!-- 右上 -->
+      <div class="wb_right_top"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>    
+    <% elsif @damage.position_wb == 3 %>
+      <!-- 右下 -->
+      <div class="wb_right_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>    
+    <% elsif @damage.position_wb == 4 %>
+      <!-- 下 -->
+      <div class="wb_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>
+    <% else %>
+      <!-- 左下 -->
+      <div class="wb_left_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>
+    <% end %>
+  <% end %>
+</div>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  width: 60%;
+  font-size: 60%;
+}
+.post-img > img {
+  width: 100%;
+}
+.post-img > .wb_left_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.post-img > .wb_top {
+  position: absolute;
+  top: 0;
+  left: 40%;
+}
+.post-img > .wb_right_top {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.post-img > .wb_right_down {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.post-img > .wb_down {
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+}
+.post-img > .wb_left_down {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+</style>

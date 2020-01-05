@@ -15,9 +15,12 @@ class KeisyasController < ApplicationController
     end
     
     @keisya.number = number
-#    @keisya.room_name = params[:room_name]
-    if params[:area4] == "その他"
-      @keisya.room_name = params[:other]
+    if params[:area4] == "外部（その他）" || params[:area4] == "内部（その他）"
+      if params[:other] != ""
+        @keisya.room_name = params[:other]
+      else
+        @keisya.room_name = params[:area4]
+      end
     else   
       @keisya.room_name = params[:area4]
     end

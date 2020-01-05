@@ -1,0 +1,157 @@
+<% @houses.each do |house| %>
+  <div class="page">
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td colspan="11">建物傾斜測定結果表</td>
+        <td>建物No.<%= house.id %></td>
+      </tr>
+      <tr>
+        <td rowspan="2">傾斜種類</td>
+        <td rowspan="2">測点</td>
+        <td rowspan="2">測定箇所</td>
+        <td colspan="4">事前測定値（mm）</td>
+        <td colspan="4">事後測定値（mm）</td>
+        <td rowspan="2">備考</td>
+      </tr>
+      <tr>
+        <td colspan="2">東西方向</td>
+        <td colspan="2">南北方向</td>
+        <td colspan="2">東西方向</td>
+        <td colspan="2">南北方向</td>          
+      </tr>
+      
+      <% keisyas = house.keisyas %>
+      <% keisyas.each do |keisya| %>
+        <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+        <tr>
+          <% if pre_slope.suichokukeisya == true %>
+            <td>垂直傾斜</td>
+          <% elsif pre_slope.suiheikeisya == true %>
+            <td>水平傾斜</td>
+          <% end %>
+          <td><%= disp_alphabet(keisya.number) %></td>
+          <td><%= keisya.room_name %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>          
+        </tr>
+      <% end %>
+    </table>
+    <p>※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
+  </div>
+  
+
+  <% num = 0 %>
+  <% while num < keisyas.length do %>
+    <div class="page">
+      <table class="table table-bordered" style="font-size:10px;">
+        <% keisya = keisyas[num] %>
+        <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+        <% if pre_slope != nil %>
+          <% num = num + 1 %>
+          <tr>
+            <td style="width: 550px">
+              <div class="post-img"> 
+                <%= image_tag pre_slope.image1 %>
+                <% if pre_slope.position_wb == 0 %>
+                  <!-- 左上 -->
+                  <div class="wb_left_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>  
+                <% elsif pre_slope.position_wb == 1 %>
+                  <!-- 上 -->
+                  <div class="wb_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                <% elsif pre_slope.position_wb == 2 %>
+                  <!-- 右上 -->
+                  <div class="wb_right_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                <% elsif pre_slope.position_wb == 3 %>
+                  <!-- 右下 -->
+                  <div class="wb_right_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                <% elsif pre_slope.position_wb == 4 %>
+                  <!-- 下 -->
+                  <div class="wb_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>
+                <% else %>
+                  <!-- 左下 -->
+                  <div class="wb_left_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>
+                <% end %>
+              </div>
+            </td>
+            <td>傾斜：<%= disp_alphabet(keisya.number) %></td>
+          </tr>
+        <% end %>
+        <% if num < keisyas.length %>      
+          <% keisya = keisyas[num] %>
+          <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+          <% if pre_slope != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td style="width: 550px">
+                <div class="post-img"> 
+                  <%= image_tag pre_slope.image1 %>
+                  <% if pre_slope.position_wb == 0 %>
+                    <!-- 左上 -->
+                    <div class="wb_left_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>  
+                  <% elsif pre_slope.position_wb == 1 %>
+                    <!-- 上 -->
+                    <div class="wb_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                  <% elsif pre_slope.position_wb == 2 %>
+                    <!-- 右上 -->
+                    <div class="wb_right_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                  <% elsif pre_slope.position_wb == 3 %>
+                    <!-- 右下 -->
+                    <div class="wb_right_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                  <% elsif pre_slope.position_wb == 4 %>
+                    <!-- 下 -->
+                    <div class="wb_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>
+                  <% else %>
+                    <!-- 左下 -->
+                    <div class="wb_left_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>
+                  <% end %>
+                </div>
+              </td>
+              <td>傾斜：<%= disp_alphabet(keisya.number) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        <% if num < keisyas.length %>      
+          <% keisya = keisyas[num] %>
+          <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+          <% if pre_slope != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td style="width: 550px">
+                <div class="post-img"> 
+                  <%= image_tag pre_slope.image1 %>
+                  <% if pre_slope.position_wb == 0 %>
+                    <!-- 左上 -->
+                    <div class="wb_left_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>  
+                  <% elsif pre_slope.position_wb == 1 %>
+                    <!-- 上 -->
+                    <div class="wb_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                  <% elsif pre_slope.position_wb == 2 %>
+                    <!-- 右上 -->
+                    <div class="wb_right_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                  <% elsif pre_slope.position_wb == 3 %>
+                    <!-- 右下 -->
+                    <div class="wb_right_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>    
+                  <% elsif pre_slope.position_wb == 4 %>
+                    <!-- 下 -->
+                    <div class="wb_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>
+                  <% else %>
+                    <!-- 左下 -->
+                    <div class="wb_left_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: pre_slope } %></div>
+                  <% end %>
+                </div>
+              </td>
+              <td>傾斜：<%= disp_alphabet(keisya.number) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  <% end %><!-- while num < points.length do -->
+<% end %>

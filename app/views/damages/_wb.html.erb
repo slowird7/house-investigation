@@ -1,0 +1,55 @@
+<table class="table table-bordered" style="background-color: white; margin-bottom: 0px;">
+  <tr>
+    <td>調査日</td>
+    <td colspan="4"><%= damage.updated_at.strftime('%Y/%m/%d') %></td>
+  </tr>
+  <tr>
+    <td>家屋名</td>
+    <td colspan="4"><%= house.house_name %></td>
+  </tr>
+  <tr>
+    <td>家屋No.</td>
+    <td><%= house.id %></td>
+    <td>写真No.</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td>調査箇所</td>
+    <td colspan="4"><%= sonsyo.room_name %></td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <% if damage.genkyo == true %>現況、<% end %>
+      <% if damage.sukima == true %>隙間、<% end %>
+      <% if damage.ware == true %>割れ、<% end %>
+      <% if damage.kake == true %>欠け、<% end %>
+      <% if damage.crack == true %>クラック、<% end %>
+      <% if damage.tile == true %>タイル、<% end %>
+      <% if damage.kire == true %>切れ、<% end %>
+      <% if damage.uki == true %>浮き、<% end %>
+      <% if damage.suhon == true %>数本、<% end %>
+      <% if damage.chirigire == true %>チリ切れ、<% end %>
+      <% if damage.cross == true %>クロス、<% end %>
+      <% if damage.meji == true %>目地、<% end %>      
+      <% if damage.tategu == true %>建具、<% end %>
+      <% if damage.tasu == true %>多数、<% end %>
+      <% if damage.kakusyo == true %>各所<% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>面積</td>
+    <td colspan="4"><%= damage.width %> x <%= damage.height %></td>
+  </tr>
+  <tr>
+    <td>幅</td>
+    <td colspan="4"><%= damage.wide %></td>
+  </tr>
+  <tr>
+    <td>長さ</td>
+    <td colspan="4"><%= damage.length %></td>  
+  </tr>
+  <tr>
+    <td>コメント</td>
+    <td colspan="4"><%= damage.comment %></td>
+  </tr>
+</table>

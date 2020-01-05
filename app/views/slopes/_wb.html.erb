@@ -1,0 +1,36 @@
+<table class="table table-bordered" style="background-color: white; margin-bottom: 0px;">
+  <tr>
+    <td>調査日</td>
+    <td colspan="4"><%= slope.updated_at.strftime('%Y/%m/%d') %></td>
+  </tr>
+  <tr>
+    <td>家屋名</td>
+    <td colspan="4"><%= house.house_name %></td>
+  </tr>
+  <tr>
+    <td>家屋No.</td>
+    <td><%= house.id %></td>
+    <td>写真No.</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td>調査箇所</td>
+    <td colspan="4"><%= keisya.room_name %></td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <% if slope.suichokukeisya == true %>垂直傾斜、<% end %>
+      <% if slope.suiheikeisya == true %>水平傾斜、<% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>東：<%= slope.east %></td>
+    <td>西：<%= slope.west %></td>
+    <td>南：<%= slope.south %></td>
+    <td>北：<%= slope.north %></td>
+  </tr>
+  <tr>
+    <td>コメント</td>
+    <td colspan="4"><%= slope.comment %></td>
+  </tr>
+</table>

@@ -16,8 +16,13 @@ class PointsController < ApplicationController
     
     @point.number = number
     
-    if params[:room_name] == "その他"
-      @point.room_name = params[:other]
+    if params[:room_name] == "外部（その他）"
+#    if params[:room_name] == "その他"
+      if params[:other] != ""
+        @point.room_name = params[:other]
+      else
+        @point.room_name = params[:room_name]
+      end
     else    
       @point.room_name = params[:room_name]
     end

@@ -120,83 +120,14 @@
 <p>
   <%= form_tag sonsyos_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
-    <%= submit_tag "損傷の追加", :class => "btn btn-primary" %>
-    <!--
-    <br/>
-    <table>
-      <tr>
-        <td rowspan="2">調査箇所&nbsp;&nbsp;</td>
-        <td>外部&nbsp;&nbsp;</td>
-        <td>
-          <label><input type="radio" name="area2" value="外部北面">外部北面&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="外部東面">外部東面&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="外部南面">外部南面&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="外部西面">外部西面&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀北">塀北&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀北（内）">塀北（内）&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀東">塀東&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀東（内）">塀東（内）&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀南">塀南&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀南（内）">塀南（内）&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀西">塀西&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="塀西（内）">塀西（内）&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="擁壁">擁壁&nbsp;&nbsp;</label>
-        </td>
-      </tr>
-      <tr>
-        <td>内部</td>
-        <td>
-          <label><input type="radio" name="area2" value="玄関">玄関&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="エントランス">エントランス&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="入口">入口&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="踏込">踏込&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="ホール">ホール&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="居間">居間&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="リビング">リビング&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="廊下">廊下&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="洋室">洋室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="洋室②">洋室②&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="洋室③">洋室③&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="洋室④">洋室④&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="洋間">洋間&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="板間">板間&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="和室">和室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="和室①">和室①&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="和室②">和室②&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="和室③">和室③&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="和室④">和室④&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="1-2F階段室">1-2F階段室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="2-3F階段室">2-3F階段室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="縁側">縁側&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="広緑">広緑&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="便所">便所&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="洗面所">洗面所&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="脱衣所">脱衣所&nbsp;&nbsp;</label>          
-          <label><input type="radio" name="area2" value="浴室">浴室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="勝手口">勝手口&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="DK">DK&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="台所">台所&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="LDK">LDK&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="物置">物置&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="納戸">納戸&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="倉庫">倉庫&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="店舗">店舗&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="事務所">事務所&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="事務室">事務室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="湯沸室">湯沸室&nbsp;&nbsp;</label>
-          <label><input type="radio" name="area2" value="給湯室">給湯室&nbsp;&nbsp;</label>      
-          <label><input type="radio" name="area2" value="土間">土間&nbsp;&nbsp;</label>
-        </td>
-      </tr>      
-    </table>
-    -->
+    <%= submit_tag "損傷の追加", :disabled => false, :class => "btn btn-primary", :id => "add_sonsyo" %>
     >> 調査箇所：
     <select name="area1" id="area1">
       <option data-subgroup="overall" selected></option>
       <option data-subgroup="outter">外部</option>
       <option data-subgroup="inner">内部</option>
     </select>
-    <select name="area2" id="area2">
+    <select name="area2" id="area2" onChange="enable_area2()">
       <%= render 'houses/select_option_for_sonsyo' %>
     </select>
     <input type="text" name="other" placeholder="その他の内容を記入"></p>
@@ -252,14 +183,14 @@
 <p>
   <%= form_tag keisyas_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
-    <%= submit_tag "傾斜の追加", :class => "btn btn-primary" %>
+    <%= submit_tag "傾斜の追加", :disabled => true, :class => "btn btn-primary", :id => "add_keisya" %>
     >> 調査箇所：
     <select name="area3" id="area3">
       <option data-subgroup=""></option>
       <option data-subgroup="outter">外部</option>
       <option data-subgroup="inner">内部</option>
     </select>
-    <select name="area4" id="area4">
+    <select name="area4" id="area4" onChange="enable_area4()">
       <%= render 'houses/select_option_for_keisya' %>
     </select>
     <input type="text" name="other" placeholder="その他の内容を記入"></p>
@@ -315,8 +246,8 @@
 <p>
   <%= form_tag points_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
-    <%= submit_tag "測点の追加", :class => "btn btn-primary" %>
-    >> 調査箇所：<%= select_tag('room_name',options_for_select($OUTSIDE_NAME))%>
+    <%= submit_tag "測点の追加", :disabled => true, :class => "btn btn-primary", :id => "add_point" %>
+    >> 調査箇所：<%= select_tag('room_name',options_for_select($OUTSIDE_NAME), :onchange => 'enable_room_name()')%>
     <input type="text" name="other" placeholder="その他の内容を記入"></p>
   <% end %>
 </p>
@@ -399,5 +330,50 @@ function setHierarchySelectEvent(parentSelect, childSelect){
     }
     $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
   });
+}
+
+// 測点の追加ボタンの有効・無効
+function enable_room_name(){
+  var room_name = document.getElementById("room_name");
+  var add_point = document.getElementById("add_point");
+  
+  if(room_name.value != "" && room_name.value != null) {
+    add_point.disabled = false;
+    //console.log("OK");
+  } else {
+    add_point.disabled = true;
+    //console.log("NG");
+  }
+  //console.log(add_sonsyo.disabled);
+}
+
+// 損傷の追加ボタンの有効・無効
+function enable_area2(){
+  var area2 = document.getElementById("area2");
+  var add_sonsyo = document.getElementById("add_sonsyo");
+  
+  if(area2.value != "" && area2.value != null) {
+    add_sonsyo.disabled = false;
+    //console.log("OK");
+  } else {
+    add_sonsyo.disabled = true;
+    //console.log("NG");
+  }
+  //console.log(add_sonsyo.disabled);
+}
+
+// 傾斜の追加ボタンの有効・無効
+function enable_area4(){
+  var area4 = document.getElementById("area4");
+  var add_keisya = document.getElementById("add_keisya");
+  
+  if(area4.value != "" && area4.value != null) {
+    add_keisya.disabled = false;
+    //console.log("OK");
+  } else {
+    add_keisya.disabled = true;
+    //console.log("NG");
+  }
+  //console.log(add_sonsyo.disabled);
 }
 </script>

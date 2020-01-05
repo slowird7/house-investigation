@@ -1,0 +1,67 @@
+<div class="row">
+  <div style="margin: 10px;">
+    <%= form_for(@damage) do |f| %>
+      <%= f.hidden_field :sonsyo_id, :value => @sonsyo.id %>
+      <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
+      <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+      <%= f.hidden_field :image_url %>
+      
+      <table class="preview-area">
+        <tr>
+          <td>
+            <% unless @preview_damage.image1? %>
+              <%= image_tag "bg_img.jpg" %>
+            <% else %>
+              <%= image_tag @preview_damage.image1 %>
+            <% end %>
+          </td>
+          <td>
+            <canvas id="liveview"></canvas>
+          </td>
+        </tr>
+      </table>
+      
+      <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // グローバル変数
+  var canvas = document.getElementById('liveview');
+  var ctx = canvas.getContext('2d');
+  var canvasWidth, canvasHeight;
+  var img = new Image();
+  //var imgData = ctx.createImageData(10, 10);
+  var reader = new FileReader();
+  var tapCount = 0;
+  var wb_width = 120, wb_height = 150;
+
+  $('#damage_image1').on('change', function (e) {
+    reader.onload = function (e) {
+      img.src = e.target.result;
+
+      img.onload = function() {
+        var rate = img.naturalWidth / canvas.clientWidth;
+        canvasWidth = canvas.clientWidth;
+        canvasHeight = img.naturalHeight / rate;
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        
+        // 画像を描画
+        ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
+        // ホワイトボード描画
+        drawWB(0, 0, wb_width, wb_height);
+      }
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  });
+
+  $('#submit').on('mousedown', function (e) {
+    // 画像化
+    var canvas_data = canvas.toDataURL('image/jpg');
+    
+    $("#damage_image1").val(""); //画像データを二重に送信するのを防ぐ
+    $("#damage_image_url").val(canvas_data);
+  });
+</script>

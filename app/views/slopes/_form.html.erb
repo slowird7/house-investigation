@@ -33,8 +33,8 @@
       
       <div class="form-group" style="margin-top: 20px;">
         <div class="switch_set">
-          <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜' %>
-          <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜' %>
+          <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜', :onclick => 'onclick_suichoku()' %>
+          <%= f.check_box :suiheikeisya, {}, "true", "false" %><%= f.label :suiheikeisya, '水平傾斜', :onclick => 'onclick_suihei()' %>
         </div>
       </div>
       
@@ -126,7 +126,7 @@
   $('#wb_left-under').on('click', function (e) {
     drawWB(0, canvas.height - wb_height, wb_width, wb_height);
   });
-
+  /*
   $('#submit').on('mousedown', function (e) {
     // 画像化
     var canvas_data = canvas.toDataURL('image/jpg');
@@ -134,4 +134,22 @@
     $("#slope_image1").val(""); //画像データを二重に送信するのを防ぐ
     $("#slope_image_url").val(canvas_data);
   });
+  */
+  
+  // 垂直傾斜ボタン押下
+  function onclick_suichoku(){
+    var suihei_checkbox = document.getElementsByName("slope[suiheikeisya]");
+    
+    if(suihei_checkbox[1].checked == true){
+      suihei_checkbox[1].checked = false;
+    }
+  }
+  // 水平傾斜ボタン押下
+  function onclick_suihei(){
+    var suichoku_checkbox = document.getElementsByName("slope[suichokukeisya]");
+    
+    if(suichoku_checkbox[1].checked == true){
+      suichoku_checkbox[1].checked = false;
+    }
+  }
 </script>

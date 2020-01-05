@@ -1,0 +1,34 @@
+<table class="table table-bordered" style="background-color: white; margin-bottom: 0px;">
+  <tr>
+    <td>調査日</td>
+    <td colspan="4"><%= post.updated_at.strftime('%Y/%m/%d') %></td>
+  </tr>
+  <tr>
+    <td>家屋名</td>
+    <td colspan="4"><%= house.house_name %></td>
+  </tr>
+  <tr>
+    <td>家屋No.</td>
+    <td><%= house.id %></td>
+    <td>写真No.</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td>調査箇所</td>
+    <td colspan="4"><%= point.room_name %></td>
+  </tr>
+  <tr>
+    <td>往路データ</td>
+    <td colspan="2">BS：<%= post.ouro_bs %></td>
+    <td colspan="2">FS：<%= post.ouro_fs %></td>          
+  </tr>
+  <tr>
+    <td>復路データ</td>
+    <td colspan="2">BS：<%= post.fukuro_bs %></td>
+    <td colspan="2">FS：<%= post.fukuro_fs %></td>          
+  </tr>        
+  <tr>
+    <td>コメント</td>
+    <td colspan="4"><%= post.comment %></td>
+  </tr>
+</table>

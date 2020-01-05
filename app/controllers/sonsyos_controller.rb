@@ -15,9 +15,12 @@ class SonsyosController < ApplicationController
     end
     
     @sonsyo.number = number
-#    @sonsyo.room_name = params[:room_name]
-    if params[:area2] == "その他"
-      @sonsyo.room_name = params[:other]
+    if params[:area2] == "外部（その他）" || params[:area2] == "内部（その他）"
+      if params[:other] != ""
+        @sonsyo.room_name = params[:other]
+      else
+        @sonsyo.room_name = params[:area2]
+      end
     else
       @sonsyo.room_name = params[:area2]
     end
@@ -55,5 +58,4 @@ class SonsyosController < ApplicationController
     #redirect_to @house
     redirect_to house_path(@house, anchor: 'sonsyo')
   end
-
 end

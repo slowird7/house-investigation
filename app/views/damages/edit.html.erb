@@ -19,4 +19,8 @@
 </ol>
 
 <h2 class="text-center">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</h2>
-<%= render 'damages/form' %>
+<% if @sonsyo.room_name == "全景" %>
+  <%= render 'damages/form_for_overall' %>
+<% else %>
+  <%= render 'damages/form' %>
+<% end %>  
