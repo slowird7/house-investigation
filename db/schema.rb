@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.float    "ouro_fs",     limit: 24
     t.float    "fukuro_bs",   limit: 24
     t.float    "fukuro_fs",   limit: 24
+    t.float    "hyoko",       limit: 24
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"

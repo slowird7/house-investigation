@@ -13,11 +13,12 @@
         <td>変化量（mm）</td>
       </tr>
       <% points = house.points %>
-      <% points.each do |point| %>        
+      <% points.each do |point| %>
+        <% pre_post = point.posts.find_by(survey_type: survey_type) %>
         <tr>
           <td><%= point.number %></td>
           <td><%= point.room_name %></td>
-          <td></td>
+          <td><%= pre_post.hyoko + ((pre_post.ouro_fs - pre_post.ouro_bs) + (pre_post.fukuro_fs - pre_post.fukuro_bs)) / 2 %></td>
           <td></td>
           <td></td>
         </tr>

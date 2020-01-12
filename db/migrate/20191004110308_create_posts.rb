@@ -9,6 +9,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.float :ouro_fs
       t.float :fukuro_bs
       t.float :fukuro_fs
+      t.float :hyoko
       t.string :comment #フリー入力欄
       t.string :image1, default: nil   #写真
       t.string :image2, default: nil   #写真
