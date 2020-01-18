@@ -148,7 +148,7 @@
     <tr>
       <td class="text-center align-middle">No.<%= sonsyo.number %></td>
       <td class="text-center align-middle">
-        <% if sonsyo.room_name_other != "" %>
+        <% if sonsyo.room_name_other.present? %>
           <%= link_to sonsyo.room_name + "/" + sonsyo.room_name_other, edit_sonsyo_path(sonsyo.id) %>
         <% else %>
           <%= link_to sonsyo.room_name, edit_sonsyo_path(sonsyo.id) %>
@@ -217,7 +217,7 @@
     <tr>
       <td class="text-center align-middle"><%= disp_alphabet(keisya.number) %></td>
       <td class="text-center align-middle">
-        <% if keisya.room_name_other != "" %>
+        <% if keisya.room_name_other.present? %>
           <%= link_to keisya.room_name + "/" + keisya.room_name_other, edit_keisya_path(keisya.id) %>
         <% else %>
           <%= link_to keisya.room_name, edit_keisya_path(keisya.id) %>
@@ -278,7 +278,7 @@
     <tr>
       <td class="text-center align-middle">P.<%= point.number %></td>
       <td class="text-center align-middle">
-        <% if point.room_name_other != "" %>
+        <% if point.room_name_other.present? %>
           <%= link_to point.room_name + "/" + point.room_name_other, edit_point_path(point.id) %>
         <% else %>
           <%= link_to point.room_name, edit_point_path(point.id) %>
