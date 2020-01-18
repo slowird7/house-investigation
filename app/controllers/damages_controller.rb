@@ -31,9 +31,9 @@ class DamagesController < ApplicationController
 
     # imageを更新
     tmp_damage_params = damage_params
-#    image_data = base64_conversion(tmp_damage_params[:image_url])
-#    tmp_damage_params[:image1] = image_data
-#    tmp_damage_params[:image_url] = nil
+    image_data = base64_conversion(tmp_damage_params[:image_url])
+    tmp_damage_params[:image1] = image_data
+    tmp_damage_params[:image_url] = nil
 
     if @damage.update(tmp_damage_params)  
       # 調査開始日・終了日の更新

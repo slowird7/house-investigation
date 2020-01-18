@@ -30,12 +30,12 @@ class SlopesController < ApplicationController
     @investigation = @house.investigation
 
     # imageを更新
-    tmp_slope_params = slope_params
+#    tmp_slope_params = slope_params
 #    image_data = base64_conversion(tmp_slope_params[:image_url])
 #    tmp_slope_params[:image1] = image_data
 #    tmp_slope_params[:image_url] = nil
 
-    if @slope.update(tmp_slope_params)  
+    if @slope.update(slope_params)  
       # 調査開始日・終了日の更新
       if @slope.survey_type == "pre"
         if @investigation.start_pre_survey == nil

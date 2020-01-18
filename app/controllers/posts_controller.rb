@@ -30,12 +30,12 @@ class PostsController < ApplicationController
     @investigation = @house.investigation
 
     # imageを更新
-    tmp_post_params = post_params
+#    tmp_post_params = post_params
 #    image_data = base64_conversion(tmp_post_params[:image_url])
 #    tmp_post_params[:image1] = image_data
 #    tmp_post_params[:image_url] = nil
 
-    if @post.update(tmp_post_params)  
+    if @post.update(post_params)  
       # 調査開始日・終了日の更新
       if @post.survey_type == "pre"
         if @investigation.start_pre_survey == nil
