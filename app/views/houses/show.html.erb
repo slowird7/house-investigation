@@ -130,7 +130,7 @@
     <select name="area2" id="area2" onChange="enable_area2()">
       <%= render 'houses/select_option_for_sonsyo' %>
     </select>
-    <input type="text" name="other" placeholder="その他の内容を記入"></p>
+    <input type="text" name="other" placeholder="">
   <% end %>
 </p>
 
@@ -147,7 +147,13 @@
   <% @sonsyos.each do |sonsyo| %>
     <tr>
       <td class="text-center align-middle">No.<%= sonsyo.number %></td>
-      <td class="text-center align-middle"><%= sonsyo.room_name %></td>
+      <td class="text-center align-middle">
+        <% if sonsyo.room_name_other != "" %>
+          <%= link_to sonsyo.room_name + "/" + sonsyo.room_name_other, edit_sonsyo_path(sonsyo.id) %>
+        <% else %>
+          <%= link_to sonsyo.room_name, edit_sonsyo_path(sonsyo.id) %>
+        <% end %>
+      </td>
       <td class="text-center align-middle">
         <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
           <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
@@ -193,7 +199,7 @@
     <select name="area4" id="area4" onChange="enable_area4()">
       <%= render 'houses/select_option_for_keisya' %>
     </select>
-    <input type="text" name="other" placeholder="その他の内容を記入"></p>
+    <input type="text" name="other" placeholder="">
   <% end %>
 </p>
 
@@ -210,7 +216,13 @@
   <% @keisyas.each do |keisya| %>
     <tr>
       <td class="text-center align-middle"><%= disp_alphabet(keisya.number) %></td>
-      <td class="text-center align-middle"><%= keisya.room_name %></td>
+      <td class="text-center align-middle">
+        <% if keisya.room_name_other != "" %>
+          <%= link_to keisya.room_name + "/" + keisya.room_name_other, edit_keisya_path(keisya.id) %>
+        <% else %>
+          <%= link_to keisya.room_name, edit_keisya_path(keisya.id) %>
+        <% end %>
+      </td>
       <td class="text-center align-middle">
         <% if keisya.slopes.find_by(survey_type: "pre").image1? %>
           <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
@@ -248,7 +260,7 @@
     <%= hidden_field_tag :house_id, @house.id %>
     <%= submit_tag "測点の追加", :disabled => true, :class => "btn btn-primary", :id => "add_point" %>
     >> 調査箇所：<%= select_tag('room_name',options_for_select($OUTSIDE_NAME), :onchange => 'enable_room_name()')%>
-    <input type="text" name="other" placeholder="その他の内容を記入"></p>
+    <input type="text" name="other" placeholder="">
   <% end %>
 </p>
 
@@ -265,7 +277,13 @@
   <% @points.each do |point| %>
     <tr>
       <td class="text-center align-middle">P.<%= point.number %></td>
-      <td class="text-center align-middle"><%= point.room_name %></td>
+      <td class="text-center align-middle">
+        <% if point.room_name_other != "" %>
+          <%= link_to point.room_name + "/" + point.room_name_other, edit_point_path(point.id) %>
+        <% else %>
+          <%= link_to point.room_name, edit_point_path(point.id) %>
+        <% end %>        
+      </td>
       <td class="text-center align-middle">
         <% if point.posts.find_by(survey_type: "pre").image1? %>
           <% pre_post = point.posts.find_by(survey_type: "pre") %>

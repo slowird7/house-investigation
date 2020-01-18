@@ -22,10 +22,10 @@ class CreateDamages < ActiveRecord::Migration[5.0]
       t.boolean :tategu, default: false #建具
       t.boolean :tasu, default: false  #多数
       t.boolean :kakusyo, default: false  #各所
-      t.float :wide
-      t.float :length
-      t.float :width
-      t.float :height
+      t.float :wide, default: 0.0
+      t.float :length, default: 0.0
+      t.float :width, default: 0.0
+      t.float :height, default: 0.0
       t.string :comment #フリー入力欄
       t.string :image1, default: nil   #写真
       t.string :image2, default: nil   #写真

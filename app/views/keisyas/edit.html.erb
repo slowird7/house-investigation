@@ -1,0 +1,82 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active">傾斜：No.<%= @keisya.number %>の調査箇所</li>
+</ol>
+
+<h2 class="text-center">傾斜：No.<%= @keisya.number %>の調査箇所</h2>
+
+<% if @keisya.room_name_other != "" %>
+  <p>現在の調査箇所：<%= @keisya.room_name %>/<%= @keisya.room_name_other %></p>
+<% else %>
+  <p>現在の調査箇所：<%= @keisya.room_name %></p>
+<% end %>
+
+<div>
+  <%= form_for(@keisya) do |f| %>
+    <select name="area3" id="area3">
+      <option data-subgroup="overall" selected></option>
+      <option data-subgroup="outter">外部</option>
+      <option data-subgroup="inner">内部</option>
+    </select>
+    <select name="area4" id="area4" onChange="enable_area4()">
+      <%= render 'houses/select_option_for_keisya' %>
+    </select>
+    <input type="text" name="other" placeholder="">
+    <%= f.submit '更新', :disabled => true, :id => "add_keisya", :class=>"btn btn-primary" %>
+  <% end %>
+</div>
+
+<script>
+//セレクトボックスイベント設定
+setHierarchySelectEvent('#area1', '#area2');
+setHierarchySelectEvent('#area3', '#area4');
+/**
+ * 階層のあるプルダウンのイベントを設定します.
+ * 親のselectタグには属性data-subgroupが設定されている必要があります。
+ * 子のselectタグには属性data-groupが設定されている必要があります。
+ * @param parentSelect 親となるselectタグのセレクタ
+ * @param childSelect 子となるselectタグのセレクタ
+ */
+function setHierarchySelectEvent(parentSelect, childSelect){
+  var initCategorySmallHtml = $(childSelect).html();
+  $(parentSelect).change(function(){
+    if( 1 < $(this).find('option:selected').length ){//複数選択時に処理
+      $(childSelect).find("option").each(function(index, element){
+        $(element).remove();
+      });
+    }else{
+      var subgroup =  $(this).find('option:selected').attr('data-subgroup');
+      $(childSelect).html(initCategorySmallHtml);
+      $(childSelect).find("option").each(function(index, element){
+          var group = $(element).attr('data-group');
+          if( group ){
+            if( subgroup == group ){
+              //$(element).css('display', 'block');//IEではoptionタグに対してdisplayは効かないため
+            }else{
+              //$(element).css('display', 'none');//IEではoptionタグに対してdisplayは効かないため
+              $(element).remove();
+            }
+          }
+      });
+    }
+    $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
+  });
+}
+
+// 傾斜の追加ボタンの有効・無効
+function enable_area4(){
+  var area4 = document.getElementById("area4");
+  var add_keisya = document.getElementById("add_keisya");
+  
+  if(area4.value != "" && area4.value != null) {
+    add_keisya.disabled = false;
+    //console.log("OK");
+  } else {
+    add_keisya.disabled = true;
+    //console.log("NG");
+  }
+  //console.log(add_sonsyo.disabled);
+}
+</script>

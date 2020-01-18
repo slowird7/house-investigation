@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.boolean  "tategu",                 default: false
     t.boolean  "tasu",                   default: false
     t.boolean  "kakusyo",                default: false
-    t.float    "wide",        limit: 24
-    t.float    "length",      limit: 24
-    t.float    "width",       limit: 24
-    t.float    "height",      limit: 24
+    t.float    "wide",        limit: 24, default: 0.0
+    t.float    "length",      limit: 24, default: 0.0
+    t.float    "width",       limit: 24, default: 0.0
+    t.float    "height",      limit: 24, default: 0.0
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
@@ -106,37 +106,39 @@ ActiveRecord::Schema.define(version: 20191107125835) do
   create_table "keisyas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "number"
     t.string   "room_name"
+    t.string   "room_name_other"
     t.integer  "house_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["house_id"], name: "index_keisyas_on_house_id", using: :btree
   end
 
   create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "number"
     t.string   "room_name"
+    t.string   "room_name_other"
     t.integer  "house_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["house_id"], name: "index_points_on_house_id", using: :btree
   end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
     t.integer  "position_wb",            default: 0
-    t.float    "ouro_bs",     limit: 24
-    t.float    "ouro_fs",     limit: 24
-    t.float    "fukuro_bs",   limit: 24
-    t.float    "fukuro_fs",   limit: 24
-    t.float    "hyoko",       limit: 24
+    t.float    "ouro_bs",     limit: 24, default: 0.0
+    t.float    "ouro_fs",     limit: 24, default: 0.0
+    t.float    "fukuro_bs",   limit: 24, default: 0.0
+    t.float    "fukuro_fs",   limit: 24, default: 0.0
+    t.float    "hyoko",       limit: 24, default: 0.0
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
     t.integer  "point_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.index ["point_id"], name: "index_posts_on_point_id", using: :btree
   end
 
@@ -145,10 +147,10 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.integer  "position_wb",               default: 0
     t.boolean  "suichokukeisya",            default: false
     t.boolean  "suiheikeisya",              default: false
-    t.float    "east",           limit: 24
-    t.float    "west",           limit: 24
-    t.float    "north",          limit: 24
-    t.float    "south",          limit: 24
+    t.float    "east",           limit: 24, default: 0.0
+    t.float    "west",           limit: 24, default: 0.0
+    t.float    "north",          limit: 24, default: 0.0
+    t.float    "south",          limit: 24, default: 0.0
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
@@ -163,9 +165,10 @@ ActiveRecord::Schema.define(version: 20191107125835) do
   create_table "sonsyos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "number"
     t.string   "room_name"
+    t.string   "room_name_other"
     t.integer  "house_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["house_id"], name: "index_sonsyos_on_house_id", using: :btree
   end
 

@@ -15,15 +15,18 @@ class KeisyasController < ApplicationController
     end
     
     @keisya.number = number
-    if params[:area4] == "外部（その他）" || params[:area4] == "内部（その他）"
-      if params[:other] != ""
-        @keisya.room_name = params[:other]
-      else
-        @keisya.room_name = params[:area4]
-      end
-    else   
-      @keisya.room_name = params[:area4]
-    end
+    @keisya.room_name = params[:area4]
+    @keisya.room_name_other = params[:other]
+    
+#    if params[:other] != ""
+#      if params[:area4] == "外部（その他）" || params[:area4] == "内部（その他）"
+#        @keisya.room_name = params[:other]
+#      else
+#        @keisya.room_name = params[:area4] + "/" + params[:other]
+#      end
+#    else
+#      @keisya.room_name = params[:area4]
+#    end
     
     if @keisya.save
       slope = @keisya.slopes.build
@@ -44,6 +47,29 @@ class KeisyasController < ApplicationController
       flash.now[:danger] = '失敗しました。'
     end
     #redirect_to @house
+    redirect_to house_path(@house, anchor: 'keisya')
+  end
+  
+  def edit
+    @keisya = Keisya.find(params[:id])
+    @house = @keisya.house
+    @investigation = @house.investigation
+  end  
+  
+  def update
+    @keisya = Keisya.find(params[:id])
+    @house = @keisya.house
+    @investigation = @house.investigation
+    
+    @keisya.room_name = params[:area4]
+    @keisya.room_name_other = params[:other]
+    
+    if @keisya.save
+      flash[:success] = '正常に損傷を登録しました。'      
+    else
+      flash.now[:danger] = '失敗しました。'
+    end
+
     redirect_to house_path(@house, anchor: 'keisya')
   end
 

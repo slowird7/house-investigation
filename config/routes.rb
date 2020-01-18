@@ -36,12 +36,12 @@ Rails.application.routes.draw do
   end
   
   # 測点（レベル）
-  resources :points, only: [:create, :destroy]
+  resources :points, only: [:create, :edit, :update, :destroy]
   resources :posts, only: [:show, :edit, :update]
   # 損傷
-  resources :sonsyos, only: [:create, :destroy]  
+  resources :sonsyos, only: [:create, :edit, :update, :destroy]
   resources :damages, only: [:show, :edit, :update]
   # 傾斜
-  resources :keisyas, only: [:create, :destroy]  
+  resources :keisyas, only: [:create, :edit, :update, :destroy]  
   resources :slopes, only: [:show, :edit, :update]
 end

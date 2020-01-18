@@ -1,0 +1,81 @@
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active">損傷：No.<%= @sonsyo.number %>の調査箇所</li>
+</ol>
+
+<h2 class="text-center">損傷：No.<%= @sonsyo.number %>の調査箇所</h2>
+
+<% if @sonsyo.room_name_other != "" %>
+  <p>現在の調査箇所：<%= @sonsyo.room_name %>/<%= @sonsyo.room_name_other %></p>
+<% else %>
+  <p>現在の調査箇所：<%= @sonsyo.room_name %></p>
+<% end %>
+
+<div>
+  <%= form_for(@sonsyo) do |f| %>
+    <select name="area1" id="area1">
+      <option data-subgroup="overall" selected></option>
+      <option data-subgroup="outter">外部</option>
+      <option data-subgroup="inner">内部</option>
+    </select>
+    <select name="area2" id="area2" onChange="enable_area2()">
+      <%= render 'houses/select_option_for_sonsyo' %>
+    </select>
+    <input type="text" name="other" placeholder="">
+      <%= f.submit '更新', :disabled => false, :class => "btn btn-primary", :id => "add_sonsyo" %>
+  <% end %>
+</div>
+
+<script>
+//セレクトボックスイベント設定
+setHierarchySelectEvent('#area1', '#area2');
+setHierarchySelectEvent('#area3', '#area4');
+/**
+ * 階層のあるプルダウンのイベントを設定します.
+ * 親のselectタグには属性data-subgroupが設定されている必要があります。
+ * 子のselectタグには属性data-groupが設定されている必要があります。
+ * @param parentSelect 親となるselectタグのセレクタ
+ * @param childSelect 子となるselectタグのセレクタ
+ */
+function setHierarchySelectEvent(parentSelect, childSelect){
+  var initCategorySmallHtml = $(childSelect).html();
+  $(parentSelect).change(function(){
+    if( 1 < $(this).find('option:selected').length ){//複数選択時に処理
+      $(childSelect).find("option").each(function(index, element){
+        $(element).remove();
+      });
+    }else{
+      var subgroup =  $(this).find('option:selected').attr('data-subgroup');
+      $(childSelect).html(initCategorySmallHtml);
+      $(childSelect).find("option").each(function(index, element){
+          var group = $(element).attr('data-group');
+          if( group ){
+            if( subgroup == group ){
+              //$(element).css('display', 'block');//IEではoptionタグに対してdisplayは効かないため
+            }else{
+              //$(element).css('display', 'none');//IEではoptionタグに対してdisplayは効かないため
+              $(element).remove();
+            }
+          }
+      });
+    }
+    $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
+  });
+}
+// 損傷の追加ボタンの有効・無効
+function enable_area2(){
+  var area2 = document.getElementById("area2");
+  var add_sonsyo = document.getElementById("add_sonsyo");
+  
+  if(area2.value != "" && area2.value != null) {
+    add_sonsyo.disabled = false;
+    //console.log("OK");
+  } else {
+    add_sonsyo.disabled = true;
+    //console.log("NG");
+  }
+  //console.log(add_sonsyo.disabled);
+}
+</script>

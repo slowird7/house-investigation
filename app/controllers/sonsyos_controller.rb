@@ -15,15 +15,8 @@ class SonsyosController < ApplicationController
     end
     
     @sonsyo.number = number
-    if params[:area2] == "外部（その他）" || params[:area2] == "内部（その他）"
-      if params[:other] != ""
-        @sonsyo.room_name = params[:other]
-      else
-        @sonsyo.room_name = params[:area2]
-      end
-    else
-      @sonsyo.room_name = params[:area2]
-    end
+    @sonsyo.room_name = params[:area2]
+    @sonsyo.room_name_other = params[:other]
     
     if @sonsyo.save
       damage = @sonsyo.damages.build
@@ -43,6 +36,29 @@ class SonsyosController < ApplicationController
       @sonsyos = @house.sonsyos.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
     end
+    redirect_to house_path(@house, anchor: 'sonsyo')
+  end
+  
+  def edit
+    @sonsyo = Sonsyo.find(params[:id])
+    @house = @sonsyo.house
+    @investigation = @house.investigation
+  end  
+  
+  def update
+    @sonsyo = Sonsyo.find(params[:id])
+    @house = @sonsyo.house
+    @investigation = @house.investigation
+    
+    @sonsyo.room_name = params[:area2]
+    @sonsyo.room_name_other = params[:other]
+    
+    if @sonsyo.save
+      flash[:success] = '正常に損傷を登録しました。'      
+    else
+      flash.now[:danger] = '失敗しました。'
+    end
+
     redirect_to house_path(@house, anchor: 'sonsyo')
   end
 
