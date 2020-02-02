@@ -143,9 +143,36 @@
         ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
         // 画像だけの状態を保存
         //original_ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
-        
+        //////////////////////
         // ホワイトボード描画
-        drawWB(0, 0, wb_width, wb_height);
+        // 縦置き
+        if(document.getElementById('damage_position_wb_0').checked){ 
+          drawWB(0, 0, wb_width, wb_height);
+        } else if(document.getElementById('damage_position_wb_1').checked){ 
+          drawWB(canvas2.width/2 - wb_width/2, 0, wb_width, wb_height);        
+        } else if(document.getElementById('damage_position_wb_2').checked){ 
+          drawWB(canvas2.width - wb_width, 0, wb_width, wb_height);        
+        } else if(document.getElementById('damage_position_wb_3').checked){ 
+          drawWB(canvas2.width - wb_width, canvas2.height - wb_height, wb_width, wb_height);      
+        } else if(document.getElementById('damage_position_wb_4').checked){ 
+          drawWB(canvas2.width/2 - wb_width/2, canvas2.height - wb_height, wb_width, wb_height);
+        } else if(document.getElementById('damage_position_wb_5').checked){ 
+          drawWB(0, canvas2.height - wb_height, wb_width, wb_height);
+        }
+        // 横置き
+          else if(document.getElementById('damage_position_wb_6').checked){ 
+          drawWB(0, 0, yoko_wb_width, yoko_wb_height);
+        } else if(document.getElementById('damage_position_wb_7').checked){ 
+          drawWB(canvas2.width/2 - yoko_wb_width/2, 0, yoko_wb_width, yoko_wb_height);
+        } else if(document.getElementById('damage_position_wb_8').checked){ 
+          drawWB(canvas2.width - yoko_wb_width, 0, yoko_wb_width, yoko_wb_height);
+        } else if(document.getElementById('damage_position_wb_9').checked){ 
+          drawWB(canvas2.width - yoko_wb_width, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
+        } else if(document.getElementById('damage_position_wb_10').checked){ 
+          drawWB(canvas2.width/2 - yoko_wb_width/2, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
+        } else if(document.getElementById('damage_position_wb_11').checked){ 
+          drawWB(0, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
+        }        
       }
     }
     reader.readAsDataURL(e.target.files[0]);
