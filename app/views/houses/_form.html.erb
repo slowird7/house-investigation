@@ -48,7 +48,11 @@
       </div>
       <hr/>
       <div class="bg-info" style="padding:10px; margin-bottom:10px;">
-        <p class="lead">所有者情報</p>        
+        <p class="lead">所有者情報</p>
+        <div class="form-group">
+          <%= f.label :owner_name_ruby, '所有者名（フリガナ）' %>
+          <%= f.text_field :owner_name_ruby, :class=>"form-control" %>
+        </div>
         <div class="form-group">
           <%= f.label :owner_name, '所有者名' %>
           <%= f.text_field :owner_name, :class=>"form-control" %>

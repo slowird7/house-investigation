@@ -59,9 +59,27 @@
   <% elsif @slope.position_wb == 4 %>
     <!-- 下 -->
     <div class="wb_down"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>
-  <% else %>
+  <% elsif @slope.position_wb == 5 %>
     <!-- 左下 -->
     <div class="wb_left_down"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>
+  <% elsif @slope.position_wb == 6 %>
+    <!-- 左上（横置き） -->
+    <div class="wb_yoko_left_top"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>  
+  <% elsif @slope.position_wb == 7 %>
+    <!-- 上（横置き） -->
+    <div class="wb_yoko_top"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>    
+  <% elsif @slope.position_wb == 8 %>
+    <!-- 右上（横置き） -->
+    <div class="wb_yoko_right_top"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>    
+  <% elsif @slope.position_wb == 9 %>
+    <!-- 右下（横置き） -->
+    <div class="wb_yoko_right_down"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>    
+  <% elsif @slope.position_wb == 10 %>
+    <!-- 下（横置き） -->
+    <div class="wb_yoko_down"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>
+  <% else %>
+    <!-- 左下（横置き） -->
+    <div class="wb_yoko_left_down"><%= render 'slopes/wb', { house: @house, keisya: @keisya, slope: @slope } %></div>
   <% end %>
 </div>
 
@@ -104,5 +122,49 @@
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+
+.post-img > .wb_yoko_left_top {
+  position: absolute;
+  top: 170px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_top {
+  position: absolute;
+  top: 170px;
+  left: calc(50% - 85px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_right_top {
+  position: absolute;
+  top: 170px;
+  right: -15px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_right_down {
+  position: absolute;
+  bottom: -155px;
+  right: -15px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_down {
+  position: absolute;
+  bottom: -155px;
+  left: calc(50% - 85px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_left_down {
+  position: absolute;
+  bottom: -155px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
 }
 </style>

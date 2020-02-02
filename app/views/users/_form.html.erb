@@ -21,7 +21,7 @@
         <%= f.password_field :password_confirmation, class: 'form-control' %>
       </div>
       
-      <% if current_user.role == "superuser" %>
+      <% if current_user.role == "superuser" or current_user.role == "admin" %>
         <div class="form-group">
           <%= f.label :role, '権限グループ*：' %>
           <%= f.select :role, $AUTHORITY_GROUP, :prompt => "選択してください" %>

@@ -18,7 +18,7 @@ end
 
 user=User.find_by(user_name: 'tsubokura')
 if user.blank?
-  user = User.new(role: 'operator', user_name: 'tsubokura', password: 'password')
+  user = User.new(role: 'admin', user_name: 'tsubokura', password: 'password')
   user.save
 end
 
@@ -57,7 +57,7 @@ end
 house= House.find_by(house_name: 'うしとら商店')
 if house.blank?
   house = investigation.houses.build(house_name: 'うしとら商店', prefectures: '大阪府', city: '寝屋川市高宮', block: '2-21-3',
-                                    resident_phone_number: '090-1899-7408', owner_name: '良　姫子', owner_prefectures: '大阪府',
+                                    resident_phone_number: '090-1899-7408', owner_name_ruby: 'よし　ひめこ', owner_name: '良　姫子', owner_prefectures: '大阪府',
                                     owner_city: '寝屋川市明和', owner_block: '1-14-21', owner_phone_number: '072-821-4340',
                                     construction: '鉄骨造', floors: '1階建', area: '159.89', use: '倉庫')
   house.save

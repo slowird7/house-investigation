@@ -65,16 +65,12 @@
       </tr>
       <tr>
         <td>延べ面積</td>
-        <td><%= house.area %></td>
+        <td><%= house.area %> m2</td>
       </tr>      
     </table>
-    <p class="text-center">施工者：<%= @investigation.builder %></p>
-    <% if survey_name == "事前" %>
-      <p class="text-center">調査機関：<%= @investigation.investigator_pre_survey %></p>
-    <% elsif survey_name == "事中" %>
-      <p class="text-center">調査機関：<%= @investigation.investigator_ongoing_survey %></p>
-    <% else %>
-      <p class="text-center">調査機関：<%= @investigation.investigator_after_survey %></p>
-    <% end %>
+    <!-- サイン -->
+    <div style="text-align: center;">
+      <%= image_tag house.sign_pre_survey %>
+    </div>
   </div>
 <% end %>

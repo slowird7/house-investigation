@@ -1,55 +1,102 @@
-<table class="table table-bordered" style="background-color: white; margin-bottom: 0px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:170px;">
   <tr>
     <td>調査日</td>
-    <td colspan="4"><%= damage.updated_at.strftime('%Y/%m/%d') %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= damage.updated_at.strftime('%Y/%m/%d') %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>家屋名</td>
-    <td colspan="4"><%= house.house_name %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= house.house_name %>
+      </div>    
+    </td>
   </tr>
   <tr>
     <td>家屋No.</td>
-    <td><%= house.id %></td>
+    <td>
+      <div style="height:12px; overflow:hidden;">
+        <%= house.id %>
+      </div>
+    </td>
     <td>写真No.</td>
-    <td colspan="2"></td>
+    <td colspan="2">
+      <div style="height:12px; overflow:hidden;">
+        No.<%= sonsyo.number %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>調査箇所</td>
-    <td colspan="4"><%= sonsyo.room_name %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= sonsyo.room_name %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td colspan="5">
-      <% if damage.genkyo == true %>現況、<% end %>
-      <% if damage.sukima == true %>隙間、<% end %>
-      <% if damage.ware == true %>割れ、<% end %>
-      <% if damage.kake == true %>欠け、<% end %>
-      <% if damage.crack == true %>クラック、<% end %>
-      <% if damage.tile == true %>タイル、<% end %>
-      <% if damage.kire == true %>切れ、<% end %>
-      <% if damage.uki == true %>浮き、<% end %>
-      <% if damage.suhon == true %>数本、<% end %>
-      <% if damage.chirigire == true %>チリ切れ、<% end %>
-      <% if damage.cross == true %>クロス、<% end %>
-      <% if damage.meji == true %>目地、<% end %>      
-      <% if damage.tategu == true %>建具、<% end %>
-      <% if damage.tasu == true %>多数、<% end %>
-      <% if damage.kakusyo == true %>各所<% end %>
+      <div style="height:12px; overflow:hidden;">
+        <% if damage.genkyo == true %>現況 <% end %>
+        <% if damage.sukima == true %>隙間 <% end %>
+        <% if damage.ware == true %>割れ <% end %>
+        <% if damage.kake == true %>欠け <% end %>
+        <% if damage.crack == true %>クラック <% end %>
+        <% if damage.tile == true %>タイル <% end %>
+        <% if damage.kire == true %>切れ <% end %>
+        <% if damage.uki == true %>浮き <% end %>
+        <% if damage.suhon == true %>数本 <% end %>
+        <% if damage.chirigire == true %>チリ切れ <% end %>
+        <% if damage.cross == true %>クロス <% end %>
+        <% if damage.meji == true %>目地 <% end %>      
+        <% if damage.tategu == true %>建具 <% end %>
+        <% if damage.tasu == true %>多数 <% end %>
+        <% if damage.kakusyo == true %>各所<% end %>
+      </div>
     </td>
   </tr>
   <tr>
     <td>面積</td>
-    <td colspan="4"><%= damage.width %> x <%= damage.height %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= damage.width %> x <%= damage.height %>
+      </div>    
+    </td>
   </tr>
   <tr>
     <td>幅</td>
-    <td colspan="4"><%= damage.wide %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= damage.wide %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>長さ</td>
-    <td colspan="4"><%= damage.length %></td>  
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <% if damage.amimejyo == true %>
+          <span>網目状</span>
+        <% end %>  
+        <% if damage.zencho == true %>
+          <span>全長</span>
+        <% end %>
+        <% if damage.zenshu == true %>
+          <span>全周</span>
+        <% end %>
+        <%= damage.length %>
+      </div>
+    </td>  
   </tr>
   <tr>
     <td>コメント</td>
-    <td colspan="4"><%= damage.comment %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= damage.comment %>
+      </div>
+    </td>
   </tr>
 </table>

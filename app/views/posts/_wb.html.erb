@@ -1,38 +1,56 @@
-<table class="table table-bordered" style="background-color: white; margin-bottom: 0px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:170px;">
   <tr>
     <td>調査日</td>
-    <td colspan="4"><%= post.updated_at.strftime('%Y/%m/%d') %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= post.updated_at.strftime('%Y/%m/%d') %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>家屋名</td>
-    <td colspan="4"><%= house.house_name %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= house.house_name %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>家屋No.</td>
-    <td><%= house.id %></td>
+    <td>
+      <div style="height:12px; overflow:hidden;">
+        <%= house.id %>
+      </div>
+    </td>
     <td>写真No.</td>
-    <td colspan="2"></td>
+    <td colspan="2">
+      <div style="height:12px; overflow:hidden;">
+        測点.<%= point.number %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>調査箇所</td>
-    <td colspan="4"><%= point.room_name %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= point.room_name %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>標高</td>
-    <td colspan="4"><%= post.hyoko %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= post.hyoko %>
+      </div>
+    </td>
   </tr>
-  <tr>
-    <td>往路データ</td>
-    <td colspan="2">BS：<%= post.ouro_bs %></td>
-    <td colspan="2">FS：<%= post.ouro_fs %></td>          
-  </tr>
-  <tr>
-    <td>復路データ</td>
-    <td colspan="2">BS：<%= post.fukuro_bs %></td>
-    <td colspan="2">FS：<%= post.fukuro_fs %></td>          
-  </tr>        
   <tr>
     <td>コメント</td>
-    <td colspan="4"><%= post.comment %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= post.comment %>
+      </div>
+    </td>
   </tr>
 </table>

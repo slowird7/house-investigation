@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.string   "city"
     t.string   "block"
     t.string   "resident_phone_number"
+    t.string   "owner_name_ruby"
     t.string   "owner_name"
     t.string   "owner_prefectures"
     t.string   "owner_city"

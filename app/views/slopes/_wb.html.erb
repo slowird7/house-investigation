@@ -1,36 +1,66 @@
-<table class="table table-bordered" style="background-color: white; margin-bottom: 0px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:170px;">
   <tr>
     <td>調査日</td>
-    <td colspan="4"><%= slope.updated_at.strftime('%Y/%m/%d') %></td>
-  </tr>
-  <tr>
-    <td>家屋名</td>
-    <td colspan="4"><%= house.house_name %></td>
-  </tr>
-  <tr>
-    <td>家屋No.</td>
-    <td><%= house.id %></td>
-    <td>写真No.</td>
-    <td colspan="2"></td>
-  </tr>
-  <tr>
-    <td>調査箇所</td>
-    <td colspan="4"><%= keisya.room_name %></td>
-  </tr>
-  <tr>
-    <td colspan="5">
-      <% if slope.suichokukeisya == true %>垂直傾斜、<% end %>
-      <% if slope.suiheikeisya == true %>水平傾斜、<% end %>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= slope.updated_at.strftime('%Y/%m/%d') %>
+      </div>  
     </td>
   </tr>
   <tr>
-    <td>東：<%= slope.east %></td>
-    <td>西：<%= slope.west %></td>
-    <td>南：<%= slope.south %></td>
-    <td>北：<%= slope.north %></td>
+    <td>家屋名</td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= house.house_name %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>家屋No.</td>
+    <td>
+      <div style="height:12px; overflow:hidden;">
+        <%= house.id %>
+      </div>  
+    </td>
+    <td>写真No.</td>
+    <td colspan="2">
+      <div style="height:12px; overflow:hidden;">
+        <%= disp_alphabet(keisya.number) %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>調査箇所</td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= keisya.room_name %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <div style="height:12px; overflow:hidden;">
+        <% if slope.suichokukeisya == true %>垂直傾斜 <% end %>
+        <% if slope.suiheikeisya == true %>水平傾斜 <% end %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <div style="height:12px; overflow:hidden;">
+        <% if slope.east != 0.0 %>東：<%= slope.east %><% end %>
+        <% if slope.west != 0.0 %>西：<%= slope.west %><% end %>
+        <% if slope.south != 0.0 %>南：<%= slope.south %><% end %>
+        <% if slope.north != 0.0 %>北：<%= slope.north %><% end %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td>コメント</td>
-    <td colspan="4"><%= slope.comment %></td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= slope.comment %>
+      </div>
+    </td>
   </tr>
 </table>

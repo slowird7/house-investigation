@@ -80,67 +80,28 @@
   <button class="menuicon btn btn-default" id="clear">クリア</button>
 </div>
 
-<div style="margin-top:30px;">
-  <p class="text-center">施工者：<%= @investigation.builder %></p>
-  <p class="text-center">調査機関：<%= @investigation.investigator_after_survey %></p>
-</div>
-
 <script>
 // グローバル変数
 var canvas = document.getElementById('myCanvas');
 (function() {
-  //HTML上の canvas タグを取得
-  var canvas = document.getElementById('myCanvas');
-
   //レスポンシブ対応 画面サイズでキャンバスサイズを調整します
   if (screen.width < 860) {
     canvas.width = 700 * screen.width / 860;
     canvas.height = 400 * screen.width / 860;
   }
-
   //キャンバスの背景カラーを決定。 fillRectは長方形に塗るメソッド
   var ctx = canvas.getContext('2d');
   ctx.beginPath();
   ctx.fillStyle = "#f5f5f5";
   ctx.fillRect(0, 0, 700, 400);
-
   //初期値（サイズ、色、アルファ値）の決定
   var defosize = 3;
   var defocolor = "#555555";
   var defoalpha = 1.0;
 
-  //マウス継続値の初期値、ここがポイント
+  //マウス・タッチ継続値の初期値、ここがポイント
   var mouseX = "";
   var mouseY = "";
-
-  //各イベントに紐づけ
-  canvas.addEventListener('mousemove', onMove, false);
-  canvas.addEventListener('mousedown', onClick, false);
-  canvas.addEventListener('mouseup', drawEnd, false);
-  canvas.addEventListener('mouseout', drawEnd, false);
-
-  //マウス動いていて、かつ左クリック時に発火。
-  function onMove(e) {
-    if (e.buttons === 1 || e.witch === 1) {
-      var rect = e.target.getBoundingClientRect();
-      var X = ~~(e.clientX - rect.left);
-      var Y = ~~(e.clientY - rect.top);
-      //draw 関数にマウスの位置を渡す
-      draw(X, Y);
-    };
-  };
-
-  //マウスが左クリックされると発火。
-  function onClick(e) {
-    if (e.button === 0) {
-      var rect = e.target.getBoundingClientRect();
-      var X = ~~(e.clientX - rect.left);
-      var Y = ~~(e.clientY - rect.top);
-      //draw 関数にマウスの位置を渡す
-      draw(X, Y);
-    }
-  };
-
   //渡されたマウス位置を元に直線を描く関数
   function draw(X, Y) {
     ctx.beginPath();
@@ -164,19 +125,70 @@ var canvas = document.getElementById('myCanvas');
     mouseX = X;
     mouseY = Y;
   };
-
+  ////////////////////////////
+  // マウスイベントに紐づけ
+  canvas.addEventListener('mousemove', onMove, false);
+  canvas.addEventListener('mousedown', onClick, false);
+  canvas.addEventListener('mouseup', drawEnd, false);
+  canvas.addEventListener('mouseout', drawEnd, false);
+  //マウス動いていて、かつ左クリック時に発火。
+  function onMove(e) {
+    if (e.buttons === 1 || e.witch === 1) {
+      var rect = e.target.getBoundingClientRect();
+      var X = ~~(e.clientX - rect.left);
+      var Y = ~~(e.clientY - rect.top);
+      //draw 関数にマウスの位置を渡す
+      draw(X, Y);
+    };
+  };
+  //マウスが左クリックされると発火。
+  function onClick(e) {
+    if (e.button === 0) {
+      var rect = e.target.getBoundingClientRect();
+      var X = ~~(e.clientX - rect.left);
+      var Y = ~~(e.clientY - rect.top);
+      //draw 関数にマウスの位置を渡す
+      draw(X, Y);
+    }
+  };
   //左クリック終了、またはマウスが領域から外れた際、継続値を初期値に戻す
   function drawEnd() {
     mouseX = "";
     mouseY = "";
   }
-
+  ////////////////////////////
+  // タッチイベントに紐づけ
+  canvas.addEventListener('touchstart', touchStart, false);  
+  canvas.addEventListener('touchmove', touchMove, false);
+  canvas.addEventListener('touchend', touchEnd, false);
+  // タッチスタート
+  function touchStart(e) {
+    var rect = e.target.getBoundingClientRect();
+    var X = ~~(e.touches[0].clientX - rect.left);
+    var Y = ~~(e.touches[0].clientY - rect.top);
+    //draw 関数にマウスの位置を渡す
+    draw(X, Y);
+  };
+  // タッチ中
+  function touchMove(e) {
+    var rect = e.target.getBoundingClientRect();
+    var X = ~~(e.touches[0].clientX - rect.left);
+    var Y = ~~(e.touches[0].clientY - rect.top);
+    //draw 関数にマウスの位置を渡す
+    draw(X, Y);
+  };
+  // タッチエンド
+  function touchEnd(e) {
+    mouseX = "";
+    mouseY = "";
+  };
+  
+  ////////////////////////
   //メニューのアイコン関係
   var menuIcon = document.getElementsByClassName("menuicon");
   for (i = 0; i < menuIcon.length; i++) {
     menuIcon[i].addEventListener("click", canvasMenu, false)
   }
-
   //メニューボタン管理
   function canvasMenu() {
     //id 値によって場合分け

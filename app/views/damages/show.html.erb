@@ -39,9 +39,28 @@
     <% elsif @damage.position_wb == 4 %>
       <!-- 下 -->
       <div class="wb_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>
-    <% else %>
+    <% elsif @damage.position_wb == 5 %>
       <!-- 左下 -->
       <div class="wb_left_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>
+    
+    <% elsif @damage.position_wb == 6 %>
+      <!-- 左上（横置き） -->
+      <div class="wb_yoko_left_top"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>  
+    <% elsif @damage.position_wb == 7 %>
+      <!-- 上（横置き） -->
+      <div class="wb_yoko_top"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>    
+    <% elsif @damage.position_wb == 8 %>
+      <!-- 右上（横置き） -->
+      <div class="wb_yoko_right_top"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>    
+    <% elsif @damage.position_wb == 9 %>
+      <!-- 右下（横置き） -->
+      <div class="wb_yoko_right_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>    
+    <% elsif @damage.position_wb == 10 %>
+      <!-- 下（横置き） -->
+      <div class="wb_yoko_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>
+    <% else %>
+      <!-- 左下（横置き） -->
+      <div class="wb_yoko_left_down"><%= render 'damages/wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %></div>
     <% end %>
   <% end %>
 </div>
@@ -56,15 +75,20 @@
 .post-img > img {
   width: 100%;
 }
+
 .post-img > .wb_left_top {
   position: absolute;
   top: 0;
   left: 0;
+  width: 120px;
+  height: 150px;
 }
 .post-img > .wb_top {
   position: absolute;
   top: 0;
   left: 40%;
+  width: 120px;
+  height: 150px;
 }
 .post-img > .wb_right_top {
   position: absolute;
@@ -85,5 +109,49 @@
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+
+.post-img > .wb_yoko_left_top {
+  position: absolute;
+  top: 170px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_top {
+  position: absolute;
+  top: 170px;
+  left: calc(50% - 100px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_right_top {
+  position: absolute;
+  top: 170px;
+  right: 31px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_right_down {
+  position: absolute;
+  bottom: -201px;
+  right: 31px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_down {
+  position: absolute;
+  bottom: -201px;
+  left: calc(50% - 100px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post-img > .wb_yoko_left_down {
+  position: absolute;
+  bottom: -201px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
 }
 </style>

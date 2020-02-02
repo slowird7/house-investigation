@@ -109,7 +109,7 @@ class HousesController < ApplicationController
 
   def house_params
     params.require(:house).permit(:investigation_id, :house_name, :prefectures, :city, :block, :resident_phone_number, 
-                                  :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
+                                  :owner_name_ruby, :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
                                   :construction, :floors, :area, :use, :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey)
   end  
   

@@ -4,7 +4,7 @@
   <li class="active"><%= @house.house_name %></li>
 </ol>
 
-<h2><%= @house.house_name %></h2>
+<h2>家屋名（居住者名）：<%= @house.house_name %></h2>
 <p><%= link_to '編集', edit_house_path, :class=>"btn btn-default" %></p>
 
 <p>家屋詳細</p>
@@ -37,6 +37,10 @@
     <th>用途</th>
     <td class="align-middle"><%= @house.use %></td>
   </tr>
+  <tr>
+    <th>所有者名（フリガナ）</th>
+    <td class="align-middle"><%= @house.owner_name_ruby %></td>
+  </tr>  
   <tr>
     <th>所有者名</th>
     <td class="align-middle"><%= @house.owner_name %></td>

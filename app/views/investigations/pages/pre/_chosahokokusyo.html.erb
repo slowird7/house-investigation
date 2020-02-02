@@ -1,0 +1,132 @@
+<% if survey_type == "pre" %>
+  <% survey_name = "事前" %>
+<% elsif survey_type == "ongoing" %>
+  <% survey_name = "事中" %>
+<% elsif survey_type == "after" %>
+  <% survey_name = "事後" %>
+<% end %>
+
+<div class="page">
+  <h1 class="text-center"><%= survey_name %>調査報告書</h1>
+  <br/>
+  <br/>
+  <div class="pdfpage_wrapper">
+    <p class="pdfpage_txt">工事名：<%= @investigation.construction_name %>
+    <br/>調査場所：<%= @investigation.place %>
+    <br/>
+    <br/>
+    <br/>1.調査目的
+    <br/>本調査(既存建物の損傷箇所の調査)は、上記工事の着手に先立ち、工事影響範囲内
+  　<br/>または必要と認められる範囲における既存建物の工事前調査を行い、建物の現況を記録
+  　<br/>することにより、当該工事の施工による周辺既存建物への影響の有無または程度を判断
+  　<br/>するための資料とすることを目的としている。
+　   <br/>
+　   <br/>
+    <br/>2.調査方法
+    <br/>事前調査においては、原則として建物・工作物の所有者、居住者の立合いまたは了承
+　   <br/>のもとに現地調査を実施し、建物の構造規模等の基礎的事項と建物・工作物の水準・柱等
+　   <br/>の傾斜及び仕上げ面の損傷または現況の写真撮影を実施した
+    <br/> 
+    <br/>
+    <br/>3.調査対象および項目
+    <br/>調査家屋配置図に示す範囲の建物（工作物を含む）につき当該工事着手前に現況調査
+　   <br/>を行い、各建物ごとに次の各項目に係わる測量・記録・写真撮影を行うものとした。</p>
+  </div>
+  <br/>
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">【調査項目】
+    <br/>① 建物の全景
+    <br/>② 建物内外部（または外部）の仕上げ面の損傷
+    <br/>③ 柱、壁等の傾斜
+    <br/>④ 建具の建付状況
+    <br/>⑤ 外構（塀・門・石積み・土間等）の損傷
+    <br/>⑥ 建物・付帯物等の水準測量
+    <br/>
+    <br/>【調査使用機器】
+    <br/>①  カメラ・白板・指示棒・スケール
+    <br/>②  傾斜測定器
+    <br/>③  レベル</p>
+  </div>
+</div>
+
+<div class="page">
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">【調査凡例】
+    <br/>・クラック
+　  <br/>0.1mm単位で計測
+　  <br/>原則として、最大幅を測定するが、実際は最も正確に数値が計測できる
+　  <br/>箇所を、損傷形状を見て判断する。
+　  <br/>
+　  <br/>
+　  <br/>
+　  <br/>
+　  <br/>
+　  <br/>・隙間巾
+　  <br/>内外の壁における取合い部分
+　  <br/>等の隙間においても、原則とし
+　  <br/>て最大幅を0.1mm単位で計測
+　  <br/>する。
+　  <br/>
+　  <br/>
+　  <br/>
+　  <br/>
+　  <br/>・垂直傾斜
+　  <br/>柱等の鉛直方向における傾きを直行する二方向について1mm/1000mm
+　  <br/>の単位で計測する。
+    <br/>
+　  <br/>
+　  <br/>
+　  <br/></p>
+  </div>  
+</div>
+
+<div class="page">
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">・水平傾斜
+　  <br/>敷居(床）の傾きを直行する二方向について1mm/1000mm　の単位で
+　  <br/>計測する。
+    <br/>
+　  <br/>
+　  <br/>・水準測量
+　  <br/>工事影響範囲外に設けた基準点と調査建物において任意に設けた
+　  <br/>測定点との高低差を計測し、工事前後の変動差を比較することにより
+　  <br/>調査建物（地盤）の沈下等の有無を判断する。</p>
+　</div>
+</div>
+
+
+<div class="page">
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">４．調査結果の概要
+　　<br/>建物配置の状況、棟別構造規模は、別紙図面および調査表のとおりであり、
+　  <br/>建物の建築年は立会人（所有者または居住者）よりの聴き取りによる。</p>
+  </div>
+  <br/>
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">（１）建物・工作物の水準および傾斜についての調査結果は、別紙図面
+　　<br/>および測定調査表のとおりである。
+　　<br/>（２）仕上げ面についての調査結果は、別紙「損傷調査書」、図面および
+　　<br/>「写真撮影台帳」のとおりである。</p>
+  </div>
+  <br/>
+  <br/>
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">５．調査資料の保管
+　　<br/>本報告書（建物所有者配布分を除く）および現地調査資料については、漏洩や
+　  <br/>上記の目的以外での使用は決して無い様に当調査機関および当該工事施工者
+　  <br/>において厳重に保管するものとする。</p>
+　</div>
+</div>
+
+<style>
+.pdfpage_wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  //background: #cccccc;
+}
+.pdfpage_txt {
+  display: inline-block;
+  text-align: left;
+}
+</style>
