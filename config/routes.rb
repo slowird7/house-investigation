@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get :syodakusyo_show_pre_survey
       get :syodakusyo_show_ongoing_survey
       get :syodakusyo_show_after_survey
+#      get :sign
     end
   end
   
