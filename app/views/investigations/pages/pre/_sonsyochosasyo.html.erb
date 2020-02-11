@@ -74,7 +74,7 @@
         <% if pre_damage != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="width: 550px">
+            <td style="max-height: 30%;">
               <div class="post-img"> 
                 <%= image_tag pre_damage.image1 %>
                 <% if pre_damage.position_wb == 0 %>
@@ -98,7 +98,7 @@
                 <% end %>
               </div>
             </td>
-            <td>損傷：No.<%= sonsyo.number %></td>
+            <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
           </tr>
         <% end %>
         <% if num < sonsyos.length %>      
@@ -107,7 +107,7 @@
           <% if pre_damage != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
                   <%= image_tag pre_damage.image1 %>
                   <% if pre_damage.position_wb == 0 %>
@@ -131,7 +131,7 @@
                   <% end %>
                 </div>
               </td>
-              <td>損傷：No.<%= sonsyo.number %></td>
+              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
             </tr>
           <% end %>
         <% end %>
@@ -141,7 +141,7 @@
           <% if pre_damage != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
                   <%= image_tag pre_damage.image1 %>
                   <% if pre_damage.position_wb == 0 %>
@@ -165,7 +165,7 @@
                   <% end %>
                 </div>
               </td>
-              <td>損傷：No.<%= sonsyo.number %></td>
+              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
             </tr>
           <% end %>
         <% end %>

@@ -37,7 +37,7 @@
         <% if pre_post != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="width: 550px">
+            <td style="max-height: 30%;">
               <div class="post-img"> 
                 <%= image_tag pre_post.image1 %>
                 <% if pre_post.position_wb == 0 %>
@@ -61,7 +61,7 @@
                 <% end %>
               </div>
             </td>
-            <td>測点：<%= point.number %></td>
+            <td style="min-width: 180px;">測点：<%= point.number %></td>
           </tr>
         <% end %>
         <% if num < points.length %>      
@@ -70,7 +70,7 @@
           <% if pre_post != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
                   <%= image_tag pre_post.image1 %>
                   <% if pre_post.position_wb == 0 %>
@@ -94,7 +94,7 @@
                   <% end %>
                 </div>
               </td>
-              <td>測点：<%= point.number %></td>
+              <td style="min-width: 180px;">測点：<%= point.number %></td>
             </tr>
           <% end %>
         <% end %>
@@ -104,7 +104,7 @@
           <% if pre_post != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
                   <%= image_tag pre_post.image1 %>
                   <% if pre_post.position_wb == 0 %>
@@ -128,7 +128,7 @@
                   <% end %>
                 </div>
               </td>
-              <td>測点：<%= point.number %></td>
+              <td style="min-width: 180px;">測点：<%= point.number %></td>
             </tr>
           <% end %>
         <% end %>

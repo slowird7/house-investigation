@@ -57,7 +57,7 @@
         <% if pre_slope != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="width: 550px">
+            <td style="max-height: 30%;">
               <div class="post-img"> 
                 <%= image_tag pre_slope.image1 %>
                 <% if pre_slope.position_wb == 0 %>
@@ -81,7 +81,7 @@
                 <% end %>
               </div>
             </td>
-            <td>傾斜：<%= disp_alphabet(keisya.number) %></td>
+            <td style="min-width: 180px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
           </tr>
         <% end %>
         <% if num < keisyas.length %>      
@@ -90,7 +90,7 @@
           <% if pre_slope != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
                   <%= image_tag pre_slope.image1 %>
                   <% if pre_slope.position_wb == 0 %>
@@ -114,7 +114,7 @@
                   <% end %>
                 </div>
               </td>
-              <td>傾斜：<%= disp_alphabet(keisya.number) %></td>
+              <td style="min-width: 180px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
             </tr>
           <% end %>
         <% end %>
@@ -124,7 +124,7 @@
           <% if pre_slope != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
                   <%= image_tag pre_slope.image1 %>
                   <% if pre_slope.position_wb == 0 %>
@@ -148,7 +148,7 @@
                   <% end %>
                 </div>
               </td>
-              <td>傾斜：<%= disp_alphabet(keisya.number) %></td>
+              <td style="min-width: 180px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
             </tr>
           <% end %>
         <% end %>
