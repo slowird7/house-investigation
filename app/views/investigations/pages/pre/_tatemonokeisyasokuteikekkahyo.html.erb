@@ -24,14 +24,15 @@
       <% keisyas.each do |keisya| %>
         <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
         <tr>
-          <% if pre_slope.suichokukeisya == true %>
-            <td>垂直傾斜</td>
-          <% elsif pre_slope.suiheikeisya == true %>
-            <td>水平傾斜</td>
-          <% end %>
+          <td>
+            <% if pre_slope.suichokukeisya == true %>
+              垂直傾斜
+            <% elsif pre_slope.suiheikeisya == true %>
+              水平傾斜
+            <% end %>
+          </td>
           <td><%= disp_alphabet(keisya.number) %></td>
           <td><%= keisya.room_name %></td>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>
