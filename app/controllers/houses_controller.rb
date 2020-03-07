@@ -69,22 +69,22 @@ class HousesController < ApplicationController
     redirect_to @investigation
   end
   
-  def syodakusyo_new
-    @house = House.find(params[:id])
-    @investigation = @house.investigation
-    @survey_type = params[:survey_type]
-  end
-  
+#  def syodakusyo_new
+#    @house = House.find(params[:id])
+#    @investigation = @house.investigation
+#    @survey_type = params[:survey_type]
+#  end
+
+  #########################################################  
+  # 所有者の承諾書
   def syodakusyo_new_pre_survey
     @house = House.find(params[:id])
     @investigation = @house.investigation
   end
-  
   def syodakusyo_new_ongoing_survey
     @house = House.find(params[:id])
     @investigation = @house.investigation
   end
-  
   def syodakusyo_new_after_survey
     @house = House.find(params[:id])
     @investigation = @house.investigation
@@ -94,21 +94,47 @@ class HousesController < ApplicationController
     @house = House.find(params[:id])
     @investigation = @house.investigation
   end
-  
   def syodakusyo_show_ongoing_survey
     @house = House.find(params[:id])
     @investigation = @house.investigation
   end
-  
   def syodakusyo_show_after_survey
     @house = House.find(params[:id])
     @investigation = @house.investigation
-  end  
+  end
+
+  #########################################################  
+  # 居住者の承諾書
+  def kyojyusya_syodakusyo_new_pre_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  def kyojyusya_syodakusyo_new_ongoing_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  def kyojyusya_syodakusyo_new_after_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  
+  def kyojyusya_syodakusyo_show_pre_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  def kyojyusya_syodakusyo_show_ongoing_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
+  def kyojyusya_syodakusyo_show_after_survey
+    @house = House.find(params[:id])
+    @investigation = @house.investigation
+  end
   
   private
 
   def house_params
-    params.require(:house).permit(:investigation_id, :house_name, :prefectures, :city, :block, :resident_phone_number, 
+    params.require(:house).permit(:investigation_id, :house_number, :house_name, :prefectures, :city, :block, :resident_phone_number, 
                                   :owner_name_ruby, :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
                                   :construction, :floors, :area, :use, :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey)
   end  

@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20191107125835) do
   end
 
   create_table "houses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "house_number"
     t.string   "house_name"
     t.string   "prefectures"
     t.string   "city"

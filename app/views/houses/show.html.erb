@@ -5,13 +5,12 @@
 </ol>
 
 <h2>家屋名（居住者名）：<%= @house.house_name %></h2>
-<p><%= link_to '編集', edit_house_path, :class=>"btn btn-default" %></p>
+<p><%= link_to '家屋情報の編集', edit_house_path, :class=>"btn btn-primary" %></p>
 
-<p>家屋詳細</p>
 <table class="table table-striped table-hover">
   <tr>
-    <th>ID</th>
-    <td class="align-middle"><%= @house.id %></td>
+    <th>家屋番号</th>
+    <td class="align-middle"><%= @house.house_number %></td>
   </tr>
   <tr>
     <th>建物所在地</th>
@@ -43,7 +42,7 @@
   </tr>  
   <tr>
     <th>所有者名</th>
-    <td class="align-middle"><%= @house.owner_name %></td>
+    <td id="owner_name" class="align-middle"><%= @house.owner_name %></td>
   </tr>
   <tr>
     <th>所有者住所</th>
@@ -70,10 +69,15 @@
 </table>
 <div>
   <% if @house.sign_pre_survey.file == nil %>
-    <%= link_to '承諾書（未サイン）', syodakusyo_new_pre_survey_house_path, :class=>"btn btn-primary" %>
+    <%= link_to '所有者の承諾書（未サイン）', syodakusyo_new_pre_survey_house_path, :class=>"btn btn-primary" %>
   <% else %>
-    <%= link_to '承諾書（サイン済み）', syodakusyo_show_pre_survey_house_path, :class=>"btn btn-default" %>
+    <%= link_to '所有者の承諾書（サイン済み）', syodakusyo_show_pre_survey_house_path, :class=>"btn btn-default" %>
   <% end %>
+  <% if @house.kyojyusya_sign_pre_survey.file == nil %>
+    <%= link_to '居住者の承諾書（未サイン）', kyojyusya_syodakusyo_new_pre_survey_house_path, :class=>"btn btn-primary" %>
+  <% else %>
+    <%= link_to '居住者の承諾書（サイン済み）', kyojyusya_syodakusyo_show_pre_survey_house_path, :class=>"btn btn-default" %>
+  <% end %>  
 </div>
 
 <hr/>
@@ -91,10 +95,15 @@
 </table>
 <div>
   <% if @house.sign_ongoing_survey.file == nil %>
-    <%= link_to '承諾書（未サイン）', syodakusyo_new_ongoing_survey_house_path, :class=>"btn btn-primary" %>
+    <%= link_to '所有者の承諾書（未サイン）', syodakusyo_new_ongoing_survey_house_path, :class=>"btn btn-primary" %>
   <% else %>
-    <%= link_to '承諾書（サイン済み）', syodakusyo_show_ongoing_survey_house_path, :class=>"btn btn-default" %>
+    <%= link_to '所有者の承諾書（サイン済み）', syodakusyo_show_ongoing_survey_house_path, :class=>"btn btn-default" %>
   <% end %>
+  <% if @house.kyojyusya_sign_ongoing_survey.file == nil %>
+    <%= link_to '居住者の承諾書（未サイン）', kyojyusya_syodakusyo_new_ongoing_survey_house_path, :class=>"btn btn-primary" %>
+  <% else %>
+    <%= link_to '居住者の承諾書（サイン済み）', kyojyusya_syodakusyo_show_ongoing_survey_house_path, :class=>"btn btn-default" %>
+  <% end %>  
 </div>
 
 <hr/>
@@ -112,10 +121,15 @@
 </table>
 <div>
   <% if @house.sign_after_survey.file == nil %>
-    <%= link_to '承諾書（未サイン）', syodakusyo_new_after_survey_house_path, :class=>"btn btn-primary" %>
+    <%= link_to '所有者の承諾書（未サイン）', syodakusyo_new_after_survey_house_path, :class=>"btn btn-primary" %>
   <% else %>
-    <%= link_to '承諾書（サイン済み）', syodakusyo_show_after_survey_house_path, :class=>"btn btn-default" %>
+    <%= link_to '所有者の承諾書（サイン済み）', syodakusyo_show_after_survey_house_path, :class=>"btn btn-default" %>
   <% end %>
+  <% if @house.kyojyusya_sign_after_survey.file == nil %>
+    <%= link_to '居住者の承諾書（未サイン）', kyojyusya_syodakusyo_new_after_survey_house_path, :class=>"btn btn-primary" %>
+  <% else %>
+    <%= link_to '居住者の承諾書（サイン済み）', kyojyusya_syodakusyo_show_after_survey_house_path, :class=>"btn btn-default" %>
+  <% end %>  
 </div>
 
 <hr/>
@@ -353,24 +367,15 @@ function setHierarchySelectEvent(parentSelect, childSelect){
     $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
   });
 }
-
-// 測点の追加ボタンの有効・無効
-function enable_room_name(){
-  var room_name = document.getElementById("room_name");
-  var add_point = document.getElementById("add_point");
-  
-  if(room_name.value != "" && room_name.value != null) {
-    add_point.disabled = false;
-    //console.log("OK");
-  } else {
-    add_point.disabled = true;
-    //console.log("NG");
-  }
-  //console.log(add_sonsyo.disabled);
-}
-
+////////////////////////////////////////
 // 損傷の追加ボタンの有効・無効
 function enable_area2(){
+  var owner_name = document.getElementById("owner_name");
+  if(owner_name.innerHTML == ""){
+    alert("家屋情報を編集し、所有者氏名を正しい漢字で入力してから調査を開始してください");
+    return;
+  }
+  
   var area2 = document.getElementById("area2");
   var add_sonsyo = document.getElementById("add_sonsyo");
   
@@ -383,9 +388,14 @@ function enable_area2(){
   }
   //console.log(add_sonsyo.disabled);
 }
-
 // 傾斜の追加ボタンの有効・無効
 function enable_area4(){
+  var owner_name = document.getElementById("owner_name");
+  if(owner_name.innerHTML == ""){
+    alert("家屋情報を編集し、所有者氏名を正しい漢字で入力してから調査を開始してください");
+    return;
+  }
+  
   var area4 = document.getElementById("area4");
   var add_keisya = document.getElementById("add_keisya");
   
@@ -398,4 +408,43 @@ function enable_area4(){
   }
   //console.log(add_sonsyo.disabled);
 }
+// 測点の追加ボタンの有効・無効
+function enable_room_name(){
+  var owner_name = document.getElementById("owner_name");
+  if(owner_name.innerHTML == ""){
+    alert("家屋情報を編集し、所有者氏名を正しい漢字で入力してから調査を開始してください");
+    return;
+  }
+  
+  var room_name = document.getElementById("room_name");
+  var add_point = document.getElementById("add_point");
+  
+  if(room_name.value != "" && room_name.value != null) {
+    add_point.disabled = false;
+    //console.log("OK");
+  } else {
+    add_point.disabled = true;
+    //console.log("NG");
+  }
+  //console.log(add_sonsyo.disabled);
+}
+//////////////////////////////
+// 初回読み込み後
+$(document).ready(function() {
+  var owner_name = document.getElementById("owner_name");
+  
+  var add_point = document.getElementById("add_point");
+  var add_sonsyo = document.getElementById("add_sonsyo");
+  var add_keisya = document.getElementById("add_keisya");
+  
+  if(owner_name.innerHTML == "") {
+    add_point.disabled = true;
+    add_sonsyo.disabled = true;
+    add_keisya.disabled = true;
+  } else {
+    add_point.disabled = false;
+    add_sonsyo.disabled = false;
+    add_keisya.disabled = false;
+  }
+});
 </script>

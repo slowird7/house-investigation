@@ -70,7 +70,7 @@
     <div class="page">
       <table class="table table-bordered" style="font-size:10px;">
         <% sonsyo = sonsyos[num] %>
-        <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
+        <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
         <% if pre_damage != nil %>
           <% num = num + 1 %>
           <tr>
@@ -103,7 +103,7 @@
         <% end %>
         <% if num < sonsyos.length %>      
           <% sonsyo = sonsyos[num] %>
-          <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
+          <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
           <% if pre_damage != nil %>
             <% num = num + 1 %>
             <tr>
@@ -137,7 +137,7 @@
         <% end %>
         <% if num < sonsyos.length %>      
           <% sonsyo = sonsyos[num] %>
-          <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
+          <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
           <% if pre_damage != nil %>
             <% num = num + 1 %>
             <tr>

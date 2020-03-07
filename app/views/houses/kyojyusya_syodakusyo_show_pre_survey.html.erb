@@ -5,7 +5,7 @@
   <li class="active">家屋調査承諾書（及び不要承諾書）</li>
 </ol>
 
-<p class="text-right">[事中調査用]</p>
+<p class="text-right">[事前調査用]</p>
 <p class="text-right">家屋番号：<%= @house.house_number %></p>
 <h1 class="text-center">家屋調査承諾書（及び不要承諾書）</h1>
 <p>工事名：<%= @investigation.construction_name %></p>
@@ -20,13 +20,13 @@
     <td colspan="3"><%= @house.city %><%= @house.block %></td>
   </tr>
   <tr>
-    <td>現住居者氏名</td>
+    <td>現住居者氏名（承諾者）</td>
     <td><%= @house.house_name %></td>
     <td>TEL</td>
     <td></td>
   </tr>
   <tr>
-    <td>所有者氏名（承諾者）</td>
+    <td>所有者氏名</td>
     <td><%= @house.owner_name %></td>
     <td>TEL</td>
     <td></td>
@@ -67,8 +67,8 @@
 </table>
 
 <!-- サイン -->
-<div style="text-align: center; margin-bottom:30px;">
-  <%= image_tag @house.sign_ongoing_survey %>
+<div style="text-align: center; margin-bottom: 30px;">
+  <%= image_tag @house.sign_pre_survey %>
 </div>
 
 <!-- サイン -->
@@ -76,7 +76,7 @@
   <div style="text-align: center;">
     <canvas id="myCanvas" width="700" height="400"></canvas>
   </div>
-  <%= f.hidden_field :sign_ongoing_survey %>
+  <%= f.hidden_field :sign_pre_survey %>
   <div style="text-align: center;">
     <%= f.submit '保存', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
   </div>
@@ -168,7 +168,7 @@ var canvas = document.getElementById('myCanvas');
   canvas.addEventListener('touchend', touchEnd, false);
   // タッチスタート
   function touchStart(e) {
-    no_scroll();  // スクロール禁止    
+    no_scroll();  // スクロール禁止
     var rect = e.target.getBoundingClientRect();
     var X = ~~(e.touches[0].clientX - rect.left);
     var Y = ~~(e.touches[0].clientY - rect.top);
@@ -177,7 +177,7 @@ var canvas = document.getElementById('myCanvas');
   };
   // タッチ中
   function touchMove(e) {
-    no_scroll();  // スクロール禁止    
+    no_scroll();  // スクロール禁止
     var rect = e.target.getBoundingClientRect();
     var X = ~~(e.touches[0].clientX - rect.left);
     var Y = ~~(e.touches[0].clientY - rect.top);
@@ -186,7 +186,7 @@ var canvas = document.getElementById('myCanvas');
   };
   // タッチエンド
   function touchEnd(e) {
-    return_scroll();  // スクロール禁止解除    
+    return_scroll();  // スクロール禁止解除
     mouseX = "";
     mouseY = "";
   };
@@ -208,7 +208,7 @@ var canvas = document.getElementById('myCanvas');
   // スクロール関連メソッド
   function scroll_control(event) {
       event.preventDefault();
-  }   
+  } 
   
   ////////////////////////
   //メニューのアイコン関係
@@ -216,7 +216,6 @@ var canvas = document.getElementById('myCanvas');
   for (i = 0; i < menuIcon.length; i++) {
     menuIcon[i].addEventListener("click", canvasMenu, false)
   }
-  
   //メニューボタン管理
   function canvasMenu() {
     //id 値によって場合分け
@@ -246,7 +245,7 @@ $('#submit').on('mousedown', function (e) {
   // 画像化
   var canvas_data = canvas.toDataURL('image/jpg');
   
-  $("#house_sign_ongoing_survey").val(""); //画像データを二重に送信するのを防ぐ
-  $("#house_sign_ongoing_survey").val(canvas_data);
+  $("#house_sign_pre_survey").val(""); //画像データを二重に送信するのを防ぐ
+  $("#house_sign_pre_survey").val(canvas_data);
 });
 </script>

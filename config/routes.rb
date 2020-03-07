@@ -26,13 +26,20 @@ Rails.application.routes.draw do
   
   resources :houses, only: [:show, :new, :create, :edit, :update, :destroy] do
     member do
+      # 所有者
       get :syodakusyo_new_pre_survey
       get :syodakusyo_new_ongoing_survey
       get :syodakusyo_new_after_survey
       get :syodakusyo_show_pre_survey
       get :syodakusyo_show_ongoing_survey
       get :syodakusyo_show_after_survey
-#      get :sign
+      # 居住者      
+      get :kyojyusya_syodakusyo_new_pre_survey
+      get :kyojyusya_syodakusyo_new_ongoing_survey
+      get :kyojyusya_syodakusyo_new_after_survey
+      get :kyojyusya_syodakusyo_show_pre_survey
+      get :kyojyusya_syodakusyo_show_ongoing_survey
+      get :kyojyusya_syodakusyo_show_after_survey
     end
   end
   

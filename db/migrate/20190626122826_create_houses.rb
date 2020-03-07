@@ -1,6 +1,7 @@
 class CreateHouses < ActiveRecord::Migration[5.0]
   def change
     create_table :houses do |t|
+      t.integer :house_number
       t.string :house_name  # 家屋名（居住者名）
 #      t.string :post_code # 郵便番号      
       t.string :prefectures # 都道府県
@@ -18,10 +19,14 @@ class CreateHouses < ActiveRecord::Migration[5.0]
       t.string :floors  # 階数
       t.string :area  #延面積
       t.string :use # 用途
-      # 承諾書サイン
+      # 承諾書サイン（所有者）
       t.string :sign_pre_survey, default: nil   #事前
       t.string :sign_ongoing_survey, default: nil   #事中
       t.string :sign_after_survey, default: nil   #事後
+      # 承諾書サイン（居住者）
+      t.string :kyojyusya_sign_pre_survey, default: nil   #事前
+      t.string :kyojyusya_sign_ongoing_survey, default: nil   #事中
+      t.string :kyojyusya_sign_after_survey, default: nil   #事後
       
       # 事前、事中、事後調査
 #      t.boolean :pre_survey, default: false

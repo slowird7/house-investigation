@@ -4,6 +4,11 @@
     <%= form_for(@house) do |f| %>
       <p class="text-right">*必須</p>
       <%= f.hidden_field :investigation_id, :value => @investigation.id %>
+
+      <div class="form-group">
+        <%= f.label :house_number, '家屋番号*' %>
+        <%= f.number_field :house_number, :class=>"form-control" %>
+      </div>
     
       <div class="form-group">
         <%= f.label :house_name, '家屋名（居住者名）*' %>

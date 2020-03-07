@@ -7,7 +7,7 @@ class InvestigationsController < ApplicationController
 
   def show
     @investigation = Investigation.find(params[:id])
-    @houses = @investigation.houses
+    @houses = @investigation.houses.order(house_number: "ASC")
   end
 
   def new
@@ -51,17 +51,17 @@ class InvestigationsController < ApplicationController
   
   def pdf_pre_survey
     @investigation = Investigation.find(params[:id])
-    @houses = @investigation.houses
+    @houses = @investigation.houses.order(house_number: "ASC")
   end
   
   def pdf_ongoing_survey
     @investigation = Investigation.find(params[:id])
-    @houses = @investigation.houses    
+    @houses = @investigation.houses.order(house_number: "ASC")    
   end
   
   def pdf_after_survey
     @investigation = Investigation.find(params[:id])
-    @houses = @investigation.houses    
+    @houses = @investigation.houses.order(house_number: "ASC")    
   end  
   
   private

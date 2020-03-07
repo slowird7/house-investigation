@@ -22,7 +22,7 @@
       
       <% keisyas = house.keisyas %>
       <% keisyas.each do |keisya| %>
-        <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+        <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
         <tr>
           <td>
             <% if pre_slope.suichokukeisya == true %>
@@ -54,7 +54,7 @@
     <div class="page">
       <table class="table table-bordered" style="font-size:10px;">
         <% keisya = keisyas[num] %>
-        <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+        <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
         <% if pre_slope != nil %>
           <% num = num + 1 %>
           <tr>
@@ -87,7 +87,7 @@
         <% end %>
         <% if num < keisyas.length %>      
           <% keisya = keisyas[num] %>
-          <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+          <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
           <% if pre_slope != nil %>
             <% num = num + 1 %>
             <tr>
@@ -121,7 +121,7 @@
         <% end %>
         <% if num < keisyas.length %>      
           <% keisya = keisyas[num] %>
-          <% pre_slope = keisya.slopes.find_by(survey_type: survey_type) %>
+          <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
           <% if pre_slope != nil %>
             <% num = num + 1 %>
             <tr>

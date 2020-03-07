@@ -1,6 +1,7 @@
 class House < ApplicationRecord
   belongs_to :investigation
-  
+
+  validates :house_number, presence: true, uniqueness: true
   validates :house_name, presence: true, length: { maximum: 255 }
   validates :prefectures, presence: true, length: { maximum: 255 }
   validates :city, length: { maximum: 255 }
@@ -20,7 +21,11 @@ class House < ApplicationRecord
   
   mount_uploader :sign_pre_survey, ImageUploader    # carrierwave
   mount_uploader :sign_ongoing_survey, ImageUploader    # carrierwave
-  mount_uploader :sign_after_survey, ImageUploader    # carrierwave    
+  mount_uploader :sign_after_survey, ImageUploader    # carrierwave
+
+  mount_uploader :kyojyusya_sign_pre_survey, ImageUploader    # carrierwave
+  mount_uploader :kyojyusya_sign_ongoing_survey, ImageUploader    # carrierwave
+  mount_uploader :kyojyusya_sign_after_survey, ImageUploader    # carrierwave
   
   has_many :points, dependent: :destroy  # 測点（レベル）
   has_many :sonsyos, dependent: :destroy # 損傷
