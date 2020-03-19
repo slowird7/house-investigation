@@ -29,11 +29,16 @@ class DamagesController < ApplicationController
     @house = @sonsyo.house
     @investigation = @house.investigation
 
-    # imageを更新
     tmp_damage_params = damage_params
+    # image（矢印あり）を更新
     image_data = base64_conversion(tmp_damage_params[:image_url])
     tmp_damage_params[:image1] = image_data
     tmp_damage_params[:image_url] = nil
+
+    # image（矢印なし）を更新
+    image_data = base64_conversion(tmp_damage_params[:original_image_url])
+    tmp_damage_params[:image2] = image_data
+    tmp_damage_params[:original_image_url] = nil
 
     if @damage.update(tmp_damage_params)  
       # 調査開始日・終了日の更新
@@ -69,7 +74,7 @@ class DamagesController < ApplicationController
   def damage_params
     params.require(:damage).permit(:sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
                                   :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,
-                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url)
+                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url)
   end
 
   def base64_conversion(uri_str, filename = 'base64')

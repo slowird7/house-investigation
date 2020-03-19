@@ -21,37 +21,38 @@ ActiveRecord::Schema.define(version: 20191107125835) do
 
   create_table "damages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
-    t.integer  "position_wb",            default: 0
-    t.boolean  "genkyo",                 default: false
-    t.boolean  "sukima",                 default: false
-    t.boolean  "ware",                   default: false
-    t.boolean  "kake",                   default: false
-    t.boolean  "amimejyo",               default: false
-    t.boolean  "zencho",                 default: false
-    t.boolean  "crack",                  default: false
-    t.boolean  "tile",                   default: false
-    t.boolean  "kire",                   default: false
-    t.boolean  "uki",                    default: false
-    t.boolean  "suhon",                  default: false
-    t.boolean  "zenshu",                 default: false
-    t.boolean  "chirigire",              default: false
-    t.boolean  "cross",                  default: false
-    t.boolean  "meji",                   default: false
-    t.boolean  "tategu",                 default: false
-    t.boolean  "tasu",                   default: false
-    t.boolean  "kakusyo",                default: false
-    t.float    "wide",        limit: 24, default: 0.0
-    t.float    "length",      limit: 24, default: 0.0
-    t.float    "width",       limit: 24, default: 0.0
-    t.float    "height",      limit: 24, default: 0.0
+    t.integer  "position_wb",                   default: 0
+    t.boolean  "genkyo",                        default: false
+    t.boolean  "sukima",                        default: false
+    t.boolean  "ware",                          default: false
+    t.boolean  "kake",                          default: false
+    t.boolean  "amimejyo",                      default: false
+    t.boolean  "zencho",                        default: false
+    t.boolean  "crack",                         default: false
+    t.boolean  "tile",                          default: false
+    t.boolean  "kire",                          default: false
+    t.boolean  "uki",                           default: false
+    t.boolean  "suhon",                         default: false
+    t.boolean  "zenshu",                        default: false
+    t.boolean  "chirigire",                     default: false
+    t.boolean  "cross",                         default: false
+    t.boolean  "meji",                          default: false
+    t.boolean  "tategu",                        default: false
+    t.boolean  "tasu",                          default: false
+    t.boolean  "kakusyo",                       default: false
+    t.float    "wide",               limit: 24, default: 0.0
+    t.float    "length",             limit: 24, default: 0.0
+    t.float    "width",              limit: 24, default: 0.0
+    t.float    "height",             limit: 24, default: 0.0
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
+    t.string   "original_image_url"
     t.integer  "sonsyo_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.index ["sonsyo_id"], name: "index_damages_on_sonsyo_id", using: :btree
   end
 
@@ -75,6 +76,9 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.string   "sign_pre_survey"
     t.string   "sign_ongoing_survey"
     t.string   "sign_after_survey"
+    t.string   "kyojyusya_sign_pre_survey"
+    t.string   "kyojyusya_sign_ongoing_survey"
+    t.string   "kyojyusya_sign_after_survey"
     t.string   "overview_pre_survey"
     t.string   "overview_ongoing_survey"
     t.string   "overview_after_survey"
@@ -82,8 +86,8 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.string   "range_ongoing_survey"
     t.string   "range_after_survey"
     t.integer  "investigation_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.index ["investigation_id"], name: "index_houses_on_investigation_id", using: :btree
   end
 

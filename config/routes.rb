@@ -21,6 +21,12 @@ Rails.application.routes.draw do
       get :pdf_pre_survey
       get :pdf_ongoing_survey
       get :pdf_after_survey
+      get :list_images_pre_survey
+      get :list_images_ongoing_survey
+      get :list_images_after_survey
+      get :list_plainImages_pre_survey
+      get :list_plainImages_ongoing_survey
+      get :list_plainImages_after_survey      
     end
   end
   

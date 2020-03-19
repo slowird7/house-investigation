@@ -22,7 +22,6 @@ class House < ApplicationRecord
   mount_uploader :sign_pre_survey, ImageUploader    # carrierwave
   mount_uploader :sign_ongoing_survey, ImageUploader    # carrierwave
   mount_uploader :sign_after_survey, ImageUploader    # carrierwave
-
   mount_uploader :kyojyusya_sign_pre_survey, ImageUploader    # carrierwave
   mount_uploader :kyojyusya_sign_ongoing_survey, ImageUploader    # carrierwave
   mount_uploader :kyojyusya_sign_after_survey, ImageUploader    # carrierwave

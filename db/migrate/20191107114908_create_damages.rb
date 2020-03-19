@@ -31,6 +31,7 @@ class CreateDamages < ActiveRecord::Migration[5.0]
       t.string :image2, default: nil   #写真
       t.string :image3, default: nil   #写真
       t.string :image_url
+      t.string :original_image_url
       
       t.references :sonsyo, foreign_key: true
 

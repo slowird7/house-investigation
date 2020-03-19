@@ -1,0 +1,256 @@
+<p><input type="button" value="一括ダウンロード" id="batch" class="btn btn-primary" onclick="multi_download()"></p>
+
+<% @houses.each do |house|
+  sonsyos = house.sonsyos 
+  keisyas = house.keisyas
+  points = house.points
+
+  sonsyos.each do |sonsyo|
+    damage = sonsyo.damages.find_by(survey_type: survey_type)
+    
+    if damage.image1.present?
+%>
+      <div id="sonsyo-<%= sonsyo.id %>" style="font-size: 60%; width: 60%; position: relative; margin-bottom: 20px;">
+        <%= image_tag damage.image1, id: "sonsyo-" + sonsyo.id.to_s + "_img", style: "width: 100%;" %>
+        <% if damage.position_wb == 0 %>
+          <!-- 左上 -->
+          <div style="position: absolute; top: 0; left: 0;">
+        <% elsif damage.position_wb == 1 %>
+          <!-- 上 -->
+          <div style="position: absolute; top: 0; left: 40%;">
+        <% elsif damage.position_wb == 2 %>
+          <!-- 右上 -->
+          <div style="position: absolute; top: 0; right: 0;">
+        <% elsif damage.position_wb == 3 %>
+          <!-- 右下 -->
+          <div style="position: absolute; bottom: 0; right: 0;">
+        <% elsif damage.position_wb == 4 %>
+          <!-- 下 -->
+          <div style="position: absolute; bottom: 0; left: 40%;">
+        <% elsif damage.position_wb == 5 %>
+          <!-- 左下 -->
+          <div style="position: absolute; bottom: 0; left: 0;">
+        <% elsif damage.position_wb == 6 %>
+          <!-- 左上（横置き） -->
+          <div style="position: absolute; top: 170px; left: 0; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif damage.position_wb == 7 %>
+          <!-- 上（横置き） -->
+          <div style="position: absolute; top: 170px; left: calc(50% - 100px); transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif damage.position_wb == 8 %>
+          <!-- 右上（横置き） -->
+          <div style="position: absolute; top: 170px; right: 33px; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif damage.position_wb == 9 %>
+          <!-- 右下（横置き） -->
+          <div style="position: absolute; bottom: -203px; right: 33px; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif damage.position_wb == 10 %>
+          <!-- 下（横置き） -->
+          <div style="position: absolute; bottom: -203px; left: calc(50% - 100px); transform:rotate(-90deg); transform-origin:left top;">
+        <% else %>
+          <!-- 左下（横置き） -->
+          <div style="position: absolute; bottom: -203px; left: 0; transform:rotate(-90deg); transform-origin:left top;">
+        <% end %><!-- END OF if damage.position_wb == 0 -->
+          <%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %>
+        </div>
+      </div>
+  <% 
+    end # END OF if damage.image1.present?
+  end # END OF sonsyos.each do |sonsyo|
+  %>
+  <!-- 
+  
+    傾斜↓
+  
+  -->
+  <% keisyas.each do |keisya|
+    slope = keisya.slopes.find_by(survey_type: survey_type)
+    if slope.image1.present?
+  %>
+      <div id="keisya-<%= keisya.id %>" style="font-size: 60%; width: 60%; position: relative; margin-bottom: 20px;">
+        <%= image_tag slope.image1, id: "keisya-" + keisya.id.to_s + "_img", style: "width: 100%;" %>
+        <% if slope.position_wb == 0 %>
+          <!-- 左上 -->
+          <div style="position: absolute; top: 0; left: 0;">
+        <% elsif slope.position_wb == 1 %>
+          <!-- 上 -->
+          <div style="position: absolute; top: 0; left: 40%;">
+        <% elsif slope.position_wb == 2 %>
+          <!-- 右上 -->
+          <div style="position: absolute; top: 0; right: 0;">
+        <% elsif slope.position_wb == 3 %>
+          <!-- 右下 -->
+          <div style="position: absolute; bottom: 0; right: 0;">
+        <% elsif slope.position_wb == 4 %>
+          <!-- 下 -->
+          <div style="position: absolute; bottom: 0; left: 40%;">
+        <% elsif slope.position_wb == 5 %>
+          <!-- 左下 -->
+          <div style="position: absolute; bottom: 0; left: 0;">
+        <% elsif slope.position_wb == 6 %>
+          <!-- 左上（横置き） -->
+          <div style="position: absolute; top: 170px; left: 0; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif slope.position_wb == 7 %>
+          <!-- 上（横置き） -->
+          <div style="position: absolute; top: 170px; left: calc(50% - 85px); transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif slope.position_wb == 8 %>
+          <!-- 右上（横置き） -->
+          <div style="position: absolute; top: 170px; right: -12px; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif slope.position_wb == 9 %>
+          <!-- 右下（横置き） -->
+          <div style="position: absolute; bottom: -158px; right: -12px; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif slope.position_wb == 10 %>
+          <!-- 下（横置き） -->
+          <div style="position: absolute; bottom: -158px; left: calc(50% - 85px); transform:rotate(-90deg); transform-origin:left top;">
+        <% else %>
+          <!-- 左下（横置き） -->
+          <div style="position: absolute; bottom: -158px; left: 0; transform:rotate(-90deg); transform-origin:left top;">
+        <% end %><!-- END OF if slope.position_wb == 0 -->
+          <%= render 'slopes/wb', { house: house, keisya: keisya, slope: slope } %>
+        </div>
+      </div>
+  <% 
+    end # END OF if slope.image1.present?
+  end # END OF keisyas.each do |keisya|
+  %>
+  <!-- 
+  
+    測点↓
+  
+  -->        
+  <% points.each do |point|
+    post = point.posts.find_by(survey_type: survey_type)
+    if post.image1.present?
+  %>
+      <div id="point-<%= point.id %>" style="font-size: 60%; width: 60%; position: relative; margin-bottom: 20px;">
+        <%= image_tag post.image1, id: "point-" + point.id.to_s + "_img", style: "width: 100%;" %>
+        <% if post.position_wb == 0 %>
+          <!-- 左上 -->
+          <div style="position: absolute; top: 0; left: 0;">
+        <% elsif post.position_wb == 1 %>
+          <!-- 上 -->
+          <div style="position: absolute; top: 0; left: 40%;">
+        <% elsif post.position_wb == 2 %>
+          <!-- 右上 -->
+          <div style="position: absolute; top: 0; right: 0;">
+        <% elsif post.position_wb == 3 %>
+          <!-- 右下 -->
+          <div style="position: absolute; bottom: 0; right: 0;">
+        <% elsif post.position_wb == 4 %>
+          <!-- 下 -->
+          <div style="position: absolute; bottom: 0; left: 40%;">
+        <% elsif post.position_wb == 5 %>
+          <!-- 左下 -->
+          <div style="position: absolute; bottom: 0; left: 0;">
+        <% elsif post.position_wb == 6 %>
+          <!-- 左上（横置き） -->
+          <div style="position: absolute; top: 170px; left: 0; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif post.position_wb == 7 %>
+          <!-- 上（横置き） -->
+          <div style="position: absolute; top: 170px; left: calc(50% - 66px); transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif post.position_wb == 8 %>
+          <!-- 右上（横置き） -->
+          <div style="position: absolute; top: 170px; right: -34px; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif post.position_wb == 9 %>
+          <!-- 右下（横置き） -->
+          <div style="position: absolute; bottom: -136px; right: -34px; transform:rotate(-90deg); transform-origin:left top;">
+        <% elsif post.position_wb == 10 %>
+          <!-- 下（横置き） -->
+          <div style="position: absolute; bottom: -136px; left: calc(50% - 66px); transform:rotate(-90deg); transform-origin:left top;">
+        <% else %>
+          <!-- 左下（横置き） -->
+          <div style="position: absolute; bottom: -136px; left: 0; transform:rotate(-90deg); transform-origin:left top;">
+        <% end %><!-- END OF if post.position_wb == 0 -->
+          <%= render 'posts/wb', { house: house, point: point, post: post } %>
+        </div>
+      </div>
+<% 
+    end # END OF if post.image1.present?
+  end # END OF points.each do |point|
+end
+%>
+
+<script>
+function handleDownload(path, name) {
+  // IE
+  if (window.navigator.msSaveBlob) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "cgi-bin/sample.py?f="+path, true);
+      xhr.responseType = "blob";
+      xhr.onload = function (e) {
+          var blob = xhr.response;
+          window.navigator.msSaveBlob(blob, path);
+      }
+      xhr.send();
+      return;
+  }
+  // chrome,firefox
+  var a = document.createElement('a');
+  a.download = name;
+//  a.href = "cgi-bin/sample.py?f="+path;
+  a.href = path;
+  
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  return;
+}
+function multi_download() {
+  var client_w, client_h;
+  <% @houses.each do |house|
+    sonsyos = house.sonsyos 
+    keisyas = house.keisyas
+    points = house.points
+
+    sonsyos.each do |sonsyo|
+      damage = sonsyo.damages.find_by(survey_type: survey_type)
+      if damage.image1.present? 
+  %>
+//        client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").naturalWidth;
+//        client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").naturalHeight;
+        client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientWidth;
+        client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientHeight;        
+        html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          canvasImage = canvas.toDataURL("image/jpeg");
+          canvasName = "damage_<%= damage.id %>_<%= survey_type %>";     
+          handleDownload(canvasImage, canvasName);
+        });
+  <% 
+      end # END OF if damage.image1.present?
+    end # END OF sonsyos.each do |sonsyo| 
+    
+    keisyas.each do |keisya|
+      slope = keisya.slopes.find_by(survey_type: survey_type)
+      if slope.image1.present?  
+  %>
+//        client_w = document.getElementById("keisya-<%= keisya.id %>_img").naturalWidth;
+//        client_h = document.getElementById("keisya-<%= keisya.id %>_img").naturalHeight;
+        client_w = document.getElementById("keisya-<%= keisya.id %>_img").clientWidth;
+        client_h = document.getElementById("keisya-<%= keisya.id %>_img").clientHeight;
+        html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          canvasImage = canvas.toDataURL("image/jpeg");
+          canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
+          handleDownload(canvasImage, canvasName);
+        });
+  <% 
+      end # END OF if slope.image1.present?
+    end # END OF keisyas.each do |keisya| 
+    
+    points.each do |point|
+      post = point.posts.find_by(survey_type: survey_type)
+      if post.image1.present?  
+  %>
+//        client_w = document.getElementById("point-<%= point.id %>_img").naturalWidth;
+//        client_h = document.getElementById("point-<%= point.id %>_img").naturalHeight;
+        client_w = document.getElementById("point-<%= point.id %>_img").clientWidth;
+        client_h = document.getElementById("point-<%= point.id %>_img").clientHeight;
+        html2canvas(document.querySelector("#point-<%= point.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          canvasImage = canvas.toDataURL("image/jpeg");
+          canvasName = "post_<%= post.id %>_<%= survey_type %>";     
+          handleDownload(canvasImage, canvasName);
+        });  
+  <% 
+      end # END OF if point.image1.present?
+    end # END OF points.each do |point|   
+  end
+  %>
+}
+</script>

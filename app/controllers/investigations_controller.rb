@@ -62,8 +62,38 @@ class InvestigationsController < ApplicationController
   def pdf_after_survey
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")    
-  end  
+  end
   
+  def list_images_pre_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")
+  end
+
+  def list_images_ongoing_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")
+  end
+  
+  def list_images_after_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")
+  end  
+
+  def list_plainImages_pre_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")
+  end
+
+  def list_plainImages_ongoing_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")
+  end
+  
+  def list_plainImages_after_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")
+  end 
+
   private
 
   # Strong Parameter

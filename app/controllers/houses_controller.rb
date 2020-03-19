@@ -37,19 +37,35 @@ class HousesController < ApplicationController
 
   def update
     @house = House.find(params[:id])
-    
     tmp_house_params = house_params
     
     if tmp_house_params[:sign_pre_survey] != nil
       image_data = base64_conversion(tmp_house_params[:sign_pre_survey])
       tmp_house_params[:sign_pre_survey] = image_data
-    elsif tmp_house_params[:sign_ongoing_survey] != nil 
+    end  
+    if tmp_house_params[:sign_ongoing_survey] != nil 
       image_data = base64_conversion(tmp_house_params[:sign_ongoing_survey])
       tmp_house_params[:sign_ongoing_survey] = image_data
-    elsif tmp_house_params[:sign_after_survey] != nil 
+    end
+    if tmp_house_params[:sign_after_survey] != nil 
       image_data = base64_conversion(tmp_house_params[:sign_after_survey])
       tmp_house_params[:sign_after_survey] = image_data
     end
+    
+    if tmp_house_params[:kyojyusya_sign_pre_survey] != nil
+      image_data = base64_conversion(tmp_house_params[:kyojyusya_sign_pre_survey])
+      tmp_house_params[:kyojyusya_sign_pre_survey] = image_data
+    end  
+    if tmp_house_params[:kyojyusya_sign_ongoing_survey] != nil 
+      image_data = base64_conversion(tmp_house_params[:kyojyusya_sign_ongoing_survey])
+      tmp_house_params[:kyojyusya_sign_ongoing_survey] = image_data
+    end
+    if tmp_house_params[:kyojyusya_sign_after_survey] != nil 
+      image_data = base64_conversion(tmp_house_params[:kyojyusya_sign_after_survey])
+      tmp_house_params[:kyojyusya_sign_after_survey] = image_data
+    end
+    
+#    binding.pry
       
     if @house.update(tmp_house_params)
       flash[:success] = '正常に更新されました。'
@@ -136,7 +152,9 @@ class HousesController < ApplicationController
   def house_params
     params.require(:house).permit(:investigation_id, :house_number, :house_name, :prefectures, :city, :block, :resident_phone_number, 
                                   :owner_name_ruby, :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
-                                  :construction, :floors, :area, :use, :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey)
+                                  :construction, :floors, :area, :use, 
+                                  :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey, 
+                                  :kyojyusya_sign_pre_survey, :kyojyusya_sign_ongoing_survey, :kyojyusya_sign_after_survey)
   end  
   
   def base64_conversion(uri_str, filename = 'base64')
