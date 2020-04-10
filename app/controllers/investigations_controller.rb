@@ -59,6 +59,11 @@ class InvestigationsController < ApplicationController
     @houses = @investigation.houses.order(house_number: "ASC")    
   end
   
+  def pdf_ongoing2_survey
+    @investigation = Investigation.find(params[:id])
+    @houses = @investigation.houses.order(house_number: "ASC")    
+  end
+  
   def pdf_after_survey
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")    

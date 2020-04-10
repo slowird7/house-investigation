@@ -1,0 +1,22 @@
+<div class="page">
+  <h1 class="text-center">調査区域平面図</h1>
+  <table class="table table-bordered" style="font-size:10px;">
+    <tr>
+      <td colspan="2">工事名</td>
+      <td colspan="2"><%= @investigation.construction_name %></td>
+      <td rowspan="2">事前<br/>調査</td>
+      <td><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
+      <td rowspan="2">事後<br/>調査</td>
+      <td><%= @investigation.start_after_survey %>～<%= @investigation.stop_after_survey %></td>
+    </tr>
+    <tr>
+      <td colspan="2">調査所在地</td>
+      <td colspan="2"><%= @investigation.place %></td>
+      <td><%= @investigation.investigator_pre_survey %></td>
+      <td><%= @investigation.investigator_after_survey %></td>
+    </tr>
+    <tr>
+      <td colspan="8" height="900"></td>
+    </tr>
+  </table>
+</div>

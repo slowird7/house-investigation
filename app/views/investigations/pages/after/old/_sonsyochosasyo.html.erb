@@ -1,0 +1,175 @@
+<% @houses.each do |house| %>
+  <div class="page">
+    <h1 class="text-center">損傷調査書</h1>
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td rowspan="2">調査番号</td>
+        <td rowspan="2"></td>
+        <td rowspan="2">建物番号</td>
+        <td rowspan="2"><%= house.id %></td>
+        <td rowspan="2">建物所在地</td>
+        <td rowspan="2"><%= house.city %><%= house.block %></td>
+        <td rowspan="2">事前調査</td>
+        <td>調査年月日</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>受注者</td>
+        <td><%= @investigation.investigator_pre_survey %></td>
+      </tr>      
+      <tr>
+        <td rowspan="2">所有者住所</td>
+        <td rowspan="2"><%= house.owner_city %><%= house.owner_block %></td>
+        <td rowspan="2">氏名</td>
+        <td rowspan="2"><%= house.house_name %></td>
+        <td rowspan="2">所有者氏名</td>
+        <td rowspan="2"><%= house.owner_name %></td>
+        <td rowspan="2">事後調査</td>
+        <td>調査年月日</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>受注者</td>
+        <td><%= @investigation.investigator_after_survey %></td>
+      </tr>
+    </table>
+    
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td rowspan="2">名称（室名）</td>
+        <td colspan="4">事前調査</td>
+        <td colspan="3">事後調査</td>
+      </tr>
+      <tr>
+        <td>各部仕上材</td>
+        <td>写真番号</td>
+        <td>損傷の状況</td>
+        <td>備考</td>
+        <td>写真番号</td>
+        <td>損傷の状況</td>
+        <td>備考</td>        
+      </tr>
+      <% house.points.each do |point| %>
+        <tr>
+          <td><%= point.room_name %></td>
+          <td><%= point.number %></td>
+          <td><%= point.posts.find_by(survey_type: "pre").id %></td>
+          <td></td>
+          <td></td>
+          <td><%= point.posts.find_by(survey_type: "after").id %></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  
+  <% sonsyos = house.sonsyos %>
+  <% num = 0 %>
+  <% while num < sonsyos.length do %>
+    <div class="page">
+      <table class="table table-bordered" style="font-size:10px;">
+        <% sonsyo = sonsyos[num] %>
+        <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
+        <% if pre_damage != nil %>
+          <% num = num + 1 %>
+          <tr>
+            <td style="width: 550px">
+              <div class="post-img"> 
+                <%= image_tag pre_damage.image1 %>
+                <% if pre_damage.position_wb == 0 %>
+                  <!-- 左上 -->
+                  <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
+                <% elsif pre_damage.position_wb == 1 %>
+                  <!-- 上 -->
+                  <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                <% elsif pre_damage.position_wb == 2 %>
+                  <!-- 右上 -->
+                  <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                <% elsif pre_damage.position_wb == 3 %>
+                  <!-- 右下 -->
+                  <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                <% elsif pre_damage.position_wb == 4 %>
+                  <!-- 下 -->
+                  <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                <% else %>
+                  <!-- 左下 -->
+                  <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                <% end %>
+              </div>
+            </td>
+            <td>損傷：No.<%= sonsyo.number %></td>
+          </tr>
+        <% end %>
+        <% if num < sonsyos.length %>      
+          <% sonsyo = sonsyos[num] %>
+          <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
+          <% if pre_damage != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td style="width: 550px">
+                <div class="post-img"> 
+                  <%= image_tag pre_damage.image1 %>
+                  <% if pre_damage.position_wb == 0 %>
+                    <!-- 左上 -->
+                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
+                  <% elsif pre_damage.position_wb == 1 %>
+                    <!-- 上 -->
+                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                  <% elsif pre_damage.position_wb == 2 %>
+                    <!-- 右上 -->
+                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                  <% elsif pre_damage.position_wb == 3 %>
+                    <!-- 右下 -->
+                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                  <% elsif pre_damage.position_wb == 4 %>
+                    <!-- 下 -->
+                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                  <% else %>
+                    <!-- 左下 -->
+                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                  <% end %>
+                </div>
+              </td>
+              <td>損傷：No.<%= sonsyo.number %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        <% if num < sonsyos.length %>      
+          <% sonsyo = sonsyos[num] %>
+          <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
+          <% if pre_damage != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td style="width: 550px">
+                <div class="post-img"> 
+                  <%= image_tag pre_damage.image1 %>
+                  <% if pre_damage.position_wb == 0 %>
+                    <!-- 左上 -->
+                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
+                  <% elsif pre_damage.position_wb == 1 %>
+                    <!-- 上 -->
+                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                  <% elsif pre_damage.position_wb == 2 %>
+                    <!-- 右上 -->
+                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                  <% elsif pre_damage.position_wb == 3 %>
+                    <!-- 右下 -->
+                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
+                  <% elsif pre_damage.position_wb == 4 %>
+                    <!-- 下 -->
+                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                  <% else %>
+                    <!-- 左下 -->
+                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                  <% end %>
+                </div>
+              </td>
+              <td>損傷：No.<%= sonsyo.number %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  <% end %><!-- while num < points.length do -->  
+<% end %>

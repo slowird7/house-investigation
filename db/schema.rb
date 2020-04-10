@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.float    "length",             limit: 24, default: 0.0
     t.float    "width",              limit: 24, default: 0.0
     t.float    "height",             limit: 24, default: 0.0
-    t.string   "comment"
+    t.string   "comment",                       default: ""
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"

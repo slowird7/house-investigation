@@ -1,0 +1,10 @@
+<div class="page">
+  <div class="subpage">
+    <h1 class="text-center"><%= @investigation.construction_name %></h1>
+    <h2 class="text-center"><%= @investigation.content %> 事中調査報告書</h2>
+    <p class="text-center"><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></p>
+    <p class="text-center">家屋番号：1～<%= @houses.count%></p>
+    <p class="text-center">施工者：<%= @investigation.builder %></p>
+    <p class="text-center">調査機関：<%= @investigation.investigator_ongoing_survey %></p>
+  </div>
+</div>

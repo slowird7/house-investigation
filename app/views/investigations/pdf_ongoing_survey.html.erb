@@ -1,1 +1,99 @@
-<p>現在、未実装です。</p>
+<div class="book">
+  <%= render 'investigations/pages/ongoing/hyoshi' %>
+  <%= render 'investigations/pages/ongoing/chosahokokusyo' %>
+  <!-- コメントアウト -->
+  <% if false %>  
+    <%= render 'investigations/pages/ongoing/chosakuikiitizu' %>
+    <%= render 'investigations/pages/ongoing/chosakuikiheimenzu1' %>
+    <%= render 'investigations/pages/ongoing/chosakuikiheimenzu2' %>
+  <% end %>
+  <!-- コメントアウト -->
+  <%= render 'investigations/pages/ongoing/tatemonochosaichiranhyo' %>
+  <%= render 'investigations/pages/ongoing/kaokuchosasyodakusyo' %>
+  <%= render 'investigations/pages/ongoing/tatemonosuijyunsokuryokekkahyo' %>
+  <%= render 'investigations/pages/ongoing/tatemonokeisyasokuteikekkahyo' %>
+  <%= render 'investigations/pages/ongoing/sonsyochosasyo' %>
+</div>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAFAFA;
+    font: 12pt "Tahoma";
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 1cm 0.2cm 1cm 1.8cm;  /*上　右　下　左*/
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.subpage {
+    padding: 1cm;
+    //border: 5px red solid;
+    height: 256mm;
+    //outline: 2cm #FFEAEA solid;
+}
+.post-img {
+  width: 100%;
+  position: relative;
+  font-size: 9px;
+}
+.post-img > img {
+  width: 100%;
+}
+.post-img > .wb_left_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.post-img > .wb_top {
+  position: absolute;
+  top: 0;
+  left: 40%;
+}
+.post-img > .wb_right_top {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.post-img > .wb_right_down {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.post-img > .wb_down {
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+}
+.post-img > .wb_left_down {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    }
+}
+</style>

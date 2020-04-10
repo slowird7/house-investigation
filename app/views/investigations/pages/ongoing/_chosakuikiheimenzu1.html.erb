@@ -1,0 +1,21 @@
+<div class="page">
+  <h1 class="text-center">調査区域平面図</h1>
+  <table class="table table-bordered" style="font-size:10px;">
+    <tr>
+      <td>家屋<br/>番号</td>
+      <td>建物名<br/>（居住者名）</td>
+      <td>家屋<br/>番号</td>
+      <td>建物名<br/>（居住者名）</td>
+      <td>家屋<br/>番号</td>
+      <td>建物名<br/>（居住者名）</td>
+      <td>家屋<br/>番号</td>
+      <td>建物名<br/>（居住者名）</td>        
+    </tr>
+    <tr>
+      <% @houses.each do |house| %>
+        <td><%= house.id %></td>
+        <td><%= house.house_name %></td>
+      <% end %>
+    </tr>
+  </table>
+</div>  

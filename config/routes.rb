@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     member do
       get :pdf_pre_survey
       get :pdf_ongoing_survey
+      get :pdf_ongoing2_survey      
       get :pdf_after_survey
       get :list_images_pre_survey
       get :list_images_ongoing_survey

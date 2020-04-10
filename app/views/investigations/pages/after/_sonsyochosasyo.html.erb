@@ -4,14 +4,14 @@
     <table class="table table-bordered" style="font-size:10px;">
       <tr>
         <td rowspan="2">調査番号</td>
-        <td rowspan="2"></td>
+        <td rowspan="2"><%= @investigation.id %></td>
         <td rowspan="2">建物番号</td>
-        <td rowspan="2"><%= house.id %></td>
+        <td rowspan="2"><%= house.house_number %></td>
         <td rowspan="2">建物所在地</td>
         <td rowspan="2"><%= house.city %><%= house.block %></td>
         <td rowspan="2">事前調査</td>
         <td>調査年月日</td>
-        <td></td>
+        <td><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
       </tr>
       <tr>
         <td>受注者</td>
@@ -26,7 +26,7 @@
         <td rowspan="2"><%= house.owner_name %></td>
         <td rowspan="2">事後調査</td>
         <td>調査年月日</td>
-        <td></td>
+        <td><%= @investigation.start_after_survey %>～<%= @investigation.stop_after_survey %></td>
       </tr>
       <tr>
         <td>受注者</td>
@@ -49,16 +49,121 @@
         <td>損傷の状況</td>
         <td>備考</td>        
       </tr>
-      <% house.points.each do |point| %>
+
+      <% house.sonsyos.each do |sonsyo| %>
         <tr>
-          <td><%= point.room_name %></td>
-          <td><%= point.number %></td>
-          <td><%= point.posts.find_by(survey_type: "pre").id %></td>
-          <td></td>
-          <td></td>
-          <td><%= point.posts.find_by(survey_type: "after").id %></td>
-          <td></td>
-          <td></td>
+          <td><%= sonsyo.room_name %></td>
+          <td>－</td>
+          <td><%= sonsyo.number %></td>
+          
+          <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
+          <td>
+            <% if pre_damage.genkyo == true %>現況 <% end %>
+            <% if pre_damage.sukima == true %>隙間 <% end %>
+            <% if pre_damage.ware == true %>割れ <% end %>         
+            <% if pre_damage.kake == true %>欠け <% end %>         
+            <% if pre_damage.amimejyo == true %>網目状 <% end %>          
+            <% if pre_damage.zencho == true %>全長 <% end %>
+            <% if pre_damage.crack == true %>クラック <% end %>
+            <% if pre_damage.tile == true %>タイル <% end %>          
+            <% if pre_damage.kire == true %>切れ <% end %>
+            <% if pre_damage.uki == true %>浮き <% end %>
+            <% if pre_damage.suhon == true %>数本 <% end %>
+            <% if pre_damage.zenshu == true %>全周 <% end %>
+            <% if pre_damage.chirigire == true %>チリ切れ <% end %>
+            <% if pre_damage.cross == true %>クロス <% end %>
+            <% if pre_damage.meji == true %>目地 <% end %>
+            <% if pre_damage.tategu == true %>建具 <% end %>
+            <% if pre_damage.tasu == true %>多数 <% end %>
+            <% if pre_damage.kakusyo == true %>各所 <% end %>
+            <% if pre_damage.wide != 0.0 %>Wide=<%= pre_damage.wide %> <% end %>
+            <% if pre_damage.length != 0.0 %>Length=<%= pre_damage.length %> <% end %>
+            <% if pre_damage.width != 0.0 %>Width=<%= pre_damage.width %> <% end %>
+            <% if pre_damage.height != 0.0 %>Height=<%= pre_damage.height %> <% end %>
+            <%= pre_damage.comment %>
+          </td>
+          <td></td><!-- 備考 -->
+          <td><%= sonsyo.number %></td>
+          
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <td>
+            <% if after_damage.genkyo == true %>現況 <% end %>
+            <% if after_damage.sukima == true %>隙間 <% end %>
+            <% if after_damage.ware == true %>割れ <% end %>         
+            <% if after_damage.kake == true %>欠け <% end %>         
+            <% if after_damage.amimejyo == true %>網目状 <% end %>          
+            <% if after_damage.zencho == true %>全長 <% end %>
+            <% if after_damage.crack == true %>クラック <% end %>
+            <% if after_damage.tile == true %>タイル <% end %>          
+            <% if after_damage.kire == true %>切れ <% end %>
+            <% if after_damage.uki == true %>浮き <% end %>
+            <% if after_damage.suhon == true %>数本 <% end %>
+            <% if after_damage.zenshu == true %>全周 <% end %>
+            <% if after_damage.chirigire == true %>チリ切れ <% end %>
+            <% if after_damage.cross == true %>クロス <% end %>
+            <% if after_damage.meji == true %>目地 <% end %>
+            <% if after_damage.tategu == true %>建具 <% end %>
+            <% if after_damage.tasu == true %>多数 <% end %>
+            <% if after_damage.kakusyo == true %>各所 <% end %>
+            <% if after_damage.wide != 0.0 %>Wide=<%= after_damage.wide %> <% end %>
+            <% if after_damage.length != 0.0 %>Length=<%= after_damage.length %> <% end %>
+            <% if after_damage.width != 0.0 %>Width=<%= after_damage.width %> <% end %>
+            <% if after_damage.height != 0.0 %>Height=<%= after_damage.height %> <% end %>
+            <%= after_damage.comment %>
+          </td>
+          
+          <!-- 備考 -->
+          <% if pre_damage.comment.include?("一部補修済") || after_damage.comment.include?("一部補修済") %>
+            <td>一部補修済</td>
+          <% elsif pre_damage.comment.include?("補修済") || after_damage.comment.include?("補修済") %>
+            <td>補修済</td>
+          <% elsif pre_damage.comment.include?("一部改装済") || after_damage.comment.include?("一部改装済") %>
+            <td>一部改装済</td>
+          <% elsif pre_damage.comment.include?("改装済") || after_damage.comment.include?("改装済") %>
+            <td>改装済</td>            
+          <% elsif pre_damage.comment.include?("一部改修済") || after_damage.comment.include?("一部改修済") %>
+            <td>一部改修済</td>
+          <% elsif pre_damage.comment.include?("改修済") || after_damage.comment.include?("改修済") %>
+            <td>改修済</td>
+          <% elsif pre_damage.comment.include?("一部状況変化") || after_damage.comment.include?("一部状況変化") %>
+            <td>一部状況変化</td>
+          <% elsif pre_damage.comment.include?("状況変化") || after_damage.comment.include?("状況変化") %>
+            <td>状況変化</td>            
+          <% elsif pre_damage.comment.include?("調査辞退") || after_damage.comment.include?("調査辞退") %>
+            <td>調査辞退</td>
+          <% elsif pre_damage.comment.include?("比較不能") || pre_damage.comment.include?("比較不可") || 
+                   after_damage.comment.include?("比較不能") || after_damage.comment.include?("比較不可") %>
+            <td>比較不能</td>
+          <% elsif pre_damage.comment.include?("事後および事中で初めて撮影した時") || pre_damage.comment.include?("申し出") || 
+                   after_damage.comment.include?("事後および事中で初めて撮影した時") || after_damage.comment.include?("申し出") %>
+            <td>新規確認</td>
+          <% elsif pre_damage.genkyo == after_damage.genkyo &&
+                pre_damage.sukima == after_damage.sukima &&
+                pre_damage.ware == after_damage.ware &&
+                pre_damage.kake == after_damage.kake &&
+                pre_damage.amimejyo == after_damage.amimejyo &&
+                pre_damage.zencho == after_damage.zencho &&
+                pre_damage.crack == after_damage.crack &&
+                pre_damage.tile == after_damage.tile &&
+                pre_damage.kire == after_damage.kire &&
+                pre_damage.uki == after_damage.uki &&
+                pre_damage.suhon == after_damage.suhon &&
+                pre_damage.zenshu == after_damage.zenshu &&
+                pre_damage.chirigire == after_damage.chirigire &&
+                pre_damage.cross == after_damage.cross &&
+                pre_damage.meji == after_damage.meji &&
+                pre_damage.tategu == after_damage.tategu &&
+                pre_damage.tasu == after_damage.tasu &&
+                pre_damage.kakusyo == after_damage.kakusyo &&
+                pre_damage.wide == after_damage.wide &&
+                pre_damage.length == after_damage.length &&
+                pre_damage.width == after_damage.width &&
+                pre_damage.height == after_damage.height &&
+                pre_damage.comment == after_damage.comment %>
+            <td>変化なし</td>
+          <% else %>
+            <td style="color:red;">変化あり</td>
+          <% end %>
         </tr>
       <% end %>
     </table>
@@ -70,102 +175,102 @@
     <div class="page">
       <table class="table table-bordered" style="font-size:10px;">
         <% sonsyo = sonsyos[num] %>
-        <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
-        <% if pre_damage != nil %>
+        <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+        <% if after_damage != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="width: 550px">
+            <td style="max-height: 30%;">
               <div class="post-img"> 
-                <%= image_tag pre_damage.image1 %>
-                <% if pre_damage.position_wb == 0 %>
+                <%= image_tag after_damage.image1 %>
+                <% if after_damage.position_wb == 0 %>
                   <!-- 左上 -->
-                  <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
-                <% elsif pre_damage.position_wb == 1 %>
+                  <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>  
+                <% elsif after_damage.position_wb == 1 %>
                   <!-- 上 -->
-                  <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                <% elsif pre_damage.position_wb == 2 %>
+                  <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                <% elsif after_damage.position_wb == 2 %>
                   <!-- 右上 -->
-                  <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                <% elsif pre_damage.position_wb == 3 %>
+                  <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                <% elsif after_damage.position_wb == 3 %>
                   <!-- 右下 -->
-                  <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                <% elsif pre_damage.position_wb == 4 %>
+                  <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                <% elsif after_damage.position_wb == 4 %>
                   <!-- 下 -->
-                  <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                  <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
                 <% else %>
                   <!-- 左下 -->
-                  <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                  <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
                 <% end %>
               </div>
             </td>
-            <td>損傷：No.<%= sonsyo.number %></td>
+            <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
           </tr>
         <% end %>
         <% if num < sonsyos.length %>      
           <% sonsyo = sonsyos[num] %>
-          <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
-          <% if pre_damage != nil %>
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <% if after_damage != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
-                  <%= image_tag pre_damage.image1 %>
-                  <% if pre_damage.position_wb == 0 %>
+                  <%= image_tag after_damage.image1 %>
+                  <% if after_damage.position_wb == 0 %>
                     <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
-                  <% elsif pre_damage.position_wb == 1 %>
+                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>  
+                  <% elsif after_damage.position_wb == 1 %>
                     <!-- 上 -->
-                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 2 %>
+                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 2 %>
                     <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 3 %>
+                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 3 %>
                     <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 4 %>
+                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 4 %>
                     <!-- 下 -->
-                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
                   <% else %>
                     <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
                   <% end %>
                 </div>
               </td>
-              <td>損傷：No.<%= sonsyo.number %></td>
+              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
             </tr>
           <% end %>
         <% end %>
         <% if num < sonsyos.length %>      
           <% sonsyo = sonsyos[num] %>
-          <% pre_damage = sonsyo.damages.find_by(survey_type: survey_type) %>
-          <% if pre_damage != nil %>
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <% if after_damage != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
-                  <%= image_tag pre_damage.image1 %>
-                  <% if pre_damage.position_wb == 0 %>
+                  <%= image_tag after_damage.image1 %>
+                  <% if after_damage.position_wb == 0 %>
                     <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
-                  <% elsif pre_damage.position_wb == 1 %>
+                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>  
+                  <% elsif after_damage.position_wb == 1 %>
                     <!-- 上 -->
-                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 2 %>
+                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 2 %>
                     <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 3 %>
+                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 3 %>
                     <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 4 %>
+                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 4 %>
                     <!-- 下 -->
-                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
                   <% else %>
                     <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
+                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
                   <% end %>
                 </div>
               </td>
-              <td>損傷：No.<%= sonsyo.number %></td>
+              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
             </tr>
           <% end %>
         <% end %>

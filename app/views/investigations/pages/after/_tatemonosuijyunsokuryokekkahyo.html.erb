@@ -3,7 +3,7 @@
     <table class="table table-bordered" style="font-size:10px;">
       <tr>
         <td colspan="4">建物水準測量結果表</td>
-        <td>家屋番号：<%= house.id %></td>
+        <td>家屋番号：<%= house.house_number %></td>
       </tr>
       <tr>
         <td>測点</td>
@@ -14,17 +14,20 @@
       </tr>
       <% points = house.points %>
       <% points.each do |point| %>
-        <% pre_post = point.posts.find_by(survey_type: survey_type) %>
+        <% pre_post = point.posts.find_by(survey_type: "pre") %>
+        <% after_post = point.posts.find_by(survey_type: "after") %>
         <tr>
           <td><%= point.number %></td>
           <td><%= point.room_name %></td>
-          <td><%= pre_post.hyoko + ((pre_post.ouro_fs - pre_post.ouro_bs) + (pre_post.fukuro_fs - pre_post.fukuro_bs)) / 2 %></td>
-          <td></td>
-          <td></td>
+          <% pre_sokuteichi = pre_post.hyoko + ((pre_post.ouro_fs - pre_post.ouro_bs) + (pre_post.fukuro_fs - pre_post.fukuro_bs)) / 2 %>
+          <td><%= pre_sokuteichi %></td>
+          <% after_sokuteichi = after_post.hyoko + ((after_post.ouro_fs - after_post.ouro_bs) + (after_post.fukuro_fs - after_post.fukuro_bs)) / 2 %>
+          <td><%= after_sokuteichi %></td>
+          <td><%= after_sokuteichi - pre_sokuteichi %></td>
         </tr>
       <% end %>
     </table>
-    <p class="text-right"><%= @investigation.investigator_pre_survey %></p>
+    <p class="text-right"><%= @investigation.investigator_after_survey %></p>
   </div>
 
   <% points = house.points %>
@@ -33,102 +36,102 @@
     <div class="page">
       <table class="table table-bordered" style="font-size:10px;">
         <% point = points[num] %>
-        <% pre_post = point.posts.find_by(survey_type: survey_type) %>
-        <% if pre_post != nil %>
+        <% after_post = point.posts.find_by(survey_type: "after") %>
+        <% if after_post != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="width: 550px">
+            <td style="max-height: 30%;">
               <div class="post-img"> 
-                <%= image_tag pre_post.image1 %>
-                <% if pre_post.position_wb == 0 %>
+                <%= image_tag after_post.image1 %>
+                <% if after_post.position_wb == 0 %>
                   <!-- 左上 -->
-                  <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>  
-                <% elsif pre_post.position_wb == 1 %>
+                  <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>  
+                <% elsif after_post.position_wb == 1 %>
                   <!-- 上 -->
-                  <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                <% elsif pre_post.position_wb == 2 %>
+                  <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                <% elsif after_post.position_wb == 2 %>
                   <!-- 右上 -->
-                  <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                <% elsif pre_post.position_wb == 3 %>
+                  <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                <% elsif after_post.position_wb == 3 %>
                   <!-- 右下 -->
-                  <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                <% elsif pre_post.position_wb == 4 %>
+                  <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                <% elsif after_post.position_wb == 4 %>
                   <!-- 下 -->
-                  <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>
+                  <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
                 <% else %>
                   <!-- 左下 -->
-                  <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>
+                  <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
                 <% end %>
               </div>
             </td>
-            <td>測点：<%= point.number %></td>
+            <td style="min-width: 180px;">測点：<%= point.number %></td>
           </tr>
         <% end %>
         <% if num < points.length %>      
           <% point = points[num] %>
-          <% pre_post = point.posts.find_by(survey_type: survey_type) %>
-          <% if pre_post != nil %>
+          <% after_post = point.posts.find_by(survey_type: "after") %>
+          <% if after_post != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
-                  <%= image_tag pre_post.image1 %>
-                  <% if pre_post.position_wb == 0 %>
+                  <%= image_tag after_post.image1 %>
+                  <% if after_post.position_wb == 0 %>
                     <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>  
-                  <% elsif pre_post.position_wb == 1 %>
+                    <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>  
+                  <% elsif after_post.position_wb == 1 %>
                     <!-- 上 -->
-                    <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                  <% elsif pre_post.position_wb == 2 %>
+                    <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                  <% elsif after_post.position_wb == 2 %>
                     <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                  <% elsif pre_post.position_wb == 3 %>
+                    <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                  <% elsif after_post.position_wb == 3 %>
                     <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                  <% elsif pre_post.position_wb == 4 %>
+                    <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                  <% elsif after_post.position_wb == 4 %>
                     <!-- 下 -->
-                    <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>
+                    <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
                   <% else %>
                     <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>
+                    <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
                   <% end %>
                 </div>
               </td>
-              <td>測点：<%= point.number %></td>
+              <td style="min-width: 180px;">測点：<%= point.number %></td>
             </tr>
           <% end %>
         <% end %>
         <% if num < points.length %>      
           <% point = points[num] %>
-          <% pre_post = point.posts.find_by(survey_type: survey_type) %>
-          <% if pre_post != nil %>
+          <% after_post = point.posts.find_by(survey_type: "after") %>
+          <% if after_post != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="width: 550px">
+              <td style="max-height: 30%;">
                 <div class="post-img"> 
-                  <%= image_tag pre_post.image1 %>
-                  <% if pre_post.position_wb == 0 %>
+                  <%= image_tag after_post.image1 %>
+                  <% if after_post.position_wb == 0 %>
                     <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>  
-                  <% elsif pre_post.position_wb == 1 %>
+                    <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>  
+                  <% elsif after_post.position_wb == 1 %>
                     <!-- 上 -->
-                    <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                  <% elsif pre_post.position_wb == 2 %>
+                    <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                  <% elsif after_post.position_wb == 2 %>
                     <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                  <% elsif pre_post.position_wb == 3 %>
+                    <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                  <% elsif after_post.position_wb == 3 %>
                     <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>    
-                  <% elsif pre_post.position_wb == 4 %>
+                    <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
+                  <% elsif after_post.position_wb == 4 %>
                     <!-- 下 -->
-                    <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>
+                    <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
                   <% else %>
                     <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: pre_post } %></div>
+                    <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
                   <% end %>
                 </div>
               </td>
-              <td>測点：<%= point.number %></td>
+              <td style="min-width: 180px;">測点：<%= point.number %></td>
             </tr>
           <% end %>
         <% end %>
@@ -136,44 +139,3 @@
     </div>
   <% end %><!-- while num < points.length do -->
 <% end %>
-
-<style>
-.post-img {
-  width: 100%;
-  position: relative;
-  font-size: 9px;
-}
-.post-img > img {
-  width: 100%;
-}
-.post-img > .wb_left_top {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.post-img > .wb_top {
-  position: absolute;
-  top: 0;
-  left: 40%;
-}
-.post-img > .wb_right_top {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.post-img > .wb_right_down {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-.post-img > .wb_down {
-  position: absolute;
-  bottom: 0;
-  left: 40%;
-}
-.post-img > .wb_left_down {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-</style>

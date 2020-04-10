@@ -1,0 +1,280 @@
+<% @houses.each do |house| %>
+  <div class="page">
+    <h1 class="text-center">損傷調査書</h1>
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td rowspan="2">調査番号</td>
+        <td rowspan="2"><%= @investigation.id %></td>
+        <td rowspan="2">建物番号</td>
+        <td rowspan="2"><%= house.house_number %></td>
+        <td rowspan="2">建物所在地</td>
+        <td rowspan="2"><%= house.city %><%= house.block %></td>
+        <td rowspan="2">事中調査</td>
+        <td>調査年月日</td>
+        <td><%= @investigation.start_ongoing_survey %>～<%= @investigation.stop_ongoing_survey %></td>
+      </tr>
+      <tr>
+        <td>受注者</td>
+        <td><%= @investigation.investigator_ongoing_survey %></td>
+      </tr>      
+      <tr>
+        <td rowspan="2">所有者住所</td>
+        <td rowspan="2"><%= house.owner_city %><%= house.owner_block %></td>
+        <td rowspan="2">氏名</td>
+        <td rowspan="2"><%= house.house_name %></td>
+        <td rowspan="2">所有者氏名</td>
+        <td rowspan="2"><%= house.owner_name %></td>
+        <td rowspan="2">事後調査</td>
+        <td>調査年月日</td>
+        <td><%= @investigation.start_after_survey %>～<%= @investigation.stop_after_survey %></td>
+      </tr>
+      <tr>
+        <td>受注者</td>
+        <td><%= @investigation.investigator_after_survey %></td>
+      </tr>
+    </table>
+    
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td rowspan="2">名称（室名）</td>
+        <td colspan="4">事前調査</td>
+        <td colspan="3">事後調査</td>
+      </tr>
+      <tr>
+        <td>各部仕上材</td>
+        <td>写真番号</td>
+        <td>損傷の状況</td>
+        <td>備考</td>
+        <td>写真番号</td>
+        <td>損傷の状況</td>
+        <td>備考</td>        
+      </tr>
+
+      <% house.sonsyos.each do |sonsyo| %>
+        <tr>
+          <td><%= sonsyo.room_name %></td>
+          <td>－</td>
+          <td><%= sonsyo.number %></td>
+          
+          <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
+          <td>
+            <% if ongoing_damage.genkyo == true %>現況 <% end %>
+            <% if ongoing_damage.sukima == true %>隙間 <% end %>
+            <% if ongoing_damage.ware == true %>割れ <% end %>         
+            <% if ongoing_damage.kake == true %>欠け <% end %>         
+            <% if ongoing_damage.amimejyo == true %>網目状 <% end %>          
+            <% if ongoing_damage.zencho == true %>全長 <% end %>
+            <% if ongoing_damage.crack == true %>クラック <% end %>
+            <% if ongoing_damage.tile == true %>タイル <% end %>          
+            <% if ongoing_damage.kire == true %>切れ <% end %>
+            <% if ongoing_damage.uki == true %>浮き <% end %>
+            <% if ongoing_damage.suhon == true %>数本 <% end %>
+            <% if ongoing_damage.zenshu == true %>全周 <% end %>
+            <% if ongoing_damage.chirigire == true %>チリ切れ <% end %>
+            <% if ongoing_damage.cross == true %>クロス <% end %>
+            <% if ongoing_damage.meji == true %>目地 <% end %>
+            <% if ongoing_damage.tategu == true %>建具 <% end %>
+            <% if ongoing_damage.tasu == true %>多数 <% end %>
+            <% if ongoing_damage.kakusyo == true %>各所 <% end %>
+            <% if ongoing_damage.wide != 0.0 %>Wide=<%= ongoing_damage.wide %> <% end %>
+            <% if ongoing_damage.length != 0.0 %>Length=<%= ongoing_damage.length %> <% end %>
+            <% if ongoing_damage.width != 0.0 %>Width=<%= ongoing_damage.width %> <% end %>
+            <% if ongoing_damage.height != 0.0 %>Height=<%= ongoing_damage.height %> <% end %>
+            <%= ongoing_damage.comment %>
+          </td>
+          <td></td><!-- 備考 -->
+          <td><%= sonsyo.number %></td>
+          
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <td>
+            <% if after_damage.genkyo == true %>現況 <% end %>
+            <% if after_damage.sukima == true %>隙間 <% end %>
+            <% if after_damage.ware == true %>割れ <% end %>         
+            <% if after_damage.kake == true %>欠け <% end %>         
+            <% if after_damage.amimejyo == true %>網目状 <% end %>          
+            <% if after_damage.zencho == true %>全長 <% end %>
+            <% if after_damage.crack == true %>クラック <% end %>
+            <% if after_damage.tile == true %>タイル <% end %>          
+            <% if after_damage.kire == true %>切れ <% end %>
+            <% if after_damage.uki == true %>浮き <% end %>
+            <% if after_damage.suhon == true %>数本 <% end %>
+            <% if after_damage.zenshu == true %>全周 <% end %>
+            <% if after_damage.chirigire == true %>チリ切れ <% end %>
+            <% if after_damage.cross == true %>クロス <% end %>
+            <% if after_damage.meji == true %>目地 <% end %>
+            <% if after_damage.tategu == true %>建具 <% end %>
+            <% if after_damage.tasu == true %>多数 <% end %>
+            <% if after_damage.kakusyo == true %>各所 <% end %>
+            <% if after_damage.wide != 0.0 %>Wide=<%= after_damage.wide %> <% end %>
+            <% if after_damage.length != 0.0 %>Length=<%= after_damage.length %> <% end %>
+            <% if after_damage.width != 0.0 %>Width=<%= after_damage.width %> <% end %>
+            <% if after_damage.height != 0.0 %>Height=<%= after_damage.height %> <% end %>
+            <%= after_damage.comment %>
+          </td>
+          
+          <!-- 備考 -->
+          <% if ongoing_damage.comment.include?("一部補修済") || after_damage.comment.include?("一部補修済") %>
+            <td>一部補修済</td>
+          <% elsif ongoing_damage.comment.include?("補修済") || after_damage.comment.include?("補修済") %>
+            <td>補修済</td>
+          <% elsif ongoing_damage.comment.include?("一部改装済") || after_damage.comment.include?("一部改装済") %>
+            <td>一部改装済</td>
+          <% elsif ongoing_damage.comment.include?("改装済") || after_damage.comment.include?("改装済") %>
+            <td>改装済</td>            
+          <% elsif ongoing_damage.comment.include?("一部改修済") || after_damage.comment.include?("一部改修済") %>
+            <td>一部改修済</td>
+          <% elsif ongoing_damage.comment.include?("改修済") || after_damage.comment.include?("改修済") %>
+            <td>改修済</td>
+          <% elsif ongoing_damage.comment.include?("一部状況変化") || after_damage.comment.include?("一部状況変化") %>
+            <td>一部状況変化</td>
+          <% elsif ongoing_damage.comment.include?("状況変化") || after_damage.comment.include?("状況変化") %>
+            <td>状況変化</td>            
+          <% elsif ongoing_damage.comment.include?("調査辞退") || after_damage.comment.include?("調査辞退") %>
+            <td>調査辞退</td>
+          <% elsif ongoing_damage.comment.include?("比較不能") || ongoing_damage.comment.include?("比較不可") || 
+                   after_damage.comment.include?("比較不能") || after_damage.comment.include?("比較不可") %>
+            <td>比較不能</td>
+          <% elsif ongoing_damage.comment.include?("事後および事中で初めて撮影した時") || ongoing_damage.comment.include?("申し出") || 
+                   after_damage.comment.include?("事後および事中で初めて撮影した時") || after_damage.comment.include?("申し出") %>
+            <td>新規確認</td>          
+          <% elsif ongoing_damage.genkyo == after_damage.genkyo &&
+                ongoing_damage.sukima == after_damage.sukima &&
+                ongoing_damage.ware == after_damage.ware &&
+                ongoing_damage.kake == after_damage.kake &&
+                ongoing_damage.amimejyo == after_damage.amimejyo &&
+                ongoing_damage.zencho == after_damage.zencho &&
+                ongoing_damage.crack == after_damage.crack &&
+                ongoing_damage.tile == after_damage.tile &&
+                ongoing_damage.kire == after_damage.kire &&
+                ongoing_damage.uki == after_damage.uki &&
+                ongoing_damage.suhon == after_damage.suhon &&
+                ongoing_damage.zenshu == after_damage.zenshu &&
+                ongoing_damage.chirigire == after_damage.chirigire &&
+                ongoing_damage.cross == after_damage.cross &&
+                ongoing_damage.meji == after_damage.meji &&
+                ongoing_damage.tategu == after_damage.tategu &&
+                ongoing_damage.tasu == after_damage.tasu &&
+                ongoing_damage.kakusyo == after_damage.kakusyo &&
+                ongoing_damage.wide == after_damage.wide &&
+                ongoing_damage.length == after_damage.length &&
+                ongoing_damage.width == after_damage.width &&
+                ongoing_damage.height == after_damage.height &&
+                ongoing_damage.comment == after_damage.comment %>
+            <td>変化なし</td>
+          <% else %>
+            <td style="color:red;">変化あり</td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  
+  <% sonsyos = house.sonsyos %>
+  <% num = 0 %>
+  <% while num < sonsyos.length do %>
+    <div class="page">
+      <table class="table table-bordered" style="font-size:10px;">
+        <% sonsyo = sonsyos[num] %>
+        <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+        <% if after_damage != nil %>
+          <% num = num + 1 %>
+          <tr>
+            <td style="max-height: 30%;">
+              <div class="post-img"> 
+                <%= image_tag after_damage.image1 %>
+                <% if after_damage.position_wb == 0 %>
+                  <!-- 左上 -->
+                  <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>  
+                <% elsif after_damage.position_wb == 1 %>
+                  <!-- 上 -->
+                  <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                <% elsif after_damage.position_wb == 2 %>
+                  <!-- 右上 -->
+                  <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                <% elsif after_damage.position_wb == 3 %>
+                  <!-- 右下 -->
+                  <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                <% elsif after_damage.position_wb == 4 %>
+                  <!-- 下 -->
+                  <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
+                <% else %>
+                  <!-- 左下 -->
+                  <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
+                <% end %>
+              </div>
+            </td>
+            <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
+          </tr>
+        <% end %>
+        <% if num < sonsyos.length %>      
+          <% sonsyo = sonsyos[num] %>
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <% if after_damage != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td style="max-height: 30%;">
+                <div class="post-img"> 
+                  <%= image_tag after_damage.image1 %>
+                  <% if after_damage.position_wb == 0 %>
+                    <!-- 左上 -->
+                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>  
+                  <% elsif after_damage.position_wb == 1 %>
+                    <!-- 上 -->
+                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 2 %>
+                    <!-- 右上 -->
+                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 3 %>
+                    <!-- 右下 -->
+                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 4 %>
+                    <!-- 下 -->
+                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
+                  <% else %>
+                    <!-- 左下 -->
+                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
+                  <% end %>
+                </div>
+              </td>
+              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        <% if num < sonsyos.length %>      
+          <% sonsyo = sonsyos[num] %>
+          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+          <% if after_damage != nil %>
+            <% num = num + 1 %>
+            <tr>
+              <td style="max-height: 30%;">
+                <div class="post-img"> 
+                  <%= image_tag after_damage.image1 %>
+                  <% if after_damage.position_wb == 0 %>
+                    <!-- 左上 -->
+                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>  
+                  <% elsif after_damage.position_wb == 1 %>
+                    <!-- 上 -->
+                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 2 %>
+                    <!-- 右上 -->
+                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 3 %>
+                    <!-- 右下 -->
+                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>    
+                  <% elsif after_damage.position_wb == 4 %>
+                    <!-- 下 -->
+                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
+                  <% else %>
+                    <!-- 左下 -->
+                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: after_damage } %></div>
+                  <% end %>
+                </div>
+              </td>
+              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  <% end %><!-- while num < points.length do -->  
+<% end %>

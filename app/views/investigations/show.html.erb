@@ -46,19 +46,20 @@
   
   <tr>
     <td class="text-center">
-      <%= link_to '報告書印刷', pdf_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to 'WB写真DL', list_images_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to '写真DL', list_plainImages_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %> 
+      <%= link_to '報告書', pdf_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to 'WB付写真', list_images_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to '写真', list_plainImages_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %> 
     </td>
     <td class="text-center">
-      <%= link_to '報告書印刷', pdf_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to 'WB写真DL', list_images_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to '写真DL', list_plainImages_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>      
+      <%= link_to '報告書｜事前-事中', pdf_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to '報告書｜事中-事後', pdf_ongoing2_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to 'WB付写真', list_images_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to '写真', list_plainImages_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>      
     </td>
     <td class="text-center">
-      <%= link_to '報告書印刷', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to 'WB写真DL', list_images_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to '写真DL', list_plainImages_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to '報告書', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to 'WB付写真', list_images_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+      <%= link_to '写真', list_plainImages_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
     </td>    
   </tr>
 </table>

@@ -1,7 +1,7 @@
 <% @houses.each do |house| %>
   <div class="page">
     <p class="text-right">[事前調査用]</p>
-    <p class="text-right">家屋番号：<%= house.id %></p>
+    <p class="text-right">家屋番号：<%= house.house_number %></p>
     <h1 class="text-center">家屋調査承諾書（及び不要承諾書）</h1>
     <p>工事名：<%= @investigation.construction_name %></p>
     <table class="table table-bordered" style="font-size:10px;">

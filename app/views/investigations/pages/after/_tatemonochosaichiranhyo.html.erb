@@ -5,11 +5,11 @@
       <td>工事名</td>
       <td><%= @investigation.construction_name %></td>
       <td rowspan="2">事前調査</td>
-      <td>事前年月日</td>
+      <td>調査年月日</td>
       <td><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
       <td rowspan="2">事後調査</td>
-      <td>事前年月日</td>
-      <td><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
+      <td>調査年月日</td>
+      <td><%= @investigation.start_after_survey %>～<%= @investigation.stop_after_survey %></td>
     </tr>
     <tr>
       <td>施工者名</td>
@@ -36,17 +36,17 @@
     </tr>
     <tr>
       <% @houses.each do |house| %>
-        <td><%= house.id %></td>
+        <td><%= house.house_number %></td>
         <td><%= house.house_name %></td>
         <td><%= house.city %><%= house.block %></td>
         <td><%= house.owner_name %></td>
         <td><%= house.use %></td>
-        <td><%= house.overview_pre_survey %></td>
+        <td><%= house.overview_after_survey %></td>
         <td><%= house.construction %></td>
         <td><%= house.area %></td>
         <td></td>
         <td></td>
-        <td><%= house.range_pre_survey %></td>
+        <td><%= house.range_after_survey %></td>
       <% end %>
     </tr>
   </table>

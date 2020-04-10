@@ -4,14 +4,14 @@
     <table class="table table-bordered" style="font-size:10px;">
       <tr>
         <td rowspan="2">調査番号</td>
-        <td rowspan="2"></td>
+        <td rowspan="2"><%= @investigation.id %></td>
         <td rowspan="2">建物番号</td>
-        <td rowspan="2"><%= house.id %></td>
+        <td rowspan="2"><%= house.house_number %></td>
         <td rowspan="2">建物所在地</td>
         <td rowspan="2"><%= house.city %><%= house.block %></td>
         <td rowspan="2">事前調査</td>
         <td>調査年月日</td>
-        <td></td>
+        <td><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
       </tr>
       <tr>
         <td>受注者</td>
@@ -49,18 +49,43 @@
         <td>損傷の状況</td>
         <td>備考</td>        
       </tr>
-      <% house.points.each do |point| %>
+      <% house.sonsyos.each do |sonsyo| %>
         <tr>
-          <td><%= point.room_name %></td>
-          <td><%= point.number %></td>
-          <td><%= point.posts.find_by(survey_type: "pre").id %></td>
+          <td><%= sonsyo.room_name %></td>
+          <td>－</td>
+          <td><%= sonsyo.number %></td>
+          
+          <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
+          <td>
+            <% if pre_damage.genkyo == true %>現況 <% end %>
+            <% if pre_damage.sukima == true %>隙間 <% end %>
+            <% if pre_damage.ware == true %>割れ <% end %>         
+            <% if pre_damage.kake == true %>欠け <% end %>         
+            <% if pre_damage.amimejyo == true %>網目状 <% end %>          
+            <% if pre_damage.zencho == true %>全長 <% end %>
+            <% if pre_damage.crack == true %>クラック <% end %>
+            <% if pre_damage.tile == true %>タイル <% end %>          
+            <% if pre_damage.kire == true %>切れ <% end %>
+            <% if pre_damage.uki == true %>浮き <% end %>
+            <% if pre_damage.suhon == true %>数本 <% end %>
+            <% if pre_damage.zenshu == true %>全周 <% end %>
+            <% if pre_damage.chirigire == true %>チリ切れ <% end %>
+            <% if pre_damage.cross == true %>クロス <% end %>
+            <% if pre_damage.meji == true %>目地 <% end %>
+            <% if pre_damage.tategu == true %>建具 <% end %>
+            <% if pre_damage.tasu == true %>多数 <% end %>
+            <% if pre_damage.kakusyo == true %>各所 <% end %>
+            <% if pre_damage.wide != 0.0 %>Wide=<%= pre_damage.wide %> <% end %>
+            <% if pre_damage.length != 0.0 %>Length=<%= pre_damage.length %> <% end %>
+            <% if pre_damage.width != 0.0 %>Width=<%= pre_damage.width %> <% end %>
+            <% if pre_damage.height != 0.0 %>Height=<%= pre_damage.height %> <% end %>
+            <%= pre_damage.comment %>
+          </td>
+          <td></td><!-- 備考 -->
           <td></td>
           <td></td>
-          <td><%= point.posts.find_by(survey_type: "after").id %></td>
-          <td></td>
-          <td></td>
-        </tr>
-      <% end %>
+          <td></td><!-- 備考 -->
+      <% end %>    
     </table>
   </div>
   

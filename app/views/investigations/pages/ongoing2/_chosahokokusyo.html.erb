@@ -1,0 +1,63 @@
+<div class="page">
+  <h1 class="text-center">事中調査報告書</h1>
+  <br/>
+  <br/>
+  <div class="pdfpage_wrapper">
+    <p class="pdfpage_txt">工事名：<%= @investigation.construction_name %>
+    <br/>調査場所：<%= @investigation.place %>
+    <br/>
+    <br/>
+    <br/>1.調査目的
+    <br/>本調査(既存建物の損傷箇所の調査)は、損傷箇所の変化および損傷箇所の新たな発生
+  　<br/>が上記の工事によるものか否か又、その程度について調査を実施したものである。
+　  <br/>
+　  <br/>
+    <br/>2.調査方法
+    <br/>本調査は、事前調査の資料をもとに比較、検討を行い、立会人（所有者または居住者）
+　  <br/>よりの指摘箇所の確認および調査を実施したものである。
+    <br/> 
+    <br/>
+    <br/>3.調査対象および項目
+    <br/>本調査（事中調査）は事前調査に準じて行うものである。
+　  <br/>調査家屋配置図に示す範囲の建物（工作物を含む）につき当該工事施工後の状況調査を
+　  <br/>行い、１棟ごとに次の各項目に係わる測量・記録・写真撮影を行うものとした。</p>
+  </div>
+  <br/>
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">【調査項目】
+    <br/>① 家屋の全景
+    <br/>② 家屋内外の損傷（調査範囲内の項目を実施）
+    <br/>③ 柱等の傾斜
+    <br/>④ 建具の建て付け状況
+    <br/>⑤ 外構（塀・門・石積み・土間等）の損傷
+    <br/>⑥ 建物知盤面等の損傷
+    <br/>⑦ 立会人（所有者または居住者）の申し出の損傷
+    <br/>⑧ その他異常個所
+    <br/>
+    <br/>【調査使用機器】
+    <br/>①  カメラ・白板・指示棒
+    <br/>②  傾斜測定器
+    <br/>③  レベル</p>
+  </div>
+  <br/>
+  <div class="pdfpage_wrapper">    
+    <p class="pdfpage_txt">４．調査結果の概要
+　　<br/>建物配置の状況、棟別構造規模は、別紙図面および調査表のとおりである。
+    <br/>（１）建物・工作物の水準および傾斜についての調査結果は、別紙図面および調査表の
+　　<br/>とおりである。
+　　<br/>（２）仕上げ面についての調査結果は、別紙「損傷調査書」および「写真撮影台帳」の
+　　<br/>とおりである。</p>
+  </div>
+</div>
+
+<style>
+.pdfpage_wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+.pdfpage_txt {
+  display: inline-block;
+  text-align: left;
+}
+</style>

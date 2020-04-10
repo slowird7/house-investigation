@@ -1,15 +1,7 @@
-<% if survey_type == "pre" %>
-  <% survey_name = "事前" %>
-<% elsif survey_type == "ongoing" %>
-  <% survey_name = "事中" %>
-<% elsif survey_type == "after" %>
-  <% survey_name = "事後" %>
-<% end %>
-
 <% @houses.each do |house| %>
   <div class="page">
-    <p class="text-right">[<%= survey_name %>調査用]</p>
-    <p class="text-right">家屋番号：<%= house.id %></p>
+    <p class="text-right">[事後調査用]</p>
+    <p class="text-right">家屋番号：<%= house.house_number %></p>
     <h1 class="text-center">家屋調査承諾書（及び不要承諾書）</h1>
     <p>工事名：<%= @investigation.construction_name %></p>
     <table class="table table-bordered" style="font-size:10px;">
@@ -68,13 +60,9 @@
         <td><%= house.area %> m2</td>
       </tr>      
     </table>
-    <p class="text-center">施工者：<%= @investigation.builder %></p>
-    <% if survey_name == "事前" %>
-      <p class="text-center">調査機関：<%= @investigation.investigator_pre_survey %></p>
-    <% elsif survey_name == "事中" %>
-      <p class="text-center">調査機関：<%= @investigation.investigator_ongoing_survey %></p>
-    <% else %>
-      <p class="text-center">調査機関：<%= @investigation.investigator_after_survey %></p>
-    <% end %>
+    <!-- サイン -->
+    <div style="text-align: center;">
+      <%= image_tag house.sign_after_survey %>
+    </div>
   </div>
 <% end %>
