@@ -1,7 +1,7 @@
 class House < ApplicationRecord
   belongs_to :investigation
 
-  validates :house_number, presence: true, uniqueness: true
+  validates :house_number, presence: true, length: { maximum: 255 }
   validates :house_name, presence: true, length: { maximum: 255 }
   validates :prefectures, presence: true, length: { maximum: 255 }
   validates :city, length: { maximum: 255 }

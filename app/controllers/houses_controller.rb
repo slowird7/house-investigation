@@ -8,8 +8,8 @@ class HousesController < ApplicationController
 
   def create
     @investigation = Investigation.find(house_params[:investigation_id])
-    
     @house = @investigation.houses.build(house_params)
+    
     if @house.save
       flash[:success] = '正常に家屋を登録しました。'
       redirect_to @investigation
@@ -26,8 +26,6 @@ class HousesController < ApplicationController
     @points = @house.points
     @sonsyos = @house.sonsyos
     @keisyas = @house.keisyas
-    
-    #binding.pry
   end
   
   def edit
@@ -64,8 +62,6 @@ class HousesController < ApplicationController
       image_data = base64_conversion(tmp_house_params[:kyojyusya_sign_after_survey])
       tmp_house_params[:kyojyusya_sign_after_survey] = image_data
     end
-    
-#    binding.pry
       
     if @house.update(tmp_house_params)
       flash[:success] = '正常に更新されました。'
