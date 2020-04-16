@@ -108,6 +108,7 @@ function multi_download() {
         
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
+          console.log(canvas);
           console.log(canvasImage);
           canvasName = "damage_<%= damage.id %>_<%= survey_type %>";     
           handleDownload(canvasImage, canvasName);
