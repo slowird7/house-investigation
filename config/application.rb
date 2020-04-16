@@ -28,7 +28,8 @@ module HouseInvestigation
         origins "*"
         resource "*",
           headers: :any,
-          methods: [:get, :post, :options, :head]
+          #methods: [:get, :post, :options, :head]
+          methods: :any
       end
     end
     # Permit cross origin
