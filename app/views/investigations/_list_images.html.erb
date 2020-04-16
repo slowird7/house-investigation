@@ -204,12 +204,18 @@ function multi_download() {
       damage = sonsyo.damages.find_by(survey_type: survey_type)
       if damage.image1.present? 
   %>
-        client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientWidth;
-        client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientHeight;        
+        var img = document.getElementById("sonsyo-<%= sonsyo.id %>_img");
+        client_w = img.clientWidth;
+        client_h = img.clientHeight;
+        
+        console.log(client_w);
+        console.log(client_h);        
     
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          console.log(canvas);          
+          
           canvasImage = canvas.toDataURL("image/jpeg");
-          canvasName = "damage_<%= damage.id %>_<%= survey_type %>";     
+          canvasName = "damage_<%= damage.id %>_<%= survey_type %>";
           handleDownload(canvasImage, canvasName);
         });
   <% 
