@@ -1,10 +1,10 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "*"
+    origins 'https://house-investigation.s3.amazonaws.com/'
 
-    resource "*",
+    resource '*',
       headers: :any,
       methods: :any,
-      expose: :any
+      credentials: true
   end
 end

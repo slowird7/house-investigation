@@ -204,10 +204,9 @@ function multi_download() {
       damage = sonsyo.damages.find_by(survey_type: survey_type)
       if damage.image1.present? 
   %>
-//        client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").naturalWidth;
-//        client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").naturalHeight;
         client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientWidth;
         client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientHeight;        
+    
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
           canvasName = "damage_<%= damage.id %>_<%= survey_type %>";     
@@ -221,10 +220,9 @@ function multi_download() {
       slope = keisya.slopes.find_by(survey_type: survey_type)
       if slope.image1.present?  
   %>
-//        client_w = document.getElementById("keisya-<%= keisya.id %>_img").naturalWidth;
-//        client_h = document.getElementById("keisya-<%= keisya.id %>_img").naturalHeight;
         client_w = document.getElementById("keisya-<%= keisya.id %>_img").clientWidth;
         client_h = document.getElementById("keisya-<%= keisya.id %>_img").clientHeight;
+        
         html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
           canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
@@ -238,10 +236,9 @@ function multi_download() {
       post = point.posts.find_by(survey_type: survey_type)
       if post.image1.present?  
   %>
-//        client_w = document.getElementById("point-<%= point.id %>_img").naturalWidth;
-//        client_h = document.getElementById("point-<%= point.id %>_img").naturalHeight;
         client_w = document.getElementById("point-<%= point.id %>_img").clientWidth;
         client_h = document.getElementById("point-<%= point.id %>_img").clientHeight;
+        
         html2canvas(document.querySelector("#point-<%= point.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
           canvasName = "post_<%= post.id %>_<%= survey_type %>";     

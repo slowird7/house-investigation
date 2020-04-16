@@ -68,4 +68,4 @@ gem 'dotenv-rails'   # 環境変数の設定
 
 # Permit cors
 # 参考URL：https://qiita.com/yumikokh/items/b5fd604e12720027b4d5
-gem 'rack-cors'
+#gem 'rack-cors'

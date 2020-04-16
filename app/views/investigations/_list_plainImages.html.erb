@@ -103,13 +103,8 @@ function multi_download() {
         client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientWidth;
         client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientHeight;
         
-        console.log(client_w);        
-        console.log(client_h);
-        
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
-          console.log(canvas);
-          console.log(canvasImage);
           canvasName = "damage_<%= damage.id %>_<%= survey_type %>";     
           handleDownload(canvasImage, canvasName);
         });
@@ -125,6 +120,7 @@ function multi_download() {
 //        client_h = document.getElementById("keisya-<%= keisya.id %>_img").naturalHeight;
         client_w = document.getElementById("keisya-<%= keisya.id %>_img").clientWidth;
         client_h = document.getElementById("keisya-<%= keisya.id %>_img").clientHeight;
+        
         html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
           canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
