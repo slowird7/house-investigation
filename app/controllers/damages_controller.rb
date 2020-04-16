@@ -30,9 +30,6 @@ class DamagesController < ApplicationController
     @investigation = @house.investigation
 
     tmp_damage_params = damage_params
-    
-    binding.pry
-    
     # image（矢印あり）を更新
     image_data = base64_conversion(tmp_damage_params[:image_url])
     tmp_damage_params[:image1] = image_data
