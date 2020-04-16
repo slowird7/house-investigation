@@ -30,16 +30,21 @@ class DamagesController < ApplicationController
     @investigation = @house.investigation
 
     tmp_damage_params = damage_params
+    
+    binding.pry
+    
     # image（矢印あり）を更新
     image_data = base64_conversion(tmp_damage_params[:image_url])
     tmp_damage_params[:image1] = image_data
     tmp_damage_params[:image_url] = nil
 
-    # image（矢印なし）を更新
-    image_data = base64_conversion(tmp_damage_params[:original_image_url])
-    tmp_damage_params[:image2] = image_data
-    tmp_damage_params[:original_image_url] = nil
-
+    if tmp_damage_params[:original_image_url] != nil
+      # image（矢印なし）を更新
+      image_data = base64_conversion(tmp_damage_params[:original_image_url])
+      tmp_damage_params[:image2] = image_data
+      tmp_damage_params[:original_image_url] = nil
+    end
+    
     if @damage.update(tmp_damage_params)  
       # 調査開始日・終了日の更新
       if @damage.survey_type == "pre"
