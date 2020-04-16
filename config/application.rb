@@ -29,11 +29,10 @@ module HouseInvestigation
         resource "*",
           headers: :any,
           #methods: [:get, :post, :options, :head]
-          methods: :any
+          methods: :any,
+          expose: :any
       end
     end
     # Permit cross origin
   end
 end
-
-
