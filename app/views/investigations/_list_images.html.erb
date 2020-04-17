@@ -185,7 +185,7 @@ function handleDownload(path, name) {
   // chrome,firefox
   var a = document.createElement('a');
   a.download = name;
-//  a.href = "cgi-bin/sample.py?f="+path;
+  //  a.href = "cgi-bin/sample.py?f="+path;
   a.href = path;
   
   document.body.appendChild(a);
@@ -209,9 +209,12 @@ function multi_download() {
         client_h = img.clientHeight;
         
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
-          canvasImage = canvas.toDataURL("image/jpeg");
-          canvasName = "damage_<%= damage.id %>_<%= survey_type %>";
-          handleDownload(canvasImage, canvasName);
+          var canvasData = canvas.toDataURL("image/jpeg");
+          var canvasName = "damage_<%= damage.id %>_<%= survey_type %>";
+          
+          console.log(canvasData);
+          
+          handleDownload(canvasData, canvasName);
         });
   <% 
       end # END OF if damage.image1.present?
