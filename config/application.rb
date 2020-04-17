@@ -23,16 +23,18 @@ module HouseInvestigation
     # -- all .rb files in that directory are automatically loaded.
     
     # Permit cross origin
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins "*"
-        resource "*",
-          headers: :any,
-          methods: [:get, :post, :options, :head],
-          #methods: :any,
-          expose: :any
-      end
-    end
+    #config.middleware.insert_before 0, Rack::Cors do
+    #  allow do
+    #    origins '*'
+    #    resource '*', headers: :any, methods: [:get, :post, :options]
+    #  end
+    #end    
     # Permit cross origin
+    
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Credentials' => 'true',
+      'Access-Control-Allow-Origin' => 'http://localhost:3355',
+      'Access-Control-Request-Method' => '*'
+    }
   end
 end

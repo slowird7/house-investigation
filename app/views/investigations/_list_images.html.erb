@@ -11,7 +11,7 @@
     if damage.image1.present?
 %>
       <div id="sonsyo-<%= sonsyo.id %>" style="font-size: 60%; width: 60%; position: relative; margin-bottom: 20px;">
-        <img src="<%= damage.image1.url %>" id="sonsyo-<%= sonsyo.id.to_s %>_img" style="width: 100%" crossorigin="anonymous">
+        <%= image_tag damage.image1, id: "sonsyo-" + sonsyo.id.to_s + "_img", style: "width: 100%;" %>
         <% if damage.position_wb == 0 %>
           <!-- 左上 -->
           <div style="position: absolute; top: 0; left: 0;">
@@ -208,9 +208,6 @@ function multi_download() {
         client_w = img.clientWidth;
         client_h = img.clientHeight;
         
-        console.log(client_w);
-        console.log(client_h);
-    
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
           canvasImage = canvas.toDataURL("image/jpeg");
           canvasName = "damage_<%= damage.id %>_<%= survey_type %>";
