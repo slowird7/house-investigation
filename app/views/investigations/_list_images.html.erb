@@ -182,11 +182,12 @@ function handleDownload(path, name) {
       xhr.send();
       return;
   }
+  
   // chrome,firefox
   var a = document.createElement('a');
   a.download = name;
   //  a.href = "cgi-bin/sample.py?f="+path;
-  a.href = path;
+  a.href = path;  
   
   document.body.appendChild(a);
   a.click();
@@ -194,7 +195,6 @@ function handleDownload(path, name) {
   return;
 }
 function multi_download() {
-  var client_w, client_h;
   <% @houses.each do |house|
     sonsyos = house.sonsyos 
     keisyas = house.keisyas
@@ -205,8 +205,8 @@ function multi_download() {
       if damage.image1.present? 
   %>
         var img = document.getElementById("sonsyo-<%= sonsyo.id %>_img");
-        client_w = img.clientWidth;
-        client_h = img.clientHeight;
+        var client_w = img.clientWidth;
+        var client_h = img.clientHeight;
         
         html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
           var canvasData = canvas.toDataURL("image/jpeg");
@@ -224,13 +224,14 @@ function multi_download() {
       slope = keisya.slopes.find_by(survey_type: survey_type)
       if slope.image1.present?  
   %>
-        client_w = document.getElementById("keisya-<%= keisya.id %>_img").clientWidth;
-        client_h = document.getElementById("keisya-<%= keisya.id %>_img").clientHeight;
+        var img = document.getElementById("keisya-<%= keisya.id %>_img");
+        var client_w = img.clientWidth;
+        var client_h = img.clientHeight;
         
         html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), {width:client_w, height: client_h}).then(canvas => {
-          canvasImage = canvas.toDataURL("image/jpeg");
-          canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
-          handleDownload(canvasImage, canvasName);
+          var canvasData = canvas.toDataURL("image/jpeg");
+          var canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
+          handleDownload(canvasData, canvasName);
         });
   <% 
       end # END OF if slope.image1.present?
@@ -240,13 +241,14 @@ function multi_download() {
       post = point.posts.find_by(survey_type: survey_type)
       if post.image1.present?  
   %>
-        client_w = document.getElementById("point-<%= point.id %>_img").clientWidth;
-        client_h = document.getElementById("point-<%= point.id %>_img").clientHeight;
+        var img = document.getElementById("point-<%= point.id %>_img");
+        var client_w = img.clientWidth;
+        var client_h = img.clientHeight;
         
         html2canvas(document.querySelector("#point-<%= point.id %>"), {width:client_w, height: client_h}).then(canvas => {
-          canvasImage = canvas.toDataURL("image/jpeg");
-          canvasName = "post_<%= post.id %>_<%= survey_type %>";     
-          handleDownload(canvasImage, canvasName);
+          var canvasData = canvas.toDataURL("image/jpeg");
+          var canvasName = "post_<%= post.id %>_<%= survey_type %>";     
+          handleDownload(canvasData, canvasName);
         });  
   <% 
       end # END OF if point.image1.present?

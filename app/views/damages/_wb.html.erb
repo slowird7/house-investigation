@@ -19,7 +19,7 @@
     <td>家屋No.</td>
     <td>
       <div style="height:12px; overflow:hidden;">
-        <%= house.id %>
+        <%= house.house_number %>
       </div>
     </td>
     <td>写真No.</td>
@@ -61,17 +61,21 @@
   <tr>
     <td>面積</td>
     <td colspan="4">
-      <div style="height:12px; overflow:hidden;">
-        <%= damage.width %> x <%= damage.height %>
-      </div>    
+      <% unless damage.width == 0.0 || damage.height == 0.0 %>
+        <div style="height:12px; overflow:hidden;">
+          <%= damage.width %> x <%= damage.height %>
+        </div>    
+      <% end %>
     </td>
   </tr>
   <tr>
     <td>幅</td>
     <td colspan="4">
-      <div style="height:12px; overflow:hidden;">
-        <%= damage.wide %>
-      </div>
+      <% unless damage.wide == 0.0 %>
+        <div style="height:12px; overflow:hidden;">
+          <%= damage.wide %>
+        </div>
+      <% end %>
     </td>
   </tr>
   <tr>
@@ -87,7 +91,10 @@
         <% if damage.zenshu == true %>
           <span>全周</span>
         <% end %>
-        <%= damage.length %>
+        
+        <% unless damage.length == 0.0 %>
+          <%= damage.length %>
+        <% end %>
       </div>
     </td>  
   </tr>
