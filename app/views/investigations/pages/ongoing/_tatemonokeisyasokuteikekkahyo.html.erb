@@ -104,31 +104,11 @@
         <% if ongoing_slope != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="max-height: 30%;">
-              <div class="post-img"> 
-                <%= image_tag ongoing_slope.image1 %>
-                <% if ongoing_slope.position_wb == 0 %>
-                  <!-- 左上 -->
-                  <div class="wb_left_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>  
-                <% elsif ongoing_slope.position_wb == 1 %>
-                  <!-- 上 -->
-                  <div class="wb_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                <% elsif ongoing_slope.position_wb == 2 %>
-                  <!-- 右上 -->
-                  <div class="wb_right_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                <% elsif ongoing_slope.position_wb == 3 %>
-                  <!-- 右下 -->
-                  <div class="wb_right_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                <% elsif ongoing_slope.position_wb == 4 %>
-                  <!-- 下 -->
-                  <div class="wb_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>
-                <% else %>
-                  <!-- 左下 -->
-                  <div class="wb_left_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>
-                <% end %>
-              </div>
+            <td style="height: 30%;">
+              <!-- 写真 -->
+              <%= render 'slopes/photo_with_wb', { house: house, keisya: keisya, slope: ongoing_slope } %>
             </td>
-            <td style="min-width: 180px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
+            <td style="min-width: 130px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
           </tr>
         <% end %>
         <% if num < keisyas.length %>      
@@ -137,31 +117,11 @@
           <% if ongoing_slope != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="max-height: 30%;">
-                <div class="post-img"> 
-                  <%= image_tag ongoing_slope.image1 %>
-                  <% if ongoing_slope.position_wb == 0 %>
-                    <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>  
-                  <% elsif ongoing_slope.position_wb == 1 %>
-                    <!-- 上 -->
-                    <div class="wb_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                  <% elsif ongoing_slope.position_wb == 2 %>
-                    <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                  <% elsif ongoing_slope.position_wb == 3 %>
-                    <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                  <% elsif ongoing_slope.position_wb == 4 %>
-                    <!-- 下 -->
-                    <div class="wb_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>
-                  <% else %>
-                    <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>
-                  <% end %>
-                </div>
+              <td style="height: 30%;">
+                <!-- 写真 -->
+                <%= render 'slopes/photo_with_wb', { house: house, keisya: keisya, slope: ongoing_slope } %>
               </td>
-              <td style="min-width: 180px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
+              <td style="min-width: 130px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
             </tr>
           <% end %>
         <% end %>
@@ -171,31 +131,11 @@
           <% if ongoing_slope != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="max-height: 30%;">
-                <div class="post-img"> 
-                  <%= image_tag ongoing_slope.image1 %>
-                  <% if ongoing_slope.position_wb == 0 %>
-                    <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>  
-                  <% elsif ongoing_slope.position_wb == 1 %>
-                    <!-- 上 -->
-                    <div class="wb_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                  <% elsif ongoing_slope.position_wb == 2 %>
-                    <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                  <% elsif ongoing_slope.position_wb == 3 %>
-                    <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>    
-                  <% elsif ongoing_slope.position_wb == 4 %>
-                    <!-- 下 -->
-                    <div class="wb_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>
-                  <% else %>
-                    <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'slopes/wb', { house: house, keisya: keisya, slope: ongoing_slope } %></div>
-                  <% end %>
-                </div>
+              <td style="height: 30%;">
+                <!-- 写真 -->
+                <%= render 'slopes/photo_with_wb', { house: house, keisya: keisya, slope: ongoing_slope } %>
               </td>
-              <td style="min-width: 180px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
+              <td style="min-width: 130px;">傾斜：<%= disp_alphabet(keisya.number) %></td>
             </tr>
           <% end %>
         <% end %>

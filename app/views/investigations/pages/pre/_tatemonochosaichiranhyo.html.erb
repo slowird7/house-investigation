@@ -34,8 +34,9 @@
       <td>事後調査日</td>
       <td>調査範囲</td>        
     </tr>
-    <tr>
-      <% @houses.each do |house| %>
+
+    <% @houses.each do |house| %>
+      <tr>
         <td><%= house.house_number %></td>
         <td><%= house.house_name %></td>
         <td><%= house.city %><%= house.block %></td>
@@ -47,7 +48,7 @@
         <td></td>
         <td></td>
         <td><%= house.range_pre_survey %></td>
-      <% end %>
-    </tr>
+      </tr>
+    <% end %>
   </table>
 </div>

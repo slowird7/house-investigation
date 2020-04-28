@@ -1,4 +1,12 @@
-<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:170px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:200px;">
+  <tr>
+    <td>工事名</td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= house.investigation.construction_name %>
+      </div>
+    </td>
+  </tr>
   <tr>
     <td>調査日</td>
     <td colspan="4">
@@ -33,24 +41,31 @@
     <td>調査箇所</td>
     <td colspan="4">
       <div style="height:12px; overflow:hidden;">
-        <%= point.room_name %>
+        <% if point.room_name == "その他" %>
+          <%= point.room_name_other %>
+        <% else %>
+          <%= point.room_name %>
+        <% end %>
       </div>
     </td>
   </tr>
-  <tr>
-    <td>標高</td>
-    <td colspan="4">
-      <div style="height:12px; overflow:hidden;">
-        <%= post.hyoko %>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>コメント</td>
-    <td colspan="4">
-      <div style="height:12px; overflow:hidden;">
-        <%= post.comment %>
-      </div>
-    </td>
-  </tr>
+  
+  <% if false %>
+    <tr>
+      <td>標高</td>
+      <td colspan="4">
+        <div style="height:12px; overflow:hidden;">
+          <%= post.hyoko %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>コメント</td>
+      <td colspan="4">
+        <div style="height:12px; overflow:hidden;">
+          <%= post.comment %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
 </table>

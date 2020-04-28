@@ -1,4 +1,12 @@
-<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:170px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:200px;">
+  <tr>
+    <td>工事名</td>
+    <td colspan="4">
+      <div style="height:12px; overflow:hidden;">
+        <%= house.investigation.construction_name %>
+      </div>
+    </td>
+  </tr>
   <tr>
     <td>調査日</td>
     <td colspan="4">
@@ -33,7 +41,11 @@
     <td>調査箇所</td>
     <td colspan="4">
       <div style="height:12px; overflow:hidden;">
-        <%= sonsyo.room_name %>
+        <% if sonsyo.room_name == "その他" %>
+          <%= sonsyo.room_name_other %>
+        <% else %>
+          <%= sonsyo.room_name %>
+        <% end %>
       </div>
     </td>
   </tr>

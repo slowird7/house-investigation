@@ -40,31 +40,11 @@
         <% if after_post != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="max-height: 30%;">
-              <div class="post-img"> 
-                <%= image_tag after_post.image1 %>
-                <% if after_post.position_wb == 0 %>
-                  <!-- 左上 -->
-                  <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>  
-                <% elsif after_post.position_wb == 1 %>
-                  <!-- 上 -->
-                  <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                <% elsif after_post.position_wb == 2 %>
-                  <!-- 右上 -->
-                  <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                <% elsif after_post.position_wb == 3 %>
-                  <!-- 右下 -->
-                  <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                <% elsif after_post.position_wb == 4 %>
-                  <!-- 下 -->
-                  <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
-                <% else %>
-                  <!-- 左下 -->
-                  <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
-                <% end %>
-              </div>
+            <td style="height: 30%;">
+              <!-- 写真 -->
+              <%= render 'posts/photo_with_wb', { house: house, point: point, post: after_post } %>
             </td>
-            <td style="min-width: 180px;">測点：<%= point.number %></td>
+            <td style="min-width: 130px;">測点：<%= point.number %></td>
           </tr>
         <% end %>
         <% if num < points.length %>      
@@ -73,31 +53,11 @@
           <% if after_post != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="max-height: 30%;">
-                <div class="post-img"> 
-                  <%= image_tag after_post.image1 %>
-                  <% if after_post.position_wb == 0 %>
-                    <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>  
-                  <% elsif after_post.position_wb == 1 %>
-                    <!-- 上 -->
-                    <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                  <% elsif after_post.position_wb == 2 %>
-                    <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                  <% elsif after_post.position_wb == 3 %>
-                    <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                  <% elsif after_post.position_wb == 4 %>
-                    <!-- 下 -->
-                    <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
-                  <% else %>
-                    <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
-                  <% end %>
-                </div>
+              <td style="height: 30%;">
+                <!-- 写真 -->
+                <%= render 'posts/photo_with_wb', { house: house, point: point, post: after_post } %>
               </td>
-              <td style="min-width: 180px;">測点：<%= point.number %></td>
+              <td style="min-width: 130px;">測点：<%= point.number %></td>
             </tr>
           <% end %>
         <% end %>
@@ -107,31 +67,11 @@
           <% if after_post != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="max-height: 30%;">
-                <div class="post-img"> 
-                  <%= image_tag after_post.image1 %>
-                  <% if after_post.position_wb == 0 %>
-                    <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>  
-                  <% elsif after_post.position_wb == 1 %>
-                    <!-- 上 -->
-                    <div class="wb_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                  <% elsif after_post.position_wb == 2 %>
-                    <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                  <% elsif after_post.position_wb == 3 %>
-                    <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>    
-                  <% elsif after_post.position_wb == 4 %>
-                    <!-- 下 -->
-                    <div class="wb_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
-                  <% else %>
-                    <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: after_post } %></div>
-                  <% end %>
-                </div>
+              <td style="height: 30%;">
+                <!-- 写真 -->
+                <%= render 'posts/photo_with_wb', { house: house, point: point, post: after_post } %>
               </td>
-              <td style="min-width: 180px;">測点：<%= point.number %></td>
+              <td style="min-width: 130px;">測点：<%= point.number %></td>
             </tr>
           <% end %>
         <% end %>

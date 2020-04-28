@@ -99,31 +99,11 @@
         <% if pre_damage != nil %>
           <% num = num + 1 %>
           <tr>
-            <td style="max-height: 30%;">
-              <div class="post-img"> 
-                <%= image_tag pre_damage.image1 %>
-                <% if pre_damage.position_wb == 0 %>
-                  <!-- 左上 -->
-                  <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
-                <% elsif pre_damage.position_wb == 1 %>
-                  <!-- 上 -->
-                  <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                <% elsif pre_damage.position_wb == 2 %>
-                  <!-- 右上 -->
-                  <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                <% elsif pre_damage.position_wb == 3 %>
-                  <!-- 右下 -->
-                  <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                <% elsif pre_damage.position_wb == 4 %>
-                  <!-- 下 -->
-                  <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
-                <% else %>
-                  <!-- 左下 -->
-                  <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
-                <% end %>
-              </div>
+            <td style="height: 30%;">
+              <!-- 写真 -->
+              <%= render 'damages/photo_with_wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %>
             </td>
-            <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
+            <td style="min-width: 130px;">損傷：No.<%= sonsyo.number %></td>
           </tr>
         <% end %>
         <% if num < sonsyos.length %>      
@@ -132,31 +112,11 @@
           <% if pre_damage != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="max-height: 30%;">
-                <div class="post-img"> 
-                  <%= image_tag pre_damage.image1 %>
-                  <% if pre_damage.position_wb == 0 %>
-                    <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
-                  <% elsif pre_damage.position_wb == 1 %>
-                    <!-- 上 -->
-                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 2 %>
-                    <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 3 %>
-                    <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 4 %>
-                    <!-- 下 -->
-                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
-                  <% else %>
-                    <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
-                  <% end %>
-                </div>
+              <td style="height: 30%;">
+                <!-- 写真 -->
+                <%= render 'damages/photo_with_wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %>
               </td>
-              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
+              <td style="min-width: 130px;">損傷：No.<%= sonsyo.number %></td>
             </tr>
           <% end %>
         <% end %>
@@ -166,31 +126,11 @@
           <% if pre_damage != nil %>
             <% num = num + 1 %>
             <tr>
-              <td style="max-height: 30%;">
-                <div class="post-img"> 
-                  <%= image_tag pre_damage.image1 %>
-                  <% if pre_damage.position_wb == 0 %>
-                    <!-- 左上 -->
-                    <div class="wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>  
-                  <% elsif pre_damage.position_wb == 1 %>
-                    <!-- 上 -->
-                    <div class="wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 2 %>
-                    <!-- 右上 -->
-                    <div class="wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 3 %>
-                    <!-- 右下 -->
-                    <div class="wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>    
-                  <% elsif pre_damage.position_wb == 4 %>
-                    <!-- 下 -->
-                    <div class="wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
-                  <% else %>
-                    <!-- 左下 -->
-                    <div class="wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %></div>
-                  <% end %>
-                </div>
+              <td style="height: 30%;">
+                <!-- 写真 -->
+                <%= render 'damages/photo_with_wb', { house: house, sonsyo: sonsyo, damage: pre_damage } %>
               </td>
-              <td style="min-width: 180px;">損傷：No.<%= sonsyo.number %></td>
+              <td style="min-width: 130px;">損傷：No.<%= sonsyo.number %></td>
             </tr>
           <% end %>
         <% end %>

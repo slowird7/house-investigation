@@ -1,0 +1,138 @@
+<div id="sonsyo-<%= sonsyo.id %>" class="post-img">
+  <%= image_tag damage.image1, id: "sonsyo-" + sonsyo.id.to_s + "_img" %>
+  
+  <% unless sonsyo.room_name == "全景" %>
+    <% if damage.position_wb == 0 %>
+      <!-- 左上 -->
+      <div class="damage_wb_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>  
+    <% elsif damage.position_wb == 1 %>
+      <!-- 上 -->
+      <div class="damage_wb_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>    
+    <% elsif damage.position_wb == 2 %>
+      <!-- 右上 -->
+      <div class="damage_wb_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>    
+    <% elsif damage.position_wb == 3 %>
+      <!-- 右下 -->
+      <div class="damage_wb_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>    
+    <% elsif damage.position_wb == 4 %>
+      <!-- 下 -->
+      <div class="damage_wb_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>
+    <% elsif damage.position_wb == 5 %>
+      <!-- 左下 -->
+      <div class="damage_wb_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>
+    <% elsif damage.position_wb == 6 %>
+      <!-- 左上（横置き） -->
+      <div class="damage_wb_yoko_left_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>  
+    <% elsif damage.position_wb == 7 %>
+      <!-- 上（横置き） -->
+      <div class="damage_wb_yoko_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>    
+    <% elsif damage.position_wb == 8 %>
+      <!-- 右上（横置き） -->
+      <div class="damage_wb_yoko_right_top"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>    
+    <% elsif damage.position_wb == 9 %>
+      <!-- 右下（横置き） -->
+      <div class="damage_wb_yoko_right_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>    
+    <% elsif damage.position_wb == 10 %>
+      <!-- 下（横置き） -->
+      <div class="damage_wb_yoko_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>
+    <% else %>
+      <!-- 左下（横置き） -->
+      <div class="damage_wb_yoko_left_down"><%= render 'damages/wb', { house: house, sonsyo: sonsyo, damage: damage } %></div>
+    <% end %>
+  <% end %>
+</div>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 60%;
+  font-size: 60%;
+}
+.post-img > img {
+  width: 100%;
+}
+/*
+ 縦置き
+*/
+.damage_wb_left_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 150px;
+}
+.damage_wb_top {
+  position: absolute;
+  top: 0;
+  left: 40%;
+  width: 120px;
+  height: 150px;
+}
+.damage_wb_right_top {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.damage_wb_right_down {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.damage_wb_down {
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+}
+.damage_wb_left_down {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+/*
+ 横置き
+*/
+.damage_wb_yoko_left_top {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.damage_wb_yoko_top {
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 100px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.damage_wb_yoko_right_top {
+  position: absolute;
+  top: 200px;
+  right: 25px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.damage_wb_yoko_right_down {
+  position: absolute;
+  bottom: -225px;
+  right: 25px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.damage_wb_yoko_down {
+  position: absolute;
+  bottom: -225px;
+  left: calc(50% - 100px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.damage_wb_yoko_left_down {
+  position: absolute;
+  bottom: -225px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+</style>

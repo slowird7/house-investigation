@@ -1,0 +1,132 @@
+<div id="point-<%= point.id %>" class="post-img">
+  <%= image_tag post.image1, id: "point-" + point.id.to_s + "_img" %>
+ 
+  <% if post.position_wb == 0 %>
+    <!-- 左上 -->
+    <div class="post_wb_left_top"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>  
+  <% elsif post.position_wb == 1 %>
+    <!-- 上 -->
+    <div class="post_wb_top"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>    
+  <% elsif post.position_wb == 2 %>
+    <!-- 右上 -->
+    <div class="post_wb_right_top"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>    
+  <% elsif post.position_wb == 3 %>
+    <!-- 右下 -->
+    <div class="post_wb_right_down"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>    
+  <% elsif post.position_wb == 4 %>
+    <!-- 下 -->
+    <div class="post_wb_down"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>
+  <% elsif post.position_wb == 5 %>
+    <!-- 左下 -->
+    <div class="post_wb_left_down"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>
+  <% elsif post.position_wb == 6 %>
+    <!-- 左上（横置き） -->
+    <div class="post_wb_yoko_left_top"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>  
+  <% elsif post.position_wb == 7 %>
+    <!-- 上（横置き） -->
+    <div class="post_wb_yoko_top"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>    
+  <% elsif post.position_wb == 8 %>
+    <!-- 右上（横置き） -->
+    <div class="post_wb_yoko_right_top"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>    
+  <% elsif post.position_wb == 9 %>
+    <!-- 右下（横置き） -->
+    <div class="post_wb_yoko_right_down"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>    
+  <% elsif post.position_wb == 10 %>
+    <!-- 下（横置き） -->
+    <div class="post_wb_yoko_down"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>
+  <% else %>
+    <!-- 左下（横置き） -->
+    <div class="post_wb_yoko_left_down"><%= render 'posts/wb', { house: house, point: point, post: post } %></div>
+  <% end %>
+</div>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom:20px;
+  width: 60%;
+  font-size: 60%;
+}
+.post-img > img {
+  width: 100%;
+}
+/*
+ 縦置き
+*/
+.post_wb_left_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.post_wb_top {
+  position: absolute;
+  top: 0;
+  left: 40%;
+}
+.post_wb_right_top {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.post_wb_right_down {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.post_wb_down {
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+}
+.post_wb_left_down {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+/*
+ 横置き
+*/
+.post_wb_yoko_left_top {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post_wb_yoko_top {
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 66px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post_wb_yoko_right_top {
+  position: absolute;
+  top: 200px;
+  right: -87px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post_wb_yoko_right_down {
+  position: absolute;
+  bottom: -113px;
+  right: -87px;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post_wb_yoko_down {
+  position: absolute;
+  bottom: -113px;
+  left: calc(50% - 66px);
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+.post_wb_yoko_left_down {
+  position: absolute;
+  bottom: -113px;
+  left: 0;
+  transform:rotate(-90deg);
+  transform-origin:left top;
+}
+</style>
