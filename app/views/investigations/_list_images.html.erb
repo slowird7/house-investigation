@@ -1,3 +1,39 @@
+<button id="previewButton1">プレビュー CORS 対応なし</button><br>
+<button id="previewButton2">プレビュー CORS 対応あり</button><br>
+<a id="downloadButton">ダウンロードする</a>
+<hr>
+
+<div id="downadArea"></div>
+
+<script>
+var canvas;
+var downloadAredElement = document.getElementById('downadArea');
+
+document.getElementById('previewButton1').addEventListener('click', event => {
+  html2canvas(document.querySelector("body")).then(_canvas => {
+    canvas = _canvas;
+    downloadAredElement.appendChild(canvas);
+  });
+});
+document.getElementById('previewButton2').addEventListener('click', event => {
+  html2canvas(document.querySelector("body"), {
+    proxy: true,
+    useCORS: true,
+  }).then(_canvas => {
+    canvas = _canvas;
+    downloadAredElement.appendChild(canvas);
+  });
+});
+document.getElementById('downloadButton').addEventListener('click', event => {
+  var imgageData = canvas.toDataURL("image/png");
+  imgageData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+  event.target.setAttribute("download", "canvas.png");
+  event.target.setAttribute("href", imgageData);
+});
+</script>  
+
+
+
 <p><input type="button" value="一括ダウンロード" id="batch" class="btn btn-primary" onclick="multi_download()"></p>
 
 <% @houses.each do |house|
@@ -88,7 +124,8 @@ function multi_download() {
         var client_w = img.clientWidth;
         var client_h = img.clientHeight;
         
-        html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
+        html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), 
+        {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
           var canvasData = canvas.toDataURL("image/jpeg");
           var canvasName = "damage_<%= damage.id %>_<%= survey_type %>";
           
@@ -108,7 +145,8 @@ function multi_download() {
         var client_w = img.clientWidth;
         var client_h = img.clientHeight;
         
-        html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
+        html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), 
+        {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
           var canvasData = canvas.toDataURL("image/jpeg");
           var canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
           handleDownload(canvasData, canvasName);
@@ -125,7 +163,8 @@ function multi_download() {
         var client_w = img.clientWidth;
         var client_h = img.clientHeight;
         
-        html2canvas(document.querySelector("#point-<%= point.id %>"), {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
+        html2canvas(document.querySelector("#point-<%= point.id %>"), 
+        {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
           var canvasData = canvas.toDataURL("image/jpeg");
           var canvasName = "post_<%= post.id %>_<%= survey_type %>";     
           handleDownload(canvasData, canvasName);
