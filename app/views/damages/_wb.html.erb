@@ -1,4 +1,4 @@
-<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:200px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:250px;">
   <tr>
     <td>工事名</td>
     <td colspan="4">
@@ -73,7 +73,7 @@
   <tr>
     <td>面積</td>
     <td colspan="4">
-      <% unless damage.width == 0.0 || damage.height == 0.0 %>
+      <% if damage.width.present? && damage.height.present? && damage.width != 0.0 && damage.height != 0.0 %>
         <div style="height:12px; overflow:hidden;">
           <%= damage.width %> x <%= damage.height %>
         </div>    
@@ -83,7 +83,7 @@
   <tr>
     <td>幅</td>
     <td colspan="4">
-      <% unless damage.wide == 0.0 %>
+      <% if damage.wide.present? && damage.wide != 0.0 %>
         <div style="height:12px; overflow:hidden;">
           <%= damage.wide %>
         </div>
@@ -104,7 +104,7 @@
           <span>全周</span>
         <% end %>
         
-        <% unless damage.length == 0.0 %>
+        <% if damage.length.present? && damage.length != 0.0 %>
           <%= damage.length %>
         <% end %>
       </div>

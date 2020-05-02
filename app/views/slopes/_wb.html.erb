@@ -1,4 +1,4 @@
-<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:200px;">
+<table class="table table-bordered table-condensed" style="background-color: white; margin-bottom: 0px; width:250px;">
   <tr>
     <td>工事名</td>
     <td colspan="4">
@@ -60,10 +60,10 @@
   <tr>
     <td colspan="5">
       <div style="height:12px; overflow:hidden;">
-        <% if slope.east != 0.0 %>東：<%= slope.east %><% end %>
-        <% if slope.west != 0.0 %>西：<%= slope.west %><% end %>
-        <% if slope.south != 0.0 %>南：<%= slope.south %><% end %>
-        <% if slope.north != 0.0 %>北：<%= slope.north %><% end %>
+        <% if slope.east.present? && slope.east != 0.0 %>東：<%= slope.east %><% end %>
+        <% if slope.west.present? && slope.west != 0.0 %>西：<%= slope.west %><% end %>
+        <% if slope.south.present? && slope.south != 0.0 %>南：<%= slope.south %><% end %>
+        <% if slope.north.present? && slope.north != 0.0 %>北：<%= slope.north %><% end %>
       </div>
     </td>
   </tr>

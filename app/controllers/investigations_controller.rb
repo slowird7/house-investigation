@@ -2,7 +2,7 @@ class InvestigationsController < ApplicationController
   before_action :require_user_logged_in
   
   def index
-    @investigations = Investigation.all
+    @investigations = Investigation.order(:id)
   end
 
   def show
