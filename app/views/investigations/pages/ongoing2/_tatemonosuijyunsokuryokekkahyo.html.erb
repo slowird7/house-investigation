@@ -1,34 +1,41 @@
 <% @houses.each do |house| %>
-  <div class="page">
-    <table class="table table-bordered" style="font-size:10px;">
-      <tr>
-        <td colspan="4">建物水準測量結果表</td>
-        <td>家屋番号：<%= house.house_number %></td>
-      </tr>
-      <tr>
-        <td>測点</td>
-        <td>場所</td>
-        <td>事中調査測定値（mm）</td>
-        <td>事後調査測定値（mm）</td>
-        <td>変化量（mm）</td>
-      </tr>
-      <% points = house.points %>
-      <% points.each do |point| %>
-        <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
-        <% after_post = point.posts.find_by(survey_type: "after") %>
+
+  <!-- コメントアウト -->
+  <% if false %>
+  
+    <div class="page">
+      <table class="table table-bordered" style="font-size:10px;">
         <tr>
-          <td><%= point.number %></td>
-          <td><%= point.room_name %></td>
-          <% ongoing_sokuteichi = ongoing_post.hyoko + ((ongoing_post.ouro_fs - ongoing_post.ouro_bs) + (ongoing_post.fukuro_fs - ongoing_post.fukuro_bs)) / 2 %>
-          <td><%= ongoing_sokuteichi %></td>
-          <% after_sokuteichi = after_post.hyoko + ((after_post.ouro_fs - after_post.ouro_bs) + (after_post.fukuro_fs - after_post.fukuro_bs)) / 2 %>
-          <td><%= after_sokuteichi %></td>
-          <td><%= after_sokuteichi - ongoing_sokuteichi %></td>
+          <td colspan="4">建物水準測量結果表</td>
+          <td>家屋番号：<%= house.house_number %></td>
         </tr>
-      <% end %>
-    </table>
-    <p class="text-right"><%= @investigation.investigator_after_survey %></p>
-  </div>
+        <tr>
+          <td>測点</td>
+          <td>場所</td>
+          <td>事中調査測定値（mm）</td>
+          <td>事後調査測定値（mm）</td>
+          <td>変化量（mm）</td>
+        </tr>
+        <% points = house.points %>
+        <% points.each do |point| %>
+          <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
+          <% after_post = point.posts.find_by(survey_type: "after") %>
+          <tr>
+            <td><%= point.number %></td>
+            <td><%= point.room_name %></td>
+            <% ongoing_sokuteichi = ongoing_post.hyoko + ((ongoing_post.ouro_fs - ongoing_post.ouro_bs) + (ongoing_post.fukuro_fs - ongoing_post.fukuro_bs)) / 2 %>
+            <td><%= ongoing_sokuteichi %></td>
+            <% after_sokuteichi = after_post.hyoko + ((after_post.ouro_fs - after_post.ouro_bs) + (after_post.fukuro_fs - after_post.fukuro_bs)) / 2 %>
+            <td><%= after_sokuteichi %></td>
+            <td><%= after_sokuteichi - ongoing_sokuteichi %></td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="text-right"><%= @investigation.investigator_after_survey %></p>
+    </div>
+
+  <% end %>
+  <!-- コメントアウト -->
 
   <% points = house.points %>
   <% num = 0 %>
