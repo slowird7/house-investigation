@@ -37,10 +37,12 @@ class HousesController < ApplicationController
     @house = House.find(params[:id])
     tmp_house_params = house_params
     
+    #binding.pry
+    
     if tmp_house_params[:sign_pre_survey] != nil
       image_data = base64_conversion(tmp_house_params[:sign_pre_survey])
       tmp_house_params[:sign_pre_survey] = image_data
-    end  
+    end
     if tmp_house_params[:sign_ongoing_survey] != nil 
       image_data = base64_conversion(tmp_house_params[:sign_ongoing_survey])
       tmp_house_params[:sign_ongoing_survey] = image_data
@@ -149,6 +151,7 @@ class HousesController < ApplicationController
     params.require(:house).permit(:investigation_id, :house_number, :house_name, :prefectures, :city, :block, :resident_phone_number, 
                                   :owner_name_ruby, :owner_name, :owner_prefectures, :owner_city, :owner_block, :owner_phone_number,
                                   :construction, :floors, :area, :use, 
+                                  :overview_pre_survey, :range_pre_survey, :overview_ongoing_survey, :range_ongoing_survey, :overview_after_survey, :range_after_survey,
                                   :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey, 
                                   :kyojyusya_sign_pre_survey, :kyojyusya_sign_ongoing_survey, :kyojyusya_sign_after_survey)
   end  

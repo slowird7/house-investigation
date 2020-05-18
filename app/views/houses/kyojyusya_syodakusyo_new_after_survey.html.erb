@@ -23,17 +23,17 @@
     <td>現住居者氏名（承諾者）</td>
     <td><%= @house.house_name %></td>
     <td>TEL</td>
-    <td></td>
+    <td><%= @house.resident_phone_number %></td>
   </tr>
   <tr>
     <td>所有者氏名</td>
     <td><%= @house.owner_name %></td>
     <td>TEL</td>
-    <td></td>
+    <td><%= @house.owner_phone_number %></td>
   </tr>
   <tr>
     <td>調査範囲</td>
-    <td colspan="3"></td>
+    <td colspan="3"><%= @house.range_after_survey %></td>
   </tr>        
 </table>
 <p>下記目的のための調査を承諾します。</p>
@@ -71,7 +71,7 @@
   <div style="text-align: center;">
     <canvas id="myCanvas" width="700" height="400"></canvas>
   </div>
-  <%= f.hidden_field :sign_after_survey %>
+  <%= f.hidden_field :kyojyusya_sign_after_survey %>
   <div style="text-align: center;">
     <%= f.submit '保存', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
   </div>
@@ -240,7 +240,7 @@ $('#submit').on('mousedown', function (e) {
   // 画像化
   var canvas_data = canvas.toDataURL('image/jpg');
   
-  $("#house_sign_after_survey").val(""); //画像データを二重に送信するのを防ぐ
-  $("#house_sign_after_survey").val(canvas_data);
+  $("#house_kyojyusya_sign_after_survey").val(""); //画像データを二重に送信するのを防ぐ
+  $("#house_kyojyusya_sign_after_survey").val(canvas_data);
 });
 </script>
