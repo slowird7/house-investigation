@@ -229,6 +229,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.2)
   dotenv-rails
+  ffi
   fog-aws
   jbuilder (~> 2.5)
   jquery-rails
