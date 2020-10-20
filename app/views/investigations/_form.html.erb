@@ -6,38 +6,88 @@
     
       <div class="form-group">
         <%= f.label :content, '調査内容*' %>
-        <%= f.text_field :content, :class=>"form-control" %>
+        <%= f.text_field :content, :class=>"form-control", required: true %>
       </div>
 
       <div class="form-group">
         <%= f.label :construction_name, '工事名*' %>
-        <%= f.text_field :construction_name, :class=>"form-control" %>
+        <%= f.text_field :construction_name, :class=>"form-control", required: true %>
       </div>
+      
+      <div class="form-group">
+        <%= f.label :construction_display_name1, 'ホワイトボード表示用工事名1(最大15文字)*' %>
+        <%= f.text_field :construction_display_name1, :class=>"form-control", required: true, maxlength: 15 %>
+        <%= f.label :construction_display_name2, 'ホワイトボード表示用工事名2(最大15文字)*' %>
+        <%= f.text_field :construction_display_name2, :class=>"form-control", required: true, maxlength: 15 %>
+      </div>      
 
       <div class="form-group">
         <%= f.label :builder, '施工者*：' %>
-        <%= f.collection_select :builder, Choice.where(category: "施工者"), :name, :name, :prompt => "選択してください" %>
+        <%= f.collection_select :builder, Choice.where(category: "施工者"), :name, :name, { :prompt => "選択してください", :required => true} %>
       </div>
 
       <div class="form-group">
         <%= f.label :place, '調査場所*' %>
-        <%= f.text_field :place, :class=>"form-control" %>
+        <%= f.text_field :place, :class=>"form-control", required: true %>
       </div> 
 
-      <div class="form-group">
-        <%= f.label :investigator_pre_survey, '調査機関（事前調査）：' %>
-        <%= f.collection_select :investigator_pre_survey, Choice.where(category: "調査機関"), :name, :name, :prompt => "選択してください" %>
+      <div class="partial">
+        <p class="text-center">事前調査</p>
+        <div class="form-group">
+          <%= f.label :investigator_pre_survey, '調査機関：' %>
+          <%= f.collection_select :investigator_pre_survey, Choice.where(category: "調査機関"), :name, :name, :prompt => "選択してください" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :start_pre_survey, '調査開始日：' %>
+          <%= f.date_field :start_pre_survey, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :stop_pre_survey, '調査終了日：' %>
+          <%= f.date_field :stop_pre_survey, class: 'form-control' %>
+        </div>
       </div>
-      <div class="form-group">
-        <%= f.label :investigator_ongoing_survey, '調査機関（事中調査）：' %>
-        <%= f.collection_select :investigator_ongoing_survey, Choice.where(category: "調査機関"), :name, :name, :prompt => "選択してください" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :investigator_after_survey, '調査機関（事後調査）：' %>
-        <%= f.collection_select :investigator_after_survey, Choice.where(category: "調査機関"), :name, :name, :prompt => "選択してください" %>
-      </div>
+
+      <div class="partial">
+        <p class="text-center">事中調査</p>      
+        <div class="form-group">
+          <%= f.label :investigator_ongoing_survey, '調査機関：' %>
+          <%= f.collection_select :investigator_ongoing_survey, Choice.where(category: "調査機関"), :name, :name, :prompt => "選択してください" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :start_ongoing_survey, '調査開始日：' %>
+          <%= f.date_field :start_ongoing_survey, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :stop_ongoing_survey, '調査終了日：' %>
+          <%= f.date_field :stop_ongoing_survey, class: 'form-control' %>
+        </div>
+      </div>      
+      
+      <div class="partial">
+        <p class="text-center">事後調査</p>
+        <div class="form-group">
+          <%= f.label :investigator_after_survey, '調査機関：' %>
+          <%= f.collection_select :investigator_after_survey, Choice.where(category: "調査機関"), :name, :name, :prompt => "選択してください" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :start_after_survey, '調査開始日：' %>
+          <%= f.date_field :start_after_survey, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :stop_after_survey, '調査終了日：' %>
+          <%= f.date_field :stop_after_survey, class: 'form-control' %>
+        </div>
+      </div>        
       
       <%= f.submit '登録', :class=>"btn btn-primary" %>
     <% end %>
   </div>
 </div>
+
+<style>
+.partial {
+  background: #eee;
+  padding: 10px;
+  margin: 30px 0;
+}  
+</style>

@@ -21,4 +21,27 @@
 <h2 class="text-center">測点：P.<%= @point.number %>の撮影（<%= survey_type_name %>）</h2>
 <%= link_to '編集', edit_post_path(point_id: @point.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 <!-- 写真 -->
-<%= render 'posts/photo_with_wb', { house: @house, point: @point, post: @post } %>
+<div id="sonsyo-<%= @point.id %>" class="post-img">
+  <%= image_tag @post.image3, id: "sonsyo-" + @point.id.to_s + "_img" %>
+</div>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 70%;
+/*  
+  max-width: 715px /* =1430/2 *
+  max-height: 537px; /* =1074/2 *
+*/  
+}
+.post-img img {
+  width: 100%;
+}
+.whiteboard {
+  background-color: white;
+  margin-bottom: 0px;
+  font-size: 10px;
+}
+</style>

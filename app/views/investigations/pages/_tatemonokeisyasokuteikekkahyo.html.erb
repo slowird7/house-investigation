@@ -1,0 +1,227 @@
+<% @houses.each do |house| %>
+  <div class="page">
+    <table class="table table-bordered" style="font-size:10px;">
+      <tr>
+        <td colspan="11">建物傾斜測定結果表</td>
+        <td>建物No.<%= house.house_number %></td>
+      </tr>
+      <tr>
+        <td rowspan="2">傾斜種類</td>
+        <td rowspan="2">測点</td>
+        <td rowspan="2">測定箇所</td>
+        <td colspan="4"><%= survey_type_1 %>測定値（mm）</td>
+        <td colspan="4"><%= survey_type_2 %>測定値（mm）</td>
+        <td rowspan="2">備考</td>
+      </tr>
+      <tr>
+        <td colspan="2">東西方向</td>
+        <td colspan="2">南北方向</td>
+        <td colspan="2">東西方向</td>
+        <td colspan="2">南北方向</td>          
+      </tr>
+      
+      <% keisyas = house.keisyas %>
+      <% keisyas.each do |keisya| %>
+        <tr>
+          <% 
+            if survey_type_1 == "事前"
+              slope = keisya.slopes.find_by(survey_type: "pre")
+            elsif survey_type_1 == "事中"
+              slope = keisya.slopes.find_by(survey_type: "ongoing")
+            elsif survey_type_1 == "事後"
+              slope = keisya.slopes.find_by(survey_type: "after")
+            end
+          %>
+          <% if slope.suichokukeisya == true %>
+            <td>垂直傾斜</td>
+          <% elsif slope.suiheikeisya == true %>
+            <td>水平傾斜</td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td><%= disp_alphabet(keisya.number) %></td>
+          <td><%= keisya.room_name %></td>
+          <td colspan="2">
+            <% if slope.east.blank? %>
+              <% if slope.west.blank? %>
+              <% elsif slope.west == 0 %>
+              <% else %>
+                西へ&nbsp;<%= slope.west %>&nbsp;mm
+              <% end %>
+            <% elsif slope.east == 0 %>
+              <% if slope.west.blank? %>
+              <% elsif slope.west == 0 %>
+                東西0
+              <% else %>
+                西へ&nbsp;<%= slope.west %>&nbsp;mm
+              <% end %>
+            <% else %>
+              <% if slope.west.blank? %>
+                東へ&nbsp;<%= slope.east %>&nbsp;mm
+              <% elsif slope.west == 0 %>
+                東へ&nbsp;<%= slope.east %>&nbsp;mm
+              <% else %>
+              <% end %>
+            <% end %>
+          </td>
+          <td colspan="2">
+            <% if slope.south.blank? %>
+              <% if slope.north.blank? %>
+              <% elsif slope.north == 0 %>
+              <% else %>
+                北へ&nbsp;<%= slope.north %>&nbsp;mm
+              <% end %>
+            <% elsif slope.south == 0 %>
+              <% if slope.north.blank? %>
+              <% elsif slope.north == 0 %>
+                南北0
+              <% else %>
+                北へ&nbsp;<%= slope.north %>&nbsp;mm
+              <% end %>
+            <% else %>
+              <% if slope.north.blank? %>
+                南へ&nbsp;<%= slope.south %>&nbsp;mm
+              <% elsif slope.north == 0 %>
+                南へ&nbsp;<%= slope.south %>&nbsp;mm
+              <% else %>
+              <% end %>
+            <% end %>            
+          </td>           
+
+          <% 
+            if survey_type_2 == "事前"
+              slope = keisya.slopes.find_by(survey_type: "pre")
+            elsif survey_type_2 == "事中"
+              slope = keisya.slopes.find_by(survey_type: "ongoing")
+            elsif survey_type_2 == "事後"
+              slope = keisya.slopes.find_by(survey_type: "after")
+            end
+          %>
+          <td colspan="2">
+            <% if slope.east.blank? %>
+              <% if slope.west.blank? %>
+              <% elsif slope.west == 0 %>
+              <% else %>
+                西へ&nbsp;<%= slope.west %>&nbsp;mm
+              <% end %>
+            <% elsif slope.east == 0 %>
+              <% if slope.west.blank? %>
+              <% elsif slope.west == 0 %>
+                東西0
+              <% else %>
+                西へ&nbsp;<%= slope.west %>&nbsp;mm
+              <% end %>
+            <% else %>
+              <% if slope.west.blank? %>
+                東へ&nbsp;<%= slope.east %>&nbsp;mm
+              <% elsif slope.west == 0 %>
+                東へ&nbsp;<%= slope.east %>&nbsp;mm
+              <% else %>
+              <% end %>
+            <% end %>
+          </td>
+          <td colspan="2">
+            <% if slope.south.blank? %>
+              <% if slope.north.blank? %>
+              <% elsif slope.north == 0 %>
+              <% else %>
+                北へ&nbsp;<%= slope.north %>&nbsp;mm
+              <% end %>
+            <% elsif slope.south == 0 %>
+              <% if slope.north.blank? %>
+              <% elsif slope.north == 0 %>
+                南北0
+              <% else %>
+                北へ&nbsp;<%= slope.north %>&nbsp;mm
+              <% end %>
+            <% else %>
+              <% if slope.north.blank? %>
+                南へ&nbsp;<%= slope.south %>&nbsp;mm
+              <% elsif slope.north == 0 %>
+                南へ&nbsp;<%= slope.south %>&nbsp;mm
+              <% else %>
+              <% end %>
+            <% end %>            
+          </td>
+          <td><%= slope.comment %></td>
+        </tr>
+      <% end %>
+    </table>
+    <p>※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
+  </div>
+  
+  <% num = 0 %>
+  <% while num < keisyas.length do %>
+    <div class="page">
+      <table class="table table-bordered photo_book">
+        <% 
+          keisya = keisyas[num]
+          
+          if survey_type_main == "事前"
+            slope = keisya.slopes.find_by(survey_type: "pre")
+          elsif survey_type_main == "事中"
+            slope = keisya.slopes.find_by(survey_type: "ongoing")
+          elsif survey_type_main == "事後"
+            slope = keisya.slopes.find_by(survey_type: "after")
+          end
+          
+          if slope != nil
+            num = num + 1
+          end
+        %>
+        <%= render 'investigations/pages/tatemonokeisyasokuteikekkahyo_photo_book_row', keisya: keisya, slope: slope %>
+        
+        <% 
+          keisya = keisyas[num]
+          if keisya != nil
+            if survey_type_main == "事前"
+              slope = keisya.slopes.find_by(survey_type: "pre")
+            elsif survey_type_main == "事中"
+              slope = keisya.slopes.find_by(survey_type: "ongoing")
+            elsif survey_type_main == "事後"
+              slope = keisya.slopes.find_by(survey_type: "after")
+            end
+          else
+            slope = nil
+          end
+          
+          if slope != nil
+            num = num + 1
+          end
+        %>
+        <%= render 'investigations/pages/tatemonokeisyasokuteikekkahyo_photo_book_row', keisya: keisya, slope: slope %>       
+        
+        <% 
+          keisya = keisyas[num]
+          if keisya != nil
+            if survey_type_main == "事前"
+              slope = keisya.slopes.find_by(survey_type: "pre")
+            elsif survey_type_main == "事中"
+              slope = keisya.slopes.find_by(survey_type: "ongoing")
+            elsif survey_type_main == "事後"
+              slope = keisya.slopes.find_by(survey_type: "after")
+            end
+          else
+            slope = nil
+          end
+          
+          if slope != nil
+            num = num + 1
+          end
+        %>
+        <%= render 'investigations/pages/tatemonokeisyasokuteikekkahyo_photo_book_row', keisya: keisya, slope: slope %>
+      </table>
+    </div>
+  <% end %><!-- while num < points.length do -->
+<% end %>
+
+<style>
+.photo_book {
+  font-size:10px;
+  border: none !important;  
+}
+.photo_book td {
+  border: none !important;
+}
+</style>

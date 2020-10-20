@@ -1,0 +1,165 @@
+<p><input type="button" value="一括ダウンロード" id="batch" class="btn btn-primary" onclick="multi_download()"></p>
+
+<% @houses.each do |house|
+  sonsyos = house.sonsyos 
+  keisyas = house.keisyas
+  points = house.points
+
+  sonsyos.each do |sonsyo|
+    damage = sonsyo.damages.find_by(survey_type: survey_type)
+    if damage.image2.present?
+%>
+      <div id="sonsyo-<%= sonsyo.id %>" class="post-img">
+        <%= image_tag damage.image2, id: "sonsyo-" + sonsyo.id.to_s + "_img" %>
+      </div>
+  <% elsif damage.image1.present? %>  
+      <div id="sonsyo-<%= sonsyo.id %>" class="post-img">
+        <%= image_tag damage.original_image_url, id: "sonsyo-" + sonsyo.id.to_s + "_img" %>
+      </div>  
+  <%
+    end # END OF if damage.image1.present?
+  end # END OF sonsyos.each do |sonsyo|
+  %>
+  <!-- 
+  
+    傾斜↓
+  
+  -->
+  <% keisyas.each do |keisya|
+    slope = keisya.slopes.find_by(survey_type: survey_type)
+    if slope.image2.present?
+  %>
+      <div id="keisya-<%= keisya.id %>" class="post-img">
+        <%= image_tag slope.image2, id: "keisya-" + keisya.id.to_s + "_img" %>
+      </div>
+  <% elsif slope.image1.present? %>
+      <div id="keisya-<%= keisya.id %>" class="post-img">
+        <%= image_tag slope.image1, id: "keisya-" + keisya.id.to_s + "_img" %>
+      </div>  
+  <% 
+    end # END OF if slope.image1.present?
+  end # END OF keisyas.each do |keisya|
+  %>
+  <!-- 
+  
+    測点↓
+  
+  -->        
+  <% points.each do |point|
+    post = point.posts.find_by(survey_type: survey_type)
+    if post.image2.present?
+  %>
+      <div id="point-<%= point.id %>" class="post-img">
+        <%= image_tag post.image2, id: "point-" + point.id.to_s + "_img" %>
+      </div>
+  <% elsif post.image1.present? %>
+      <div id="point-<%= point.id %>" class="post-img">
+        <%= image_tag post.image1, id: "point-" + point.id.to_s + "_img" %>
+      </div>
+<% 
+    end # END OF if post.image1.present?
+  end # END OF points.each do |point|
+end
+%>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom:20px;
+  width: 60%;
+  font-size: 60%;
+}
+.post-img > img {
+  width: 100%;
+}
+</style>
+
+<script>
+function handleDownload(path, name) {
+  // IE
+  if (window.navigator.msSaveBlob) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "cgi-bin/sample.py?f="+path, true);
+      xhr.responseType = "blob";
+      xhr.onload = function (e) {
+          var blob = xhr.response;
+          window.navigator.msSaveBlob(blob, path);
+      }
+      xhr.send();
+      return;
+  }
+  // chrome,firefox
+  var a = document.createElement('a');
+  a.download = name;
+//  a.href = "cgi-bin/sample.py?f="+path;
+  a.href = path;
+  
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  return;
+}
+function multi_download() {
+  var client_w, client_h;
+  <% @houses.each do |house|
+    sonsyos = house.sonsyos 
+    keisyas = house.keisyas
+    points = house.points
+
+    sonsyos.each do |sonsyo|
+      damage = sonsyo.damages.find_by(survey_type: survey_type)
+      if damage.image1.present? 
+  %>
+//        client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").naturalWidth;
+//        client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").naturalHeight;
+        client_w = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientWidth;
+        client_h = document.getElementById("sonsyo-<%= sonsyo.id %>_img").clientHeight;
+        
+        html2canvas(document.querySelector("#sonsyo-<%= sonsyo.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          canvasImage = canvas.toDataURL("image/jpeg");
+          canvasName = "damage_<%= damage.id %>_<%= survey_type %>";     
+          handleDownload(canvasImage, canvasName);
+        });
+  <% 
+      end # END OF if damage.image1.present?
+    end # END OF sonsyos.each do |sonsyo| 
+    
+    keisyas.each do |keisya|
+      slope = keisya.slopes.find_by(survey_type: survey_type)
+      if slope.image1.present?  
+  %>
+//        client_w = document.getElementById("keisya-<%= keisya.id %>_img").naturalWidth;
+//        client_h = document.getElementById("keisya-<%= keisya.id %>_img").naturalHeight;
+        client_w = document.getElementById("keisya-<%= keisya.id %>_img").clientWidth;
+        client_h = document.getElementById("keisya-<%= keisya.id %>_img").clientHeight;
+        
+        html2canvas(document.querySelector("#keisya-<%= keisya.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          canvasImage = canvas.toDataURL("image/jpeg");
+          canvasName = "slope_<%= slope.id %>_<%= survey_type %>";     
+          handleDownload(canvasImage, canvasName);
+        });
+  <% 
+      end # END OF if slope.image1.present?
+    end # END OF keisyas.each do |keisya| 
+    
+    points.each do |point|
+      post = point.posts.find_by(survey_type: survey_type)
+      if post.image1.present?  
+  %>
+//        client_w = document.getElementById("point-<%= point.id %>_img").naturalWidth;
+//        client_h = document.getElementById("point-<%= point.id %>_img").naturalHeight;
+        client_w = document.getElementById("point-<%= point.id %>_img").clientWidth;
+        client_h = document.getElementById("point-<%= point.id %>_img").clientHeight;
+        html2canvas(document.querySelector("#point-<%= point.id %>"), {width:client_w, height: client_h}).then(canvas => {
+          canvasImage = canvas.toDataURL("image/jpeg");
+          canvasName = "post_<%= post.id %>_<%= survey_type %>";     
+          handleDownload(canvasImage, canvasName);
+        });  
+  <% 
+      end # END OF if point.image1.present?
+    end # END OF points.each do |point|   
+  end
+  %>
+}
+</script>

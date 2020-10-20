@@ -28,8 +28,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
 
-  # 高さを最大 800px、横 を最大 600 pxに調整
-  process resize_to_limit: [800, 600]
+  # サイズ調整
+  #process resize_to_limit: [1524, 1074]
+  process resize_to_limit: [1430, 1074]
+  
+  # 保存形式をPNGにする
+  #process convert: 'png'  
 
   # Process files as they are uploaded:
   # process scale: [200, 300]
@@ -55,6 +59,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   def filename
   #   "something.jpg" if original_filename
     "#{secure_token}.#{'jpg'}" if original_filename.present?
+#    "#{secure_token}.#{'png'}" if original_filename.present?    
   end
   
   # ～4MB

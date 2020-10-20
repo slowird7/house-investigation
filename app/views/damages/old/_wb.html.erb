@@ -1,0 +1,97 @@
+<table class="table table-bordered table-condensed whiteboard">
+  <tr>
+    <td>工事名</td>
+    <td colspan="4"><%= house.investigation.construction_name %></td>
+  </tr>
+  <tr>
+    <td>調査日</td>
+    <td colspan="4"><%= damage.updated_at.strftime('%Y/%m/%d') %></td>
+  </tr>
+  <tr>
+    <td>家屋名</td>
+    <td colspan="4"><%= house.house_name %></td>
+  </tr>
+  <tr>
+    <td>家屋No.</td>
+    <td><%= house.house_number %></td>
+    <td>写真No.</td>
+    <td colspan="2">No.<%= sonsyo.number %></td>
+  </tr>
+  <tr>
+    <td>調査箇所</td>
+    <td colspan="4">
+      <% if sonsyo.room_name == "その他" %>
+        <%= sonsyo.room_name_other %>
+      <% else %>
+        <%= sonsyo.room_name %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <% if damage.genkyo == true %>現況 <% end %>
+      <% if damage.sukima == true %>隙間 <% end %>
+      <% if damage.ware == true %>割れ <% end %>
+      <% if damage.kake == true %>欠け <% end %>
+      <% if damage.crack == true %>クラック <% end %>
+      <% if damage.tile == true %>タイル <% end %>
+      <% if damage.kire == true %>切れ <% end %>
+      <% if damage.uki == true %>浮き <% end %>
+      <% if damage.suhon == true %>数本 <% end %>
+      <% if damage.chirigire == true %>チリ切れ <% end %>
+      <% if damage.cross == true %>クロス <% end %>
+      <% if damage.meji == true %>目地 <% end %>      
+      <% if damage.tategu == true %>建具 <% end %>
+      <% if damage.tasu == true %>多数 <% end %>
+      <% if damage.kakusyo == true %>各所<% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>面積</td>
+    <td colspan="4">
+      <% if damage.width.present? && damage.height.present? && damage.width != 0.0 && damage.height != 0.0 %>
+        <%= damage.width %> x <%= damage.height %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>幅</td>
+    <td colspan="4">
+      <% if damage.wide.present? && damage.wide != 0.0 %>
+        <%= damage.wide %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>長さ</td>
+    <td colspan="4">
+      <% if damage.amimejyo == true %>
+        <span>網目状</span>
+      <% end %>  
+      <% if damage.zencho == true %>
+        <span>全長</span>
+      <% end %>
+      <% if damage.zenshu == true %>
+        <span>全周</span>
+      <% end %>
+      
+      <% if damage.length.present? && damage.length != 0.0 %>
+        <%= damage.length %>
+      <% end %>
+    </td>  
+  </tr>
+  <tr>
+    <td>コメント</td>
+    <td colspan="4">
+      <%= damage.comment %>
+    </td>
+  </tr>
+</table>
+
+<style>
+.whiteboard {
+  background-color: white;
+  margin-bottom: 0px;
+  font-size: 10px;
+}
+</style>

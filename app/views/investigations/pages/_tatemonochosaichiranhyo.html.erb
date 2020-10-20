@@ -1,0 +1,134 @@
+<div class="page horizontal_parent">
+  <div class="horizontal">
+    <div class="horizontal_child">
+      <h1 class="text-center">建物調査一覧表</h1>
+      <table class="table table-bordered" style="font-size:10px;">
+        <tr>
+          <td>工事名</td>
+          <td><%= @investigation.construction_name %></td>
+          <td rowspan="2"><%= survey_type_1 %>調査</td>
+          <td>調査年月日</td>
+          <td>
+            <% if survey_type_1 == "事前" %>
+              <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
+                <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+              <% end %>
+            <% elsif survey_type_1 == "事中" %>
+              <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
+                <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
+              <% end %>
+            <% elsif survey_type_1 == "事後" %>
+              <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
+                <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+              <% end %>
+            <% end %>
+          </td>
+          <td rowspan="2"><%= survey_type_2 %>調査</td>
+          <td>調査年月日</td>
+          <td>
+            <% if survey_type_2 == "事前" %>
+              <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
+                <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+              <% end %>
+            <% elsif survey_type_2 == "事中" %>
+              <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
+                <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
+              <% end %>
+            <% elsif survey_type_2 == "事後" %>
+              <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
+                <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>施工者名</td>
+          <td><%= @investigation.builder %></td>
+          <td>受注者</td>
+          <td>
+            <% if survey_type_1 == "事前" %>
+              <%= @investigation.investigator_pre_survey %>
+            <% elsif survey_type_1 == "事中" %>
+              <%= @investigation.investigator_ongoing_survey %>
+            <% elsif survey_type_1 == "事後" %>
+              <%= @investigation.investigator_after_survey %>
+            <% end %>
+          </td>
+          <td>受注者</td>
+          <td>
+            <% if survey_type_2 == "事前" %>
+              <%= @investigation.investigator_pre_survey %>
+            <% elsif survey_type_2 == "事中" %>
+              <%= @investigation.investigator_ongoing_survey %>
+            <% elsif survey_type_2 == "事後" %>
+              <%= @investigation.investigator_after_survey %>
+            <% end %>           
+          </td>
+        </tr>
+      </table>
+      <table class="table table-bordered" style="font-size:10px;">
+        <tr>
+          <td>家屋No</td>
+          <td>家屋名（居住者名）</td>
+          <td>建物所在地</td>
+          <td>所有者名</td>
+          <td>用途</td>
+          <td>概要</td>
+          <td>構造</td>
+          <td>延床面積</td>
+          <td><%= survey_type_1 %>調査日</td>
+          <td><%= survey_type_2 %>調査日</td>
+          <td>調査範囲</td>        
+        </tr>
+    
+        <% @houses.each do |house| %>
+          <tr>
+            <td><%= house.house_number %></td>
+            <td><%= house.house_name %></td>
+            <td><%= house.city %><%= house.block %></td>
+            <td><%= house.owner_name %></td>
+            <td><%= house.use %></td>
+            <td>
+              <% if survey_type_main == "事前" %>
+                <%= house.overview_pre_survey %>
+              <% elsif survey_type_main == "事中" %>
+                <%= house.overview_ongoing_survey %>
+              <% elsif survey_type_main == "事後" %>
+                <%= house.overview_after_survey %>
+              <% end %>
+            </td>
+            <td><%= house.construction %></td>
+            <td><%= house.area %></td>
+            <td></td>
+            <td></td>
+            <td>
+              <% if survey_type_main == "事前" %>
+                <%= house.range_pre_survey %>
+              <% elsif survey_type_main == "事中" %>
+                <%= house.range_ongoing_survey %>
+              <% elsif survey_type_main == "事後" %>
+                <%= house.range_after_survey %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<style>
+.horizontal_parent {
+  position: relative;
+}
+.horizontal {
+  position: absolute;
+  left: -100px;
+  top: 195px;
+  transform: rotate(-90deg);
+}
+.horizontal .horizontal_child {
+  width: 1044px;
+  height: 715px;
+}
+</style>

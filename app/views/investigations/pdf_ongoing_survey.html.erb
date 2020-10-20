@@ -1,5 +1,5 @@
 <div class="book">
-  <%= render 'investigations/pages/ongoing/hyoshi' %>
+  <%= render 'investigations/pages/hyoshi', survey_type: '事中' %>
   <%= render 'investigations/pages/ongoing/chosahokokusyo' %>
   <!-- コメントアウト -->
   <% if false %>  
@@ -8,11 +8,11 @@
     <%= render 'investigations/pages/ongoing/chosakuikiheimenzu2' %>
   <% end %>
   <!-- コメントアウト -->
-  <%= render 'investigations/pages/ongoing/tatemonochosaichiranhyo' %>
-  <%= render 'investigations/pages/ongoing/kaokuchosasyodakusyo' %>
-  <%= render 'investigations/pages/ongoing/tatemonosuijyunsokuryokekkahyo' %>
-  <%= render 'investigations/pages/ongoing/tatemonokeisyasokuteikekkahyo' %>
-  <%= render 'investigations/pages/ongoing/sonsyochosasyo' %>
+  <%= render 'investigations/pages/tatemonochosaichiranhyo', survey_type_1: '事前', survey_type_2: '事中', survey_type_main: '事中' %>
+  <%= render 'investigations/pages/kaokuchosasyodakusyo', survey_type: '事中' %>
+  <%= render 'investigations/pages/tatemonosuijyunsokuryokekkahyo', survey_type_1: '事前', survey_type_2: '事中', survey_type_main: '事中' %>
+  <%= render 'investigations/pages/tatemonokeisyasokuteikekkahyo', survey_type_1: '事前', survey_type_2: '事中', survey_type_main: '事中' %>
+  <%= render 'investigations/pages/sonsyochosasyo', survey_type_1: '事前', survey_type_2: '事中', survey_type_main: '事中' %>
 </div>
 
 <style>

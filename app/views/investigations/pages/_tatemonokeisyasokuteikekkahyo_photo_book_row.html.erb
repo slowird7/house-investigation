@@ -1,0 +1,115 @@
+<tr>
+  <td class="photo">
+    <% if slope != nil %>
+      <%= image_tag slope.image3 %><!-- 写真 -->
+    <% end %>
+  </td>
+  <td class="book">
+    <table class="table table-bordered">
+      <% if keisya != nil %>
+        <tr class="header"><td><%= disp_alphabet(keisya.number) %></td></tr>
+        <tr class="body">
+          <td>
+            <% if keisya.room_name == "その他" %>
+              <%= keisya.room_name_other %>
+            <% else %>
+              <%= keisya.room_name %>
+            <% end %>
+          </td>
+        </tr>
+        <tr class="body">
+          <td>
+            <% if slope.east.blank? %>
+              <% if slope.west.blank? %>
+              <% elsif slope.west == 0 %>
+              <% else %>
+                西へ&nbsp;<%= slope.west %>&nbsp;mm
+              <% end %>
+            <% elsif slope.east == 0 %>
+              <% if slope.west.blank? %>
+              <% elsif slope.west == 0 %>
+                東西0
+              <% else %>
+                西へ&nbsp;<%= slope.west %>&nbsp;mm
+              <% end %>
+            <% else %>
+              <% if slope.west.blank? %>
+                東へ&nbsp;<%= slope.east %>&nbsp;mm
+              <% elsif slope.west == 0 %>
+                東へ&nbsp;<%= slope.east %>&nbsp;mm
+              <% else %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <tr class="body">
+          <td>
+            <% if slope.south.blank? %>
+              <% if slope.north.blank? %>
+              <% elsif slope.north == 0 %>
+              <% else %>
+                北へ&nbsp;<%= slope.north %>&nbsp;mm
+              <% end %>
+            <% elsif slope.south == 0 %>
+              <% if slope.north.blank? %>
+              <% elsif slope.north == 0 %>
+                南北0
+              <% else %>
+                北へ&nbsp;<%= slope.north %>&nbsp;mm
+              <% end %>
+            <% else %>
+              <% if slope.north.blank? %>
+                南へ&nbsp;<%= slope.south %>&nbsp;mm
+              <% elsif slope.north == 0 %>
+                南へ&nbsp;<%= slope.south %>&nbsp;mm
+              <% else %>
+              <% end %>
+            <% end %>            
+          </td> 
+        </tr>
+      <% end %>
+    </table>
+  </td>  
+</tr>
+
+<style>
+.photo_book .photo {
+  height: 380px;
+}
+/* セルの最小heightを設定 */
+.photo_book .photo:first-child:before {
+  display: block;
+  float: left;
+  height: 380px;
+  content: "";
+}  
+.photo_book .photo img {
+  width: 100%;
+}
+
+.photo_book .book {
+  width: 150px;
+}
+.photo_book .book table {
+  border: none !important;
+}
+.photo_book .book table .header td {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: solid 2px !important;  
+}
+.photo_book .book table .body td {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: dotted !important;
+}
+/* セルの最小heightを設定 */
+.photo_book .book table .body td:first-child:before {
+  display: block;
+  float: left;
+  height: 12px;
+  content: "";
+}
+</style>

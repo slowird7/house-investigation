@@ -21,4 +21,27 @@
 <h2 class="text-center">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</h2>
 <%= link_to '編集', edit_damage_path(sonsyo_id: @sonsyo.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 <!-- 写真 -->
-<%= render 'damages/photo_with_wb', { house: @house, sonsyo: @sonsyo, damage: @damage } %>
+<div id="sonsyo-<%= @sonsyo.id %>" class="post-img">
+  <%= image_tag @damage.image3, id: "sonsyo-" + @sonsyo.id.to_s + "_img" %>
+</div>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 70%;
+/*  
+  max-width: 715px /* =1430/2 *
+  max-height: 537px; /* =1074/2 *
+*/  
+}
+.post-img img {
+  width: 100%;
+}
+.whiteboard {
+  background-color: white;
+  margin-bottom: 0px;
+  font-size: 10px;
+}
+</style>

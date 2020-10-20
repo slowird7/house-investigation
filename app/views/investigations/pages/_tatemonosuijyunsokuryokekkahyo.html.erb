@@ -1,0 +1,130 @@
+<% @houses.each do |house| %>
+  <!-- コメントアウト -->
+  <% if false %>
+    <div class="page">
+      <table class="table table-bordered" style="font-size:10px;">
+        <tr>
+          <td colspan="4">建物水準測量結果表</td>
+          <td>家屋番号：<%= house.house_number %></td>
+        </tr>
+        <tr>
+          <td>測点</td>
+          <td>場所</td>
+          <td><%= survey_type_1 %>調査測定値（mm）</td>
+          <td><%= survey_type_2 %>調査測定値（mm）</td>
+          <td>変化量（mm）</td>
+        </tr>
+        <% points = house.points %>
+        <% points.each do |point| %>
+          <tr>
+            <td><%= point.number %></td>
+            <td><%= point.room_name %></td>
+
+            <% 
+              if survey_type_1 == "事前"
+                post = point.posts.find_by(survey_type: "pre")
+              elsif survey_type_1 == "事中"
+                post = point.posts.find_by(survey_type: "ongoing")
+              elsif survey_type_1 == "事後"
+                post = point.posts.find_by(survey_type: "after")
+              end
+            %>
+            <td><%= post.hyoko + ((post.ouro_fs - post.ouro_bs) + (post.fukuro_fs - post.fukuro_bs)) / 2 %></td>
+
+            <% 
+              if survey_type_2 == "事前"
+                post = point.posts.find_by(survey_type: "pre")
+              elsif survey_type_2 == "事中"
+                post = point.posts.find_by(survey_type: "ongoing")
+              elsif survey_type_2 == "事後"
+                post = point.posts.find_by(survey_type: "after")
+              end
+            %>
+            <td><%= post.hyoko + ((post.ouro_fs - post.ouro_bs) + (post.fukuro_fs - post.fukuro_bs)) / 2 %></td>
+            
+            <td></td>
+          </tr>
+        <% end %>
+      </table>
+      <p class="text-right"><%= @investigation.investigator_pre_survey %></p>
+    </div>
+  <% end %>
+  <!-- コメントアウト -->   
+
+  <% points = house.points %>
+  <% num = 0 %>
+  <% while num < points.length do %>
+    <div class="page">
+      <table class="table table-bordered photo_book">
+        
+        <% 
+          point = points[num]
+          
+          if survey_type_main == "事前"
+            post = point.posts.find_by(survey_type: "pre")
+          elsif survey_type_main == "事中"
+            post = point.posts.find_by(survey_type: "ongoing")
+          elsif survey_type_main == "事後"
+            post = point.posts.find_by(survey_type: "after")
+          end
+          
+          if post != nil
+            num = num + 1
+          end
+        %>
+        <%= render 'investigations/pages/tatemonosuijyunsokuryokekkahyo_photo_book_row', point: point, post: post %>
+  
+        <% 
+          point = points[num]
+          if point != nil
+            if survey_type_main == "事前"
+              post = point.posts.find_by(survey_type: "pre")
+            elsif survey_type_main == "事中"
+              post = point.posts.find_by(survey_type: "ongoing")
+            elsif survey_type_main == "事後"
+              post = point.posts.find_by(survey_type: "after")
+            end
+          else
+            post = nil
+          end
+          
+          if post != nil
+            num = num + 1
+          end
+        %>
+        <%= render 'investigations/pages/tatemonosuijyunsokuryokekkahyo_photo_book_row', point: point, post: post %>
+        
+        <% 
+          point = points[num]
+          if point != nil
+            if survey_type_main == "事前"
+              post = point.posts.find_by(survey_type: "pre")
+            elsif survey_type_main == "事中"
+              post = point.posts.find_by(survey_type: "ongoing")
+            elsif survey_type_main == "事後"
+              post = point.posts.find_by(survey_type: "after")
+            end
+          else
+            post = nil
+          end
+          
+          if post != nil
+            num = num + 1
+          end
+        %>
+        <%= render 'investigations/pages/tatemonosuijyunsokuryokekkahyo_photo_book_row', point: point, post: post %>        
+        
+      </table>
+    </div>
+  <% end %><!-- while num < points.length do -->
+<% end %>
+
+<style>
+.photo_book {
+  font-size:10px;
+  border: none !important;  
+}
+.photo_book td {
+  border: none !important;
+}
+</style>

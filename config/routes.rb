@@ -20,14 +20,16 @@ Rails.application.routes.draw do
     member do
       get :pdf_pre_survey
       get :pdf_ongoing_survey
-      get :pdf_ongoing2_survey      
+      get :pdf_ongoing2_survey
       get :pdf_after_survey
-      get :list_images_pre_survey
-      get :list_images_ongoing_survey
-      get :list_images_after_survey
-      get :list_plainImages_pre_survey
-      get :list_plainImages_ongoing_survey
-      get :list_plainImages_after_survey      
+      
+      get :download_images_pre_survey
+      get :download_images_ongoing_survey
+      get :download_images_after_survey
+      
+      get :download_originalImages_pre_survey
+      get :download_originalImages_ongoing_survey
+      get :download_originalImages_after_survey
     end
   end
   
@@ -52,11 +54,28 @@ Rails.application.routes.draw do
   
   # 測点（レベル）
   resources :points, only: [:create, :edit, :update, :destroy]
-  resources :posts, only: [:show, :edit, :update]
+  resources :posts, only: [:show, :edit, :update] do
+    member do
+      get :check
+      patch :confirm
+    end
+  end
+  
   # 損傷
   resources :sonsyos, only: [:create, :edit, :update, :destroy]
-  resources :damages, only: [:show, :edit, :update]
+  resources :damages, only: [:show, :edit, :update] do
+    member do
+      get :check
+      patch :confirm
+    end
+  end
+  
   # 傾斜
   resources :keisyas, only: [:create, :edit, :update, :destroy]  
-  resources :slopes, only: [:show, :edit, :update]
+  resources :slopes, only: [:show, :edit, :update] do
+    member do
+      get :check
+      patch :confirm
+    end
+  end
 end

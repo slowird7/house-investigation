@@ -9,27 +9,6 @@
   else
     survey_type_name = "その他"
   end
-  
-  position_wb = @slope.position_wb
-  if position_wb == 0
-    position_wb_name = "左"
-  elsif position_wb == 1
-    position_wb_name = "左上"
-  elsif position_wb == 2
-    position_wb_name = "上"
-  elsif position_wb == 3
-    position_wb_name = "右上"
-  elsif position_wb == 4
-    position_wb_name = "右"
-  elsif position_wb == 5
-    position_wb_name = "右下"
-  elsif position_wb == 6
-    position_wb_name = "下"
-  elsif position_wb == 7
-    position_wb_name = "左下"
-  else
-    position_wb_name = "その他"
-  end  
 %>
 
 <ol class="breadcrumb">
@@ -42,4 +21,27 @@
 <h2 class="text-center">傾斜：<%= disp_alphabet(@keisya.number) %>の撮影（<%= survey_type_name %>）</h2>
 <%= link_to '編集', edit_slope_path(keisya_id: @keisya.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 <!-- 写真 -->
-<%= render 'slopes/photo_with_wb', { house: @house, keisya: @keisya, slope: @slope } %>
+<div id="sonsyo-<%= @keisya.id %>" class="post-img">
+  <%= image_tag @slope.image3, id: "sonsyo-" + @keisya.id.to_s + "_img" %>
+</div>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 70%;
+/*  
+  max-width: 715px /* =1430/2 *
+  max-height: 537px; /* =1074/2 *
+*/  
+}
+.post-img img {
+  width: 100%;
+}
+.whiteboard {
+  background-color: white;
+  margin-bottom: 0px;
+  font-size: 10px;
+}
+</style>

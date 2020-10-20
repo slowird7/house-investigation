@@ -1,0 +1,54 @@
+<div class="page">
+  <div class="hyoshi_parent text-center">
+    <h1 class="investigation_construction_name"><%= @investigation.construction_name %></h1>
+    <h2 class="investigation_content"><%= @investigation.content %> <%= survey_type %>調査報告書</h2>
+    <p class="investigation_period">
+      <% if survey_type == "事前" %>
+        <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
+          <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+        <% end %>
+      <% elsif survey_type == "事中" %>
+        <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
+          <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
+        <% end %>
+      <% elsif survey_type == "事後" %>
+        <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
+          <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+        <% end %>
+      <% end %>      
+    </p>
+    <p class="investigation_houses">家屋番号：1～<%= @houses.count%></p>
+    <div class="investigation_footer">
+      <p>施工者：<%= @investigation.builder %></p>
+      <p>調査機関：<%= @investigation.investigator_pre_survey %></p>
+    </div>
+  </div>
+</div>
+
+<style>
+.hyoshi_parent {
+  position: relative;
+
+  height: 1044px;
+  padding: 60px 0;
+}
+.investigation_construction_name {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 100px;
+}
+.investigation_content,
+.investigation_period,
+.investigation_houses {
+  font-size: 28px;
+  margin-bottom: 100px;  
+}
+.investigation_footer {
+  font-size: 20px;  
+  width: 100%;
+  
+  position: absolute;
+  bottom: 50px;
+}
+</style>
+

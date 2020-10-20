@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.boolean  "tategu",                        default: false
     t.boolean  "tasu",                          default: false
     t.boolean  "kakusyo",                       default: false
-    t.float    "wide",               limit: 24, default: 0.0
-    t.float    "length",             limit: 24, default: 0.0
-    t.float    "width",              limit: 24, default: 0.0
-    t.float    "height",             limit: 24, default: 0.0
+    t.float    "wide",               limit: 24
+    t.float    "length",             limit: 24
+    t.float    "width",              limit: 24
+    t.float    "height",             limit: 24
     t.string   "comment",                       default: ""
     t.string   "image1"
     t.string   "image2"
@@ -94,11 +94,13 @@ ActiveRecord::Schema.define(version: 20191107125835) do
   create_table "investigations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
     t.string   "construction_name"
+    t.string   "construction_display_name1"
+    t.string   "construction_display_name2"
     t.string   "builder"
+    t.string   "place"
     t.string   "investigator_pre_survey"
     t.string   "investigator_ongoing_survey"
     t.string   "investigator_after_survey"
-    t.string   "place"
     t.date     "start_pre_survey"
     t.date     "start_ongoing_survey"
     t.date     "start_after_survey"
@@ -131,40 +133,42 @@ ActiveRecord::Schema.define(version: 20191107125835) do
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
-    t.integer  "position_wb",            default: 0
-    t.float    "ouro_bs",     limit: 24, default: 0.0
-    t.float    "ouro_fs",     limit: 24, default: 0.0
-    t.float    "fukuro_bs",   limit: 24, default: 0.0
-    t.float    "fukuro_fs",   limit: 24, default: 0.0
-    t.float    "hyoko",       limit: 24, default: 0.0
+    t.integer  "position_wb",                   default: 0
+    t.float    "ouro_bs",            limit: 24
+    t.float    "ouro_fs",            limit: 24
+    t.float    "fukuro_bs",          limit: 24
+    t.float    "fukuro_fs",          limit: 24
+    t.float    "hyoko",              limit: 24
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
+    t.string   "original_image_url"
     t.integer  "point_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.index ["point_id"], name: "index_posts_on_point_id", using: :btree
   end
 
   create_table "slopes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
-    t.integer  "position_wb",               default: 0
-    t.boolean  "suichokukeisya",            default: false
-    t.boolean  "suiheikeisya",              default: false
-    t.float    "east",           limit: 24, default: 0.0
-    t.float    "west",           limit: 24, default: 0.0
-    t.float    "north",          limit: 24, default: 0.0
-    t.float    "south",          limit: 24, default: 0.0
+    t.integer  "position_wb",                   default: 0
+    t.boolean  "suichokukeisya",                default: false
+    t.boolean  "suiheikeisya",                  default: false
+    t.float    "east",               limit: 24
+    t.float    "west",               limit: 24
+    t.float    "north",              limit: 24
+    t.float    "south",              limit: 24
     t.string   "comment"
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
+    t.string   "original_image_url"
     t.integer  "keisya_id"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.index ["keisya_id"], name: "index_slopes_on_keisya_id", using: :btree
   end
 

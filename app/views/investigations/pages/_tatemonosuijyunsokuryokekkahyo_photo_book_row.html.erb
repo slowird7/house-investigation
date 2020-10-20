@@ -1,0 +1,65 @@
+<tr>
+  <td class="photo">
+    <% if post != nil %>
+      <%= image_tag post.image3 %><!-- 写真 -->
+    <% end %>
+  </td>
+  <td class="book">
+    <table class="table table-bordered">
+      <% if point != nil %>
+        <tr class="header"><td>P.<%= point.number %></td></tr>
+        <tr class="body">
+          <td>
+            <% if point.room_name == "その他" %>
+              <%= point.room_name_other %>
+            <% else %>
+              <%= point.room_name %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </td>  
+</tr>
+
+<style>
+.photo_book .photo {
+  height: 380px;
+}
+/* セルの最小heightを設定 */
+.photo_book .photo:first-child:before {
+  display: block;
+  float: left;
+  height: 380px;
+  content: "";
+}  
+.photo_book .photo img {
+  width: 100%;
+}
+
+.photo_book .book {
+  width: 150px;
+}
+.photo_book .book table {
+  border: none !important;
+}
+.photo_book .book table .header td {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: solid 2px !important;  
+}
+.photo_book .book table .body td {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: dotted !important;
+}
+/* セルの最小heightを設定 */
+.photo_book .book table .body td:first-child:before {
+  display: block;
+  float: left;
+  height: 12px;
+  content: "";
+}
+</style>

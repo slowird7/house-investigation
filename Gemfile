@@ -71,3 +71,5 @@ gem 'dotenv-rails'   # 環境変数の設定
 gem 'rack-cors'
 
 gem 'ffi' # 信頼性モジュールの呼び出し
+
+gem 'mini_exiftool' # Exifの編集

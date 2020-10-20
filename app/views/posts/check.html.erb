@@ -1,0 +1,125 @@
+<% 
+  survey_type = @post.survey_type
+  if survey_type == "pre"
+    survey_type_name = "事前調査"
+  elsif survey_type == "ongoing"
+    survey_type_name = "事中調査"
+  elsif survey_type == "after"
+    survey_type_name = "事後調査"
+  else
+    survey_type_name = "その他"
+  end
+%>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active">測点：No.<%= @point.number %>の撮影（<%= survey_type_name %>）</li>
+</ol>
+
+<h2 class="text-center">測点：P.<%= @point.number %>の撮影（<%= survey_type_name %>）</h2>
+<!-- 写真 -->
+<div id="point-<%= @point.id %>" class="post-img">
+  <%= image_tag @post.image2, id: "point-" + @point.id.to_s + "_img" %>
+
+  <div class="post_wb">
+    <table class="table table-bordered table-condensed whiteboard">
+      <tr>
+        <td colspan="5"><%= @house.investigation.construction_display_name1 %><br/><%= @house.investigation.construction_display_name2 %></td>
+      </tr>
+      <tr>
+        <td class="table_header">調査日</td>
+        <td colspan="4"><%= @post.updated_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+      <tr>
+        <td class="table_header">家屋名</td>
+        <td colspan="4"><%= @house.house_name %></td>
+      </tr>
+      <tr>
+        <td class="table_header">家屋No</td>
+        <td style="width: 44px;"><%= @house.house_number %></td>
+        <td class="table_header">測点</td>
+        <td style="width: 44px;" colspan="2">P.<%= @point.number %></td>
+      </tr>
+      <tr>
+        <td class="table_header">調査<br/>箇所</td>
+        <td colspan="4">
+          <% if @point.room_name == "その他" %>
+            <%= @point.room_name_other %>
+          <% else %>
+            <%= @point.room_name %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="table_header">コメ<br/>ント</td>
+        <td colspan="4">
+          <%= @post.comment %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<%= form_for(@post, url: confirm_post_path) do |f| %>
+  <input type="hidden" name="canvas_data" id="canvas_data">
+  <%= f.hidden_field :image3 %>
+  <%= f.submit '確定', :class=>"btn btn-primary", :id=>"submit", method: :delete, 
+    data: { confirm: '入力の間違いはありませんか？もう一度確認してください。無ければ登録しますがよろしいでしょうか？' } %> 
+<% end %>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 640px;
+}
+.post-img img {
+  width: 100%;
+}
+.post_wb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 50%;
+}
+.whiteboard {
+  background-color: white;
+  margin-bottom: 0px;
+  font-size: 10px;
+  width: 160px;
+}
+.whiteboard td {
+  padding: 1px !important;
+  text-align: center;
+}
+/* セルの最小heightを設定 */
+.whiteboard td:first-child:before {
+  display: block;
+  float: left;
+  height: 12px;
+  content: "";
+}
+.whiteboard .table_header {
+  width: 36px;
+}
+</style>
+
+<script>
+(window.onload = function() {
+  var img = document.getElementById("point-<%= @point.id %>_img");
+  var client_w = img.clientWidth;
+  var client_h = img.clientHeight;
+  //var natural_w = img.naturalWidth;
+  //var natural_h = img.naturalHeight;
+
+  html2canvas(document.querySelector("#point-<%= @point.id %>"), 
+  {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
+    var canvasData = canvas.toDataURL("image/jpeg");
+    $("#canvas_data").val(canvasData);
+  });
+})();
+</script>

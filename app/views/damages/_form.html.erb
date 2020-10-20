@@ -1,46 +1,32 @@
-<div class="row">
-  <div style="margin: 10px;">
-    <%= form_for(@damage) do |f| %>
-      <%= f.hidden_field :sonsyo_id, :value => @sonsyo.id %>
-      <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
-      <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
-      <%= f.hidden_field :image_url %>
-      <%= f.hidden_field :original_image_url %>
-
-      <div class="form-group" style="margin-top: 10px; padding: 10px; background: #eee;">    
-        ホワイトボードの配置（縦置き）：
-        <label id="wb_left-top"><%= f.radio_button :position_wb, "0" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_top"><%= f.radio_button :position_wb, "1" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_right-top"><%= f.radio_button :position_wb, "2" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_right-under"><%= f.radio_button :position_wb, "3" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_under"><%= f.radio_button :position_wb, "4" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="wb_left-under"><%= f.radio_button :position_wb, "5" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <br/>
-        ホワイトボードの配置（横置き）：
-        <label id="yoko_wb_left-top"><%= f.radio_button :position_wb, "6" %>左上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="yoko_wb_top"><%= f.radio_button :position_wb, "7" %>上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="yoko_wb_right-top"><%= f.radio_button :position_wb, "8" %>右上</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="yoko_wb_right-under"><%= f.radio_button :position_wb, "9" %>右下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="yoko_wb_under"><%= f.radio_button :position_wb, "10" %>下</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <label id="yoko_wb_left-under"><%= f.radio_button :position_wb, "11" %>左下</label>&nbsp;&nbsp;&nbsp;&nbsp;        
+<div class="container">
+  <%= form_for(@damage) do |f| %>
+    <%= f.hidden_field :sonsyo_id, :value => @sonsyo.id %>
+    <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
+    
+    <div class="row">
+      <div class="col-xs-6">
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
       </div>
-
-      <table class="preview-area">
-        <tr>
-          <td>
-            <% unless @preview_damage.image1? %>
-              <%= image_tag "bg_img.jpg" %>
-            <% else %>
-              <%= image_tag @preview_damage.image1 %>
-            <% end %>
-          </td>
-          <td>
-            <canvas id="liveview"></canvas>
-            <canvas id="liveview2"></canvas><!-- ホワイトボード描画用 -->
-          </td>
-        </tr>
-      </table>
-
+      <div class="col-xs-6">
+        <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+      </div>
+    </div>
+    
+    <div class="row photosArea">
+      <div class="col-xs-6">
+        <% unless @preview_damage.image1? %>
+          <%= image_tag "bg_img.jpg", class:"previewImg" %>
+        <% else %>
+          <%= image_tag @preview_damage.image1, class:"previewImg" %>
+        <% end %>      
+      </div>
+      <div class="col-xs-6" id="sonsyo-<%= @sonsyo.id %>">
+        <canvas id="liveview"></canvas>
+        <input type="hidden" name="canvas_data" id="canvas_data">
+      </div>
+    </div>
+    
+    <% if @sonsyo.room_name != "全景" %>
       <div class="form-group" style="margin-top: 20px;">
         <div class="switch_set">
           <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
@@ -69,233 +55,141 @@
         <label><input id="arrow_left" type="radio" name="direction">左</label>&nbsp;&nbsp;&nbsp;&nbsp;
         <label><input id="arrow_clean" type="radio" name="direction">クリア</label>
       </div>
-
+  
       <div class="form-group">
-        <p>面積：<%= f.text_field :width %>&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %></p>
-        <p>幅：<%= f.text_field :wide %></p>
+        <p>面積：<%= f.text_field :width %>&nbsp;cm&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %>&nbsp;cm</p>
+        <p>幅：<%= f.text_field :wide %>&nbsp;mm</p>
       </div>
       
       <div class="form-group">
         長さ：&nbsp;<label><%= f.check_box :amimejyo, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
         <label><%= f.check_box :zencho, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
         <label><%= f.check_box :zenshu, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <%= f.text_field :length %></span>
+        <%= f.text_field :length %>&nbsp;cm</span>
       </div>
       
       <div class="form-group">
-        <%= f.label :comment, 'コメント' %>
-        <%= f.text_area :comment, :class=>"form-control" %>
+        <%= f.label :comment, 'コメント(最大24文字)' %>
+        <%= f.text_area :comment, :class=>"form-control", maxlength: 24 %>
       </div>
-
-      <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, 
-        data: { confirm: '入力の間違いはありませんか？もう一度確認してください。無ければ登録しますがよろしいでしょうか？' } %>
     <% end %>
-  </div>
+  <% end %>
 </div>
 
+<style>
+.photosArea {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.photosArea .previewImg {
+  width: 100%;
+}
+</style>
+
 <script>
-  // グローバル変数
-  var canvas = document.getElementById('liveview');
-  var ctx = canvas.getContext('2d');
-  var canvas2 = document.getElementById('liveview2');
-  var ctx2 = canvas2.getContext('2d');
-  var canvasWidth, canvasHeight;
-  var img = new Image();
-  //var imgData = ctx.createImageData(10, 10);
-  var reader = new FileReader();
-  var tapCount = 0;
-  var wb_width = 120, wb_height = 150;
-  var yoko_wb_width = 170, yoko_wb_height = 100;
+// グローバル変数
+var canvas = document.getElementById('liveview');
+var ctx = canvas.getContext('2d');
+var img = new Image();
+var reader = new FileReader();
 
-  // ホワイトボードの描画
-  function drawWB(x, y, width, height) {
-    // 初期化
-    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-    // パスをリセット
-    ctx2.beginPath();
-    // レクタングルの座標(x, y)とサイズ(width, height)を指定
-    ctx2.rect( x, y, width, height );
-    // 塗りつぶしの色
-    ctx2.fillStyle = "rgba(255,255,255,0.7)";
-    // 塗りつぶしを実行
-    ctx2.fill();
-    // 線の色
-    ctx2.strokeStyle = "yellow";
-    // 線の太さ
-    ctx2.lineWidth = 2;
-    // 線を描画を実行
-    ctx2.stroke();
-  }
+$('#damage_image1').on('change', function (e) {
+  reader.onload = function (e) {
+    img.src = e.target.result;
 
-  $('#damage_image1').on('change', function (e) {
-    reader.onload = function (e) {
-      img.src = e.target.result;
-
-      img.onload = function() {
-        var rate = img.naturalWidth / canvas.clientWidth;
-        canvasWidth = canvas.clientWidth;
-        canvasHeight = img.naturalHeight / rate;
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-        // ホワイトボード用キャンバス
-        canvas2.width = canvasWidth;
-        canvas2.height = canvasHeight;
-        
-        // 画像を描画
-        ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
-        // 画像だけの状態を保存
-        //original_ctx.drawImage(img, 0, 0, canvasWidth, this.height * (canvasWidth / this.width));
-        //////////////////////
-        // ホワイトボード描画
-        // 縦置き
-        if(document.getElementById('damage_position_wb_0').checked){ 
-          drawWB(0, 0, wb_width, wb_height);
-        } else if(document.getElementById('damage_position_wb_1').checked){ 
-          drawWB(canvas2.width/2 - wb_width/2, 0, wb_width, wb_height);        
-        } else if(document.getElementById('damage_position_wb_2').checked){ 
-          drawWB(canvas2.width - wb_width, 0, wb_width, wb_height);        
-        } else if(document.getElementById('damage_position_wb_3').checked){ 
-          drawWB(canvas2.width - wb_width, canvas2.height - wb_height, wb_width, wb_height);      
-        } else if(document.getElementById('damage_position_wb_4').checked){ 
-          drawWB(canvas2.width/2 - wb_width/2, canvas2.height - wb_height, wb_width, wb_height);
-        } else if(document.getElementById('damage_position_wb_5').checked){ 
-          drawWB(0, canvas2.height - wb_height, wb_width, wb_height);
-        }
-        // 横置き
-          else if(document.getElementById('damage_position_wb_6').checked){ 
-          drawWB(0, 0, yoko_wb_width, yoko_wb_height);
-        } else if(document.getElementById('damage_position_wb_7').checked){ 
-          drawWB(canvas2.width/2 - yoko_wb_width/2, 0, yoko_wb_width, yoko_wb_height);
-        } else if(document.getElementById('damage_position_wb_8').checked){ 
-          drawWB(canvas2.width - yoko_wb_width, 0, yoko_wb_width, yoko_wb_height);
-        } else if(document.getElementById('damage_position_wb_9').checked){ 
-          drawWB(canvas2.width - yoko_wb_width, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
-        } else if(document.getElementById('damage_position_wb_10').checked){ 
-          drawWB(canvas2.width/2 - yoko_wb_width/2, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
-        } else if(document.getElementById('damage_position_wb_11').checked){ 
-          drawWB(0, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
-        }        
-      }
-    }
-    reader.readAsDataURL(e.target.files[0]);
-  });
-  
-  // 縦置き  
-  $('#wb_left-top').on('click', function (e) {
-    drawWB(0, 0, wb_width, wb_height);
-  });
-  $('#wb_top').on('click', function (e) {
-    drawWB(canvas2.width/2 - wb_width/2, 0, wb_width, wb_height);
-  });
-  $('#wb_right-top').on('click', function (e) {
-    drawWB(canvas2.width - wb_width, 0, wb_width, wb_height);
-  });
-  $('#wb_right-under').on('click', function (e) {
-    drawWB(canvas2.width - wb_width, canvas2.height - wb_height, wb_width, wb_height);
-  });
-  $('#wb_under').on('click', function (e) {
-    drawWB(canvas2.width/2 - wb_width/2, canvas2.height - wb_height, wb_width, wb_height);
-  });
-  $('#wb_left-under').on('click', function (e) {
-    drawWB(0, canvas2.height - wb_height, wb_width, wb_height);
-  });
-  // 横置き
-  $('#yoko_wb_left-top').on('click', function (e) {
-    drawWB(0, 0, yoko_wb_width, yoko_wb_height);
-  });
-  $('#yoko_wb_top').on('click', function (e) {
-    drawWB(canvas2.width/2 - yoko_wb_width/2, 0, yoko_wb_width, yoko_wb_height);
-  });
-  $('#yoko_wb_right-top').on('click', function (e) {
-    drawWB(canvas2.width - yoko_wb_width, 0, yoko_wb_width, yoko_wb_height);
-  });
-  $('#yoko_wb_right-under').on('click', function (e) {
-    drawWB(canvas2.width - yoko_wb_width, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
-  });
-  $('#yoko_wb_under').on('click', function (e) {
-    drawWB(canvas2.width/2 - yoko_wb_width/2, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
-  });
-  $('#yoko_wb_left-under').on('click', function (e) {
-    drawWB(0, canvas2.height - yoko_wb_height, yoko_wb_width, yoko_wb_height);
-  });  
-  
-  $('#liveview2').on('click', function(e){
-    if(document.getElementById( "arrow_clean" ).checked) {
-      // 初期化
-      //ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    } else {
-      // 実際の画像サイズと描画領域の倍率を算出
-      var rate = canvas.width / canvas.clientWidth;
-      let offsetX = e.offsetX * rate; // =>要素左上からのx座標
-      let offsetY = e.offsetY * rate; // =>要素左上からのy座標
-  
-//      var w=30,h=30,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
-      var w=canvas.width*0.05,h=w,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
-      // 矢印描画     
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.translate(x,y);
-      ctx.beginPath();
-      ctx.fillStyle = 'red';
-      if ( document.getElementById( "arrow_up" ).checked ) {
-      	// 上
-        ctx.moveTo(-h0,w);
-      	ctx.lineTo(-h0,w0);
-        ctx.lineTo(-w0,w0);
-        ctx.lineTo(0,0);
-        ctx.lineTo(w0,w0);
-        ctx.lineTo(h0,w0);
-        ctx.lineTo(h0,w); 
-        ctx.lineTo(-h0,w);
-      } else if ( document.getElementById( "arrow_right" ).checked ) {
-      	// 右
-        ctx.moveTo(-w,-h0);    	
-      	ctx.lineTo(-w0,-h0);
-        ctx.lineTo(-w0,-w0);
-        ctx.lineTo(0,0);
-        ctx.lineTo(-w0,w0);
-        ctx.lineTo(-w0,h0);
-        ctx.lineTo(-w,h0);
-        ctx.lineTo(-w,-h0);
-      } else if ( document.getElementById( "arrow_down" ).checked ) {
-      	// 下
-        ctx.moveTo(-h0,-w);    	
-      	ctx.lineTo(-h0,-w0);
-        ctx.lineTo(-w0,-w0);
-        ctx.lineTo(0,0);
-        ctx.lineTo(w0,-w0);
-        ctx.lineTo(h0,-w0);
-        ctx.lineTo(h0,-w);
-        ctx.lineTo(-h0,-w);    	
-      } else if ( document.getElementById( "arrow_left" ).checked ) {
-      	// 左
-        ctx.moveTo(w,-h0);
-      	ctx.lineTo(w0,-h0);
-        ctx.lineTo(w0,-w0);
-        ctx.lineTo(0,0);
-        ctx.lineTo(w0,w0);
-        ctx.lineTo(w0,h0);
-        ctx.lineTo(w,h0);
-        ctx.lineTo(w,-h0);
-      }
-      ctx.stroke();
-      ctx.fill();
-      ctx.closePath();
-      ctx.setTransform(1,0,0,1,0,0);
+    img.onload = function() {
+      // 画像サイズ取得
+      var imgW = img.width;
+      var imgH = img.height;
+      // プレビュー画像の幅取得
+      var previewImgW = $('.previewImg').width();
+      // 拡縮率の計算
+      var rate = previewImgW / imgW;
       
-      console.log(ctx);
+      // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
+      canvas.width = imgW * rate * 2;      // 高画質化のため、2倍に
+      canvas.height = imgH * rate * 2;     // 高画質化のため、2倍に
+      // 画像を canvas に表示
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // スタイルを設定
+      canvas.style.width = String(imgW * rate) + "px";
+      canvas.style.height = String(imgH * rate) + "px";
     }
-  });
+  }
+  reader.readAsDataURL(e.target.files[0]);
+});
 
-  $('#submit').on('mousedown', function (e) {
-    $("#damage_image1").val(""); //画像データを二重に送信するのを防ぐ
-    // 矢印ありイメージの画像化
-    var canvas_data = canvas.toDataURL('image/jpg');
-    $("#damage_image_url").val(canvas_data);
-    
-    // 矢印のないオリジナルイメージを作成
+$('#liveview').on('click', function(e){
+  if(document.getElementById( "arrow_clean" ).checked) {
+    // 初期化
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    canvas_data = canvas.toDataURL('image/jpg');
-    $("#damage_original_image_url").val(canvas_data);
-  });
+  } else {
+    // 実際の画像サイズと描画領域の倍率を算出
+    var rate = canvas.width / canvas.clientWidth;
+    let offsetX = e.offsetX * rate; // =>要素左上からのx座標
+    let offsetY = e.offsetY * rate; // =>要素左上からのy座標
+
+//      var w=30,h=30,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
+    var w=canvas.width*0.05,h=w,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
+    // 矢印描画     
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.translate(x,y);
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    if ( document.getElementById( "arrow_up" ).checked ) {
+    	// 上
+      ctx.moveTo(-h0,w);
+    	ctx.lineTo(-h0,w0);
+      ctx.lineTo(-w0,w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(w0,w0);
+      ctx.lineTo(h0,w0);
+      ctx.lineTo(h0,w); 
+      ctx.lineTo(-h0,w);
+    } else if ( document.getElementById( "arrow_right" ).checked ) {
+    	// 右
+      ctx.moveTo(-w,-h0);    	
+    	ctx.lineTo(-w0,-h0);
+      ctx.lineTo(-w0,-w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(-w0,w0);
+      ctx.lineTo(-w0,h0);
+      ctx.lineTo(-w,h0);
+      ctx.lineTo(-w,-h0);
+    } else if ( document.getElementById( "arrow_down" ).checked ) {
+    	// 下
+      ctx.moveTo(-h0,-w);    	
+    	ctx.lineTo(-h0,-w0);
+      ctx.lineTo(-w0,-w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(w0,-w0);
+      ctx.lineTo(h0,-w0);
+      ctx.lineTo(h0,-w);
+      ctx.lineTo(-h0,-w);    	
+    } else if ( document.getElementById( "arrow_left" ).checked ) {
+    	// 左
+      ctx.moveTo(w,-h0);
+    	ctx.lineTo(w0,-h0);
+      ctx.lineTo(w0,-w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(w0,w0);
+      ctx.lineTo(w0,h0);
+      ctx.lineTo(w,h0);
+      ctx.lineTo(w,-h0);
+    }
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+    ctx.setTransform(1,0,0,1,0,0);
+    
+    console.log(ctx);
+  }
+});
+
+$('#submit').on('mousedown', function (e) {
+  // canvasの画像化
+  var canvas_data = canvas.toDataURL('image/jpeg');
+  $("#canvas_data").val(canvas_data);
+});
 </script>

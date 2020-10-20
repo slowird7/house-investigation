@@ -1,5 +1,5 @@
 <div class="book">
-  <%= render 'investigations/pages/pre/hyoshi' %>
+  <%= render 'investigations/pages/hyoshi', survey_type: '事前' %>
   <%= render 'investigations/pages/pre/chosahokokusyo' %>
   <!-- コメントアウト -->
   <% if false %>  
@@ -8,40 +8,42 @@
     <%= render 'investigations/pages/pre/chosakuikiheimenzu2' %>
   <% end %>
   <!-- コメントアウト -->
-  <%= render 'investigations/pages/pre/tatemonochosaichiranhyo' %>
-  <%= render 'investigations/pages/pre/kaokuchosasyodakusyo' %>
-  <%= render 'investigations/pages/pre/tatemonosuijyunsokuryokekkahyo' %>
-  <%= render 'investigations/pages/pre/tatemonokeisyasokuteikekkahyo' %>
-  <%= render 'investigations/pages/pre/sonsyochosasyo' %>
+  <%= render 'investigations/pages/tatemonochosaichiranhyo', survey_type_1: '事前', survey_type_2: '事後', survey_type_main: '事前' %>
+  <%= render 'investigations/pages/kaokuchosasyodakusyo', survey_type: '事前' %>
+  <%= render 'investigations/pages/tatemonosuijyunsokuryokekkahyo', survey_type_1: '事前', survey_type_2: '事後', survey_type_main: '事前' %>
+  <%= render 'investigations/pages/tatemonokeisyasokuteikekkahyo', survey_type_1: '事前', survey_type_2: '事後', survey_type_main: '事前' %>
+  <%= render 'investigations/pages/sonsyochosasyo', survey_type_1: '事前', survey_type_2: '事後', survey_type_main: '事前' %>
 </div>
 
 <style>
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #FAFAFA;
-    font: 12pt "Tahoma";
+  margin: 0;
+  padding: 0;
+  background-color: #FAFAFA;
+  font: 12pt "Tahoma";
 }
 * {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 .page {
-    width: 21cm;
-    min-height: 29.7cm;
-    padding: 1cm 0.2cm 1cm 1.8cm;  /*上　右　下　左*/
-    margin: 1cm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 21cm;
+  min-height: 29.7cm;
+  padding: 1cm 0.2cm 1cm 1.8cm;  /*上　右　下　左*/
+  margin: 1cm auto;
+  border: 1px #D3D3D3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+/*
 .subpage {
-    padding: 1cm;
-    //border: 5px red solid;
-    height: 256mm;
-    //outline: 2cm #FFEAEA solid;
+  padding: 1cm;
+  /* border: 5px red solid; *
+  height: 256mm;
+  /* outline: 2cm #FFEAEA solid; *
 }
+*/
 .post-img {
   width: 100%;
   position: relative;
@@ -125,22 +127,20 @@ body {
 }
 
 
-
-
 @page {
-    size: A4;
-    margin: 0;
+  size: A4;
+  margin: 0;
 }
 @media print {
-    .page {
-        margin: 0;
-        border: initial;
-        border-radius: initial;
-        width: initial;
-        min-height: initial;
-        box-shadow: initial;
-        background: initial;
-        page-break-after: always;
-    }
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
 }
 </style>

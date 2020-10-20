@@ -5,27 +5,34 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 user=User.find_by(user_name: 'asao')
 if user.blank?
-  user = User.new(role: 'superuser', user_name: 'asao', password: 'yousei0930')
+  user = User.new(role: 'superuser', user_name: 'asao', password: 'gNw47gvgaDSy')
   user.save
 end
 
 user=User.find_by(user_name: 'tanaka')
 if user.blank?
-  user = User.new(role: 'admin', user_name: 'tanaka', password: 'password')
+  user = User.new(role: 'admin', user_name: 'tanaka', password: 'tanaka')
+  user.save
+end
+
+user=User.find_by(user_name: 'okamoto')
+if user.blank?
+  user = User.new(role: 'operator', user_name: 'okamoto', password: 'okamoto')
   user.save
 end
 
 user=User.find_by(user_name: 'tsubokura')
 if user.blank?
-  user = User.new(role: 'admin', user_name: 'tsubokura', password: 'password')
+  user = User.new(role: 'admin', user_name: 'tsubokura', password: 'tsubokura')
   user.save
 end
 
 user=User.find_by(user_name: 'fujita')
 if user.blank?
-  user = User.new(role: 'operator', user_name: 'fujita', password: 'password')
+  user = User.new(role: 'operator', user_name: 'fujita', password: 'fujita')
   user.save
 end
 
@@ -49,7 +56,8 @@ end
 
 investigation=Investigation.find_by(construction_name: '寝屋川市秦高宮雨水幹線建設工事')
 if investigation.blank?
-  investigation = Investigation.new(construction_name: '寝屋川市秦高宮雨水幹線建設工事', content: "沿道家屋", 
+  investigation = Investigation.new(construction_name: '寝屋川市秦高宮雨水幹線建設工事', content: "沿道家屋",
+                                    construction_display_name1: '寝屋川市', construction_display_name2: '秦高宮雨水幹線建設工事',
                                     builder: "戸田・ハンシン特定建設共同企業体", investigator_pre_survey: "株式会社きんそく家屋調査", 
                                     place: "大阪府寝屋川市高宮地内")
   investigation.save

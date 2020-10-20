@@ -1,0 +1,220 @@
+<div class="container">
+  <%= form_for(@damage) do |f| %>
+    <%= f.hidden_field :sonsyo_id, :value => @sonsyo.id %>
+    <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
+    
+    <input type="hidden" name="construction_name" id="construction_name" value="<%= @investigation.construction_name %>">
+    
+    
+    
+    <div class="row">
+      <div class="col-xs-6">
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+      </div>
+      <div class="col-xs-6">
+        <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+      </div>
+    </div>
+    
+    <div class="row photosArea">
+      <div class="col-xs-6">
+        <% unless @preview_damage.image1? %>
+          <%= image_tag "bg_img.jpg", class:"previewImg" %>
+        <% else %>
+          <%= image_tag @preview_damage.image1, class:"previewImg" %>
+        <% end %>      
+      </div>
+      <div class="col-xs-6" id="sonsyo-<%= @sonsyo.id %>">
+        <canvas id="liveview"></canvas>
+        <input type="hidden" name="canvas_data" id="canvas_data">
+      </div>
+    </div>
+    
+    <div class="form-group" style="margin-top: 20px;">
+      <div class="switch_set">
+        <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
+        <%= f.check_box :sukima, {}, "true", "false" %><%= f.label :sukima, '隙間' %>
+        <%= f.check_box :ware, {}, "true", "false" %><%= f.label :ware, '割れ' %>
+        <%= f.check_box :kake, {}, "true", "false" %><%= f.label :kake, '欠け' %>
+        <%= f.check_box :crack, {}, "true", "false" %><%= f.label :crack, 'クラック' %>
+        <%= f.check_box :tile, {}, "true", "false" %><%= f.label :tile, 'タイル' %>
+        <%= f.check_box :kire, {}, "true", "false" %><%= f.label :kire, '切れ' %>
+        <%= f.check_box :uki, {}, "true", "false" %><%= f.label :uki, '浮き' %>
+        <%= f.check_box :suhon, {}, "true", "false" %><%= f.label :suhon, '数本' %>
+        <%= f.check_box :chirigire, {}, "true", "false" %><%= f.label :chirigire, 'チリ切れ' %>
+        <%= f.check_box :cross, {}, "true", "false" %><%= f.label :cross, 'クロス' %>
+        <%= f.check_box :meji, {}, "true", "false" %><%= f.label :meji, '目地' %>
+        <%= f.check_box :tategu, {}, "true", "false" %><%= f.label :tategu, '建具' %>
+        <%= f.check_box :tasu, {}, "true", "false" %><%= f.label :tasu, '多数' %>
+        <%= f.check_box :kakusyo, {}, "true", "false" %><%= f.label :kakusyo, '各所' %>
+      </div>
+    </div>
+  
+    <div class="form-group" style="margin-top: 10px; padding: 10px;">
+      矢印の向き：
+      <label><input id="arrow_up" type="radio" checked="checked" name="direction">上</label>&nbsp;&nbsp;&nbsp;&nbsp;
+      <label><input id="arrow_right" type="radio" name="direction">右</label>&nbsp;&nbsp;&nbsp;&nbsp;
+      <label><input id="arrow_down" type="radio" name="direction">下</label>&nbsp;&nbsp;&nbsp;&nbsp;
+      <label><input id="arrow_left" type="radio" name="direction">左</label>&nbsp;&nbsp;&nbsp;&nbsp;
+      <label><input id="arrow_clean" type="radio" name="direction">クリア</label>
+    </div>
+
+    <div class="form-group">
+      <p>面積：<%= f.text_field :width %>&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %></p>
+      <p>幅：<%= f.text_field :wide %></p>
+    </div>
+    
+    <div class="form-group">
+      長さ：&nbsp;<label><%= f.check_box :amimejyo, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
+      <label><%= f.check_box :zencho, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
+      <label><%= f.check_box :zenshu, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <%= f.text_field :length %></span>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :comment, 'コメント' %>
+      <%= f.text_area :comment, :class=>"form-control" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.photosArea {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.photosArea .previewImg {
+  width: 100%;
+}
+</style>
+
+<script>
+// グローバル変数
+var canvas = document.getElementById('liveview');
+var ctx = canvas.getContext('2d');
+var img = new Image();
+var reader = new FileReader();
+var wb_width, wb_height;
+
+$('#damage_image1').on('change', function (e) {
+  reader.onload = function (e) {
+    img.src = e.target.result;
+
+    img.onload = function() {
+      // 画像サイズ取得
+      var imgW = img.width;
+      var imgH = img.height;
+      // プレビュー画像の幅取得
+      var previewImgW = $('.previewImg').width();
+      // 拡縮率の計算
+      var rate = previewImgW / imgW;
+      
+      // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
+      canvas.width = imgW * rate;
+      canvas.height = imgH * rate;
+      // 画像を canvas に表示
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      
+      /*
+      // ホワイトボードを描画
+      wb_width = canvas.width / 4;
+      wb_height = canvas.height / 2;
+      ctx.fillStyle = "white";      
+      ctx.fillRect(0, 0, wb_width, wb_height);
+
+      //テキスト描画のスタイルを指定する
+      ctx.fillStyle = "black";
+      ctx.font = "8px 'ＭＳ ゴシック'";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "top";
+
+      // 工事名の描画
+      //塗りつぶしのテキストを、座標(1, 1)の位置に最大幅wb_widthで描画する
+      ctx.fillText($("#construction_name").val(), 1, 1);
+      */
+    }
+  }
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+$('#liveview').on('click', function(e){
+  if(document.getElementById( "arrow_clean" ).checked) {
+    // 初期化
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  } else {
+    // 実際の画像サイズと描画領域の倍率を算出
+    var rate = canvas.width / canvas.clientWidth;
+    let offsetX = e.offsetX * rate; // =>要素左上からのx座標
+    let offsetY = e.offsetY * rate; // =>要素左上からのy座標
+
+//      var w=30,h=30,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
+    var w=canvas.width*0.05,h=w,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
+    // 矢印描画     
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.translate(x,y);
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    if ( document.getElementById( "arrow_up" ).checked ) {
+    	// 上
+      ctx.moveTo(-h0,w);
+    	ctx.lineTo(-h0,w0);
+      ctx.lineTo(-w0,w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(w0,w0);
+      ctx.lineTo(h0,w0);
+      ctx.lineTo(h0,w); 
+      ctx.lineTo(-h0,w);
+    } else if ( document.getElementById( "arrow_right" ).checked ) {
+    	// 右
+      ctx.moveTo(-w,-h0);    	
+    	ctx.lineTo(-w0,-h0);
+      ctx.lineTo(-w0,-w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(-w0,w0);
+      ctx.lineTo(-w0,h0);
+      ctx.lineTo(-w,h0);
+      ctx.lineTo(-w,-h0);
+    } else if ( document.getElementById( "arrow_down" ).checked ) {
+    	// 下
+      ctx.moveTo(-h0,-w);    	
+    	ctx.lineTo(-h0,-w0);
+      ctx.lineTo(-w0,-w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(w0,-w0);
+      ctx.lineTo(h0,-w0);
+      ctx.lineTo(h0,-w);
+      ctx.lineTo(-h0,-w);    	
+    } else if ( document.getElementById( "arrow_left" ).checked ) {
+    	// 左
+      ctx.moveTo(w,-h0);
+    	ctx.lineTo(w0,-h0);
+      ctx.lineTo(w0,-w0);
+      ctx.lineTo(0,0);
+      ctx.lineTo(w0,w0);
+      ctx.lineTo(w0,h0);
+      ctx.lineTo(w,h0);
+      ctx.lineTo(w,-h0);
+    }
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+    ctx.setTransform(1,0,0,1,0,0);
+    
+    console.log(ctx);
+  }
+});
+
+$('#submit').on('mousedown', function (e) {
+  //$("#damage_image1").val(""); //画像データを二重に送信するのを防ぐ
+  // 矢印ありイメージの画像化
+  var canvas_data = canvas.toDataURL('image/jpeg');
+  //$("#damage_image_url").val(canvas_data);
+  $("#canvas_data").val(canvas_data);
+  
+  // 矢印のないオリジナルイメージを作成
+  //ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  //canvas_data = canvas.toDataURL('image/jpeg');
+  //$("#damage_original_image_url").val(canvas_data);
+});
+</script>

@@ -1,3 +1,7 @@
+require './lib/jacic_hash_lib'
+require 'mini_exiftool'
+include JACICHash
+
 class SlopesController < ApplicationController
   before_action :require_user_logged_in
 
@@ -29,39 +33,65 @@ class SlopesController < ApplicationController
     @house = @keisya.house
     @investigation = @house.investigation
 
-    # imageを更新
-#    tmp_slope_params = slope_params
-#    image_data = base64_conversion(tmp_slope_params[:image_url])
-#    tmp_slope_params[:image1] = image_data
-#    tmp_slope_params[:image_url] = nil
+    # paramsは代入できないので、コピーを生成
+    copy_slope_params = slope_params
+    # canvasの画像化
+    copy_slope_params[:image2] = base64_conversion(params[:canvas_data])
 
-    if @slope.update(slope_params)  
-      # 調査開始日・終了日の更新
-      if @slope.survey_type == "pre"
-        if @investigation.start_pre_survey == nil
-          @investigation.start_pre_survey = Date.today
-        end
-        @investigation.stop_pre_survey = Date.today
-      elsif @slope.survey_type == "ongoing"
-        if @investigation.start_ongoing_survey == nil
-          @investigation.start_ongoing_survey = Date.today
-        end      
-        @investigation.stop_ongoing_survey = Date.today      
-      else
-        if @investigation.start_after_survey == nil
-          @investigation.start_after_survey = Date.today
-        end      
-        @investigation.stop_after_survey = Date.today
-      end
-      @investigation.save
-
-      flash[:success] = '正常に更新されました。'
-      #redirect_to @house
-      redirect_to house_path(@house, anchor: 'keisya')
+    if @slope.update(copy_slope_params)
+      # 信憑性のチェック（ハッシュ値の付加）
+      dst_file_path = check_credibility(@slope.image1.path)
+      # 相対パスに変換
+      @slope.original_image_url = dst_file_path
+      # ハッシュ付き画像も保存
+      @slope.save
+      
+      redirect_to check_slope_path
     else
       flash.now[:danger] = '更新に失敗しました。'
       render :edit
-    end  
+    end
+  end
+  
+  def check
+    @slope = Slope.find(params[:id])
+    @keisya = @slope.keisya
+    @house = @keisya.house
+    @investigation = @house.investigation
+  end    
+  
+  def confirm
+    @slope = Slope.find(params[:id])
+    @keisya = @slope.keisya
+    @house = @keisya.house
+    @investigation = @house.investigation
+    
+    # paramsは代入できないので、コピーを生成
+    copy_slope_params = slope_params    
+    # canvasの画像化
+    copy_slope_params[:image3] = base64_conversion(params[:canvas_data])
+    @slope.update(copy_slope_params)
+
+    # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
+    exif1 = MiniExiftool.new(@slope.image1.path)
+    exif3 = MiniExiftool.new(@slope.image3.path)
+    exif3.date_time_original = exif1.date_time_original
+    exif3.save
+
+    # 信憑性のチェック（ハッシュ値の付加）
+    dst_file_path = check_credibility(@slope.image3.path)
+    if dst_file_path != nil
+      @slope.image_url = dst_file_path
+    end
+    
+    # ハッシュ付き画像も保存
+    if @slope.save
+      flash[:success] = '正常に更新されました。'
+      redirect_to house_path(@house, anchor: 'keisya')
+    else
+      flash.now[:danger] = '更新に失敗しました。'
+      render :confirm
+    end    
   end
   
   private
@@ -70,31 +100,4 @@ class SlopesController < ApplicationController
     params.require(:slope).permit(:keisya_id, :position_wb, :suichokukeisya, :suiheikeisya, :east, :west, :north, :south, :comment,
                                   :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url)
   end
-
-  def base64_conversion(uri_str, filename = 'base64')
-    image_data = split_base64(uri_str)
-    image_data_string = image_data[:data]
-    image_data_binary = Base64.decode64(image_data_string)
-
-    temp_img_file = Tempfile.new(filename)
-    temp_img_file.binmode
-    temp_img_file << image_data_binary
-    temp_img_file.rewind
-
-    img_params = {:filename => "#{filename}.#{image_data[:extension]}", :type => image_data[:type], :tempfile => temp_img_file}
-    ActionDispatch::Http::UploadedFile.new(img_params)
-  end
-
-  def split_base64(uri_str)
-    if uri_str.match(%r{data:(.*?);(.*?),(.*)$})
-      uri = Hash.new
-      uri[:type] = $1
-      uri[:encoder] = $2
-      uri[:data] = $3
-      uri[:extension] = $1.split('/')[1]
-      return uri
-    else
-      return nil
-    end
-  end  
 end

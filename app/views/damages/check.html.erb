@@ -1,0 +1,179 @@
+<% 
+  survey_type = @damage.survey_type
+  if survey_type == "pre"
+    survey_type_name = "事前調査"
+  elsif survey_type == "ongoing"
+    survey_type_name = "事中調査"
+  elsif survey_type == "after"
+    survey_type_name = "事後調査"
+  else
+    survey_type_name = "その他"
+  end
+%>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'HOME', root_path %></li>
+  <li><%= link_to @investigation.construction_name, @investigation %></li>
+  <li><%= link_to @house.house_name, @house %></li>
+  <li class="active">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</li>
+</ol>
+
+<h2 class="text-center">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</h2>
+<!-- 写真 -->
+<div id="sonsyo-<%= @sonsyo.id %>" class="post-img">
+  <%= image_tag @damage.image2, id: "sonsyo-" + @sonsyo.id.to_s + "_img" %>
+  <% if @sonsyo.room_name != "全景" %>
+    <div class="damage_wb">
+      <table class="table table-bordered table-condensed whiteboard">
+        <tr>
+          <td colspan="5"><%= @house.investigation.construction_display_name1 %><br/><%= @house.investigation.construction_display_name2 %></td>
+        </tr>
+        <tr>
+          <td class="table_header">調査日</td>
+          <td colspan="4"><%= @damage.updated_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <td class="table_header">家屋名</td>
+          <td colspan="4"><%= @house.house_name %></td>
+        </tr>
+        <tr>
+          <td class="table_header">家屋No</td>
+          <td style="width: 44px;"><%= @house.house_number %></td>
+          <td class="table_header">写真No</td>
+          <td style="width: 44px;" colspan="2">No.<%= @sonsyo.number %></td>
+        </tr>
+        <tr>
+          <td class="table_header">調査<br/>箇所</td>
+          <td colspan="4">
+            <% if @sonsyo.room_name == "その他" %>
+              <%= @sonsyo.room_name_other %>
+            <% else %>
+              <%= @sonsyo.room_name %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <% if @damage.genkyo == true %>現況 <% end %>
+            <% if @damage.sukima == true %>隙間 <% end %>
+            <% if @damage.ware == true %>割れ <% end %>
+            <% if @damage.kake == true %>欠け <% end %>
+            <% if @damage.crack == true %>クラック <% end %>
+            <% if @damage.tile == true %>タイル <% end %>
+            <% if @damage.kire == true %>切れ <% end %>
+            <% if @damage.uki == true %>浮き <% end %>
+            <% if @damage.suhon == true %>数本 <% end %>
+            <% if @damage.chirigire == true %>チリ切れ <% end %>
+            <% if @damage.cross == true %>クロス <% end %>
+            <% if @damage.meji == true %>目地 <% end %>      
+            <% if @damage.tategu == true %>建具 <% end %>
+            <% if @damage.tasu == true %>多数 <% end %>
+            <% if @damage.kakusyo == true %>各所 <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header">面積</td>
+          <td colspan="4">
+            <% if @damage.width.present? && @damage.height.present? %>
+              <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header">幅</td>
+          <td colspan="4">
+            <% if @damage.wide.present? %>
+              <%= @damage.wide %>&nbsp;mm
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header">長さ</td>
+          <td colspan="4">
+            <% if @damage.amimejyo == true %>
+              <span>網目状</span>
+            <% end %>  
+            <% if @damage.zencho == true %>
+              <span>全長</span>
+            <% end %>
+            <% if @damage.zenshu == true %>
+              <span>全周</span>
+            <% end %>
+            
+            <% if @damage.length.present? %>
+              <%= @damage.length %>&nbsp;cm
+            <% end %>
+          </td>  
+        </tr>
+        <tr>
+          <td class="table_header">コメ<br/>ント</td>
+          <td colspan="4">
+            <%= @damage.comment %>
+          </td>
+        </tr>
+      </table>
+    </div>  
+  <% end %> 
+</div>
+
+<%= form_for(@damage, url: confirm_damage_path) do |f| %>
+  <input type="hidden" name="canvas_data" id="canvas_data">
+  <%= f.hidden_field :image3 %>
+  <%= f.submit '確定', :class=>"btn btn-primary", :id=>"submit", method: :delete, 
+    data: { confirm: '入力の間違いはありませんか？もう一度確認してください。無ければ登録しますがよろしいでしょうか？' } %> 
+<% end %>
+
+<style>
+.post-img {
+  position: relative;
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 640px;
+}
+.post-img img {
+  width: 100%;
+}
+.damage_wb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 50%;
+}
+.whiteboard {
+  background-color: white;
+  margin-bottom: 0px;
+  font-size: 10px;
+  width: 160px;
+}
+.whiteboard td {
+  padding: 1px !important;
+  text-align: center;
+}
+/* セルの最小heightを設定 */
+.whiteboard td:first-child:before {
+  display: block;
+  float: left;
+  height: 12px;
+  content: "";
+}
+.whiteboard .table_header {
+  width: 36px;
+}
+</style>
+
+<script>
+(window.onload = function() {
+  var img = document.getElementById("sonsyo-<%= @sonsyo.id %>_img");
+  var client_w = img.clientWidth;
+  var client_h = img.clientHeight;
+  //var natural_w = img.naturalWidth;
+  //var natural_h = img.naturalHeight;
+
+  html2canvas(document.querySelector("#sonsyo-<%= @sonsyo.id %>"), 
+  {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
+    var canvasData = canvas.toDataURL("image/jpeg");
+    $("#canvas_data").val(canvasData);
+  });
+})();
+</script>

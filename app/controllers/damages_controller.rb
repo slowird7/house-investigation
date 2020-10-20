@@ -1,11 +1,16 @@
+require './lib/jacic_hash_lib'
+require 'mini_exiftool'
+include JACICHash
+
 class DamagesController < ApplicationController
-  before_action :require_user_logged_in  
+  before_action :require_user_logged_in
+  before_action :damage_params, only: [:update, :confirm]
   
   def show
     @damage = Damage.find(params[:id])
     @sonsyo = @damage.sonsyo
     @house = @sonsyo.house
-    @investigation = @house.investigation    
+    @investigation = @house.investigation
   end
 
   def edit
@@ -29,47 +34,67 @@ class DamagesController < ApplicationController
     @house = @sonsyo.house
     @investigation = @house.investigation
 
-    tmp_damage_params = damage_params
-    # image（矢印あり）を更新
-    image_data = base64_conversion(tmp_damage_params[:image_url])
-    tmp_damage_params[:image1] = image_data
-    tmp_damage_params[:image_url] = nil
+    # paramsは代入できないので、コピーを生成
+    copy_damage_params = damage_params
+    # canvasの画像化
+    copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
 
-    if tmp_damage_params[:original_image_url] != nil
-      # image（矢印なし）を更新
-      image_data = base64_conversion(tmp_damage_params[:original_image_url])
-      tmp_damage_params[:image2] = image_data
-      tmp_damage_params[:original_image_url] = nil
-    end
-    
-    if @damage.update(tmp_damage_params)  
-      # 調査開始日・終了日の更新
-      if @damage.survey_type == "pre"
-        if @investigation.start_pre_survey == nil
-          @investigation.start_pre_survey = Date.today
-        end
-        @investigation.stop_pre_survey = Date.today
-      elsif @damage.survey_type == "ongoing"
-        if @investigation.start_ongoing_survey == nil
-          @investigation.start_ongoing_survey = Date.today
-        end      
-        @investigation.stop_ongoing_survey = Date.today      
-      else
-        if @investigation.start_after_survey == nil
-          @investigation.start_after_survey = Date.today
-        end      
-        @investigation.stop_after_survey = Date.today
-      end
-      @investigation.save
-
-      flash[:success] = '正常に更新されました。'
-      #redirect_to @house
-      redirect_to house_path(@house, anchor: 'sonsyo')
+    if @damage.update(copy_damage_params)
+      # 信憑性のチェック（ハッシュ値の付加）
+      dst_file_path = check_credibility(@damage.image1.path)
+      # 相対パスに変換
+      #@damage.original_image_url = dst_file_path.match("/uploads/.*")
+      @damage.original_image_url = dst_file_path
+      # ハッシュ付き画像も保存
+      @damage.save
+      
+      redirect_to check_damage_path
     else
       flash.now[:danger] = '更新に失敗しました。'
       render :edit
     end    
   end
+
+  def check
+    @damage = Damage.find(params[:id])
+    @sonsyo = @damage.sonsyo
+    @house = @sonsyo.house
+    @investigation = @house.investigation
+  end  
+
+  def confirm
+    @damage = Damage.find(params[:id])
+    @sonsyo = @damage.sonsyo
+    @house = @sonsyo.house
+    @investigation = @house.investigation
+    
+    # paramsは代入できないので、コピーを生成
+    copy_damage_params = damage_params    
+    # canvasの画像化
+    copy_damage_params[:image3] = base64_conversion(params[:canvas_data])
+    @damage.update(copy_damage_params)
+
+    # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
+    exif1 = MiniExiftool.new(@damage.image1.path)
+    exif3 = MiniExiftool.new(@damage.image3.path)
+    exif3.date_time_original = exif1.date_time_original
+    exif3.save
+
+    # 信憑性のチェック（ハッシュ値の付加）
+    dst_file_path = check_credibility(@damage.image3.path)
+    if dst_file_path != nil
+      @damage.image_url = dst_file_path
+    end
+    
+    # ハッシュ付き画像も保存
+    if @damage.save
+      flash[:success] = '正常に更新されました。'
+      redirect_to house_path(@house, anchor: 'sonsyo')
+    else
+      flash.now[:danger] = '更新に失敗しました。'
+      render :confirm
+    end    
+  end  
   
   private
 
@@ -78,31 +103,4 @@ class DamagesController < ApplicationController
                                   :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,
                                   :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url)
   end
-
-  def base64_conversion(uri_str, filename = 'base64')
-    image_data = split_base64(uri_str)
-    image_data_string = image_data[:data]
-    image_data_binary = Base64.decode64(image_data_string)
-
-    temp_img_file = Tempfile.new(filename)
-    temp_img_file.binmode
-    temp_img_file << image_data_binary
-    temp_img_file.rewind
-
-    img_params = {:filename => "#{filename}.#{image_data[:extension]}", :type => image_data[:type], :tempfile => temp_img_file}
-    ActionDispatch::Http::UploadedFile.new(img_params)
-  end
-
-  def split_base64(uri_str)
-    if uri_str.match(%r{data:(.*?);(.*?),(.*)$})
-      uri = Hash.new
-      uri[:type] = $1
-      uri[:encoder] = $2
-      uri[:data] = $3
-      uri[:extension] = $1.split('/')[1]
-      return uri
-    else
-      return nil
-    end
-  end    
 end
