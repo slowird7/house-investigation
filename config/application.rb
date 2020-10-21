@@ -37,6 +37,6 @@ module HouseInvestigation
       'Access-Control-Request-Method' => '*'
     }
     
-    config.autoload_paths << Rails.root.join("lib")
+    #config.autoload_paths << Rails.root.join("lib")
   end
 end
