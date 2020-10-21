@@ -36,5 +36,7 @@ module HouseInvestigation
       'Access-Control-Allow-Origin' => 'http://localhost:3355',
       'Access-Control-Request-Method' => '*'
     }
+    
+    config.autoload_paths << Rails.root.join("lib")
   end
 end
