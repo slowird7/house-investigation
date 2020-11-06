@@ -1,3 +1,5 @@
+require 'zip'
+
 class InvestigationsController < ApplicationController
   before_action :require_user_logged_in
   
@@ -74,7 +76,10 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")
     
-    count = download_images(@houses, "pre", "withWB")
+    #    dst_file_path = File.join(File.dirname(image_path), File.basename(image_path, '.*') + "_hash" + ".jpg")
+    zippath = "#{Rails.root}/tmp/pre_img_withWB.zip"
+    
+    count = download_images(@houses, "pre", "withWB", zippath)
     if count == 0
       redirect_to @investigation
     end    
@@ -83,8 +88,10 @@ class InvestigationsController < ApplicationController
   def download_images_ongoing_survey
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")
+
+    zippath = "#{Rails.root}/tmp/ongoing_img_withWB.zip"
     
-    count = download_images(@houses, "ongoing", "withWB")
+    count = download_images(@houses, "ongoing", "withWB", zippath)
     if count == 0
       redirect_to @investigation
     end     
@@ -94,7 +101,9 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")
     
-    count = download_images(@houses, "after", "withWB")
+    zippath = "#{Rails.root}/tmp/after_img_withWB.zip"
+    
+    count = download_images(@houses, "after", "withWB", zippath)
     if count == 0
       redirect_to @investigation
     end     
@@ -106,7 +115,9 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")
     
-    count = download_images(@houses, "pre", "original")
+    zippath = "#{Rails.root}/tmp/pre_img.zip"
+    
+    count = download_images(@houses, "pre", "original", zippath)
     if count == 0
       redirect_to @investigation
     end
@@ -115,8 +126,10 @@ class InvestigationsController < ApplicationController
   def download_originalImages_ongoing_survey
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")
+    
+    zippath = "#{Rails.root}/tmp/ongoing_img.zip"    
 
-    count = download_images(@houses, "ongoing", "original")
+    count = download_images(@houses, "ongoing", "original", zippath)
     if count == 0
       redirect_to @investigation
     end
@@ -126,7 +139,9 @@ class InvestigationsController < ApplicationController
     @investigation = Investigation.find(params[:id])
     @houses = @investigation.houses.order(house_number: "ASC")
     
-    count = download_images(@houses, "after", "original")
+    zippath = "#{Rails.root}/tmp/after_img.zip"
+    
+    count = download_images(@houses, "after", "original", zippath)
     if count == 0
       redirect_to @investigation
     end    
@@ -141,78 +156,88 @@ class InvestigationsController < ApplicationController
                                           :start_pre_survey, :stop_pre_survey, :start_ongoing_survey, :stop_ongoing_survey, :start_after_survey, :stop_after_survey)
   end
   
-  def download_images(houses, survey_type, image_type)
-    if houses.blank?
-      return 0
-    end
-    
+  def download_images(houses, survey_type, image_type, zippath)
     count = 0
-    houses.each do |house|
-      sonsyos = house.sonsyos
-      if sonsyos.present?
-        sonsyos.each do |sonsyo|
-          damage = sonsyo.damages.find_by(survey_type: survey_type)
-          
-          if damage.present?
-            if image_type == "original"
-              if damage.original_image_url.present?
-                send_file damage.original_image_url
-                count += 1
-              end
-            elsif image_type == "withWB"
-              if damage.image_url.present?
-                send_file damage.image_url
-                count += 1
-              end          
-            end
-          end
-        end
-      end
+    if houses.blank?
+      return count
+    end
 
-      keisyas = house.keisyas
-      if keisyas.present?
-        keisyas.each do |keisya|
-          slope = keisya.slopes.find_by(survey_type: survey_type)
-          
-          if slope.present?
-            if image_type == "original"
-              if slope.original_image_url.present?
-                send_file slope.original_image_url
-                count += 1
+    # zip圧縮
+    File.unlink zippath if File.file?(zippath)
+    Zip::File.open(zippath, Zip::File::CREATE) do |z_fp|
+
+      houses.each do |house|
+        sonsyos = house.sonsyos
+        if sonsyos.present?
+          sonsyos.each do |sonsyo|
+            damage = sonsyo.damages.find_by(survey_type: survey_type)
+            
+            if damage.present?
+              if image_type == "original"
+                if damage.original_image_url.present?
+                  path = damage.original_image_url
+                  z_fp.add(File.basename(path), path)
+                  count += 1
+                end
+              elsif image_type == "withWB"
+                if damage.image_url.present?
+                  path = damage.image_url
+                  z_fp.add(File.basename(path), path)
+                  count += 1
+                end          
               end
-            elsif image_type == "withWB"
-              if slope.image_url.present?
-                send_file slope.image_url
-                count += 1
-              end          
             end
           end
         end
-      end
-      
-      points = house.points
-      if points.present?
-        points.each do |point|
-          post = point.posts.find_by(survey_type: survey_type)
-          
-          if post.present?
-            if image_type == "original"        
-              if post.original_image_url.present?
-                send_file post.original_image_url
-                count += 1
+
+        keisyas = house.keisyas
+        if keisyas.present?
+          keisyas.each do |keisya|
+            slope = keisya.slopes.find_by(survey_type: survey_type)
+            
+            if slope.present?
+              if image_type == "original"
+                if slope.original_image_url.present?
+                  path = slope.original_image_url
+                  z_fp.add(File.basename(path), path)
+                  count += 1
+                end
+              elsif image_type == "withWB"
+                if slope.image_url.present?
+                  path = slope.image_url
+                  z_fp.add(File.basename(path), path)
+                  count += 1
+                end          
               end
-            elsif image_type == "withWB"
-              if post.image_url.present?
-                send_file post.image_url
-                count += 1
-              end           
             end
-          end  
+          end
+        end
+        
+        points = house.points
+        if points.present?
+          points.each do |point|
+            post = point.posts.find_by(survey_type: survey_type)
+            
+            if post.present?
+              if image_type == "original"        
+                if post.original_image_url.present?
+                  path = post.original_image_url
+                  z_fp.add(File.basename(path), path)
+                  count += 1
+                end
+              elsif image_type == "withWB"
+                if post.image_url.present?
+                  path = post.image_url
+                  z_fp.add(File.basename(path), path)
+                  count += 1
+                end           
+              end
+            end  
+          end
         end
       end
-    
-    end  
+    end
+    send_file(zippath)
     return count
   end
-  
 end

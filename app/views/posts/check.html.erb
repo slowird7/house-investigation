@@ -109,7 +109,8 @@
 </style>
 
 <script>
-(window.onload = function() {
+// 画像を読み込んだ後に実行
+$(window).on('load', function() {
   var img = document.getElementById("point-<%= @point.id %>_img");
   var client_w = img.clientWidth;
   var client_h = img.clientHeight;
@@ -121,5 +122,5 @@
     var canvasData = canvas.toDataURL("image/jpeg");
     $("#canvas_data").val(canvasData);
   });
-})();
+});
 </script>

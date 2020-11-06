@@ -73,3 +73,5 @@ gem 'rack-cors'
 gem 'ffi' # 信頼性モジュールの呼び出し
 
 gem 'mini_exiftool' # Exifの編集
+
+gem 'rubyzip'
