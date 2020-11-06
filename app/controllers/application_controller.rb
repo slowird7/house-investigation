@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
   end
   
   # # # # # # # # # # 改ざん防止メソッド # # # # # # # # # #
-  def base64_conversion(uri_str, filename = 'base64')
+#  def base64_conversion(uri_str, filename = 'base64')
+  def base64_conversion(uri_str, filename)
     image_data = split_base64(uri_str)
     image_data_string = image_data[:data]
     image_data_binary = Base64.decode64(image_data_string)
@@ -28,6 +29,7 @@ class ApplicationController < ActionController::Base
   end
   
   def split_base64(uri_str)
+    #binding.pry
     if uri_str.match(%r{data:(.*?);(.*?),(.*)$})
       uri = Hash.new
       uri[:type] = $1

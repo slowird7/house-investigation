@@ -37,8 +37,7 @@ class DamagesController < ApplicationController
     # paramsは代入できないので、コピーを生成
     copy_damage_params = damage_params
     # canvasの画像化
-    copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
-    #binding.pry
+    copy_damage_params[:image2] = base64_conversion(params[:canvas_data], 'base64')
 
     if @damage.update(copy_damage_params)
       # 信憑性のチェック（ハッシュ値の付加）
