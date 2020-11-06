@@ -41,10 +41,10 @@ class DamagesController < ApplicationController
 
     if @damage.update(copy_damage_params)
       # 信憑性のチェック（ハッシュ値の付加）
-      #dst_file_path = check_credibility(@damage.image1.path)
+      dst_file_path = check_credibility(@damage.image1.path)
       # 相対パスに変換
       #未使用#@damage.original_image_url = dst_file_path.match("/uploads/.*")
-      #@damage.original_image_url = dst_file_path
+      @damage.original_image_url = dst_file_path
       # ハッシュ付き画像も保存
       @damage.save
       
