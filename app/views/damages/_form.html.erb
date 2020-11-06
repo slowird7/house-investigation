@@ -107,13 +107,17 @@ $('#damage_image1').on('change', function (e) {
       var rate = previewImgW / imgW;
       
       // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
-      canvas.width = imgW * rate * 1;      // 高画質化のため、2倍に
-      canvas.height = imgH * rate * 1;     // 高画質化のため、2倍に
+      canvas.width = imgW * rate * 2;      // 高画質化のため、2倍に
+      canvas.height = imgH * rate * 2;     // 高画質化のため、2倍に
       // 画像を canvas に表示
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       // スタイルを設定
       canvas.style.width = String(imgW * rate) + "px";
       canvas.style.height = String(imgH * rate) + "px";
+      
+      // canvasの画像化
+      var canvas_data = canvas.toDataURL('image/jpeg');
+      $("#canvas_data").val(canvas_data);
     }
   }
   reader.readAsDataURL(e.target.files[0]);
@@ -183,13 +187,18 @@ $('#liveview').on('click', function(e){
     ctx.closePath();
     ctx.setTransform(1,0,0,1,0,0);
     
-    console.log(ctx);
+    //console.log(ctx);
   }
+  // canvasの画像化
+  var canvas_data = canvas.toDataURL('image/jpeg');
+  $("#canvas_data").val(canvas_data);
 });
 
+/*
 $('#submit').on('mousedown', function (e) {
   // canvasの画像化
   var canvas_data = canvas.toDataURL('image/jpeg');
   $("#canvas_data").val(canvas_data);
 });
+*/
 </script>
