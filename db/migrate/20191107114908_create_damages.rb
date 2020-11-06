@@ -32,8 +32,7 @@ class CreateDamages < ActiveRecord::Migration[5.0]
       t.string :image3, default: nil   # ホワイトボード付き写真
       t.string :image_url              # ハッシュ付きホワイトボード等付写真
       t.string :original_image_url     # ハッシュ付きオリジナル写真
-      t.text :canvas_data
-      
+
       t.references :sonsyo, foreign_key: true
 
       t.timestamps
