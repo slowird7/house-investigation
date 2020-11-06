@@ -37,7 +37,7 @@ class DamagesController < ApplicationController
     # paramsは代入できないので、コピーを生成
     copy_damage_params = damage_params
     # canvasの画像化
-    #binding.pry
+    binding.pry
     copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
     #copy_damage_params[:image2] = base64_conversion(damage_params[:canvas_data])
     #copy_damage_params[:canvas_data] = nil
