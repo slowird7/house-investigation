@@ -1,5 +1,5 @@
 <div class="container">
-  <%= form_for(@damage) do |f| %>
+  <%= form_for @damage, :html => { :onsubmit => "imagingAtCanvas()" } do |f| %>
     <%= f.hidden_field :sonsyo_id, :value => @sonsyo.id %>
     <%= f.hidden_field :survey_type, :value => @damage.survey_type %>
     
@@ -196,11 +196,18 @@ $('#liveview').on('click', function(e){
   //var canvas_data = canvas.toDataURL('image/jpeg');
   //$("#canvas_data").val(canvas_data);
 });
-
+/*
 $('#submit').on('mousedown', function (e) {
   // canvasの画像化
   var canvas_data = canvas.toDataURL('image/jpeg');
   $("#canvas_data").val(canvas_data);
   //$("#damage_canvas_data").val(canvas_data);
 });
+*/
+function imagingAtCanvas() {
+  // canvasの画像化
+  var canvas_data = canvas.toDataURL('image/jpeg');
+  $("#canvas_data").val(canvas_data);
+  //$("#damage_canvas_data").val(canvas_data);
+}
 </script>
