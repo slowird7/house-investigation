@@ -53,7 +53,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # 追記↓
-gem 'pry-byebug'#, group: :development   # debugger
+gem 'pry-byebug', group: :development   # debugger
 gem 'thinreports'   # Thinreports Generator
 gem 'carrierwave'   # 画像アップローダー
 gem 'rmagick'   # 画像加工
