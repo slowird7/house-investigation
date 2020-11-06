@@ -107,8 +107,8 @@ $('#damage_image1').on('change', function (e) {
       var rate = previewImgW / imgW;
       
       // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
-      canvas.width = imgW * rate * 2;      // 高画質化のため、2倍に
-      canvas.height = imgH * rate * 2;     // 高画質化のため、2倍に
+      canvas.width = imgW * rate * 1;      // 高画質化のため、2倍に
+      canvas.height = imgH * rate * 1;     // 高画質化のため、2倍に
       // 画像を canvas に表示
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       // スタイルを設定

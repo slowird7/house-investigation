@@ -3,8 +3,13 @@ require 'ffi'
 # こちらは使わないでください
 module JACICHashLib
   extend FFI::Library
-  ffi_lib Rails.root.join("JACIC", "JACIC.so") # 本番環境用
-#  ffi_lib "/usr/local/lib/JACIC_HashLib/libJACIC_Hash.so" # 開発環境用  
+  if Rails.env.production?
+    # 本番(heroku)環境用のパスを設定
+    ffi_lib Rails.root.join("JACIC", "JACIC.so")
+  else
+    # 開発環境用のパスを設定
+    ffi_lib "/usr/local/lib/JACIC_HashLib/libJACIC_Hash.so"
+  end
   # int WINAPI JACIC_WriteHashValue(const char *sourceFile, const char *destFile);
   attach_function :JACIC_WriteHashValue, [:string, :string], :int
   # int WINAPI JACIC_CheckHashValue(const char *checkFile);
