@@ -21,38 +21,39 @@ ActiveRecord::Schema.define(version: 20191107125835) do
 
   create_table "damages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
-    t.integer  "position_wb",                   default: 0
-    t.boolean  "genkyo",                        default: false
-    t.boolean  "sukima",                        default: false
-    t.boolean  "ware",                          default: false
-    t.boolean  "kake",                          default: false
-    t.boolean  "amimejyo",                      default: false
-    t.boolean  "zencho",                        default: false
-    t.boolean  "crack",                         default: false
-    t.boolean  "tile",                          default: false
-    t.boolean  "kire",                          default: false
-    t.boolean  "uki",                           default: false
-    t.boolean  "suhon",                         default: false
-    t.boolean  "zenshu",                        default: false
-    t.boolean  "chirigire",                     default: false
-    t.boolean  "cross",                         default: false
-    t.boolean  "meji",                          default: false
-    t.boolean  "tategu",                        default: false
-    t.boolean  "tasu",                          default: false
-    t.boolean  "kakusyo",                       default: false
+    t.integer  "position_wb",                      default: 0
+    t.boolean  "genkyo",                           default: false
+    t.boolean  "sukima",                           default: false
+    t.boolean  "ware",                             default: false
+    t.boolean  "kake",                             default: false
+    t.boolean  "amimejyo",                         default: false
+    t.boolean  "zencho",                           default: false
+    t.boolean  "crack",                            default: false
+    t.boolean  "tile",                             default: false
+    t.boolean  "kire",                             default: false
+    t.boolean  "uki",                              default: false
+    t.boolean  "suhon",                            default: false
+    t.boolean  "zenshu",                           default: false
+    t.boolean  "chirigire",                        default: false
+    t.boolean  "cross",                            default: false
+    t.boolean  "meji",                             default: false
+    t.boolean  "tategu",                           default: false
+    t.boolean  "tasu",                             default: false
+    t.boolean  "kakusyo",                          default: false
     t.float    "wide",               limit: 24
     t.float    "length",             limit: 24
     t.float    "width",              limit: 24
     t.float    "height",             limit: 24
-    t.string   "comment",                       default: ""
+    t.string   "comment",                          default: ""
     t.string   "image1"
     t.string   "image2"
     t.string   "image3"
     t.string   "image_url"
     t.string   "original_image_url"
+    t.text     "canvas_data",        limit: 65535
     t.integer  "sonsyo_id"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.index ["sonsyo_id"], name: "index_damages_on_sonsyo_id", using: :btree
   end
 

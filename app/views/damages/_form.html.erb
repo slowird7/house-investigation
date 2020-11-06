@@ -22,7 +22,10 @@
       </div>
       <div class="col-xs-6" id="sonsyo-<%= @sonsyo.id %>">
         <canvas id="liveview"></canvas>
+        <!--
         <input type="hidden" name="canvas_data" id="canvas_data">
+        -->
+        <%= f.hidden_field :canvas_data %>
       </div>
     </div>
     
@@ -197,6 +200,8 @@ $('#liveview').on('click', function(e){
 $('#submit').on('mousedown', function (e) {
   // canvasの画像化
   var canvas_data = canvas.toDataURL('image/jpeg');
-  $("#canvas_data").val(canvas_data);
+  //$("#canvas_data").val(canvas_data);
+  $("#damage_canvas_data").val(canvas_data);
+  
 });
 </script>

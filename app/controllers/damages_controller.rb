@@ -37,7 +37,9 @@ class DamagesController < ApplicationController
     # paramsは代入できないので、コピーを生成
     copy_damage_params = damage_params
     # canvasの画像化
-    copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
+    #copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
+    copy_damage_params[:image2] = base64_conversion(damage_params[:canvas_data])
+    copy_damage_params[:canvas_data] = nil
 
     if @damage.update(copy_damage_params)
       # 信憑性のチェック（ハッシュ値の付加）
@@ -101,6 +103,7 @@ class DamagesController < ApplicationController
   def damage_params
     params.require(:damage).permit(:sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
                                   :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,
-                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url)
+                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url,
+                                  :canvas_data)
   end
 end
