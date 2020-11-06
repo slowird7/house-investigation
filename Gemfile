@@ -75,3 +75,6 @@ gem 'ffi' # 信頼性モジュールの呼び出し
 gem 'mini_exiftool' # Exifの編集
 
 gem 'rubyzip'
+
+# heroku環境でのデバッグ用
+gem 'rails_12factor', group: :production
