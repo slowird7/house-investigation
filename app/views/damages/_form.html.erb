@@ -22,13 +22,7 @@
       </div>
       <div class="col-xs-6" id="sonsyo-<%= @sonsyo.id %>">
         <canvas id="liveview"></canvas>
-        <input type="hidden" name="liveview_data">
-        <!--
-        <input type="hidden" name="type">
-        <input type="hidden" name="encoder">
-        <input type="hidden" name="data">
-        <input type="hidden" name="extension">
-        -->
+        <input type="hidden" name="canvas_data">
       </div>
     </div>
     
@@ -202,13 +196,7 @@ $('#submit').on('mousedown', function (e) {
 */
 function imagingAtCanvas() {
   // canvasの画像化
-  var liveview_data = canvas.toDataURL('image/jpeg');
-  //$("#liveview_data").val(liveview_data);
-  $('input[name="liveview_data"]').val(liveview_data);
-  
-  //liveview_data.match(%r{data:(.*?);(.*?),(.*)$});
-  //console.log()
-
-
+  var canvas_data = canvas.toDataURL('image/jpeg');
+  $('input[name="canvas_data"]').val(canvas_data);
 }
 </script>

@@ -37,11 +37,7 @@ class DamagesController < ApplicationController
     # paramsは代入できないので、コピーを生成
     copy_damage_params = damage_params
     # canvasの画像化
-    #binding.pry
-    copy_damage_params[:image2] = base64_conversion(params[:liveview_data])
-    #copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
-    #copy_damage_params[:image2] = base64_conversion(damage_params[:canvas_data])
-    #copy_damage_params[:canvas_data] = nil
+    copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
 
     if @damage.update(copy_damage_params)
       # 信憑性のチェック（ハッシュ値の付加）
@@ -79,13 +75,25 @@ class DamagesController < ApplicationController
     @damage.update(copy_damage_params)
 
     # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
-    exif1 = MiniExiftool.new(@damage.image1.path)
-    exif3 = MiniExiftool.new(@damage.image3.path)
+    if Rails.env.production?
+      img1_file_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image1.path.match(/uploads(.*)/)[0]
+      img3_file_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image3.path.match(/uploads(.*)/)[0]
+      #exif1 = MiniExiftool.new("https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image1.path.match(/uploads(.*)/)[0])
+      #exif3 = MiniExiftool.new("https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image3.path.match(/uploads(.*)/)[0])
+    else
+      img1_file_path = @damage.image1.path
+      img3_file_path = @damage.image3.path
+      #exif1 = MiniExiftool.new(@damage.image1.path)
+      #exif3 = MiniExiftool.new(@damage.image3.path)
+    end
+    exif1 = MiniExiftool.new(img1_file_path)
+    exif3 = MiniExiftool.new(img3_file_path)
     exif3.date_time_original = exif1.date_time_original
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）
-    dst_file_path = check_credibility(@damage.image3.path)
+    #dst_file_path = check_credibility(@damage.image3.path)
+    dst_file_path = check_credibility(img3_file_path)
     if dst_file_path != nil
       @damage.image_url = dst_file_path
     end
