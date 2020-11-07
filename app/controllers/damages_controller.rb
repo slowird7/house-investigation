@@ -76,7 +76,7 @@ class DamagesController < ApplicationController
 
     # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
     if Rails.env.production?
-      aws_s3_path = Rails.root.to_s
+      aws_s3_path = Rails.root.to_s + "/"
       #aws_s3_path = "https://house-investigation.s3.amazonaws.com/"
       #aws_s3_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/"
       img1_file_path = aws_s3_path + @damage.image1.path.match(/uploads(.*)/)[0]
