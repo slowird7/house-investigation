@@ -78,7 +78,7 @@ class DamagesController < ApplicationController
 
     # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
     if Rails.env.production?
-      aws_s3_root_path = "/app/house-investigation/"
+      aws_s3_root_path = "/app/"
       #aws_s3_root_path = "https://s3-ap-northeast-1.amazonaws.com/house-investigation/"
       #aws_s3_path = "s3://house-investigation/"
       #aws_s3_path = "https://house-investigation.s3.amazonaws.com/"
@@ -89,33 +89,12 @@ class DamagesController < ApplicationController
       img1_file_path = @damage.image1.path
       img3_file_path = @damage.image3.path
     end
-    #img1_file_path = @damage.image1.current_path
-    #img3_file_path = @damage.image3.current_path
-
-if false    
-    s3 = Aws::S3::Resource.new(
-      :region => ENV['AWS_DEFAULT_REGION'],
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-    )
-    bucket = s3.bucket('house-investigation')
-    
-    # images以下のファイルに限定
-    bucket.objects(prefix: 'uploads/').each do |obj|
-    #  puts "#{obj.key} => #{obj.etag}"
-        binding.pry
-    end
-end
 
     #exif1 = MiniExiftool.new(@damage.image1.path)
     #exif3 = MiniExiftool.new(@damage.image3.path)    
     exif1 = MiniExiftool.new(img1_file_path)
     exif3 = MiniExiftool.new(img3_file_path)
-#    exif1 = Magick::Image.read(@damage.image1.path).first
-#    exif3 = Magick::Image.read(@damage.image3.path).first
-#    exif1 = EXIFR::JPEG.new(@damage.image1.path)
-#    exif3 = EXIFR::JPEG.new(@damage.image3.path)    
-   
+
 #    binding.pry
     
     exif3.date_time_original = exif1.date_time_original
