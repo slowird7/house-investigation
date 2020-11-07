@@ -78,17 +78,16 @@ class DamagesController < ApplicationController
     if Rails.env.production?
       img1_file_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image1.path.match(/uploads(.*)/)[0]
       img3_file_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image3.path.match(/uploads(.*)/)[0]
-      #exif1 = MiniExiftool.new("https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image1.path.match(/uploads(.*)/)[0])
-      #exif3 = MiniExiftool.new("https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.image3.path.match(/uploads(.*)/)[0])
     else
       img1_file_path = @damage.image1.path
       img3_file_path = @damage.image3.path
     end
 
-    exif1 = MiniExiftool.new(@damage.image1.path)
-    exif3 = MiniExiftool.new(@damage.image3.path)    
-    #exif1 = MiniExiftool.new(img1_file_path)
-    #exif3 = MiniExiftool.new(img3_file_path)
+    #exif1 = MiniExiftool.new(@damage.image1.path)
+    #exif3 = MiniExiftool.new(@damage.image3.path)    
+    exif1 = MiniExiftool.new(img1_file_path)
+    exif3 = MiniExiftool.new(img3_file_path)
+    
     exif3.date_time_original = exif1.date_time_original
     exif3.save
 
