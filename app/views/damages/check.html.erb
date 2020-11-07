@@ -22,6 +22,9 @@
 <!-- 写真 -->
 <div id="sonsyo-<%= @sonsyo.id %>" class="post-img">
   <%= image_tag @damage.image2, id: "sonsyo-" + @sonsyo.id.to_s + "_img" %>
+  
+  <%= File.open(@damage.image2.path) %>
+  
   <% if @sonsyo.room_name != "全景" %>
     <div class="damage_wb">
       <table class="table table-bordered table-condensed whiteboard">
@@ -171,8 +174,8 @@ $(window).on('load', function() {
   //var natural_w = img.naturalWidth;
   //var natural_h = img.naturalHeight;
   
-  console.log(client_w);
-  console.log(client_h);
+  //console.log(client_w);
+  //console.log(client_h);
 
   html2canvas(document.querySelector("#sonsyo-<%= @sonsyo.id %>"), 
   {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {

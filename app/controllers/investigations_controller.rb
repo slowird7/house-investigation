@@ -119,7 +119,7 @@ class InvestigationsController < ApplicationController
     
     count = download_images(@houses, "pre", "original", zippath)
     if count == 0
-#      redirect_to @investigation
+      redirect_to @investigation
     end
   end
 
