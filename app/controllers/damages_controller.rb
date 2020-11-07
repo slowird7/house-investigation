@@ -106,6 +106,7 @@ if false
     #  puts "#{obj.key} => #{obj.etag}"
         binding.pry
     end
+end
 
     #exif1 = MiniExiftool.new(@damage.image1.path)
     #exif3 = MiniExiftool.new(@damage.image3.path)    
@@ -118,11 +119,11 @@ if false
     exif1 = EXIFR::JPEG.new(@damage.image1.path)
     exif3 = EXIFR::JPEG.new(@damage.image3.path)    
     
-    binding.pry
+#    binding.pry
     
-    exif3.date_time_original = exif1.date_time_original
-    exif3.save
-end
+#    exif3.date_time_original = exif1.date_time_original
+#    exif3.save
+
 
     # 信憑性のチェック（ハッシュ値の付加）
     dst_file_path = check_credibility(@damage.image3.path)
