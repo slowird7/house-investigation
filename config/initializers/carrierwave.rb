@@ -1,6 +1,9 @@
 require 'carrierwave/storage/abstract'
 require 'carrierwave/storage/file'
 require 'carrierwave/storage/fog'
+
+# Carrierwave のファイル名に日本語を許可する
+CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
  
 CarrierWave.configure do |config|
   if Rails.env.production?
@@ -20,6 +23,3 @@ CarrierWave.configure do |config|
     config.enable_processing = false if Rails.env.test?
   end
 end
-
-# Carrierwave のファイル名に日本語を許可する
-CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
