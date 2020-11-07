@@ -1,6 +1,6 @@
 require './lib/jacic_hash_lib'
 require 'mini_exiftool'
-require 'aws-sdk'
+#require 'aws-sdk'
 require 'exifr/jpeg'
 include JACICHash
 
