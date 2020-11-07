@@ -83,11 +83,12 @@ class DamagesController < ApplicationController
     else
       img1_file_path = @damage.image1.path
       img3_file_path = @damage.image3.path
-      #exif1 = MiniExiftool.new(@damage.image1.path)
-      #exif3 = MiniExiftool.new(@damage.image3.path)
     end
-    exif1 = MiniExiftool.new(img1_file_path)
-    exif3 = MiniExiftool.new(img3_file_path)
+
+    exif1 = MiniExiftool.new(@damage.image1.path)
+    exif3 = MiniExiftool.new(@damage.image3.path)    
+    #exif1 = MiniExiftool.new(img1_file_path)
+    #exif3 = MiniExiftool.new(img3_file_path)
     exif3.date_time_original = exif1.date_time_original
     exif3.save
 
