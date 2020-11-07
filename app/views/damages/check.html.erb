@@ -22,9 +22,9 @@
 <!-- 写真 -->
 <div id="sonsyo-<%= @sonsyo.id %>" class="post-img">
   <%= image_tag @damage.image2, id: "sonsyo-" + @sonsyo.id.to_s + "_img" %>
-  
-  <%= File.open(@damage.image2.path) %>
-  
+  <%= image_tag "/uploads/damage/image1/55/7c47b1bd-4f63-46e7-8b1f-72defc1fa705_hash.jpg" %>
+  <%= image_tag "https://house-investigation.s3-ap-northeast-1.amazonaws.com/" + @damage.original_image_url.match(/uploads(.*)/)[0] %>
+
   <% if @sonsyo.room_name != "全景" %>
     <div class="damage_wb">
       <table class="table table-bordered table-condensed whiteboard">

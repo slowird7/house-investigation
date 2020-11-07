@@ -76,7 +76,7 @@ class DamagesController < ApplicationController
     copy_damage_params[:image3] = base64_conversion(params[:canvas_data])
     @damage.update(copy_damage_params)
 
-if false
+#if false
     # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
     if Rails.env.production?
       #aws_s3_root_path = "/app/"
@@ -96,11 +96,11 @@ if false
     exif1 = MiniExiftool.new(img1_file_path)
     exif3 = MiniExiftool.new(img3_file_path)
 
-    #binding.pry
+    binding.pry
     
     exif3.date_time_original = exif1.date_time_original
     exif3.save
-end
+#end
 
     # 信憑性のチェック（ハッシュ値の付加）
     dst_file_path = check_credibility(@damage.image3.path)
