@@ -76,31 +76,29 @@ class DamagesController < ApplicationController
     copy_damage_params[:image3] = base64_conversion(params[:canvas_data])
     @damage.update(copy_damage_params)
 
-#if false
     # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
-    if Rails.env.production?
+    exif1 = MiniExiftool.new(@damage.image1.path)
+    exif3 = MiniExiftool.new(@damage.image3.path)    
+
+    #if Rails.env.production?
       #aws_s3_root_path = "/app/"
       #aws_s3_root_path = "https://s3-ap-northeast-1.amazonaws.com/house-investigation/"
       #aws_s3_path = "s3://house-investigation/"
       #aws_s3_path = "https://house-investigation.s3.amazonaws.com/"
-      aws_s3_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/"
-      img1_file_path = aws_s3_root_path + @damage.image1.path.match(/uploads(.*)/)[0]
-      img3_file_path = aws_s3_root_path + @damage.image3.path.match(/uploads(.*)/)[0]
-    else
-      img1_file_path = @damage.image1.path
-      img3_file_path = @damage.image3.path
-    end
+      #aws_s3_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/"
+      #img1_file_path = aws_s3_root_path + @damage.image1.path.match(/uploads(.*)/)[0]
+      #img3_file_path = aws_s3_root_path + @damage.image3.path.match(/uploads(.*)/)[0]
+    #else
+      #img1_file_path = @damage.image1.path
+      #img3_file_path = @damage.image3.path
+    #end
+    #exif1 = MiniExiftool.new(img1_file_path)
+    #exif3 = MiniExiftool.new(img3_file_path)
 
-    #exif1 = MiniExiftool.new(@damage.image1.path)
-    #exif3 = MiniExiftool.new(@damage.image3.path)    
-    exif1 = MiniExiftool.new(img1_file_path)
-    exif3 = MiniExiftool.new(img3_file_path)
-
-    binding.pry
+    #binding.pry
     
     exif3.date_time_original = exif1.date_time_original
     exif3.save
-#end
 
     # 信憑性のチェック（ハッシュ値の付加）
     dst_file_path = check_credibility(@damage.image3.path)
