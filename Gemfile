@@ -78,3 +78,7 @@ gem 'rubyzip'
 
 # heroku環境でのデバッグ用
 gem 'rails_12factor', group: :production
+
+gem 'aws-sdk'
+
+gem 'exifr'
