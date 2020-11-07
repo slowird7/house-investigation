@@ -85,19 +85,19 @@ class DamagesController < ApplicationController
       img3_file_path = @damage.image3.path
     end
     
-    #binding.pry
+    binding.pry
 
-    #exif1 = MiniExiftool.new(@damage.image1.path)
-    #exif3 = MiniExiftool.new(@damage.image3.path)    
-    exif1 = MiniExiftool.new(img1_file_path)
-    exif3 = MiniExiftool.new(img3_file_path)
+    exif1 = MiniExiftool.new(@damage.image1.path)
+    exif3 = MiniExiftool.new(@damage.image3.path)    
+    #exif1 = MiniExiftool.new(img1_file_path)
+    #exif3 = MiniExiftool.new(img3_file_path)
     
     exif3.date_time_original = exif1.date_time_original
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）
-    #dst_file_path = check_credibility(@damage.image3.path)
-    dst_file_path = check_credibility(img3_file_path)
+    dst_file_path = check_credibility(@damage.image3.path)
+    #dst_file_path = check_credibility(img3_file_path)
     if dst_file_path != nil
       @damage.image_url = dst_file_path
     end
