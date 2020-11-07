@@ -85,7 +85,7 @@ class DamagesController < ApplicationController
       img3_file_path = @damage.image3.path
     end
     
-    binding.pry
+    #binding.pry
 
     exif1 = MiniExiftool.new(@damage.image1.path)
     exif3 = MiniExiftool.new(@damage.image3.path)    
