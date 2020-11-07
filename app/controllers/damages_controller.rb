@@ -104,9 +104,9 @@ end
 
     # 信憑性のチェック（ハッシュ値の付加）
     dst_file_path = check_credibility(@damage.image3.path)
-#    if dst_file_path != nil
+    if dst_file_path != nil
       @damage.image_url = dst_file_path
-#    end
+    end
     
     # ハッシュ付き画像も保存
     if @damage.save
