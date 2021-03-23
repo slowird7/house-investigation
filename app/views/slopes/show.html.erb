@@ -19,22 +19,23 @@
 </ol>
 
 <h2 class="text-center">傾斜：<%= disp_alphabet(@keisya.number) %>の撮影（<%= survey_type_name %>）</h2>
-<%= link_to '編集', edit_slope_path(keisya_id: @keisya.id, survey_type: survey_type), :class=>"btn btn-primary" %>
+<%= link_to '編集', edit_slope_path(keisya_id: @keisya.id, survey_type: survey_type), :class=>"btn btn-primary shooting" %>
 <!-- 写真 -->
 <div id="sonsyo-<%= @keisya.id %>" class="post-img">
   <%= image_tag @slope.image3, id: "sonsyo-" + @keisya.id.to_s + "_img" %>
 </div>
 
 <style>
+/* クリック・タッチを無効化 */
+.nullify {
+  pointer-events: none;
+}
+
 .post-img {
   position: relative;
   margin-top:10px;
   margin-bottom: 20px;
   width: 70%;
-/*  
-  max-width: 715px /* =1430/2 *
-  max-height: 537px; /* =1074/2 *
-*/  
 }
 .post-img img {
   width: 100%;
@@ -45,3 +46,28 @@
   font-size: 10px;
 }
 </style>
+
+<script>
+//////////////////////////////
+// 初回読み込み後
+$(document).ready(function() {
+  // ユーザーエージェントの取得
+  var userAgentResult = navigator.userAgent;
+  //console.log(userAgentResult);
+    
+  // ユーザーエージェントにより、処理を切り分け
+  if(userAgentResult.match(/iPhone/))
+  {
+    //console.log("iPhoneです");
+  }
+  else if(userAgentResult.match(/iPad/))
+  {
+    //console.log("iPadです");    
+  }
+  else
+  {
+    //console.log("その他の端末です");
+    $(".shooting").addClass("nullify");
+  }
+});  
+</script>

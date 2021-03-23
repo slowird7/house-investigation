@@ -33,6 +33,17 @@
     <td class="align-middle"><%= @house.area %></td>
   </tr>
   <tr>
+    <th>建築年数</th>
+    <% 
+      if @house.completion_date.present?
+        years = Date.today.year - @house.completion_date.year
+      else
+        years = ""
+      end
+    %>
+    <td class="align-middle">築後　約 <%= years %> 年</td>
+  </tr>
+  <tr>
     <th>用途</th>
     <td class="align-middle"><%= @house.use %></td>
   </tr>
@@ -177,7 +188,7 @@
           <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
           <%= link_to pre_damage.updated_at.strftime('%Y/%m/%d'), pre_damage, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle">
@@ -185,7 +196,7 @@
           <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
           <%= link_to ongoing_damage.updated_at.strftime('%Y/%m/%d'), ongoing_damage, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle">
@@ -193,7 +204,7 @@
           <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
           <%= link_to after_damage.updated_at.strftime('%Y/%m/%d'), after_damage, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
@@ -246,7 +257,7 @@
           <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
           <%= link_to pre_slope.updated_at.strftime('%Y/%m/%d'), pre_slope, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle">
@@ -254,7 +265,7 @@
           <% ongoing_slope = keisya.slopes.find_by(survey_type: "ongoing") %>
           <%= link_to ongoing_slope.updated_at.strftime('%Y/%m/%d'), ongoing_slope, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle">
@@ -262,7 +273,7 @@
           <% after_slope = keisya.slopes.find_by(survey_type: "after") %>
           <%= link_to after_slope.updated_at.strftime('%Y/%m/%d'), after_slope, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle"><%= link_to "削除", keisya, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
@@ -307,7 +318,7 @@
           <% pre_post = point.posts.find_by(survey_type: "pre") %>
           <%= link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle">
@@ -315,7 +326,7 @@
           <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
           <%= link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle">
@@ -323,7 +334,7 @@
           <% after_post = point.posts.find_by(survey_type: "after") %>
           <%= link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
         <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary" %>
+          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
         <% end %>
       </td>
       <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
@@ -331,17 +342,18 @@
   <% end %>
 </table>
 
+<style>
+/* クリック・タッチを無効化 */
+.nullify {
+  pointer-events: none;
+}  
+</style>
+
 <script>
 //セレクトボックスイベント設定
 setHierarchySelectEvent('#area1', '#area2');
 setHierarchySelectEvent('#area3', '#area4');
-/**
- * 階層のあるプルダウンのイベントを設定します.
- * 親のselectタグには属性data-subgroupが設定されている必要があります。
- * 子のselectタグには属性data-groupが設定されている必要があります。
- * @param parentSelect 親となるselectタグのセレクタ
- * @param childSelect 子となるselectタグのセレクタ
- */
+
 function setHierarchySelectEvent(parentSelect, childSelect){
   var initCategorySmallHtml = $(childSelect).html();
   $(parentSelect).change(function(){
@@ -381,12 +393,9 @@ function enable_area2(){
   
   if(area2.value != "" && area2.value != null) {
     add_sonsyo.disabled = false;
-    //console.log("OK");
   } else {
     add_sonsyo.disabled = true;
-    //console.log("NG");
   }
-  //console.log(add_sonsyo.disabled);
 }
 // 傾斜の追加ボタンの有効・無効
 function enable_area4(){
@@ -401,12 +410,9 @@ function enable_area4(){
   
   if(area4.value != "" && area4.value != null) {
     add_keisya.disabled = false;
-    //console.log("OK");
   } else {
     add_keisya.disabled = true;
-    //console.log("NG");
   }
-  //console.log(add_sonsyo.disabled);
 }
 // 測点の追加ボタンの有効・無効
 function enable_room_name(){
@@ -421,10 +427,8 @@ function enable_room_name(){
   
   if(room_name.value != "" && room_name.value != null) {
     add_point.disabled = false;
-    //console.log("OK");
   } else {
     add_point.disabled = true;
-    //console.log("NG");
   }
   //console.log(add_sonsyo.disabled);
 }
@@ -445,6 +449,26 @@ $(document).ready(function() {
     add_point.disabled = false;
     add_sonsyo.disabled = false;
     add_keisya.disabled = false;
+  }
+  
+  ////////////////////////////////////
+  // ユーザーエージェントの取得
+  var userAgentResult = navigator.userAgent;
+  //console.log(userAgentResult);
+    
+  // ユーザーエージェントにより、処理を切り分け
+  if(userAgentResult.match(/iPhone/))
+  {
+    //console.log("iPhoneです");
+  }
+  else if(userAgentResult.match(/iPad/))
+  {
+    //console.log("iPadです");    
+  }
+  else
+  {
+    //console.log("その他の端末です");
+    $(".shooting").addClass("nullify");
   }
 });
 </script>
