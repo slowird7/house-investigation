@@ -99,8 +99,34 @@
             </td>
             <td><%= house.construction %></td>
             <td><%= house.area %></td>
-            <td></td>
-            <td></td>
+            <!--
+            
+              2021/01/21修正↓
+            
+            -->
+            <td>
+              <% if survey_type_main == "事前" %>
+                <%= house.pre_survey_day %>
+              <% elsif survey_type_main == "事中" %>
+                <%= house.ongoing_survey_day %>
+              <% elsif survey_type_main == "事後" %>
+                <%= house.after_survey_day %>
+              <% end %>              
+            </td>
+            <td>
+              <% if survey_type_main == "事前" %>
+                <%= house.pre_survey_day %>
+              <% elsif survey_type_main == "事中" %>
+                <%= house.ongoing_survey_day %>
+              <% elsif survey_type_main == "事後" %>
+                <%= house.after_survey_day %>
+              <% end %>
+            </td>
+            <!--
+            
+              2021/01/21修正↑
+            
+            -->
             <td>
               <% if survey_type_main == "事前" %>
                 <%= house.range_pre_survey %>

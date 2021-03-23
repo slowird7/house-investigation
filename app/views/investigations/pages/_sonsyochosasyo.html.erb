@@ -15,17 +15,62 @@
             <td>調査年月日</td>
             <td>
               <% if survey_type_1 == "事前" %>
-                <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-                  <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+                <!--
+                
+                  2021/01/21修正↓
+                
+                -->              
+                <%= house.pre_survey_day %>
+                <!-- コメントアウト↓ -->
+                <% if false %>           
+                  <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
+                    <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
                 <% end %>
+                <!-- コメントアウト↑ -->
+                <!--
+                
+                  2021/01/21修正↑
+                
+                -->
               <% elsif survey_type_1 == "事中" %>
-                <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-                  <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <!--
+                
+                  2021/01/21修正↓
+                
+                -->              
+                <%= house.ongoing_survey_day %>
+                <!-- コメントアウト↓ -->
+                <% if false %>   
+                  <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
+                    <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
+                <% end %>  
+                <!-- コメントアウト↑ -->
+                <!--
+                
+                  2021/01/21修正↑
+                
+                -->
               <% elsif survey_type_1 == "事後" %>
-                <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-                  <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <!--
+                
+                  2021/01/21修正↓
+                
+                -->              
+                <%= house.after_survey_day %>
+                <!-- コメントアウト↓ -->
+                <% if false %>
+                  <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
+                    <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
+                <% end %>  
+                <!-- コメントアウト↑ -->
+                <!--
+                
+                  2021/01/21修正↑
+                
+                -->                  
               <% end %>
             </td>
           </tr>
@@ -52,18 +97,90 @@
             <td>調査年月日</td>
             <td>
               <% if survey_type_2 == "事前" %>
-                <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-                  <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+                <!--
+                
+                  2021/01/21修正↓
+                
+                -->              
+                <%= house.pre_survey_day %>
+                <!-- コメントアウト↓ -->
+                <% if false %>           
+                  <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
+                    <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
                 <% end %>
+                <!-- コメントアウト↑ -->
+                <!--
+                
+                  2021/01/21修正↑
+                
+                -->
               <% elsif survey_type_2 == "事中" %>
-                <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-                  <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <!--
+                
+                  2021/01/21修正↓
+                
+                -->              
+                <%= house.ongoing_survey_day %>
+                <!-- コメントアウト↓ -->
+                <% if false %>   
+                  <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
+                    <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
+                <% end %>  
+                <!-- コメントアウト↑ -->
+                <!--
+                
+                  2021/01/21修正↑
+                
+                -->
               <% elsif survey_type_2 == "事後" %>
-                <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-                  <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+                <!--
+                
+                  2021/01/21修正↓
+                
+                -->              
+                <%= house.after_survey_day %>
+                <!-- コメントアウト↓ -->
+                <% if false %>
+                  <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
+                    <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
+                <% end %>  
+                <!-- コメントアウト↑ -->
+                <!--
+                
+                  2021/01/21修正↑
+                
+                -->                  
+              <% end %> 
+              <!--
+              
+                2021/01/21修正↓
+              
+              -->                            
+              <!-- コメントアウト↓ -->
+              <% if false %>
+                <% if survey_type_2 == "事前" %>
+                  <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
+                    <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
+                <% elsif survey_type_2 == "事中" %>
+                  <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
+                    <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
+                <% elsif survey_type_2 == "事後" %>
+                  <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
+                    <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
+                  <% end %>
                 <% end %>
-              <% end %>              
+              <% end %>  
+              <!-- コメントアウト↑ -->
+              <!--
+              
+                2021/01/21修正↑
+              
+              -->
             </td>
           </tr>
           <tr>
@@ -131,8 +248,7 @@
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
-                <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
               </td>
               <td><%= damage.comment %></td><!-- 備考 -->
               

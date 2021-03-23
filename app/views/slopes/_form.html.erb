@@ -5,7 +5,7 @@
   
     <div class="row">
       <div class="col-xs-6">
-        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'user' %>
       </div>
       <div class="col-xs-6">
         <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
