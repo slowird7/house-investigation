@@ -156,10 +156,26 @@
       <option data-subgroup="outter">外部</option>
       <option data-subgroup="inner">内部</option>
     </select>
+    
+    <% last = @sonsyos.last %>
     <select name="area2" id="area2" onChange="enable_area2()">
-      <%= render 'houses/select_option_for_sonsyo' %>
+      <!-- 全景 -->
+      <% if last.present? && @sonsyos.last.room_name == "全景" %>
+        <option data-group="overall" value="全景" selected>全景</option>
+      <% else %>
+        <option data-group="overall" value="全景">全景</option>
+      <% end %>
+      <!-- 外部 -->
+      <%= render 'houses/select_option_for_outer', last: last  %>
+      <!-- 内部 -->
+      <%= render 'houses/select_option_for_inner', last: last %>
     </select>
-    <input type="text" name="other" placeholder="">
+    <% if last.present? %><!-- フリー入力欄 -->
+      <input type="text" name="other" value="<%= last.room_name_other %>">
+    <% else %>
+      <input type="text" name="other" value="">
+    <% end %>
+    
   <% end %>
 </p>
 
@@ -225,10 +241,20 @@
       <option data-subgroup="outter">外部</option>
       <option data-subgroup="inner">内部</option>
     </select>
+    
+    <% last = @keisyas.last %>
     <select name="area4" id="area4" onChange="enable_area4()">
-      <%= render 'houses/select_option_for_keisya' %>
+      <!-- 外部 -->
+      <%= render 'houses/select_option_for_outer', last: last %>
+      <!-- 内部 -->
+      <%= render 'houses/select_option_for_inner', last: last %>
     </select>
-    <input type="text" name="other" placeholder="">
+    <% if last.present? %><!-- フリー入力欄 -->
+      <input type="text" name="other" value="<%= last.room_name_other %>">
+    <% else %>
+      <input type="text" name="other" value="">
+    <% end %>
+
   <% end %>
 </p>
 
@@ -288,8 +314,17 @@
   <%= form_tag points_path do %>
     <%= hidden_field_tag :house_id, @house.id %>
     <%= submit_tag "測点の追加", :disabled => true, :class => "btn btn-primary", :id => "add_point" %>
-    >> 調査箇所：<%= select_tag('room_name',options_for_select($OUTSIDE_NAME), :onchange => 'enable_room_name()')%>
-    <input type="text" name="other" placeholder="">
+    >> 調査箇所：
+    <% last = @points.last %>
+    <select name="room_name" id="room_name" onchange="enable_room_name()">
+      <!-- 外部 -->
+      <%= render 'houses/select_option_for_outer', last: last  %>
+    </select>
+    <% if last.present? %><!-- フリー入力欄 -->
+      <input type="text" name="other" value="<%= last.room_name_other %>">
+    <% else %>
+      <input type="text" name="other" value="">
+    <% end %>
   <% end %>
 </p>
 

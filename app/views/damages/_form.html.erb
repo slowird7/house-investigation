@@ -5,7 +5,7 @@
     
     <div class="row">
       <div class="col-xs-6">
-        <%= f.file_field :image1, :accept => 'image/*', :capture => 'environment' %>
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
       </div>
       <div class="col-xs-6">
         <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", data: { confirm: '登録してよろしいでしょうか？' } %>
@@ -27,6 +27,7 @@
     </div>
     
     <% if @sonsyo.room_name != "全景" %>
+      <%= f.hidden_field :tekiyo %><!-- 選択した順番に適用を表記 -->
       <div class="form-group" style="margin-top: 20px;">
         <div class="switch_set">
           <%= f.check_box :genkyo, {}, "true", "false" %><%= f.label :genkyo, '現況' %>
@@ -107,8 +108,8 @@ $('#damage_image1').on('change', function (e) {
       var rate = previewImgW / imgW;
       
       // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
-      canvas.width = imgW * rate * 2;      // 高画質化のため、2倍に
-      canvas.height = imgH * rate * 2;     // 高画質化のため、2倍に
+      canvas.width = imgW * rate * 4;      // 高画質化のため、4倍に
+      canvas.height = imgH * rate * 4;     // 高画質化のため、4倍に
       // 画像を canvas に表示
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       // スタイルを設定
@@ -130,7 +131,6 @@ $('#liveview').on('click', function(e){
     let offsetX = e.offsetX * rate; // =>要素左上からのx座標
     let offsetY = e.offsetY * rate; // =>要素左上からのy座標
 
-//      var w=30,h=30,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
     var w=canvas.width*0.05,h=w,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
     // 矢印描画     
     ctx.setTransform(1,0,0,1,0,0);
@@ -186,17 +186,162 @@ $('#liveview').on('click', function(e){
     //console.log(ctx);
   }
 });
-/*
-$('#submit').on('mousedown', function (e) {
-  // canvasの画像化
-  var canvas_data = canvas.toDataURL('image/jpeg');
-  $("#canvas_data").val(canvas_data);
-  //$("#damage_canvas_data").val(canvas_data);
-});
-*/
+
 function imagingAtCanvas() {
   // canvasの画像化
   var canvas_data = canvas.toDataURL('image/jpeg');
   $('input[name="canvas_data"]').val(canvas_data);
 }
+
+//************ 適用を選択順に表記 ************//
+// 現況
+$('#damage_genkyo').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "現況 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("現況 ", ""));
+  }
+});
+// 隙間
+$('#damage_sukima').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "隙間 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("隙間 ", ""));
+  }
+});
+// 割れ
+$('#damage_ware').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "割れ ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("割れ ", ""));
+  }
+});
+// 欠け
+$('#damage_kake').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "欠け ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("欠け ", ""));
+  }
+});
+// クラック
+$('#damage_crack').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "クラック ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("クラック ", ""));
+  }
+});
+// タイル
+$('#damage_tile').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "タイル ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("タイル ", ""));
+  }
+});
+// 切れ
+$('#damage_kire').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "切れ ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("切れ ", ""));
+  }
+});
+// 浮き
+$('#damage_uki').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "浮き ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("浮き ", ""));
+  }
+});
+// 数本
+$('#damage_suhon').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "数本 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("数本 ", ""));
+  }
+});
+// チリ切れ
+$('#damage_chirigire').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "チリ切れ ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("チリ切れ ", ""));
+  }
+});
+// クロス
+$('#damage_cross').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "クロス ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("クロス ", ""));
+  }
+});
+// 目地
+$('#damage_meji').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "目地 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("目地 ", ""));
+  }
+});
+// 建具
+$('#damage_tategu').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "建具 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("建具 ", ""));
+  }
+});
+// 多数
+$('#damage_tasu').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "多数 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("多数 ", ""));
+  }
+});
+// 各所
+$('#damage_kakusyo').on('click', function(e){
+  var original_val = $('#damage_tekiyo').val();
+  
+  if($(this).prop('checked') == true) {
+    $('#damage_tekiyo').val(original_val + "各所 ");
+  } else {
+    $('#damage_tekiyo').val(original_val.replace("各所 ", ""));
+  }
+});
 </script>

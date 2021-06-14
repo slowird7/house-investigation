@@ -4,7 +4,19 @@ class InvestigationsController < ApplicationController
   before_action :require_user_logged_in
   
   def index
-    @investigations = Investigation.order(:id)
+    if params[:order] == "asc"
+      @investigations = Investigation.order(updated_at: :ASC) # 昇順
+    elsif params[:order] == "desc"
+      @investigations = Investigation.order(updated_at: :DESC) # 降順
+    else
+      @investigations = Investigation.order(:id) # デフォルト
+    end
+    
+    # 検索
+    unless params[:keyword].blank?
+      @investigations = @investigations.where(["construction_name like?", "%#{params[:keyword]}%"])
+    end
+    #binding.pry
   end
 
   def show

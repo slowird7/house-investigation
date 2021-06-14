@@ -226,25 +226,7 @@
                 end
               %>  
               <td>
-                <% if damage.genkyo == true %>現況&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.sukima == true %>隙間&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.ware == true %>割れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
-                <% if damage.kake == true %>欠け&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
-                <% if damage.amimejyo == true %>網目状&nbsp;&nbsp;&nbsp;&nbsp;<% end %>          
-                <% if damage.zencho == true %>全長&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.crack == true %>クラック&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.tile == true %>タイル&nbsp;&nbsp;&nbsp;&nbsp;<% end %>          
-                <% if damage.kire == true %>切れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.uki == true %>浮き&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.suhon == true %>数本&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.zenshu == true %>全周&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.chirigire == true %>チリ切れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.cross == true %>クロス&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.meji == true %>目地&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.tategu == true %>建具&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.tasu == true %>多数&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.kakusyo == true %>各所&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <br/>
+                <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>

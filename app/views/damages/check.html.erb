@@ -40,7 +40,7 @@
           <td class="table_header">家屋No</td>
           <td style="width: 44px;"><%= @house.house_number %></td>
           <td class="table_header">写真No</td>
-          <td style="width: 44px;" colspan="2">No.<%= @sonsyo.number %></td>
+          <td style="width: 44px;" colspan="2"><%= @sonsyo.number %></td>
         </tr>
         <tr>
           <td class="table_header">調査<br/>箇所</td>
@@ -54,21 +54,7 @@
         </tr>
         <tr>
           <td colspan="5">
-            <% if @damage.genkyo == true %>現況 <% end %>
-            <% if @damage.sukima == true %>隙間 <% end %>
-            <% if @damage.ware == true %>割れ <% end %>
-            <% if @damage.kake == true %>欠け <% end %>
-            <% if @damage.crack == true %>クラック <% end %>
-            <% if @damage.tile == true %>タイル <% end %>
-            <% if @damage.kire == true %>切れ <% end %>
-            <% if @damage.uki == true %>浮き <% end %>
-            <% if @damage.suhon == true %>数本 <% end %>
-            <% if @damage.chirigire == true %>チリ切れ <% end %>
-            <% if @damage.cross == true %>クロス <% end %>
-            <% if @damage.meji == true %>目地 <% end %>      
-            <% if @damage.tategu == true %>建具 <% end %>
-            <% if @damage.tasu == true %>多数 <% end %>
-            <% if @damage.kakusyo == true %>各所 <% end %>
+            <%= @damage.tekiyo %>
           </td>
         </tr>
         <tr>
@@ -168,11 +154,6 @@ $(window).on('load', function() {
   var img = document.getElementById("sonsyo-<%= @sonsyo.id %>_img");
   var client_w = img.clientWidth;
   var client_h = img.clientHeight;
-  //var natural_w = img.naturalWidth;
-  //var natural_h = img.naturalHeight;
-  
-  //console.log(client_w);
-  //console.log(client_h);
 
   html2canvas(document.querySelector("#sonsyo-<%= @sonsyo.id %>"), 
   {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
@@ -180,28 +161,4 @@ $(window).on('load', function() {
     $("#canvas_data").val(canvasData);
   });
 });
-
-/*
-$(function(){
-  var waitMsec = 500
-  var startMsec = new Date();
-  // 指定ミリ秒間だけループさせる（CPUは常にビジー状態）
-  while (new Date() - startMsec < waitMsec);
-  
-  var img = document.getElementById("sonsyo-<%= @sonsyo.id %>_img");
-  var client_w = img.clientWidth;
-  var client_h = img.clientHeight;
-  //var natural_w = img.naturalWidth;
-  //var natural_h = img.naturalHeight;
-  
-  console.log(client_w);
-  console.log(client_h);
-
-  html2canvas(document.querySelector("#sonsyo-<%= @sonsyo.id %>"), 
-  {proxy: true, useCORS: true, width:client_w, height: client_h}).then(canvas => {
-    var canvasData = canvas.toDataURL("image/jpeg");
-    $("#canvas_data").val(canvasData);
-  });
-});
-*/
 </script>
