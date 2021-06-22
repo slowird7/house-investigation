@@ -51,6 +51,8 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: house_investigation_production
-  username: house_investigation
-  password: <%= ENV['HOUSE-INVESTIGATION_DATABASE_PASSWORD'] %>
+  database: house_inv
+  username: postgres
+  password: fds2ag98w49
+  host: database-2.cr8wwfphfbq0.ap-northeast-1.rds.amazonaws.com
+  port: 5432
