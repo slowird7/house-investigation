@@ -7,10 +7,13 @@ CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
  
 CarrierWave.configure do |config|
   if Rails.env.production?
-    config.storage :fog
+    config.storage :file
+#    config.storage :fog
+#    config.cache_storage = :fog # キャッシュにS3を指定
+
     config.fog_provider = 'fog/aws'
-    config.fog_directory  = 'house-investigation'
-    config.asset_host = 'https://s3-' + ENV['AWS_DEFAULT_REGION'] + '.amazonaws.com/house-investigation'
+    config.fog_directory  = 'house-investigation3'
+#    config.asset_host = 'https://s3-' + ENV['AWS_DEFAULT_REGION'] + '.amazonaws.com/house-investigation3'
     config.fog_credentials = {
       provider: 'AWS',
       aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],

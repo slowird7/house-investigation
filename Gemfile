@@ -57,6 +57,8 @@ gem 'pry-byebug', group: :development   # debugger
 gem 'thinreports'   # Thinreports Generator
 gem 'carrierwave'   # 画像アップローダー
 gem 'rmagick'   # 画像加工
+gem 'aws-sdk'
+#gem 'aws-s3', :require => 'aws/s3'
 
 group :production do
   gem 'pg', '0.21.0'
@@ -76,8 +78,7 @@ gem 'mini_exiftool' # Exifの編集
 
 gem 'rubyzip'
 
-# heroku環境でのデバッグ用
-gem 'rails_12factor', group: :production
-
 #gem 'aws-sdk'
 #gem 'exifr'
+
+gem 'byebug'
