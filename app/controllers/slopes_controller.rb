@@ -75,7 +75,13 @@ class SlopesController < ApplicationController
     # オリジナル写真のEXIF情報を取得し、ホワイトボード付き写真のEXIFに上書き
     exif1 = MiniExiftool.new(@slope.image1.path)
     exif3 = MiniExiftool.new(@slope.image3.path)
-    exif3.date_time_original = exif1.date_time_original
+  #[ 2021.07.21 n_otsuka
+#    exif3.date_time_original = exif1.date_time_original
+#    exif3.save
+    datetime = Time.now
+    exif1.date_time_original = datetime
+    exif1.save
+    exif3.date_time_original = datetime
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）

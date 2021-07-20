@@ -42,6 +42,7 @@ class ApplicationController < ActionController::Base
   end  
   
   def check_credibility(image_path)
+#    byebug
     # ハッシュ付き画像パスの生成
     #dst_file_path = File.join(File.dirname(image_path), File.basename(image_path, '.*') + "_hash" + File.extname(image_path))
     dst_file_path = File.join(File.dirname(image_path), File.basename(image_path, '.*') + "_hash" + ".jpg")

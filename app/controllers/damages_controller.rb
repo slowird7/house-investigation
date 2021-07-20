@@ -101,8 +101,14 @@ class DamagesController < ApplicationController
 #      exif1 = MiniExiftool.new(download_image(@damage.image1.path))
 #      exif3 = MiniExiftool.new(download_image(@damage.image3.path)) 
     end      
-
-    exif3.date_time_original = exif1.date_time_original
+#    byebug
+#[ 2021.07.21 n_otsuka
+#    exif3.date_time_original = exif1.date_time_original
+#    exif3.save
+    datetime = Time.now
+    exif1.date_time_original = datetime
+    exif1.save
+    exif3.date_time_original = datetime
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）
