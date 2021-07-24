@@ -19,17 +19,13 @@
 </ol>
 
 <h2 class="text-center">損傷：No.<%= @sonsyo.number %>の撮影（<%= survey_type_name %>）</h2>
-<%= link_to '編集', edit_damage_path(sonsyo_id: @sonsyo.id, survey_type: survey_type), :class=>"btn btn-primary shooting" %>
+<%= link_to '編集', edit_damage_path(sonsyo_id: @sonsyo.id, survey_type: survey_type), :class=>"btn btn-primary" %>
 <!-- 写真 -->
 <div id="sonsyo-<%= @sonsyo.id %>" class="post-img">
   <%= image_tag @damage.image3, id: "sonsyo-" + @sonsyo.id.to_s + "_img" %>
 </div>
 
 <style>
-/* クリック・タッチを無効化 */
-.nullify {
-  pointer-events: none;
-}
 
 .post-img {
   position: relative;
@@ -48,8 +44,8 @@
 </style>
 
 <script>
-//////////////////////////////
-// 初回読み込み後
+#//////////////////////////////
+#// 初回読み込み後
 $(document).ready(function() {
   // ユーザーエージェントの取得
   var userAgentResult = navigator.userAgent;
@@ -67,7 +63,7 @@ $(document).ready(function() {
   else
   {
     //console.log("その他の端末です");
-    $(".shooting").addClass("nullify");
+#    $(".shooting").addClass("nullify");
   }
 });  
 </script>
