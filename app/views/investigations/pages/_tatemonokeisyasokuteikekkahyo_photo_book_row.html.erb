@@ -7,7 +7,7 @@
   <td class="book">
     <table class="table table-bordered">
       <% if keisya != nil %>
-        <tr class="header"><td><%= disp_alphabet(keisya.number) %></td></tr>
+        <tr class="header"><td>傾斜 <%= disp_alphabet(keisya.number) %></td></tr>
         <tr class="body">
           <td>
             <% if keisya.room_name == "その他" %>
@@ -65,7 +65,12 @@
               <% else %>
               <% end %>
             <% end %>            
-          </td> 
+          </td>
+        </tr>
+        <tr class="body">
+          <td>
+            <%= slope.comment %>
+          </td>
         </tr>
       <% end %>
     </table>
@@ -73,18 +78,9 @@
 </tr>
 
 <style>
-.photo_book .photo {
-  height: 380px;
-}
-/* セルの最小heightを設定 */
-.photo_book .photo:first-child:before {
-  display: block;
-  float: left;
-  height: 380px;
-  content: "";
-}  
 .photo_book .photo img {
-  width: 100%;
+  width: auto;
+  height: 330px;
 }
 
 .photo_book .book {
