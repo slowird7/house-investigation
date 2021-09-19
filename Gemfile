@@ -55,6 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # 追記↓
 gem 'pry-byebug', group: :development   # debugger
 gem 'thinreports'   # Thinreports Generator
+gem 'ffi'	# Cライブラリの呼び出し
 gem 'carrierwave'   # 画像アップローダー
 gem 'rmagick'   # 画像加工
 
@@ -77,7 +78,8 @@ gem 'mini_exiftool' # Exifの編集
 gem 'rubyzip'
 
 # heroku環境でのデバッグ用
-gem 'rails_12factor', group: :production
+# gem 'rails_12factor', group: :production
+#
+# #gem 'aws-sdk'
+# #gem 'exifr'
 
-#gem 'aws-sdk'
-#gem 'exifr'
