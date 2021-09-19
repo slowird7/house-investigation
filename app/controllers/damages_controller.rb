@@ -36,12 +36,16 @@ class DamagesController < ApplicationController
     @house = @sonsyo.house
     @investigation = @house.investigation
 
+    @damage.assign_attributes(damage_params) # キャッシュ作成される
+    @damage.image1 = params[:damage][:image1] # キャッシュ作成される
+
     # paramsは代入できないので、コピーを生成
     copy_damage_params = damage_params
     # canvasの画像化
     copy_damage_params[:image2] = base64_conversion(params[:canvas_data])
 
     if @damage.update(copy_damage_params)
+
       # 信憑性のチェック（ハッシュ値の付加）
       dst_file_path = check_credibility(@damage.image1.path)
       # 相対パスに変換

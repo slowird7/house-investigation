@@ -6,6 +6,9 @@
     <div class="row">
       <div class="col-xs-6">
         <%= f.file_field :image1, :accept => 'image/*', :capture => 'camera' %>
+        <%= f.hidden_field :image1_cache %>
+        <%= f.hidden_field :image2_cache %>
+        <%= f.hidden_field :image3_cache %>
       </div>
       <div class="col-xs-6">
         <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", data: { confirm: '登録してよろしいでしょうか？' } %>

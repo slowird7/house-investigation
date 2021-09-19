@@ -48,11 +48,14 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  database: house_inv
-  username: postgres
-  password: fds2ag98w49
-  host: database-2.cr8wwfphfbq0.ap-northeast-1.rds.amazonaws.com
-  port: 5432
+  <<: *default
+  database: house_investigation_development
+#  adapter: postgresql
+#  encoding: unicode
+#  pool: 5
+#  database: house_investigation
+#  username: postgres
+#  password: fds2ag98w49
+##  host: database-2.cr8wwfphfbq0.ap-northeast-1.rds.amazonaws.com
+#  host: database-3.cr8wwfphfbq0.ap-northeast-1.rds.amazonaws.com
+#  port: 5432

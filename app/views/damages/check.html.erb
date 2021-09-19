@@ -105,6 +105,9 @@
 <%= form_for(@damage, url: confirm_damage_path) do |f| %>
   <input type="hidden" name="canvas_data" id="canvas_data">
   <%= f.hidden_field :image3 %>
+  <%= f.hidden_field :image1_cache %>
+  <%= f.hidden_field :image2_cache %>
+  <%= f.hidden_field :image3_cache %>
   <%= f.submit '確定', :class=>"btn btn-primary", :id=>"submit", method: :delete, 
     data: { confirm: '入力の間違いはありませんか？もう一度確認してください。無ければ登録しますがよろしいでしょうか？' } %> 
 <% end %>
