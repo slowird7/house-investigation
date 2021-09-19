@@ -17,24 +17,20 @@
             <% end %>
           </td>
         </tr>
+        <tr class="body">
+          <td>
+            <%= post.comment %>
+          </td>
+        </tr>        
       <% end %>
     </table>
   </td>  
 </tr>
 
 <style>
-.photo_book .photo {
-  height: 380px;
-}
-/* セルの最小heightを設定 */
-.photo_book .photo:first-child:before {
-  display: block;
-  float: left;
-  height: 380px;
-  content: "";
-}  
 .photo_book .photo img {
-  width: 100%;
+  width: auto;
+  height: 330px;
 }
 
 .photo_book .book {

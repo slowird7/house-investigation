@@ -2,16 +2,7 @@
   <%= form_for(@slope) do |f| %>
     <%= f.hidden_field :keisya_id, :value => @keisya.id %>
     <%= f.hidden_field :survey_type, :value => @slope.survey_type %>
-  
-    <div class="row">
-      <div class="col-xs-6">
-        <%= f.file_field :image1, :accept => 'image/*', :capture => 'user' %>
-      </div>
-      <div class="col-xs-6">
-        <%= f.submit '登録', :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
-      </div>
-    </div>
-    
+
     <div class="row photosArea">
       <div class="col-xs-6">
         <% unless @preview_slope.image1? %>
@@ -25,7 +16,17 @@
         <input type="hidden" name="canvas_data" id="canvas_data">
       </div>
     </div>
-
+  
+    <div class="row">
+      <div class="col-xs-6" style="text-align: center;">
+        <%= f.submit '登録', :disabled=>"true", :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+        <button type="button" id="return" class="btn btn-default">戻る</button>
+      </div>
+      <div class="col-xs-6">
+        <%= f.file_field :image1, :accept => 'image/*', :capture => 'environment' %>
+      </div>
+    </div>
+    
     <div class="form-group" style="margin-top: 20px;">
       <div class="switch_set">
         <%= f.check_box :suichokukeisya, {}, "true", "false" %><%= f.label :suichokukeisya, '垂直傾斜', :onclick => 'onclick_suichoku()' %>
@@ -64,6 +65,25 @@ var ctx = canvas.getContext('2d');
 var img = new Image();
 var reader = new FileReader();
 
+// 入力欄の有効(false)・無効化(true)操作
+function inputAreaDisable(flag) {
+  $("#slope_suichokukeisya, #slope_suiheikeisya").prop("disabled", flag); // 垂直・水平
+  $("#slope_east, #slope_west, #slope_south, #slope_north").prop("disabled", flag); // 東西南北 
+  $("#slope_comment").prop("disabled", flag); // コメント欄
+}
+
+// 戻るボタン
+document.querySelector("#return").addEventListener("click", () => {
+  // 登録ボタンを無効化
+  $("#submit").prop("disabled", true);
+  // 入力欄を有効化
+  inputAreaDisable(false);  
+  // ファイル選択を初期化  
+  $('#damage_image1').val('');
+  // liveview上の画像をクリア
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
 $('#slope_image1').on('change', function (e) {
   reader.onload = function (e) {
     img.src = e.target.result;
@@ -77,8 +97,9 @@ $('#slope_image1').on('change', function (e) {
       var imgH = img.height;
       // プレビュー画像の幅取得
       var previewImgW = $('.previewImg').width();
+      var previewImgH = $('.previewImg').height();
       // 拡縮率の計算
-      var rate = previewImgW / imgW;    
+      var rate = previewImgH / imgH;    
       
       // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
       canvas.width = imgW * rate * 4;      // 高画質化のため、4倍に
@@ -88,6 +109,11 @@ $('#slope_image1').on('change', function (e) {
       // スタイルを設定
       canvas.style.width = String(imgW * rate) + "px";
       canvas.style.height = String(imgH * rate) + "px";
+      
+      // 登録ボタンを有効化
+      $("#submit").prop("disabled", false);
+      // 入力欄を無効化
+      inputAreaDisable(true);
     }
   }
   reader.readAsDataURL(e.target.files[0]);
@@ -95,18 +121,22 @@ $('#slope_image1').on('change', function (e) {
 
 // 垂直傾斜ボタン押下
 function onclick_suichoku(){
-  var suihei_checkbox = document.getElementsByName("slope[suiheikeisya]");
+  if($("#slope_suichokukeisya").prop('disabled') == false){
+    var suihei_checkbox = document.getElementsByName("slope[suiheikeisya]");
   
-  if(suihei_checkbox[1].checked == true){
-    suihei_checkbox[1].checked = false;
+    if(suihei_checkbox[1].checked == true){
+      suihei_checkbox[1].checked = false;
+    }
   }
 }
 // 水平傾斜ボタン押下
 function onclick_suihei(){
-  var suichoku_checkbox = document.getElementsByName("slope[suichokukeisya]");
-  
-  if(suichoku_checkbox[1].checked == true){
-    suichoku_checkbox[1].checked = false;
+  if($("#slope_suiheikeisya").prop('disabled') == false){  
+    var suichoku_checkbox = document.getElementsByName("slope[suichokukeisya]");
+    
+    if(suichoku_checkbox[1].checked == true){
+      suichoku_checkbox[1].checked = false;
+    }
   }
 }
 
