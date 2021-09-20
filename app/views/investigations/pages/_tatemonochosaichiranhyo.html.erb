@@ -1,3 +1,4 @@
+<!-- 1ページ目 -->
 <div class="page horizontal_parent">
   <div class="horizontal">
     <div class="horizontal_child">
@@ -81,7 +82,8 @@
           <td>調査範囲</td>        
         </tr>
     
-        <% @houses.each do |house| %>
+        <% num_per_fist_page = 14 %><!-- 先頭から14件分のデータを1ページ目に表示 -->
+        <% @houses.first(num_per_fist_page).each do |house| %>
           <tr>
             <td><%= house.house_number %></td>
             <td><%= house.house_name %></td>
@@ -99,11 +101,6 @@
             </td>
             <td><%= house.construction %></td>
             <td><%= house.area %></td>
-            <!--
-            
-              2021/01/21修正↓
-            
-            -->
             <td>
               <% if survey_type_main == "事前" %>
                 <%= house.pre_survey_day %>
@@ -122,11 +119,6 @@
                 <%= house.after_survey_day %>
               <% end %>
             </td>
-            <!--
-            
-              2021/01/21修正↑
-            
-            -->
             <td>
               <% if survey_type_main == "事前" %>
                 <%= house.range_pre_survey %>
@@ -142,6 +134,75 @@
     </div>
   </div>
 </div>
+
+<!-- 2ページ目以降 -->
+<% num_per_page = 20 %><!-- 1ページあたり20件表示 -->
+<% remaining_houses = @houses.count - num_per_fist_page %><!-- 1ページ目に表示した分をマイナス -->
+<% if remaining_houses > 0 then %>
+  <% remaining_pages = remaining_houses / num_per_page %>
+  <% if remaining_houses % num_per_page > 0 %>
+    <% remaining_pages = remaining_pages + 1 %>
+  <% end %>
+  <% for i in 1..remaining_pages %>
+    <% start = (i - 1) * num_per_page + num_per_fist_page %>
+    <% stop = start + (num_per_page - 1) %>
+    <div class="page horizontal_parent">
+      <div class="horizontal">
+        <div class="horizontal_child">
+          <table class="table table-bordered" style="font-size:10px;">
+            <% @houses[start..stop].each do |house| %>
+              <tr>
+                <td><%= house.house_number %></td>
+                <td><%= house.house_name %></td>
+                <td><%= house.city %><%= house.block %></td>
+                <td><%= house.owner_name %></td>
+                <td><%= house.use %></td>
+                <td>
+                  <% if survey_type_main == "事前" %>
+                    <%= house.overview_pre_survey %>
+                  <% elsif survey_type_main == "事中" %>
+                    <%= house.overview_ongoing_survey %>
+                  <% elsif survey_type_main == "事後" %>
+                    <%= house.overview_after_survey %>
+                  <% end %>
+                </td>
+                <td><%= house.construction %></td>
+                <td><%= house.area %></td>
+                <td>
+                  <% if survey_type_main == "事前" %>
+                    <%= house.pre_survey_day %>
+                  <% elsif survey_type_main == "事中" %>
+                    <%= house.ongoing_survey_day %>
+                  <% elsif survey_type_main == "事後" %>
+                    <%= house.after_survey_day %>
+                  <% end %>              
+                </td>
+                <td>
+                  <% if survey_type_main == "事前" %>
+                    <%= house.pre_survey_day %>
+                  <% elsif survey_type_main == "事中" %>
+                    <%= house.ongoing_survey_day %>
+                  <% elsif survey_type_main == "事後" %>
+                    <%= house.after_survey_day %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if survey_type_main == "事前" %>
+                    <%= house.range_pre_survey %>
+                  <% elsif survey_type_main == "事中" %>
+                    <%= house.range_ongoing_survey %>
+                  <% elsif survey_type_main == "事後" %>
+                    <%= house.range_after_survey %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 
 <style>
 .horizontal_parent {
