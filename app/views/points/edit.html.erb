@@ -15,8 +15,15 @@
 
 <div>
   <%= form_for(@point) do |f| %>
-    <%= select_tag('room_name',options_for_select($OUTSIDE_NAME), :onchange => 'enable_room_name()')%>
-    <input type="text" name="other" placeholder="">
+    <select name="room_name" id="room_name" onchange="enable_room_name()">
+      <!-- 外部 -->
+      <%= render 'houses/select_option_for_outer', last: @point  %>
+    </select>
+    <% if @point.present? %><!-- フリー入力欄 -->
+      <input type="text" name="other" value="<%= @point.room_name_other %>">
+    <% else %>
+      <input type="text" name="other" value="">
+    <% end %>
     <%= f.submit '更新', :disabled => true, :id => "add_point", :class=>"btn btn-primary" %>
   <% end %>
 </div>
@@ -25,13 +32,7 @@
 //セレクトボックスイベント設定
 setHierarchySelectEvent('#area1', '#area2');
 setHierarchySelectEvent('#area3', '#area4');
-/**
- * 階層のあるプルダウンのイベントを設定します.
- * 親のselectタグには属性data-subgroupが設定されている必要があります。
- * 子のselectタグには属性data-groupが設定されている必要があります。
- * @param parentSelect 親となるselectタグのセレクタ
- * @param childSelect 子となるselectタグのセレクタ
- */
+
 function setHierarchySelectEvent(parentSelect, childSelect){
   var initCategorySmallHtml = $(childSelect).html();
   $(parentSelect).change(function(){
@@ -65,11 +66,8 @@ function enable_room_name(){
   
   if(room_name.value != "" && room_name.value != null) {
     add_point.disabled = false;
-    //console.log("OK");
   } else {
     add_point.disabled = true;
-    //console.log("NG");
   }
-  //console.log(add_sonsyo.disabled);
 }
 </script>

@@ -19,21 +19,7 @@
         </tr>
         <tr class="body">
           <td>
-            <% if damage.genkyo == true %>現況 <% end %>
-            <% if damage.sukima == true %>隙間 <% end %>
-            <% if damage.ware == true %>割れ <% end %>
-            <% if damage.kake == true %>欠け <% end %>
-            <% if damage.crack == true %>クラック <% end %>
-            <% if damage.tile == true %>タイル <% end %>
-            <% if damage.kire == true %>切れ <% end %>
-            <% if damage.uki == true %>浮き <% end %>
-            <% if damage.suhon == true %>数本 <% end %>
-            <% if damage.chirigire == true %>チリ切れ <% end %>
-            <% if damage.cross == true %>クロス <% end %>
-            <% if damage.meji == true %>目地 <% end %>      
-            <% if damage.tategu == true %>建具 <% end %>
-            <% if damage.tasu == true %>多数 <% end %>
-            <% if damage.kakusyo == true %>各所 <% end %>
+            <%= damage.tekiyo %>
           </td>
         </tr>
         <tr class="body">
@@ -60,28 +46,25 @@
             <% end %>
           </td>
         </tr>
+        <tr class="body">
+          <td>
+            <%= damage.comment %>
+          </td>
+        </tr>
       <% end %>
     </table>
   </td>  
 </tr>
 
 <style>
-.photo_book .photo {
-  height: 380px;
-}
-/* セルの最小heightを設定 */
-.photo_book .photo:first-child:before {
-  display: block;
-  float: left;
-  height: 380px;
-  content: "";
-}  
 .photo_book .photo img {
-  width: 100%;
+  width: auto;
+  height: 330px;
 }
 
 .photo_book .book {
   width: 150px;
+  height: auto !important;
 }
 .photo_book .book table {
   border: none !important;

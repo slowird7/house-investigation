@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20191107125835) do
   create_table "damages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
     t.integer  "position_wb",                   default: 0
+    t.string   "tekiyo"
     t.boolean  "genkyo",                        default: false
     t.boolean  "sukima",                        default: false
     t.boolean  "ware",                          default: false
@@ -72,6 +73,7 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.string   "construction"
     t.string   "floors"
     t.string   "area"
+    t.date     "completion_date"
     t.string   "use"
     t.string   "sign_pre_survey"
     t.string   "sign_ongoing_survey"
@@ -85,6 +87,9 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.string   "range_pre_survey"
     t.string   "range_ongoing_survey"
     t.string   "range_after_survey"
+    t.date     "pre_survey_day"
+    t.date     "ongoing_survey_day"
+    t.date     "after_survey_day"
     t.integer  "investigation_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false

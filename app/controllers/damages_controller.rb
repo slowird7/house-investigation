@@ -80,23 +80,6 @@ class DamagesController < ApplicationController
     exif1 = MiniExiftool.new(@damage.image1.path)
     exif3 = MiniExiftool.new(@damage.image3.path)    
 
-    #if Rails.env.production?
-      #aws_s3_root_path = "/app/"
-      #aws_s3_root_path = "https://s3-ap-northeast-1.amazonaws.com/house-investigation/"
-      #aws_s3_path = "s3://house-investigation/"
-      #aws_s3_path = "https://house-investigation.s3.amazonaws.com/"
-      #aws_s3_path = "https://house-investigation.s3-ap-northeast-1.amazonaws.com/"
-      #img1_file_path = aws_s3_root_path + @damage.image1.path.match(/uploads(.*)/)[0]
-      #img3_file_path = aws_s3_root_path + @damage.image3.path.match(/uploads(.*)/)[0]
-    #else
-      #img1_file_path = @damage.image1.path
-      #img3_file_path = @damage.image3.path
-    #end
-    #exif1 = MiniExiftool.new(img1_file_path)
-    #exif3 = MiniExiftool.new(img3_file_path)
-
-    #binding.pry
-    
     exif3.date_time_original = exif1.date_time_original
     exif3.save
 
@@ -119,7 +102,7 @@ class DamagesController < ApplicationController
   private
 
   def damage_params
-    params.require(:damage).permit(:sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
+    params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
                                   :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,
                                   :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url)
   end

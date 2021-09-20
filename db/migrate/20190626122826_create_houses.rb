@@ -18,6 +18,7 @@ class CreateHouses < ActiveRecord::Migration[5.0]
       t.string :construction  # 構造
       t.string :floors  # 階数
       t.string :area  #延面積
+      t.date :completion_date # 建物が完成した日
       t.string :use # 用途
       # 承諾書サイン（所有者）
       t.string :sign_pre_survey, default: nil   #事前
@@ -40,10 +41,10 @@ class CreateHouses < ActiveRecord::Migration[5.0]
       t.string :range_pre_survey
       t.string :range_ongoing_survey
       t.string :range_after_survey
-      # 調査開始日
-#      t.date :start_pre_survey, default: nil
-#      t.date :start_ongoing_survey, default: nil
-#      t.date :start_after_survey, default: nil
+      # 調査日
+      t.date :pre_survey_day, default: nil
+      t.date :ongoing_survey_day, default: nil
+      t.date :after_survey_day, default: nil
       # 調査終了日
 #      t.date :stop_pre_survey, default: nil
 #      t.date :stop_ongoing_survey, default: nil

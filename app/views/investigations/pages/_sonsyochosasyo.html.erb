@@ -1,4 +1,5 @@
 <% @houses.each do |house| %>
+  <!-- 1ページ目 -->
   <div class="page horizontal_parent">
     <div class="horizontal">
       <div class="horizontal_child">
@@ -15,17 +16,11 @@
             <td>調査年月日</td>
             <td>
               <% if survey_type_1 == "事前" %>
-                <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-                  <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <%= house.pre_survey_day %>
               <% elsif survey_type_1 == "事中" %>
-                <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-                  <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <%= house.ongoing_survey_day %>
               <% elsif survey_type_1 == "事後" %>
-                <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-                  <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <%= house.after_survey_day %>
               <% end %>
             </td>
           </tr>
@@ -52,18 +47,12 @@
             <td>調査年月日</td>
             <td>
               <% if survey_type_2 == "事前" %>
-                <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-                  <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <%= house.pre_survey_day %>
               <% elsif survey_type_2 == "事中" %>
-                <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-                  <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-                <% end %>
+                <%= house.ongoing_survey_day %>
               <% elsif survey_type_2 == "事後" %>
-                <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-                  <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
-                <% end %>
-              <% end %>              
+                <%= house.after_survey_day %>
+              <% end %> 
             </td>
           </tr>
           <tr>
@@ -94,7 +83,9 @@
             <td>損傷の状況</td>
             <td>備考</td>        
           </tr>
-          <% house.sonsyos.each do |sonsyo| %>
+          
+          <% num_per_fist_page = 8 %><!-- 先頭から8件分のデータを1ページ目に表示 -->
+          <% house.sonsyos.first(num_per_fist_page).each do |sonsyo| %>
             <tr>
               <td><%= sonsyo.room_name %></td>
               
@@ -109,30 +100,11 @@
                 end
               %>  
               <td>
-                <% if damage.genkyo == true %>現況&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.sukima == true %>隙間&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.ware == true %>割れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
-                <% if damage.kake == true %>欠け&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
-                <% if damage.amimejyo == true %>網目状&nbsp;&nbsp;&nbsp;&nbsp;<% end %>          
-                <% if damage.zencho == true %>全長&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.crack == true %>クラック&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.tile == true %>タイル&nbsp;&nbsp;&nbsp;&nbsp;<% end %>          
-                <% if damage.kire == true %>切れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.uki == true %>浮き&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.suhon == true %>数本&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.zenshu == true %>全周&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.chirigire == true %>チリ切れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.cross == true %>クロス&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.meji == true %>目地&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.tategu == true %>建具&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.tasu == true %>多数&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.kakusyo == true %>各所&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <br/>
+                <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
-                <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
               </td>
               <td><%= damage.comment %></td><!-- 備考 -->
               
@@ -181,7 +153,94 @@
     </div>
   </div>
   
+  <!-- 2ページ目以降 -->
+  <% num_per_page = 14 %><!-- 1ページあたり14件表示 -->
   <% sonsyos = house.sonsyos %>
+  <% remaining_sonsyos = sonsyos.count - num_per_fist_page %><!-- 1ページ目に表示した分をマイナス -->
+  <% if remaining_sonsyos > 0 then %>
+    <% remaining_pages = remaining_sonsyos / num_per_page %>
+    <% if remaining_sonsyos % num_per_page > 0 %>
+      <% remaining_pages = remaining_pages + 1 %>
+    <% end %>
+    <% for i in 1..remaining_pages %>
+      <% start = (i - 1) * num_per_page + num_per_fist_page %>
+      <% stop = start + (num_per_page - 1) %>
+    
+      <div class="page horizontal_parent">
+        <div class="horizontal">
+          <div class="horizontal_child">  
+            <table class="table table-bordered" style="font-size:10px;">
+
+              <% sonsyos[start..stop].each do |sonsyo| %>
+                <tr>
+                  <td><%= sonsyo.room_name %></td>
+                  
+                  <td><%= sonsyo.number %></td>
+                  <% 
+                    if survey_type_1 == "事前"
+                      damage = sonsyo.damages.find_by(survey_type: "pre")
+                    elsif survey_type_1 == "事中"
+                      damage = sonsyo.damages.find_by(survey_type: "ongoing")
+                    elsif survey_type_1 == "事後"
+                      damage = sonsyo.damages.find_by(survey_type: "after")
+                    end
+                  %>  
+                  <td>
+                    <%= damage.tekiyo %><br/>
+                    <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <br/>
+                    <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
+                  </td>
+                  <td><%= damage.comment %></td><!-- 備考 -->
+                  
+                  
+                  <td><%= sonsyo.number %></td>
+                  <% 
+                    if survey_type_2 == "事前"
+                      damage = sonsyo.damages.find_by(survey_type: "pre")
+                    elsif survey_type_2 == "事中"
+                      damage = sonsyo.damages.find_by(survey_type: "ongoing")
+                    elsif survey_type_2 == "事後"
+                      damage = sonsyo.damages.find_by(survey_type: "after")
+                    end
+                  %>
+                  <td>
+                    <% if damage.genkyo == true %>現況&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.sukima == true %>隙間&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.ware == true %>割れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
+                    <% if damage.kake == true %>欠け&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
+                    <% if damage.amimejyo == true %>網目状&nbsp;&nbsp;&nbsp;&nbsp;<% end %>          
+                    <% if damage.zencho == true %>全長&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.crack == true %>クラック&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.tile == true %>タイル&nbsp;&nbsp;&nbsp;&nbsp;<% end %>          
+                    <% if damage.kire == true %>切れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.uki == true %>浮き&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.suhon == true %>数本&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.zenshu == true %>全周&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.chirigire == true %>チリ切れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.cross == true %>クロス&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.meji == true %>目地&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.tategu == true %>建具&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.tasu == true %>多数&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.kakusyo == true %>各所&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <br/>
+                    <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <br/>
+                    <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                  </td>
+                  <td><%= damage.comment %></td><!-- 備考 -->
+                </tr>
+              <% end %>    
+            </table>
+          </div>
+        </div>
+      </div>  
+    <% end %>
+  <% end %>
+  
   <% num = 0 %>
   <% while num < sonsyos.length do %>
     <div class="page">

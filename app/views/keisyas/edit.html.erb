@@ -21,9 +21,16 @@
       <option data-subgroup="inner">内部</option>
     </select>
     <select name="area4" id="area4" onChange="enable_area4()">
-      <%= render 'houses/select_option_for_keisya' %>
+      <!-- 外部 -->
+      <%= render 'houses/select_option_for_outer', last: @keisya %>
+      <!-- 内部 -->     
+      <%= render 'houses/select_option_for_inner', last: @keisya %>
     </select>
-    <input type="text" name="other" placeholder="">
+    <% if @keisya.present? %><!-- フリー入力欄 -->
+      <input type="text" name="other" value="<%= @keisya.room_name_other %>">
+    <% else %>
+      <input type="text" name="other" value="">
+    <% end %>
     <%= f.submit '更新', :disabled => true, :id => "add_keisya", :class=>"btn btn-primary" %>
   <% end %>
 </div>
@@ -32,13 +39,7 @@
 //セレクトボックスイベント設定
 setHierarchySelectEvent('#area1', '#area2');
 setHierarchySelectEvent('#area3', '#area4');
-/**
- * 階層のあるプルダウンのイベントを設定します.
- * 親のselectタグには属性data-subgroupが設定されている必要があります。
- * 子のselectタグには属性data-groupが設定されている必要があります。
- * @param parentSelect 親となるselectタグのセレクタ
- * @param childSelect 子となるselectタグのセレクタ
- */
+
 function setHierarchySelectEvent(parentSelect, childSelect){
   var initCategorySmallHtml = $(childSelect).html();
   $(parentSelect).change(function(){
@@ -72,11 +73,8 @@ function enable_area4(){
   
   if(area4.value != "" && area4.value != null) {
     add_keisya.disabled = false;
-    //console.log("OK");
   } else {
     add_keisya.disabled = true;
-    //console.log("NG");
   }
-  //console.log(add_sonsyo.disabled);
 }
 </script>

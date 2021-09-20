@@ -3,7 +3,9 @@ class CreateDamages < ActiveRecord::Migration[5.0]
     create_table :damages do |t|
       t.string :survey_type # pre、ongoing after
       
-      t.integer :position_wb, default: 0 # 0：左上、1：上、2：右上、3：右下、4：下、5：左下      
+      t.integer :position_wb, default: 0 # 0：左上、1：上、2：右上、3：右下、4：下、5：左下     
+      
+      t.string :tekiyo
       t.boolean :genkyo, default: false # 現況
       t.boolean :sukima, default: false # 隙間
       t.boolean :ware, default: false # 割れ
@@ -22,6 +24,7 @@ class CreateDamages < ActiveRecord::Migration[5.0]
       t.boolean :tategu, default: false #建具
       t.boolean :tasu, default: false  #多数
       t.boolean :kakusyo, default: false  #各所
+      
       t.float :wide
       t.float :length
       t.float :width

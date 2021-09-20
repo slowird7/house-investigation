@@ -1,4 +1,5 @@
 <% @houses.each do |house| %>
+  <!-- 1ページ目 -->
   <div class="page">
     <table class="table table-bordered" style="font-size:10px;">
       <tr>
@@ -20,8 +21,9 @@
         <td colspan="2">南北方向</td>          
       </tr>
       
+      <% num_per_fist_page = 30 %><!-- 先頭から30件分のデータを1ページ目に表示 -->
       <% keisyas = house.keisyas %>
-      <% keisyas.each do |keisya| %>
+      <% keisyas.first(num_per_fist_page).each do |keisya| %>
         <tr>
           <% 
             if survey_type_1 == "事前"
@@ -150,6 +152,153 @@
     </table>
     <p>※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
   </div>
+  
+  <!-- 2ページ目以降 -->
+  <% num_per_page = 33 %><!-- 1ページあたり33件表示 -->
+  <% keisyas = house.keisyas %>
+  <% remaining_keisyas = keisyas.count - num_per_fist_page %><!-- 1ページ目に表示した分をマイナス -->
+  <% if remaining_keisyas > 0 then %>
+    <% remaining_pages = remaining_keisyas / num_per_page %><!-- 1ページあたり33件表示 -->
+    <% if remaining_keisyas % num_per_page > 0 %>
+      <% remaining_pages = remaining_pages + 1 %>
+    <% end %>
+    <% for i in 1..remaining_pages %>
+      <% start = (i - 1) * num_per_page + num_per_fist_page %>
+      <% stop = start + (num_per_page - 1) %>  
+  
+      <div class="page">
+        <table class="table table-bordered" style="font-size:10px;">
+          <% keisyas[start..stop].each do |keisya| %><!-- 先頭から30件のデータまでループ処理 -->
+            <tr>
+              <% 
+                if survey_type_1 == "事前"
+                  slope = keisya.slopes.find_by(survey_type: "pre")
+                elsif survey_type_1 == "事中"
+                  slope = keisya.slopes.find_by(survey_type: "ongoing")
+                elsif survey_type_1 == "事後"
+                  slope = keisya.slopes.find_by(survey_type: "after")
+                end
+              %>
+              <% if slope.suichokukeisya == true %>
+                <td>垂直傾斜</td>
+              <% elsif slope.suiheikeisya == true %>
+                <td>水平傾斜</td>
+              <% else %>
+                <td></td>
+              <% end %>
+    
+              <td><%= disp_alphabet(keisya.number) %></td>
+              <td><%= keisya.room_name %></td>
+              <td colspan="2">
+                <% if slope.east.blank? %>
+                  <% if slope.west.blank? %>
+                  <% elsif slope.west == 0 %>
+                  <% else %>
+                    西へ&nbsp;<%= slope.west %>&nbsp;mm
+                  <% end %>
+                <% elsif slope.east == 0 %>
+                  <% if slope.west.blank? %>
+                  <% elsif slope.west == 0 %>
+                    東西0
+                  <% else %>
+                    西へ&nbsp;<%= slope.west %>&nbsp;mm
+                  <% end %>
+                <% else %>
+                  <% if slope.west.blank? %>
+                    東へ&nbsp;<%= slope.east %>&nbsp;mm
+                  <% elsif slope.west == 0 %>
+                    東へ&nbsp;<%= slope.east %>&nbsp;mm
+                  <% else %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td colspan="2">
+                <% if slope.south.blank? %>
+                  <% if slope.north.blank? %>
+                  <% elsif slope.north == 0 %>
+                  <% else %>
+                    北へ&nbsp;<%= slope.north %>&nbsp;mm
+                  <% end %>
+                <% elsif slope.south == 0 %>
+                  <% if slope.north.blank? %>
+                  <% elsif slope.north == 0 %>
+                    南北0
+                  <% else %>
+                    北へ&nbsp;<%= slope.north %>&nbsp;mm
+                  <% end %>
+                <% else %>
+                  <% if slope.north.blank? %>
+                    南へ&nbsp;<%= slope.south %>&nbsp;mm
+                  <% elsif slope.north == 0 %>
+                    南へ&nbsp;<%= slope.south %>&nbsp;mm
+                  <% else %>
+                  <% end %>
+                <% end %>            
+              </td>           
+    
+              <% 
+                if survey_type_2 == "事前"
+                  slope = keisya.slopes.find_by(survey_type: "pre")
+                elsif survey_type_2 == "事中"
+                  slope = keisya.slopes.find_by(survey_type: "ongoing")
+                elsif survey_type_2 == "事後"
+                  slope = keisya.slopes.find_by(survey_type: "after")
+                end
+              %>
+              <td colspan="2">
+                <% if slope.east.blank? %>
+                  <% if slope.west.blank? %>
+                  <% elsif slope.west == 0 %>
+                  <% else %>
+                    西へ&nbsp;<%= slope.west %>&nbsp;mm
+                  <% end %>
+                <% elsif slope.east == 0 %>
+                  <% if slope.west.blank? %>
+                  <% elsif slope.west == 0 %>
+                    東西0
+                  <% else %>
+                    西へ&nbsp;<%= slope.west %>&nbsp;mm
+                  <% end %>
+                <% else %>
+                  <% if slope.west.blank? %>
+                    東へ&nbsp;<%= slope.east %>&nbsp;mm
+                  <% elsif slope.west == 0 %>
+                    東へ&nbsp;<%= slope.east %>&nbsp;mm
+                  <% else %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td colspan="2">
+                <% if slope.south.blank? %>
+                  <% if slope.north.blank? %>
+                  <% elsif slope.north == 0 %>
+                  <% else %>
+                    北へ&nbsp;<%= slope.north %>&nbsp;mm
+                  <% end %>
+                <% elsif slope.south == 0 %>
+                  <% if slope.north.blank? %>
+                  <% elsif slope.north == 0 %>
+                    南北0
+                  <% else %>
+                    北へ&nbsp;<%= slope.north %>&nbsp;mm
+                  <% end %>
+                <% else %>
+                  <% if slope.north.blank? %>
+                    南へ&nbsp;<%= slope.south %>&nbsp;mm
+                  <% elsif slope.north == 0 %>
+                    南へ&nbsp;<%= slope.south %>&nbsp;mm
+                  <% else %>
+                  <% end %>
+                <% end %>            
+              </td>
+              <td><%= slope.comment %></td>
+            </tr>
+          <% end %>
+        </table>
+        <p>※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
+      </div>  
+    <% end %>
+  <% end %>
   
   <% num = 0 %>
   <% while num < keisyas.length do %>
