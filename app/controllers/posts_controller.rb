@@ -76,6 +76,10 @@ class PostsController < ApplicationController
     exif1 = MiniExiftool.new(@post.image1.path)
     exif3 = MiniExiftool.new(@post.image3.path)
     exif3.date_time_original = exif1.date_time_original
+    datetime = Time.now
+    exif1.date_time_original = datetime
+    exif1.save
+    exif3.date_time_original = datetime
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）
