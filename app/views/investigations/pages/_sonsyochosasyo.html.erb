@@ -89,7 +89,7 @@
             <tr>
               <td><%= sonsyo.room_name %></td>
               
-              <td><%= sonsyo.number %></td>
+              <td width="10%"><%= sonsyo.number %></td>
               <% 
                 if survey_type_1 == "事前"
                   damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -99,17 +99,17 @@
                   damage = sonsyo.damages.find_by(survey_type: "after")
                 end
               %>  
-              <td>
+              <td width="25%">
                 <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
                 <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
               </td>
-              <td><%= damage.comment %></td><!-- 備考 -->
+              <td width="10%"><%= damage.comment %></td><!-- 備考 -->
               
               
-              <td><%= sonsyo.number %></td>
+              <td width="10%"><%= sonsyo.number %></td>
               <% 
                 if survey_type_2 == "事前"
                   damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -119,7 +119,7 @@
                   damage = sonsyo.damages.find_by(survey_type: "after")
                 end
               %>
-              <td>
+              <td width="25%">
                 <% if damage.genkyo == true %>現況&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.sukima == true %>隙間&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.ware == true %>割れ&nbsp;&nbsp;&nbsp;&nbsp;<% end %>         
@@ -145,7 +145,7 @@
                 <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
               </td>
-              <td><%= damage.comment %></td><!-- 備考 -->
+              <td width="10%"><%= damage.comment %></td><!-- 備考 -->
             </tr>
           <% end %>    
         </table>

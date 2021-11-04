@@ -74,10 +74,10 @@ var reader = new FileReader();
 
 // 入力欄の有効(false)・無効化(true)操作
 function inputAreaDisable(flag) {
-  $("#post_hyoko").prop("disabled", flag); // 標高
-  $("#post_ouro_bs, #post_ouro_fs").prop("disabled", flag); // 往路データ  
-  $("#post_fukuro_bs, #post_fukuro_fs").prop("disabled", flag); // 復路データ
-  $("#post_comment").prop("disabled", flag); // コメント欄
+  $("#post_hyoko").prop("readonly", flag); // 標高
+  $("#post_ouro_bs, #post_ouro_fs").prop("readonly", flag); // 往路データ  
+  $("#post_fukuro_bs, #post_fukuro_fs").prop("readonly", flag); // 復路データ
+  $("#post_comment").prop("readonly", flag); // コメント欄
 }
 
 // 戻るボタン

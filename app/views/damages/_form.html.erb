@@ -117,11 +117,11 @@ function inputAreaDisable(flag) {
   $("#damage_tasu").prop("disabled", flag);  // 多数
   $("#damage_kakusyo").prop("disabled", flag);  // 各所
   
-  $("#damage_width, #damage_height").prop("disabled", flag);  // 面積
-  $("#damage_wide").prop("disabled", flag);  // 幅
-  $("#damage_amimejyo, #damage_zencho, #damage_zenshu, #damage_length").prop("disabled", flag);  // 長さ
+  $("#damage_width, #damage_height").prop("readonly", flag);  // 面積
+  $("#damage_wide").prop("readonly", flag);  // 幅
+  $("#damage_amimejyo, #damage_zencho, #damage_zenshu, #damage_length").prop("readonly", flag);  // 長さ
   
-  $("#damage_comment").prop("disabled", flag); // コメント欄
+  $("#damage_comment").prop("readonly", flag); // コメント欄
 }
 
 // 戻るボタン

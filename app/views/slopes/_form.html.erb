@@ -67,9 +67,9 @@ var reader = new FileReader();
 
 // 入力欄の有効(false)・無効化(true)操作
 function inputAreaDisable(flag) {
-  $("#slope_suichokukeisya, #slope_suiheikeisya").prop("disabled", flag); // 垂直・水平
-  $("#slope_east, #slope_west, #slope_south, #slope_north").prop("disabled", flag); // 東西南北 
-  $("#slope_comment").prop("disabled", flag); // コメント欄
+  $("#slope_suichokukeisya, #slope_suiheikeisya").prop("readonly", flag); // 垂直・水平
+  $("#slope_east, #slope_west, #slope_south, #slope_north").prop("readonly", flag); // 東西南北 
+  $("#slope_comment").prop("readonly", flag); // コメント欄
 }
 
 // 戻るボタン
