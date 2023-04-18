@@ -1,4 +1,29 @@
 module ApplicationHelper
+  # 和暦な日付文字列を得る。尚、「元年」は「1年」と表記する。
+  # !!!!!!!!! 引数の date は必ず jisx0301 で変換できる値であること !!!!!!!!!
+  def disp_wareki(date)
+    if date.blank?
+      sprintf('')
+    else
+      unless date.is_a?(Date)
+        date = date.to_date
+      end
+      
+      _wareki, mon, day = date.jisx0301.split(".")
+      gengou, year = _wareki.partition(/\d+/).take(2) # 元号と和暦の年に分解
+  
+      # 元号のアルファベットを漢字に変換
+      gengou.gsub!('M', '明治')
+      gengou.gsub!('T', '大正')
+      gengou.gsub!('S', '昭和')
+      gengou.gsub!('H', '平成')
+      gengou.gsub!('R', '令和')
+ 
+      # ゼロサプレスした和暦の日付を返す
+      sprintf("%s%d年%d月%d日", gengou, year.to_i, mon.to_i, day.to_i)
+    end
+  end
+
   def disp_user_role(role)
     if role == "superuser"
       return "システム管理者"

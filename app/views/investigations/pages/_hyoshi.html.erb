@@ -3,19 +3,7 @@
     <h1 class="investigation_construction_name"><%= @investigation.construction_name %></h1>
     <h2 class="investigation_content"><%= @investigation.content %> <%= survey_type %>調査報告書</h2>
     <p class="investigation_period">
-      <% if survey_type == "事前" %>
-        <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-          <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
-        <% end %>
-      <% elsif survey_type == "事中" %>
-        <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-          <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-        <% end %>
-      <% elsif survey_type == "事後" %>
-        <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-          <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
-        <% end %>
-      <% end %>      
+      <%= render 'investigations/pages/disp_period', investigation: @investigation, survey_type: survey_type %>
     </p>
     <p class="investigation_houses">家屋番号：1～<%= @houses.count%></p>
     <div class="investigation_footer">

@@ -3,26 +3,24 @@
   <br/>
   <br/>
   <div class="pdfpage_wrapper">
-    <p class="pdfpage_txt">工事名：<%= @investigation.construction_name %>
-    <br/>調査場所：<%= @investigation.place %>
-    <br/>
-    <br/>
-    <br/>1.調査目的
+    <p class="text-center" style="margin-bottom: 0;">工事名：<%= @investigation.construction_name %></p>
+    <p class="text-center" style="margin-bottom: 20px;">調査場所：<%= @investigation.place %></p>
+    <p class="pdfpage_txt">1.調査目的
     <br/>本調査(既存建物の損傷箇所の調査)は、上記工事の着手に先立ち、工事影響範囲内
   　<br/>または必要と認められる範囲における既存建物の工事前調査を行い、建物の現況を記録
   　<br/>することにより、当該工事の施工による周辺既存建物への影響の有無または程度を判断
   　<br/>するための資料とすることを目的としている。
-　   <br/>
-　   <br/>
+　  <br/>
+　  <br/>
     <br/>2.調査方法
     <br/>事前調査においては、原則として建物・工作物の所有者、居住者の立合いまたは了承
-　   <br/>のもとに現地調査を実施し、建物の構造規模等の基礎的事項と建物・工作物の水準・柱等
-　   <br/>の傾斜及び仕上げ面の損傷または現況の写真撮影を実施した
+　  <br/>のもとに現地調査を実施し、建物の構造規模等の基礎的事項と建物・工作物の水準・柱等
+　  <br/>の傾斜及び仕上げ面の損傷または現況の写真撮影を実施した
     <br/> 
     <br/>
     <br/>3.調査対象および項目
     <br/>調査家屋配置図に示す範囲の建物（工作物を含む）につき当該工事着手前に現況調査
-　   <br/>を行い、各建物ごとに次の各項目に係わる測量・記録・写真撮影を行うものとした。</p>
+　  <br/>を行い、各建物ごとに次の各項目に係わる測量・記録・写真撮影を行うものとした。</p>
   </div>
   <br/>
   <div class="pdfpage_wrapper">    
@@ -48,41 +46,35 @@
 　  <br/>0.1mm単位で計測
 　  <br/>原則として、最大幅を測定するが、実際は最も正確に数値が計測できる
 　  <br/>箇所を、損傷形状を見て判断する。
-　  <br/>
-　  <br/>
-　  <br/>
+　  <br/><%= image_tag "img_crack.jpg", class:"", style:"width: 80%;" %>
 　  <br/>
 　  <br/>
 　  <br/>・隙間巾
-　  <br/>内外の壁における取合い部分
-　  <br/>等の隙間においても、原則とし
-　  <br/>て最大幅を0.1mm単位で計測
-　  <br/>する。
-　  <br/>
-　  <br/>
-　  <br/>
-　  <br/>
-　  <br/>・垂直傾斜
-　  <br/>柱等の鉛直方向における傾きを直行する二方向について1mm/1000mm
-　  <br/>の単位で計測する。
-    <br/>
-　  <br/>
-　  <br/>
-　  <br/></p>
+　  <br/>内外の壁における取合い部分等の隙間においても、
+　  <br/>原則として最大幅を0.1mm単位で計測する。
+    <br/><%= image_tag "img_sukima.jpg", class:"", style:"width: 70%;" %>
+　  </p>
   </div>  
 </div>
 
 <div class="page">
   <div class="pdfpage_wrapper">    
-    <p class="pdfpage_txt">・水平傾斜
+    <p class="pdfpage_txt">・垂直傾斜
+　  <br/>柱等の鉛直方向における傾きを直行する二方向について1mm/1000mm
+　  <br/>の単位で計測する。
+　  <br/><%= image_tag "img_suichokukeisya.jpg", class:"", style:"width: 70%;" %>
+    <br/>
+    <br/>
+    <br/>・水平傾斜
 　  <br/>敷居(床）の傾きを直行する二方向について1mm/1000mm　の単位で
 　  <br/>計測する。
-    <br/>
+　  <br/>
 　  <br/>
 　  <br/>・水準測量
 　  <br/>工事影響範囲外に設けた基準点と調査建物において任意に設けた
 　  <br/>測定点との高低差を計測し、工事前後の変動差を比較することにより
 　  <br/>調査建物（地盤）の沈下等の有無を判断する。</p>
+    <br/><%= image_tag "img_suijyunsokuryo.jpg", class:"", style:"width: 70%;" %>
 　</div>
 </div>
 

@@ -10,36 +10,12 @@
           <td rowspan="2"><%= survey_type_1 %>調査</td>
           <td>調査年月日</td>
           <td>
-            <% if survey_type_1 == "事前" %>
-              <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-                <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
-              <% end %>
-            <% elsif survey_type_1 == "事中" %>
-              <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-                <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-              <% end %>
-            <% elsif survey_type_1 == "事後" %>
-              <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-                <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
-              <% end %>
-            <% end %>
+            <%= render 'investigations/pages/disp_period', investigation: @investigation, survey_type: survey_type_1 %>            
           </td>
           <td rowspan="2"><%= survey_type_2 %>調査</td>
           <td>調査年月日</td>
           <td>
-            <% if survey_type_2 == "事前" %>
-              <% if @investigation.start_pre_survey.present? && @investigation.stop_pre_survey.present? %>
-                <%= @investigation.start_pre_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_pre_survey.strftime('%Y/%m/%d') %>
-              <% end %>
-            <% elsif survey_type_2 == "事中" %>
-              <% if @investigation.start_ongoing_survey.present? && @investigation.stop_ongoing_survey.present? %>
-                <%= @investigation.start_ongoing_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_ongoing_survey.strftime('%Y/%m/%d') %>
-              <% end %>
-            <% elsif survey_type_2 == "事後" %>
-              <% if @investigation.start_after_survey.present? && @investigation.stop_after_survey.present? %>
-                <%= @investigation.start_after_survey.strftime('%Y/%m/%d') %>～<%= @investigation.stop_after_survey.strftime('%Y/%m/%d') %>
-              <% end %>
-            <% end %>
+            <%= render 'investigations/pages/disp_period', investigation: @investigation, survey_type: survey_type_2 %>
           </td>
         </tr>
         <tr>
@@ -82,6 +58,7 @@
           <td>調査範囲</td>        
         </tr>
     
+        <% num_exist = 0 %><!-- 存在したデータ数 -->
         <% num_per_fist_page = 14 %><!-- 先頭から14件分のデータを1ページ目に表示 -->
         <% @houses.first(num_per_fist_page).each do |house| %>
           <tr>
@@ -129,6 +106,25 @@
               <% end %>
             </td>
           </tr>
+          <% num_exist+=1 %>
+        <% end %>
+
+        <!-- 空欄枠の表示 -->
+        <% while num_exist < num_per_fist_page do %>
+          <tr>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+            <td>　</td>
+          </tr>
+          <% num_exist+=1 %>
         <% end %>
       </table>
     </div>
@@ -150,6 +146,7 @@
       <div class="horizontal">
         <div class="horizontal_child">
           <table class="table table-bordered" style="font-size:10px;">
+            <% num_exist = 0 %><!-- 存在したデータ数 -->
             <% @houses[start..stop].each do |house| %>
               <tr>
                 <td><%= house.house_number %></td>
@@ -196,7 +193,27 @@
                   <% end %>
                 </td>
               </tr>
+              <% num_exist+=1 %>
             <% end %>
+            
+            <!-- 空欄枠の表示 -->
+            <% while num_exist < num_per_page do %>
+              <tr>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+                <td>　</td>
+              </tr>
+              <% num_exist+=1 %>
+            <% end %>            
+            
           </table>
         </div>
       </div>

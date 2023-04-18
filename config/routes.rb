@@ -30,7 +30,9 @@ Rails.application.routes.draw do
       get :download_originalImages_pre_survey
       get :download_originalImages_ongoing_survey
       get :download_originalImages_after_survey
-    end
+
+      get :download_csv 
+    end    
   end
   
   resources :houses, only: [:show, :new, :create, :edit, :update, :destroy] do
