@@ -43,6 +43,7 @@
           </td>
         </tr>
       </table>
+      
       <table class="table table-bordered" style="font-size:10px;">
         <tr>
           <td>家屋No</td>
@@ -79,20 +80,20 @@
             <td><%= house.construction %></td>
             <td><%= house.area %></td>
             <td>
-              <% if survey_type_main == "事前" %>
+              <% if survey_type_1 == "事前" %>
                 <%= house.pre_survey_day %>
-              <% elsif survey_type_main == "事中" %>
+              <% elsif survey_type_1 == "事中" %>
                 <%= house.ongoing_survey_day %>
-              <% elsif survey_type_main == "事後" %>
+              <% elsif survey_type_1 == "事後" %>
                 <%= house.after_survey_day %>
               <% end %>              
             </td>
             <td>
-              <% if survey_type_main == "事前" %>
+              <% if survey_type_2 == "事前" %>
                 <%= house.pre_survey_day %>
-              <% elsif survey_type_main == "事中" %>
+              <% elsif survey_type_2 == "事中" %>
                 <%= house.ongoing_survey_day %>
-              <% elsif survey_type_main == "事後" %>
+              <% elsif survey_type_2 == "事後" %>
                 <%= house.after_survey_day %>
               <% end %>
             </td>

@@ -93,7 +93,20 @@
           <% num_per_fist_page = 9 %><!-- 先頭から9件分のデータを1ページ目に表示 -->
           <% house.sonsyos.first(num_per_fist_page).each do |sonsyo| %>
             <tr>
-              <td><%= sonsyo.room_name %></td>
+              <td>
+                <% if sonsyo.room_name == "その他" %>
+                  <%= sonsyo.room_name_other %>
+                <% else %>
+                  <%= sonsyo.room_name %>
+                <% end %>   
+
+                <% if false %><!-- コメントアウト -->             
+                  <%= sonsyo.room_name %>
+                  <% if sonsyo.room_name_other.present? %>
+                    /<%= sonsyo.room_name_other %>
+                  <% end %>
+                <% end %><!-- コメントアウト -->                  
+              </td>
               <td>－</td>
               <td><%= sonsyo.number %></td>
               <% 
