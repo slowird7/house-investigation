@@ -31,7 +31,10 @@ Rails.application.routes.draw do
       get :download_originalImages_ongoing_survey
       get :download_originalImages_after_survey
 
-      get :download_csv 
+      get :download_csv_houses
+      get :download_csv_pre
+      get :download_csv_ongoing
+      get :download_csv_after
     end    
   end
   

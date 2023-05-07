@@ -1,3 +1,9 @@
+require './lib/jacic_hash_lib'
+require 'mini_exiftool'
+#require 'aws-sdk'
+#require 'exifr/jpeg'
+include JACICHash
+
 class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   protect_from_forgery with: :null_session

@@ -47,6 +47,10 @@
           <%= f.text_field :area, :class=>"form-control" %>
         </div>
         <div class="form-group">
+          <%= f.label :completion_date, '建物が完成した日' %>
+          <%= f.date_field :completion_date, :class=>"form-control" %>
+        </div>
+        <div class="form-group">
           <%= f.label :use, '用途' %>
           <%= f.text_field :use, :class=>"form-control" %>
         </div>           
@@ -90,6 +94,10 @@
           <%= f.label :range_pre_survey, '調査範囲' %>
           <%= f.text_field :range_pre_survey, :class=>"form-control" %>
         </div>
+        <div class="form-group">
+          <%= f.label :pre_survey_day, '調査日' %>
+          <%= f.date_field :pre_survey_day, :class=>"form-control" %>
+        </div>        
       </div>
       <hr/>      
       <div class="bg-info" style="padding:10px; margin-bottom:10px;">
@@ -102,6 +110,10 @@
           <%= f.label :range_ongoing_survey, '調査範囲' %>
           <%= f.text_field :range_ongoing_survey, :class=>"form-control" %>
         </div>
+        <div class="form-group">
+          <%= f.label :ongoing_survey_day, '調査日' %>
+          <%= f.date_field :ongoing_survey_day, :class=>"form-control" %>
+        </div>         
       </div>     
       <hr/>    
       <div class="bg-info" style="padding:10px; margin-bottom:10px;">
@@ -114,6 +126,10 @@
           <%= f.label :range_after_survey, '調査範囲' %>
           <%= f.text_field :range_after_survey, :class=>"form-control" %>
         </div>
+        <div class="form-group">
+          <%= f.label :after_survey_day, '調査日' %>
+          <%= f.date_field :after_survey_day, :class=>"form-control" %>
+        </div>          
       </div>       
       <%= f.submit '登録', :class=>"btn btn-primary" %>
     <% end %>

@@ -26,7 +26,6 @@
     <th class="text-center">最終更新日</th>
     <th class="text-center"><%= link_to "▲", investigations_path(order: "asc"), :class=>"" %></br><%= link_to "▼", investigations_path(order: "desc"), :class=>"" %></th>
     <th class="text-center"></th>
-    <th class="text-center"></th>
   </tr>
   
   <% @investigations.each do |investigation| %>

@@ -5,10 +5,10 @@
     <li><%= link_to 'ユーザー一覧', users_path %></li>
   <% end %>
   
-  <li class="active"><%= @user.email %>の編集</li>
+  <li class="active"><%= @user.user_name %>の編集</li>
 </ol>
 
 
-<h2 class="text-center"><%= @user.email %>の編集</h2>
+<h2 class="text-center"><%= @user.user_name %>の編集</h2>
 
 <%= render 'users/form' %>

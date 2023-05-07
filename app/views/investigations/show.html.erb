@@ -7,7 +7,6 @@
   <h2><%= @investigation.construction_name %></h2>
   <div style="margin-bottom: 10px;">
     <%= link_to '編集', edit_investigation_path, :class=>"btn btn-default", :style=>"margin-right: 10px" %>
-    <%= link_to "csv出力", download_csv_investigation_path(format: :csv), :class=>"btn btn-default", :style=>"margin-right: 10px" %>
     <%= link_to "削除", @investigation, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
   </div>
   
@@ -70,17 +69,28 @@
     <tr>
       <td class="text-center">
         <%= link_to '報告書', pdf_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-        <%= link_to 'WB付写真', download_images_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
-        <%= link_to '元写真', download_originalImages_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
+        <%= link_to "csv出力", download_csv_pre_investigation_path(format: :csv), :class=>"btn btn-default" %>
       </td>
       <td class="text-center">
         <%= link_to '報告書｜事前-事中', pdf_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
         <%= link_to '報告書｜事中-事後', pdf_ongoing2_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+        <%= link_to "csv出力", download_csv_ongoing_investigation_path(format: :csv), :class=>"btn btn-default" %>
+      </td>      
+      <td class="text-center">
+        <%= link_to '報告書', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+        <%= link_to "csv出力", download_csv_after_investigation_path(format: :csv), :class=>"btn btn-default" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center">
+        <%= link_to 'WB付写真', download_images_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
+        <%= link_to '元写真', download_originalImages_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
+      </td>
+      <td class="text-center">
         <%= link_to 'WB付写真', download_images_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
         <%= link_to '元写真', download_originalImages_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>      
       </td>
       <td class="text-center">
-        <%= link_to '報告書', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
         <%= link_to 'WB付写真', download_images_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
         <%= link_to '元写真', download_originalImages_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
       </td>    
@@ -90,7 +100,10 @@
   <hr/>
   
   <h2>家屋一覧</h2>
-  <p><%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-primary" %></p>
+  <p>
+    <%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-primary" %>
+    <%= link_to "csv出力", download_csv_houses_investigation_path(format: :csv), :class=>"btn btn-default", :style=>"margin-left: 10px;" %>
+  </p>
   
   <table class="table table-striped table-hover">
     <tr>

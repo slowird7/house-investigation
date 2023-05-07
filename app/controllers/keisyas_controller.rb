@@ -18,16 +18,6 @@ class KeisyasController < ApplicationController
     @keisya.room_name = params[:area4]
     @keisya.room_name_other = params[:other]
     
-#    if params[:other] != ""
-#      if params[:area4] == "外部（その他）" || params[:area4] == "内部（その他）"
-#        @keisya.room_name = params[:other]
-#      else
-#        @keisya.room_name = params[:area4] + "/" + params[:other]
-#      end
-#    else
-#      @keisya.room_name = params[:area4]
-#    end
-    
     if @keisya.save
       slope = @keisya.slopes.build
       slope.survey_type = "pre"
