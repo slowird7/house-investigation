@@ -83,12 +83,6 @@ class HousesController < ApplicationController
     redirect_to @investigation
   end
   
-#  def syodakusyo_new
-#    @house = House.find(params[:id])
-#    @investigation = @house.investigation
-#    @survey_type = params[:survey_type]
-#  end
-
   #########################################################  
   # 所有者の承諾書
   def syodakusyo_new_pre_survey
@@ -153,33 +147,35 @@ class HousesController < ApplicationController
                                   :construction, :floors, :area, :use, 
                                   :overview_pre_survey, :range_pre_survey, :overview_ongoing_survey, :range_ongoing_survey, :overview_after_survey, :range_after_survey,
                                   :sign_pre_survey, :sign_ongoing_survey, :sign_after_survey, 
-                                  :kyojyusya_sign_pre_survey, :kyojyusya_sign_ongoing_survey, :kyojyusya_sign_after_survey)
+                                  :kyojyusya_sign_pre_survey, :kyojyusya_sign_ongoing_survey, :kyojyusya_sign_after_survey,
+                                  :pre_survey_day, :ongoing_survey_day, :after_survey_day, :completion_date)
   end  
   
-  def base64_conversion(uri_str, filename = 'base64')
-    image_data = split_base64(uri_str)
-    image_data_string = image_data[:data]
-    image_data_binary = Base64.decode64(image_data_string)
+### application_controller.rbに移行 ###  
+#  def base64_conversion(uri_str, filename = 'base64')
+#    image_data = split_base64(uri_str)
+#    image_data_string = image_data[:data]
+#    image_data_binary = Base64.decode64(image_data_string)
 
-    temp_img_file = Tempfile.new(filename)
-    temp_img_file.binmode
-    temp_img_file << image_data_binary
-    temp_img_file.rewind
+#    temp_img_file = Tempfile.new(filename)
+#    temp_img_file.binmode
+#    temp_img_file << image_data_binary
+#    temp_img_file.rewind
 
-    img_params = {:filename => "#{filename}.#{image_data[:extension]}", :type => image_data[:type], :tempfile => temp_img_file}
-    ActionDispatch::Http::UploadedFile.new(img_params)
-  end
+#    img_params = {:filename => "#{filename}.#{image_data[:extension]}", :type => image_data[:type], :tempfile => temp_img_file}
+#    ActionDispatch::Http::UploadedFile.new(img_params)
+#  end
 
-  def split_base64(uri_str)
-    if uri_str.match(%r{data:(.*?);(.*?),(.*)$})
-      uri = Hash.new
-      uri[:type] = $1
-      uri[:encoder] = $2
-      uri[:data] = $3
-      uri[:extension] = $1.split('/')[1]
-      return uri
-    else
-      return nil
-    end
-  end  
+#  def split_base64(uri_str)
+#    if uri_str.match(%r{data:(.*?);(.*?),(.*)$})
+#      uri = Hash.new
+#      uri[:type] = $1
+#      uri[:encoder] = $2
+#      uri[:data] = $3
+#      uri[:extension] = $1.split('/')[1]
+#      return uri
+#    else
+#      return nil
+#    end
+#  end  
 end

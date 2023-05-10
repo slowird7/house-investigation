@@ -1,0 +1,29 @@
+<table class="table table-bordered" style="font-size:10px;">
+  <tr>
+    <td>構造</td>
+    <td><%= house.construction %></td>
+  </tr>
+  <tr>
+    <td>用途</td>
+    <td><%= house.use %></td>
+  </tr>
+  <tr>
+    <td>階数</td>
+    <td><%= house.floors %></td>
+  </tr>
+  <tr>
+    <td>建築年数</td>
+    <% 
+      if house.completion_date.present?
+        years = Date.today.year - house.completion_date.year
+      else
+        years = ""
+      end
+    %>
+    <td>築後　約 <%= years %> 年</td>
+  </tr>
+  <tr>
+    <td>延べ面積</td>
+    <td><%= house.area %> m2</td>
+  </tr>      
+</table>

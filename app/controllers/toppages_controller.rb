@@ -1,3 +1,4 @@
+# –¢Žg—p
 class ToppagesController < ApplicationController
   def index
   end
