@@ -38,5 +38,7 @@ module HouseInvestigation
     }
     
     #config.autoload_paths << Rails.root.join("lib")
+    
+    config.time_zone = 'Tokyo'
   end
 end

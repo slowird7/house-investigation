@@ -4,7 +4,11 @@
 
 <h2>案件一覧</h2>
 <div class="row" style="margin-bottom: 10px;">
-  <div class="col-md-6"><%= link_to '新規登録', new_investigation_path, :class=>"btn btn-primary" %></div>
+  <div class="col-md-6">
+    <% if current_user.role == "admin" || current_user.role == "superuser" %>
+      <%= link_to '新規登録', new_investigation_path, :class=>"btn btn-primary" %>
+    <% end %>
+  </div>
   <div class="col-md-6">
     <input type="text" id="keyword" size="50" placeholder="工事名で検索">
     <%= link_to "検索", investigations_path, :id => "search", :class => "btn btn-default" %>
@@ -22,20 +26,23 @@
     <th class="text-center">最終更新日</th>
     <th class="text-center"><%= link_to "▲", investigations_path(order: "asc"), :class=>"" %></br><%= link_to "▼", investigations_path(order: "desc"), :class=>"" %></th>
     <th class="text-center"></th>
-    <th class="text-center"></th>
   </tr>
   
   <% @investigations.each do |investigation| %>
       <tr>
-        <td class="text-center align-middle"><%= investigation.id %></td>
+        <td id="id" class="text-center align-middle"><%= investigation.id %></td>
         <td class="text-center align-middle"><%= investigation.construction_name %></td>
         <td class="text-center align-middle"><%= investigation.builder %></td>
         <td class="text-center align-middle"><%= investigation.investigator_pre_survey %></td>
         <td class="text-center align-middle"><%= investigation.investigator_ongoing_survey %></td>
         <td class="text-center align-middle"><%= investigation.investigator_after_survey %></td>
         <td colspan="2" class="text-center align-middle"><%= investigation.updated_at.in_time_zone('Tokyo').strftime("%y/%m/%d") %></td>
-        <td class="text-center align-middle"><%= link_to "詳細", investigation, :class=>"btn btn-default" %></td>
+        <td class="text-center align-middle">
+          <%= link_to "詳細", investigation, :class=>"btn btn-default link_detail", :id=>"check-pass" %>
+        </td>
+<% if false %><!-- コメントアウト -->
         <td class="text-center align-middle"><%= link_to "削除", investigation, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+<% end %>
       </tr>
   <% end %>
 </table>
@@ -44,12 +51,26 @@
 $(function() {
   $('#search').on('click', function() {
     // 検索ワードの取得
-    var param = $("#keyword").val();
-    var base = $('#search').attr('href');
+    let param = $("#keyword").val();
+    let base = $(this).attr('href');
         
     // パラメーターの追加
-    $('#search').attr('href', base + '?keyword=' + param);
-    console.log($('#search').attr('href'));
+    $(this).attr('href', base + '?keyword=' + param);
   });
+  
+  // 注）ページ読み込み後に生成されたDOM要素を指定するため、
+  //     セレクタにdocumentを指定
+  $(document).on("click", "#check-pass", function(e) {
+    <% if current_user.role != "admin" && current_user.role != "superuser" %>
+      e.preventDefault(); // 遷移を強制ストップ
+    
+      let inpass = prompt('パスワードを入力してください');
+      if(inpass != "" && inpass != null) {
+        // 入力されたパスワードをパラメータに追記し、遷移
+        location.href= $(this).attr('href') + '?password=' + inpass;
+      }
+    <% end %>
+  });    
+  
 });
 </script>

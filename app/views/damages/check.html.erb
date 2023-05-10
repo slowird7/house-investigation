@@ -58,14 +58,6 @@
           </td>
         </tr>
         <tr>
-          <td class="table_header">面積</td>
-          <td colspan="4">
-            <% if @damage.width.present? && @damage.height.present? %>
-              <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm
-            <% end %>
-          </td>
-        </tr>
-        <tr>
           <td class="table_header">幅</td>
           <td colspan="4">
             <% if @damage.wide.present? %>
@@ -90,6 +82,14 @@
               <%= @damage.length %>&nbsp;cm
             <% end %>
           </td>  
+        </tr>
+        <tr>
+          <td class="table_header">面積</td>
+          <td colspan="4">
+            <% if @damage.width.present? && @damage.height.present? %>
+              <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm
+            <% end %>
+          </td>
         </tr>
         <tr>
           <td class="table_header">コメ<br/>ント</td>

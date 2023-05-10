@@ -1,102 +1,133 @@
-<ol class="breadcrumb">
-  <li><%= link_to 'HOME', root_path %></li>
-  <li class="active"><%= @investigation.construction_name %></li>
-</ol>
-
-<h2><%= @investigation.construction_name %></h2>
-<p><%= link_to '編集', edit_investigation_path, :class=>"btn btn-default" %></p>
-
-<table class="table">
-  <tr>
-    <th>ID</th>
-    <td class="align-middle"><%= @investigation.id %></td>
-  </tr>
+<div id="secure">  
+  <ol class="breadcrumb">
+    <li><%= link_to 'HOME', root_path %></li>
+    <li class="active"><%= @investigation.construction_name %></li>
+  </ol>
   
-  <tr>
-    <th>調査内容</th>
-    <td class="align-middle"><%= @investigation.content %></td>
-  </tr>
+  <h2><%= @investigation.construction_name %></h2>
+  <div style="margin-bottom: 10px;">
+    <%= link_to '編集', edit_investigation_path, :class=>"btn btn-default", :style=>"margin-right: 10px" %>
+    <%= link_to "削除", @investigation, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
+  </div>
   
-  <tr>
-    <th>施工者</th>
-    <td class="align-middle"><%= @investigation.builder %></td>
-  </tr>
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <td class="align-middle"><%= @investigation.id %></td>
+    </tr>
   
-  <tr>
-    <th>調査場所</th>
-    <td class="align-middle"><%= @investigation.place %></td>
-  </tr>
-
-</table>
-
-<hr/>
-
-<table class="table table-hover">
-  <tr>
-    <th class="text-center">事前調査</th>
-    <th class="text-center">事中調査</th>
-    <th class="text-center">事後調査</th>
-  </tr>
-
-  <tr>
-    <td class="text-center"><%= @investigation.investigator_pre_survey %></td>
-    <td class="text-center"><%= @investigation.investigator_ongoing_survey %></td>
-    <td class="text-center"><%= @investigation.investigator_after_survey %></td>    
-  </tr>
-  
-  <tr>
-    <td class="text-center"><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
-    <td class="text-center"><%= @investigation.start_ongoing_survey %>～<%= @investigation.stop_ongoing_survey %></td>
-    <td class="text-center"><%= @investigation.start_after_survey %>～<%= @investigation.stop_after_survey %></td>    
-  </tr>
-  
-  <tr>
-    <td class="text-center">
-      <%= link_to '報告書', pdf_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to 'WB付写真', download_images_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
-      <%= link_to '元写真', download_originalImages_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
-    </td>
-    <td class="text-center">
-      <%= link_to '報告書｜事前-事中', pdf_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to '報告書｜事中-事後', pdf_ongoing2_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to 'WB付写真', download_images_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
-      <%= link_to '元写真', download_originalImages_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>      
-    </td>
-    <td class="text-center">
-      <%= link_to '報告書', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
-      <%= link_to 'WB付写真', download_images_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
-      <%= link_to '元写真', download_originalImages_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
-    </td>    
-  </tr>
-</table>
-
-<hr/>
-
-<h2>家屋一覧</h2>
-<p><%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-primary" %></p>
-
-<table class="table table-striped table-hover">
-  <tr>
-    <th class="text-center">家屋番号</th>
-    <th class="text-center">家屋名（居住者名）</th>
-    <th class="text-center">居住者電話番号</th>
-    <th class="text-center">建物所在地</th>
-    <th class="text-center">所有者名</th>
-    <th class="text-center">所有者電話番号</th>
-    <th class="text-center"></th>
-    <th class="text-center"></th>    
-  </tr>
-  
-  <% @houses.each do |house| %>
+    <tr>
+      <th>調査コード</th>
+      <td class="align-middle"><%= @investigation.code %></td>
+    </tr>
+    
+    <% if current_user.role == "admin" || current_user.role == "superuser" %>
       <tr>
-        <td class="text-center align-middle"><%= house.house_number %></td>
-        <td class="text-center align-middle"><%= house.house_name %></td>
-        <td class="text-center align-middle"><%= house.resident_phone_number %></td>
-        <td class="text-center align-middle"><%= house.prefectures %><%= house.city %><%= house.block %></td>
-        <td class="text-center align-middle"><%= house.owner_name %></td>
-        <td class="text-center align-middle"><%= house.owner_phone_number %></td>
-        <td class="text-center align-middle"><%= link_to "詳細", house, :class=>"btn btn-default" %></td>
-        <td class="text-center align-middle"><%= link_to "削除", house, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+        <th>パスワード</th>
+        <td class="align-middle"><%= @investigation.password %></td>
       </tr>
-  <% end %>  
-</table>
+    <% end %>
+  
+    <tr>
+      <th>調査内容</th>
+      <td class="align-middle"><%= @investigation.content %></td>
+    </tr>
+    
+    <tr>
+      <th>施工者</th>
+      <td class="align-middle"><%= @investigation.builder %></td>
+    </tr>
+    
+    <tr>
+      <th>調査場所</th>
+      <td class="align-middle"><%= @investigation.place %></td>
+    </tr>
+  
+  </table>
+  
+  <hr/>
+  
+  <table class="table table-hover">
+    <tr>
+      <th class="text-center">事前調査</th>
+      <th class="text-center">事中調査</th>
+      <th class="text-center">事後調査</th>
+    </tr>
+  
+    <tr>
+      <td class="text-center"><%= @investigation.investigator_pre_survey %></td>
+      <td class="text-center"><%= @investigation.investigator_ongoing_survey %></td>
+      <td class="text-center"><%= @investigation.investigator_after_survey %></td>    
+    </tr>
+    
+    <tr>
+      <td class="text-center"><%= @investigation.start_pre_survey %>～<%= @investigation.stop_pre_survey %></td>
+      <td class="text-center"><%= @investigation.start_ongoing_survey %>～<%= @investigation.stop_ongoing_survey %></td>
+      <td class="text-center"><%= @investigation.start_after_survey %>～<%= @investigation.stop_after_survey %></td>    
+    </tr>
+    
+    <tr>
+      <td class="text-center">
+        <%= link_to '報告書', pdf_pre_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+        <%= link_to "csv出力", download_csv_pre_investigation_path(format: :csv), :class=>"btn btn-default" %>
+      </td>
+      <td class="text-center">
+        <%= link_to '報告書｜事前-事中', pdf_ongoing_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+        <%= link_to '報告書｜事中-事後', pdf_ongoing2_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+        <%= link_to "csv出力", download_csv_ongoing_investigation_path(format: :csv), :class=>"btn btn-default" %>
+      </td>      
+      <td class="text-center">
+        <%= link_to '報告書', pdf_after_survey_investigation_path, target: :_blank, :class=>"btn btn-primary" %>
+        <%= link_to "csv出力", download_csv_after_investigation_path(format: :csv), :class=>"btn btn-default" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center">
+        <%= link_to 'WB付写真', download_images_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
+        <%= link_to '元写真', download_originalImages_pre_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
+      </td>
+      <td class="text-center">
+        <%= link_to 'WB付写真', download_images_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
+        <%= link_to '元写真', download_originalImages_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>      
+      </td>
+      <td class="text-center">
+        <%= link_to 'WB付写真', download_images_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
+        <%= link_to '元写真', download_originalImages_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
+      </td>    
+    </tr>
+  </table>
+  
+  <hr/>
+  
+  <h2>家屋一覧</h2>
+  <p>
+    <%= link_to '新規登録', new_house_path(investigation_id: @investigation.id), :class=>"btn btn-primary" %>
+    <%= link_to "csv出力", download_csv_houses_investigation_path(format: :csv), :class=>"btn btn-default", :style=>"margin-left: 10px;" %>
+  </p>
+  
+  <table class="table table-striped table-hover">
+    <tr>
+      <th class="text-center">家屋番号</th>
+      <th class="text-center">家屋名（居住者名）</th>
+      <th class="text-center">居住者電話番号</th>
+      <th class="text-center">建物所在地</th>
+      <th class="text-center">所有者名</th>
+      <th class="text-center">所有者電話番号</th>
+      <th class="text-center"></th>
+      <th class="text-center"></th>    
+    </tr>
+    
+    <% @houses.each do |house| %>
+        <tr>
+          <td class="text-center align-middle"><%= house.house_number %></td>
+          <td class="text-center align-middle"><%= house.house_name %></td>
+          <td class="text-center align-middle"><%= house.resident_phone_number %></td>
+          <td class="text-center align-middle"><%= house.prefectures %><%= house.city %><%= house.block %></td>
+          <td class="text-center align-middle"><%= house.owner_name %></td>
+          <td class="text-center align-middle"><%= house.owner_phone_number %></td>
+          <td class="text-center align-middle"><%= link_to "詳細", house, :class=>"btn btn-default" %></td>
+          <td class="text-center align-middle"><%= link_to "削除", house, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+        </tr>
+    <% end %>  
+  </table>
+</div>

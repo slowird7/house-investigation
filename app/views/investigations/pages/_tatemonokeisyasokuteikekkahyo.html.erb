@@ -1,7 +1,7 @@
 <% @houses.each do |house| %>
   <!-- 1ページ目 -->
   <div class="page">
-    <table class="table table-bordered" style="font-size:10px;">
+    <table class="table table-bordered" style="font-size:10px; margin-bottom: 5px;">
       <tr>
         <td colspan="11">建物傾斜測定結果表</td>
         <td>建物No.<%= house.house_number %></td>
@@ -21,6 +21,7 @@
         <td colspan="2">南北方向</td>          
       </tr>
       
+      <% num_exist = 0 %><!-- 存在したデータ数 -->
       <% num_per_fist_page = 30 %><!-- 先頭から30件分のデータを1ページ目に表示 -->
       <% keisyas = house.keisyas %>
       <% keisyas.first(num_per_fist_page).each do |keisya| %>
@@ -148,17 +149,34 @@
           </td>
           <td><%= slope.comment %></td>
         </tr>
+        <% num_exist+=1 %>
       <% end %>
+      
+      <!-- 空欄枠の表示 -->
+      <% while num_exist < num_per_fist_page do %>
+        <tr>
+          <td>　</td>
+          <td>　</td>
+          <td>　</td>
+          <td colspan="2">　</td>
+          <td colspan="2">　</td>           
+          <td colspan="2">　</td>
+          <td colspan="2">　</td>
+          <td>　</td>
+        </tr>
+        <% num_exist+=1 %>
+      <% end %>
+      
     </table>
-    <p>※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
+    <p style="font-size:10px;">※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
   </div>
   
   <!-- 2ページ目以降 -->
-  <% num_per_page = 33 %><!-- 1ページあたり33件表示 -->
+  <% num_per_page = 32 %><!-- 1ページあたり32件表示 -->
   <% keisyas = house.keisyas %>
   <% remaining_keisyas = keisyas.count - num_per_fist_page %><!-- 1ページ目に表示した分をマイナス -->
   <% if remaining_keisyas > 0 then %>
-    <% remaining_pages = remaining_keisyas / num_per_page %><!-- 1ページあたり33件表示 -->
+    <% remaining_pages = remaining_keisyas / num_per_page %><!-- 1ページあたり32件表示 -->
     <% if remaining_keisyas % num_per_page > 0 %>
       <% remaining_pages = remaining_pages + 1 %>
     <% end %>
@@ -168,6 +186,7 @@
   
       <div class="page">
         <table class="table table-bordered" style="font-size:10px;">
+          <% num_exist = 0 %><!-- 存在したデータ数 -->
           <% keisyas[start..stop].each do |keisya| %><!-- 先頭から30件のデータまでループ処理 -->
             <tr>
               <% 
@@ -293,7 +312,28 @@
               </td>
               <td><%= slope.comment %></td>
             </tr>
+            
+            <% num_exist+=1 %>
           <% end %>
+          
+          <!-- 空欄枠の表示 -->
+          <% while num_exist < num_per_page do %>
+            <tr>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+              <td>　</td>
+            </tr>
+            <% num_exist+=1 %>
+          <% end %>            
+
         </table>
         <p>※測定値については±1mmの範囲で測定誤差が生じる場合があります。</p>
       </div>  

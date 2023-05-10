@@ -1,0 +1,25 @@
+<% if survey_type == "事前" %>
+  <% if investigation.start_pre_survey.present? && investigation.stop_pre_survey.present? %>
+    <% if investigation.stop_pre_survey - investigation.start_pre_survey == 0 %>
+      <%= disp_wareki(investigation.start_pre_survey) %>
+    <% else %>
+      <%= disp_wareki(investigation.start_pre_survey) %>～<%= disp_wareki(investigation.stop_pre_survey) %>
+    <% end %>
+  <% end %>
+<% elsif survey_type == "事中" %>
+  <% if investigation.start_ongoing_survey.present? && investigation.stop_ongoing_survey.present? %>
+    <% if investigation.stop_ongoing_survey - investigation.start_ongoing_survey == 0 %>
+      <%= disp_wareki(investigation.start_ongoing_survey) %>
+    <% else %>
+      <%= disp_wareki(investigation.start_ongoing_survey) %>～<%= disp_wareki(investigation.stop_ongoing_survey) %>
+    <% end %>
+  <% end %>
+<% elsif survey_type == "事後" %>
+  <% if investigation.start_after_survey.present? && investigation.stop_after_survey.present? %>
+    <% if investigation.stop_after_survey - investigation.start_after_survey == 0 %>
+      <%= disp_wareki(investigation.start_after_survey) %>
+    <% else %>
+      <%= disp_wareki(investigation.start_after_survey) %>～<%= disp_wareki(investigation.stop_after_survey) %>
+    <% end %>
+  <% end %>
+<% end %>
