@@ -76,8 +76,8 @@
         <table class="table table-bordered table_padding_yon_important" style="font-size:10px;">
           <tr>
             <td rowspan="2">名称（室名）</td>
-            <td colspan="4"><%= survey_type_1 %>調査</td>
-            <td colspan="3"><%= survey_type_2 %>調査</td>
+            <td style="width:45%;" colspan="4"><%= survey_type_1 %>調査</td>
+            <td style="width:45%;" colspan="3"><%= survey_type_2 %>調査</td>
           </tr>
           <tr>
             <td>各部仕上材</td>
@@ -93,7 +93,7 @@
           <% num_per_fist_page = 9 %><!-- 先頭から9件分のデータを1ページ目に表示 -->
           <% house.sonsyos.first(num_per_fist_page).each do |sonsyo| %>
             <tr>
-              <td>
+              <td class="text-center">
                 <% if sonsyo.room_name == "その他" %>
                   <%= sonsyo.room_name_other %>
                 <% else %>
@@ -107,8 +107,8 @@
                   <% end %>
                 <% end %><!-- コメントアウト -->                  
               </td>
-              <td>－</td>
-              <td><%= sonsyo.number %></td>
+              <td style="width:6%;" class="text-center">－</td>
+              <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
               <% 
                 if survey_type_1 == "事前"
                   damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -121,13 +121,13 @@
               <td>
                 <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
                 <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
               </td>
               <td><%= damage.comment %></td><!-- 備考 -->
               
-              <td><%= sonsyo.number %></td>
+              <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
               <% 
                 if survey_type_2 == "事前"
                   damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -140,7 +140,7 @@
               <td>
                 <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
                 <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
@@ -179,6 +179,7 @@
     <% if remaining_sonsyos % num_per_page > 0 %>
       <% remaining_pages = remaining_pages + 1 %>
     <% end %>
+    
     <% for i in 1..remaining_pages %>
       <% start = (i - 1) * num_per_page + num_per_fist_page %>
       <% stop = start + (num_per_page - 1) %>
@@ -191,9 +192,10 @@
 
               <% sonsyos[start..stop].each do |sonsyo| %>
                 <tr>
-                  <td><%= sonsyo.room_name %></td>
+                  <td class="text-center"><%= sonsyo.room_name %></td>
+                  <td style="width:6%;" class="text-center">－</td>
+                  <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
                   
-                  <td><%= sonsyo.number %></td>
                   <% 
                     if survey_type_1 == "事前"
                       damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -206,14 +208,13 @@
                   <td>
                     <%= damage.tekiyo %><br/>
                     <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <br/>
                     <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
                   </td>
                   <td><%= damage.comment %></td><!-- 備考 -->
-                  
-                  
-                  <td><%= sonsyo.number %></td>
+
+                  <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
                   <% 
                     if survey_type_2 == "事前"
                       damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -226,7 +227,7 @@
                   <td>
                     <%= damage.tekiyo %><br/>
                     <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <br/>
                     <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
