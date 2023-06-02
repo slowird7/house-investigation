@@ -5,16 +5,16 @@
       <h1 class="text-center">建物調査一覧表</h1>
       <table class="table table-bordered" style="font-size:10px;">
         <tr>
-          <td>工事名</td>
+          <td style="width:6%;">工事名</td>
           <td><%= @investigation.construction_name %></td>
-          <td rowspan="2"><%= survey_type_1 %>調査</td>
-          <td>調査年月日</td>
-          <td>
+          <td style="width:6%;" rowspan="2"><%= survey_type_1 %>調査</td>
+          <td style="width:7%;">調査年月日</td>
+          <td style="width:21%;">
             <%= render 'investigations/pages/disp_period', investigation: @investigation, survey_type: survey_type_1 %>            
           </td>
-          <td rowspan="2"><%= survey_type_2 %>調査</td>
-          <td>調査年月日</td>
-          <td>
+          <td style="width:6%;" rowspan="2"><%= survey_type_2 %>調査</td>
+          <td style="width:7%;">調査年月日</td>
+          <td style="width:21%;">
             <%= render 'investigations/pages/disp_period', investigation: @investigation, survey_type: survey_type_2 %>
           </td>
         </tr>

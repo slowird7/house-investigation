@@ -3,8 +3,8 @@
   <br/>
   <br/>
   <div class="pdfpage_wrapper">
-    <p class="text-center" style="margin-bottom: 0;">工事名：<%= @investigation.construction_name %></p>
-    <p class="text-center" style="margin-bottom: 20px;">調査場所：<%= @investigation.place %></p>
+    <p class="pdfpage_txt" style="margin-bottom: 20px;">工事名：<%= @investigation.construction_name %><br>調査場所：<%= @investigation.place %></p>
+
     <p class="pdfpage_txt">1.調査目的
     <br/>本調査(既存建物の損傷箇所の調査)は、上記工事の着手に先立ち、工事影響範囲内
   　<br/>または必要と認められる範囲における既存建物の工事前調査を行い、建物の現況を記録
@@ -105,11 +105,18 @@
 <style>
 .pdfpage_wrapper {
   max-width: 1200px;
-  margin: 0 auto;
+/*  margin: 0 auto;*/
   text-align: center;
 }
 .pdfpage_txt {
   display: inline-block;
   text-align: left;
 }
+/*
+.second-line-left > p {
+/*  text-align: start;*
+  display: flex;
+  justify-content: center;
+}
+*/
 </style>
