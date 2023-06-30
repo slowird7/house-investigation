@@ -90,7 +90,7 @@
           </tr>
           
           <% num_exist = 0 %><!-- 存在したデータ数 -->
-          <% num_per_fist_page = 9 %><!-- 先頭から9件分のデータを1ページ目に表示 -->
+          <% num_per_fist_page = 7 %><!-- 先頭から7件分のデータを1ページ目に表示 -->
           <% house.sonsyos.first(num_per_fist_page).each do |sonsyo| %>
             <tr>
               <td class="text-center">
@@ -124,6 +124,7 @@
                 <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
                 <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
+                <br/>
               </td>
               <td><%= damage.comment %></td><!-- 備考 -->
               
@@ -154,7 +155,7 @@
           <% while num_exist < num_per_fist_page do %>
             <tr>
               <td>　</td>
-              <td>－</td>
+              <td style="width:6%;" class="text-center">－<br/>　<br/>　</td>
               <td>　</td>
               <td>　</td>
               <td>　</td>
@@ -171,7 +172,7 @@
   </div>
   
   <!-- 2ページ目以降 -->
-  <% num_per_page = 15 %><!-- 1ページあたり15件表示 -->
+  <% num_per_page = 10 %><!-- 1ページあたり10件表示 -->
   <% sonsyos = house.sonsyos %>
   <% remaining_sonsyos = sonsyos.count - num_per_fist_page %><!-- 1ページ目に表示した分をマイナス -->
   <% if remaining_sonsyos > 0 then %>
@@ -211,6 +212,7 @@
                     <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <br/>
                     <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
+                    <br/>
                   </td>
                   <td><%= damage.comment %></td><!-- 備考 -->
 
@@ -231,6 +233,7 @@
                     <br/>
                     <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
+                    <br/>
                   </td>
                   <td><%= damage.comment %></td><!-- 備考 -->
                 </tr>
@@ -242,7 +245,7 @@
               <% while num_exist < num_per_page do %>
                 <tr>
                   <td>　</td>
-                  <td>－</td>
+                  <td style="width:6%;" class="text-center">－<br/>　<br/>　</td>
                   <td>　</td>
                   <td>　</td>
                   <td>　</td>
