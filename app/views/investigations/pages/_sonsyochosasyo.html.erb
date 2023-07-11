@@ -188,12 +188,26 @@
       <div class="page horizontal_parent">
         <div class="horizontal">
           <div class="horizontal_child">  
-            <table class="table table-bordered" style="font-size:10px;">
+            <table class="table table-bordered table_padding_yon_extend" style="font-size:10px; margin-bottom: 0;">
+                <tr>
+                  <td rowspan="2">名称（室名）</td>
+                  <td style="width:45%;" colspan="4"><%= survey_type_1 %>調査</td>
+                  <td style="width:45%;" colspan="3"><%= survey_type_2 %>調査</td>
+                </tr>
+                <tr>
+                  <td width="6%">各部仕上材</td>
+                  <td width="6%">写真番号</td>
+                  <td width="25%">損傷の状況</td>
+                  <td width="10%">備考</td>
+                  <td width="6%">写真番号</td>
+                  <td width="25%">損傷の状況</td>
+                  <td width="10%">備考</td>        
+                </tr>
               <% num_exist = 0 %><!-- 存在したデータ数 -->
 
               <% sonsyos[start..stop].each do |sonsyo| %>
                 <tr>
-                  <td  width="10%" class="text-center"><%= sonsyo.room_name %></td>
+                  <td class="text-center"><%= sonsyo.room_name %></td>
                   <td style="width:6%;" class="text-center">－</td>
                   <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
                   
@@ -334,6 +348,12 @@
   padding: 4px !important;
   height: 38px;
 }
+
+.table_padding_yon_extend td {
+  padding: 4px !important;
+  height: 38px;
+}
+
 .horizontal_parent {
   position: relative;
 }
