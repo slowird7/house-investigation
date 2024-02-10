@@ -9,33 +9,8 @@
 <p class="text-right">家屋番号：<%= @house.house_number %></p>
 <h1 class="text-center">家屋調査承諾書（及び不要承諾書）</h1>
 <p>工事名：<%= @investigation.construction_name %></p>
-<table class="table table-bordered" style="font-size:10px;">
-  <tr>
-    <td>調査日</td>
-    <td colspan="2"></td>
-    <td>ご承諾印</td>        
-  </tr>
-  <tr>
-    <td>所在地</td>
-    <td colspan="3"><%= @house.city %><%= @house.block %></td>
-  </tr>
-  <tr>
-    <td>現住居者氏名（承諾者）</td>
-    <td><%= @house.house_name %></td>
-    <td>TEL</td>
-    <td><%= @house.resident_phone_number %></td>
-  </tr>
-  <tr>
-    <td>所有者氏名</td>
-    <td><%= @house.owner_name %></td>
-    <td>TEL</td>
-    <td><%= @house.owner_phone_number %></td>
-  </tr>
-  <tr>
-    <td>調査範囲</td>
-    <td colspan="3"><%= @house.range_ongoing_survey %></td>
-  </tr>        
-</table>
+<%= render 'houses/house_table', house: @house, approver: '居住者', survey_type: 'ongoing' %>
+
 <p>下記目的のための調査を承諾します。</p>
 
 <h2 class="text-center">調査目的</h2>
@@ -43,28 +18,7 @@
 <p>なお、調査資料は上記の目的以外に一切使用することはありませんので、ご協力頂きますようお願い申し上げます。</p>
 
 <h2 class="text-center">建物等概要</h2>
-<table class="table table-bordered" style="font-size:10px;">
-  <tr>
-    <td>構造</td>
-    <td><%= @house.construction %></td>
-  </tr>
-  <tr>
-    <td>用途</td>
-    <td><%= @house.use %></td>
-  </tr>
-  <tr>
-    <td>階数</td>
-    <td><%= @house.floors %></td>
-  </tr>
-  <tr>
-    <td>建築年数</td>
-    <td>築後　約　　　年</td>
-  </tr>
-  <tr>
-    <td>延べ面積</td>
-    <td><%= @house.area %></td>
-  </tr>      
-</table>
+<%= render 'houses/tatemono_table', house: @house %>
 
 <!-- サイン -->
 <%= form_for(@house) do |f| %>

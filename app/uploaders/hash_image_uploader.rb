@@ -1,3 +1,4 @@
+# 未使用
 # ハッシュ付き画像をアップロードするためのクラス
 # 画像改ざんになるためアップロード時の自動リサイズを行わない。
 class HashImageUploader < CarrierWave::Uploader::Base

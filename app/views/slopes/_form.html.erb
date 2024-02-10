@@ -35,10 +35,8 @@
     </div>
         
     <div class="form-group">
-      東：<%= f.text_field :east %>&nbsp;&nbsp;&nbsp;&nbsp;
-      西：<%= f.text_field :west %>&nbsp;&nbsp;&nbsp;&nbsp;
-      南：<%= f.text_field :south %>&nbsp;&nbsp;&nbsp;&nbsp;
-      北：<%= f.text_field :north %>
+      <p>東：<%= f.text_field :east %>&nbsp;&nbsp;&nbsp;&nbsp;西：<%= f.text_field :west %></p>
+      </p>南：<%= f.text_field :south %>&nbsp;&nbsp;&nbsp;&nbsp;北：<%= f.text_field :north %></p>
     </div>
         
     <div class="form-group">
@@ -67,9 +65,9 @@ var reader = new FileReader();
 
 // 入力欄の有効(false)・無効化(true)操作
 function inputAreaDisable(flag) {
-  $("#slope_suichokukeisya, #slope_suiheikeisya").prop("disabled", flag); // 垂直・水平
-  $("#slope_east, #slope_west, #slope_south, #slope_north").prop("disabled", flag); // 東西南北 
-  $("#slope_comment").prop("disabled", flag); // コメント欄
+  $("#slope_suichokukeisya, #slope_suiheikeisya").prop("disabled", flag); // 垂直・水平（チェックボックス）
+  $("#slope_east, #slope_west, #slope_south, #slope_north").prop("readonly", flag); // 東西南北（テキスト）
+  $("#slope_comment").prop("readonly", flag); // コメント欄（テキスト）
 }
 
 // 戻るボタン

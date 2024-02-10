@@ -1,0 +1,63 @@
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FAFAFA;
+  font-size: 12pt;
+}
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.page {
+  /*A4縦*/
+  width: 190mm;
+  height: 251mm;  
+  /*
+  width: 172mm;
+  height: 251mm;
+  */
+  min-height: 29.7cm;
+  padding: 1cm 0.2cm 1cm 1.8cm;  /*上　右　下　左*/
+  margin: 1cm auto;
+  border: 1px #D3D3D3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  
+  page-break-after: always;  
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  #wrap {
+    padding: 0;
+  }
+
+  .top-down_padding {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  .page {
+    /*A4縦*/
+    width: 190mm;
+    height: 251mm; 
+    page-break-after: always;
+
+    border: initial;
+    border-radius: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+  }
+  /*最後のページは改ページを入れない*/
+  .page:last-child {
+      page-break-after: auto;
+  }
+}
+</style>

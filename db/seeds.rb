@@ -6,12 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user=User.find_by(user_name: 'asao')
-if user.blank?
-  user = User.new(role: 'superuser', user_name: 'asao', password: 'gNw47gvgaDSy')
-  user.save
-end
-
 user=User.find_by(user_name: 'tanaka')
 if user.blank?
   user = User.new(role: 'admin', user_name: 'tanaka', password: 'tanaka')
@@ -68,6 +62,6 @@ if house.blank?
   house = investigation.houses.build(house_number: 1, house_name: 'うしとら商店', prefectures: '大阪府', city: '寝屋川市高宮', block: '2-21-3',
                                     resident_phone_number: '090-1899-7408', owner_name_ruby: 'よし　ひめこ', owner_name: '良　姫子', owner_prefectures: '大阪府',
                                     owner_city: '寝屋川市明和', owner_block: '1-14-21', owner_phone_number: '072-821-4340',
-                                    construction: '鉄骨造', floors: '1階建', area: '159.89', use: '倉庫')
+                                    construction: '鉄骨造', floors: '1階建', area: '159.89', completion_date: '2000/1/1', use: '倉庫')
   house.save
 end
