@@ -5,6 +5,18 @@
       <p class="text-right">*必須</p>    
     
       <div class="form-group">
+        <%= f.label :code, '調査コード*' %>
+        <%= f.text_field :code, :class=>"form-control", required: true %>
+      </div>
+
+      <% if current_user.role == "admin" || current_user.role == "superuser" %>
+        <div class="form-group">
+          <%= f.label :password, 'パスワード*' %>
+          <%= f.text_field :password, :class=>"form-control", required: true %>
+        </div>
+      <% end %>
+    
+      <div class="form-group">
         <%= f.label :content, '調査内容*' %>
         <%= f.text_field :content, :class=>"form-control", required: true %>
       </div>
@@ -15,9 +27,9 @@
       </div>
       
       <div class="form-group">
-        <%= f.label :construction_display_name1, 'ホワイトボード表示用工事名1(最大15文字)*' %>
+        <%= f.label :construction_display_name1, 'ホワイトボード表示用工事名１行目(最大15文字)*' %>
         <%= f.text_field :construction_display_name1, :class=>"form-control", required: true, maxlength: 15 %>
-        <%= f.label :construction_display_name2, 'ホワイトボード表示用工事名2(最大15文字)*' %>
+        <%= f.label :construction_display_name2, 'ホワイトボード表示用工事名２行目(最大15文字)*' %>
         <%= f.text_field :construction_display_name2, :class=>"form-control", required: true, maxlength: 15 %>
       </div>      
 

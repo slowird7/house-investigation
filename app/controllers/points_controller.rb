@@ -18,16 +18,6 @@ class PointsController < ApplicationController
     @point.room_name = params[:room_name]
     @point.room_name_other = params[:other]    
     
-#    if params[:other] != ""
-#      if params[:room_name] == "外部（その他）"
-#        @point.room_name = params[:other]
-#      else
-#        @point.room_name = params[:room_name] + "/" + params[:other]
-#      end
-#    else
-#       @point.room_name = params[:room_name]
-#    end
-    
     if @point.save
       post = @point.posts.build
       post.survey_type = "pre"

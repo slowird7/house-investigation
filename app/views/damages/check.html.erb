@@ -44,7 +44,7 @@
         </tr>
         <tr>
           <td class="table_header">調査<br/>箇所</td>
-          <td colspan="4">
+          <td colspan="4" style="vertical-align: middle;">
             <% if @sonsyo.room_name == "その他" %>
               <%= @sonsyo.room_name_other %>
             <% else %>
@@ -55,14 +55,6 @@
         <tr>
           <td colspan="5">
             <%= @damage.tekiyo %>
-          </td>
-        </tr>
-        <tr>
-          <td class="table_header">面積</td>
-          <td colspan="4">
-            <% if @damage.width.present? && @damage.height.present? %>
-              <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm
-            <% end %>
           </td>
         </tr>
         <tr>
@@ -90,6 +82,14 @@
               <%= @damage.length %>&nbsp;cm
             <% end %>
           </td>  
+        </tr>
+        <tr>
+          <td class="table_header">面積</td>
+          <td colspan="4">
+            <% if @damage.width.present? && @damage.height.present? %>
+              <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm
+            <% end %>
+          </td>
         </tr>
         <tr>
           <td class="table_header">コメ<br/>ント</td>

@@ -31,6 +31,8 @@ class DamagesController < ApplicationController
   end
 
   def update
+    #binding.pry
+
     @damage = Damage.find(params[:id])
     @sonsyo = @damage.sonsyo
     @house = @sonsyo.house
@@ -106,8 +108,17 @@ class DamagesController < ApplicationController
   private
 
   def damage_params
-    params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
-                                  :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,
-                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url)
+    params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :survey_type, 
+      :zenshu, :amimejyo, :zencho, :wide, :length, :width, :height, :comment,
+      :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :image_url, :original_image_url)
+#    params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
+#                                  :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,
+#                                  :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :survey_type, :image_url, :original_image_url)
+#    params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :survey_type, 
+#      :genkyo, :sukima, :ware, :kake, :crack, :tile, :kire, :uki, :chirigire, :cross, :meji, :tategu, 
+#      :hosyuzumi, :kaisouzumi, :hason, :tawami, :kosure, :kishimi, :kudari, :hakuri, :shimiato,
+#      :hosyuato, :hakka, :ketsuraku, :furoku, :yuka, :caulking, :block, :kabe, :tenjyo,
+#      :zenshu, :amimejyo, :zencho, :wide, :length, :width, :height, :comment,
+#      :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :image_url, :original_image_url)
   end
 end

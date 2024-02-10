@@ -19,7 +19,13 @@ class CreateInvestigations < ActiveRecord::Migration[5.0]
       # 調査終了日
       t.date :stop_pre_survey, default: nil
       t.date :stop_ongoing_survey, default: nil
-      t.date :stop_after_survey, default: nil      
+      t.date :stop_after_survey, default: nil
+      
+      # 調査コード
+      t.string :code
+      
+      # パスワード
+      t.string :password
 
       t.timestamps
     end
