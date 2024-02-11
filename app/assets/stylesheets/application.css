@@ -17,7 +17,7 @@
 html,
 body {
   height: 100%;
-  font-family: serif;  /* 明朝体 */  
+  font-family: Meiryo;  /* 明朝体 */  
   /* html と body 要素はパディングやマージンを持てません。*/
 }
 
