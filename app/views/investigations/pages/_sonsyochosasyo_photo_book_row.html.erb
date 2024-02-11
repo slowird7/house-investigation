@@ -25,7 +25,7 @@
         <tr class="body">
           <td>
             <% if damage.width.present? && damage.height.present? %>
-              A=<%= damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm
+              A&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm
             <% end %>
           </td>
         </tr>
@@ -42,7 +42,7 @@
             <% if damage.zencho == true %>L=全長<% end %>
             <% if damage.zenshu == true %>L=全周<% end %>
             <% if damage.length.present? %>
-              L&nbsp;=&nbsp;<%= damage.length %>
+              L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm
             <% end %>
           </td>
         </tr>
@@ -73,13 +73,19 @@
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
-  border-bottom: solid 2px !important;  
+  border-bottom: solid 2px !important;
+  padding: 8px 4px 0px 4px;
+  vertical-align: bottom;
+  font-size: 12pt;
 }
 .photo_book .book table .body td {
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
-  border-bottom: dotted !important;
+  border-bottom: solid 1px !important;
+  padding: 8px 4px 0px 4px;
+  vertical-align: top;
+  font-size: 8pt;
 }
 /* セルの最小heightを設定 */
 .photo_book .book table .body td:first-child:before {
