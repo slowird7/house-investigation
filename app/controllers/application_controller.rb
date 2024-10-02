@@ -18,6 +18,42 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # 調査日の更新
+  def update_survey_day(house, target)
+    if target.survey_type == "pre"
+      if house.pre_survey_day == nil
+        # 調査開始日
+        house.pre_survey_day = target.created_at
+      else
+        # 調査終了日
+        house.end_pre_survey_day = target.created_at
+      end
+    elsif target.survey_type == "ongoing"
+      if house.ongoing_survey_day == nil
+        # 調査開始日
+        house.ongoing_survey_day = target.created_at
+      else
+        # 調査終了日
+        house.end_ongoing_survey_day = target.created_at
+      end
+    elsif target.survey_type == "after"      
+      if house.after_survey_day == nil
+        # 調査開始日
+        house.after_survey_day = target.created_at
+      else
+        # 調査終了日
+        house.end_after_survey_day = target.created_at
+      end      
+    end
+    
+    if house.save
+      return true
+    else
+      return false
+    end
+  end
+  
+  
   # # # # # # # # # # 改ざん防止メソッド # # # # # # # # # #
   def base64_conversion(uri_str, filename = 'base64')
     image_data = split_base64(uri_str)

@@ -23,9 +23,26 @@ class HousesController < ApplicationController
   def show
     @house = House.find(params[:id])
     @investigation = @house.investigation
-    @points = @house.points
-    @sonsyos = @house.sonsyos
-    @keisyas = @house.keisyas
+
+    if params[:sort_sonsyo] == "true"
+      #binding.pry
+      @sonsyos = @house.sonsyos.order("room_name")
+    else
+      #binding.pry
+      @sonsyos = @house.sonsyos.order("number")
+    end
+    
+    if params[:sort_point] == "true"
+      @points = @house.points.order("room_name")
+    else
+      @points = @house.points
+    end 
+    
+    if params[:sort_keisya] == "true"
+      @keisyas = @house.keisyas.order("room_name")
+    else
+      @keisyas = @house.keisyas
+    end
   end
   
   def edit
@@ -82,7 +99,7 @@ class HousesController < ApplicationController
     flash[:success] = '正常に削除されました'
     redirect_to @investigation
   end
-  
+
   #########################################################  
   # 所有者の承諾書
   def syodakusyo_new_pre_survey
@@ -150,7 +167,7 @@ class HousesController < ApplicationController
                                   :kyojyusya_sign_pre_survey, :kyojyusya_sign_ongoing_survey, :kyojyusya_sign_after_survey,
                                   :pre_survey_day, :ongoing_survey_day, :after_survey_day, :completion_date)
   end  
-  
+
 ### application_controller.rbに移行 ###  
 #  def base64_conversion(uri_str, filename = 'base64')
 #    image_data = split_base64(uri_str)

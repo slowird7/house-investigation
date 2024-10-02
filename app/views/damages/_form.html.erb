@@ -6,9 +6,9 @@
     <div class="row photosArea">
       <div class="col-xs-6">
         <% unless @preview_damage.image1? %>
-          <%= image_tag "bg_img.jpg", class:"previewImg" %>
+          <%= image_tag "bg_img.jpg", id:"previewImg" %>
         <% else %>
-          <%= image_tag @preview_damage.image1, class:"previewImg" %>
+          <%= image_tag @preview_damage.image1, id:"previewImg" %>
         <% end %>      
       </div>
       <div class="col-xs-6" id="sonsyo-<%= @sonsyo.id %>">
@@ -28,146 +28,49 @@
     </div>
     
     <% if @sonsyo.room_name != "全景" %>
-      <%= f.hidden_field :tekiyo %><!-- 選択した順番に適用を表記 -->
-      <div class="form-group" style="margin: 30px 0;">
+      <div class="form-group" style="margin: 30px 10px;">
+        <%= f.label :tekiyo, '選択中の適用' %>
+        <%= f.text_field :tekiyo, :readonly=> true, :class=>"form-control" %><!-- 選択した順番に適用を表記 -->
+        <br>
         
         <div class="switch_set">
-          <input name="genkyo" type="hidden" value="false">          
-          <input type="checkbox" value="true" name="genkyo" id="genkyo">
-          <label for="genkyo">現況</label>
-          
-          <input name="crack" type="hidden" value="false">
-          <input type="checkbox" value="true" name="crack" id="crack">
-          <label for="crack">クラック</label>
-          
-          <input name="chirigire" type="hidden" value="false">
-          <input type="checkbox" value="true" name="chirigire" id="chirigire">
-          <label for="chirigire">チリ切レ</label>
-          
-          <input name="hosyuzumi" type="hidden" value="false">
-          <input type="checkbox" value="true" name="hosyuzumi" id="hosyuzumi">
-          <label for="hosyuzumi">補修済</label>      
-          
-          <input name="kaisouzumi" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kaisouzumi" id="kaisouzumi">
-          <label for="kaisouzumi">改装済</label>          
-          
-          <input name="sukima" type="hidden" value="false">
-          <input type="checkbox" value="true" name="sukima" id="sukima">
-          <label for="sukima">隙間</label>
-
-          <input name="ware" type="hidden" value="false">
-          <input type="checkbox" value="true" name="ware" id="ware">
-          <label for="ware">割レ</label>
-
-          <input name="hason" type="hidden" value="false">
-          <input type="checkbox" value="true" name="hason" id="hason">
-          <label for="hason">破損</label>
-
-          <input name="uki" type="hidden" value="false">
-          <input type="checkbox" value="true" name="uki" id="uki">
-          <label for="uki">浮キ</label>
-
-          <input name="kake" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kake" id="kake">
-          <label for="kake">欠ケ</label>
-
-          <input name="tawami" type="hidden" value="false">
-          <input type="checkbox" value="true" name="tawami" id="tawami">
-          <label for="tawami">タワミ</label>
-
-          <input name="kire" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kire" id="kire">
-          <label for="kire">切レ</label>
-          
-          <input name="kosure" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kosure" id="kosure">
-          <label for="kosure">コスレ</label>          
-          
-          <input name="kishimi" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kishimi" id="kishimi">
-          <label for="kishimi">キシミ</label>
-          
-          <input name="kudari" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kudari" id="kudari">
-          <label for="kudari">下リ</label>          
-          
-          <input name="hakuri" type="hidden" value="false">
-          <input type="checkbox" value="true" name="hakuri" id="hakuri">
-          <label for="hakuri">剥離</label>      
-          
-          <input name="shimiato" type="hidden" value="false">
-          <input type="checkbox" value="true" name="shimiato" id="shimiato">
-          <label for="shimiato">シミ跡</label>             
-          
-          <input name="hosyuato" type="hidden" value="false">
-          <input type="checkbox" value="true" name="hosyuato" id="hosyuato">
-          <label for="hosyuato">補修跡</label>
-          
-          <input name="hakka" type="hidden" value="false">
-          <input type="checkbox" value="true" name="hakka" id="hakka">
-          <label for="hakka">白華</label>
-          
-          <input name="ketsuraku" type="hidden" value="false">
-          <input type="checkbox" value="true" name="ketsuraku" id="ketsuraku">
-          <label for="ketsuraku">欠落</label>
-          
-          <input name="furoku" type="hidden" value="false">
-          <input type="checkbox" value="true" name="furoku" id="furoku">
-          <label for="furoku">不陸</label>          
-          
-          <input name="meji" type="hidden" value="false">
-          <input type="checkbox" value="true" name="meji" id="meji">
-          <label for="meji">目地</label>
-          
-          <input name="tile" type="hidden" value="false">
-          <input type="checkbox" value="true" name="tile" id="tile">
-          <label for="tile">タイル</label>
-          
-          <input name="cross" type="hidden" value="false">
-          <input type="checkbox" value="true" name="cross" id="cross">
-          <label for="cross">クロス</label>
-          
-          <input name="tategu" type="hidden" value="false">
-          <input type="checkbox" value="true" name="tategu" id="tategu">
-          <label for="tategu">建具</label>
-          
-          <input name="yuka" type="hidden" value="false">
-          <input type="checkbox" value="true" name="yuka" id="yuka">
-          <label for="yuka">床</label> 
-          
-          <input name="caulking" type="hidden" value="false">
-          <input type="checkbox" value="true" name="caulking" id="caulking">
-          <label for="caulking">コーキング</label>          
-          
-          <input name="block" type="hidden" value="false">
-          <input type="checkbox" value="true" name="block" id="block">
-          <label for="block">ブロック</label>   
-          
-          <input name="kabe" type="hidden" value="false">
-          <input type="checkbox" value="true" name="kabe" id="kabe">
-          <label for="kabe">壁</label>
-
-          <input name="tenjyo" type="hidden" value="false">
-          <input type="checkbox" value="true" name="tenjyo" id="tenjyo">
-          <label for="tenjyo">天井</label>
-      </div>
-      
+          <% $TEKIYO_LIST.each do |t| %>
+            <input name="<%= t[1] %>" type="hidden" value="false">          
+            <input type="checkbox" value="true" name="<%= t[1] %>" id="<%= t[1] %>">
+            <label for="<%= t[1] %>"><%= t[0] %></label>
+          <% end %>
+        </div>
+        
         <input type="text" id="other" name="other" placeholder="その他" size="20" style="margin-top: 10px;">
       </div>
+
+      <div style="margin: 40px 0;">
+        <div class="form-group">
+          <p>面積：<%= f.text_field :width %>&nbsp;cm&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %>&nbsp;cm</p>
+          <p>幅：<%= f.text_field :wide %>&nbsp;mm</p>
+          <!-- <p>幅：<input id="damage_wide" type="number" step="0.01" name="damage[wide]">&nbsp;mm</p> -->
+        </div>
+        <div class="form-group">
+          長さ：&nbsp;<label><%= f.check_box :amimejyo, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
+          <label><%= f.check_box :zencho, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
+          <label><%= f.check_box :zenshu, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= f.text_field :length %>&nbsp;cm</span>
+        </div>
+      </div>      
       
-      <div class="form-group">
-        <p>面積：<%= f.text_field :width %>&nbsp;cm&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height %>&nbsp;cm</p>
-        <p>幅：<%= f.text_field :wide %>&nbsp;mm</p>
-        <!-- <p>幅：<input id="damage_wide" type="number" step="0.01" name="damage[wide]">&nbsp;mm</p> -->
-      </div>
-      
-      <div class="form-group">
-        長さ：&nbsp;<label><%= f.check_box :amimejyo, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
-        <label><%= f.check_box :zencho, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
-        <label><%= f.check_box :zenshu, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <%= f.text_field :length %>&nbsp;cm</span>
-      </div>
+      <div style="margin: 40px 0;">
+        <div class="form-group">
+          <p>面積：<%= f.text_field :width2 %>&nbsp;cm&nbsp;&nbsp;×&nbsp;&nbsp;<%= f.text_field :height2 %>&nbsp;cm</p>
+          <p>幅：<%= f.text_field :wide2 %>&nbsp;mm</p>
+          <!-- <p>幅：<input id="damage_wide" type="number" step="0.01" name="damage[wide]">&nbsp;mm</p> -->
+        </div>
+        <div class="form-group">
+          長さ：&nbsp;<label><%= f.check_box :amimejyo2, {}, "true", "false" %>網目状</label>&nbsp;&nbsp;
+          <label><%= f.check_box :zencho2, {}, "true", "false" %>全長</label>&nbsp;&nbsp;
+          <label><%= f.check_box :zenshu2, {}, "true", "false" %>全周</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= f.text_field :length2 %>&nbsp;cm</span>
+        </div>
+      </div>      
       
       <div class="form-group">
         <%= f.label :comment, 'コメント(最大24文字)' %>
@@ -177,15 +80,7 @@
   <% end %>
 </div>
 
-<style>
-.photosArea {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.photosArea .previewImg {
-  width: 100%;
-}
-</style>
+<%= render 'layouts/common_css_for_takephoto' %>
 
 <script>
 // グローバル変数
@@ -194,60 +89,12 @@ var ctx = canvas.getContext('2d');
 var img = new Image();
 var reader = new FileReader();
 
-// 入力欄の有効(false)・無効化(true)操作
-function inputAreaDisable(flag) {
-  $("#genkyo").prop("disabled", flag);  // 現況（チェックボックス）
-  $("#crack").prop("disabled", flag);  // クラック（チェックボックス）
-  $("#chirigire").prop("disabled", flag);  // チリ切レ（チェックボックス）
-  $("#hosyuzumi").prop("disabled", flag);  // 補修済（チェックボックス）
-  $("#kaisouzumi").prop("disabled", flag);  // 改装済（チェックボックス）
-  
-  $("#sukima").prop("disabled", flag);  // 隙間（チェックボックス）
-  $("#ware").prop("disabled", flag);  // 割レ（チェックボックス）
-  $("#hason").prop("disabled", flag);  // 破損（チェックボックス）
-  $("#uki").prop("disabled", flag);  // 浮キ（チェックボックス）
-  $("#kake").prop("disabled", flag);  // 欠ケ（チェックボックス）
-
-  $("#tawami").prop("disabled", flag);  // タワミ（チェックボックス）
-  $("#kire").prop("disabled", flag);  // 切レ（チェックボックス）
-  $("#kosure").prop("disabled", flag);  // コスレ（チェックボックス）
-  $("#kishimi").prop("disabled", flag);  // キシミ（チェックボックス）
-  $("#kudari").prop("disabled", flag);  // 下リ（チェックボックス）
-
-  $("#hakuri").prop("disabled", flag);  // 剥離（チェックボックス）
-  $("#shimiato").prop("disabled", flag);  // シミ跡（チェックボックス）
-  $("#hosyuato").prop("disabled", flag);  // 補修跡（チェックボックス）
-  $("#hakka").prop("disabled", flag);  // 白華（チェックボックス）
-  $("#ketsuraku").prop("disabled", flag);  // 欠落（チェックボックス）
-  
-  $("#furoku").prop("disabled", flag);  // 不陸（チェックボックス）
-  $("#meji").prop("disabled", flag);  // 目地（チェックボックス）
-  $("#tile").prop("disabled", flag);  // タイル（チェックボックス）
-  $("#cross").prop("disabled", flag);  // クロス（チェックボックス）
-  $("#tategu").prop("disabled", flag);  // 建具（チェックボックス）
-
-  $("#yuka").prop("disabled", flag);  // 床（チェックボックス）
-  $("#caulking").prop("disabled", flag);  // コーキング（チェックボックス）
-  $("#block").prop("disabled", flag);  // ブロック（チェックボックス）
-  $("#kabe").prop("disabled", flag);  // 壁（チェックボックス）
-  $("#tenjyo").prop("disabled", flag);  // 天井（チェックボックス） 
-  
-  $('#other').prop("readonly", flag); // その他（テキストボックス）
-  
-  $("#damage_width, #damage_height").prop("readonly", flag);  // 面積（テキストボックス）
-  $("#damage_wide").prop("readonly", flag);  // 幅（テキストボックス）
-  $("#damage_amimejyo, #damage_zencho, #damage_zenshu").prop("readonly", flag);  // 長さ（チェックボックス）
-  $("#damage_length").prop("readonly", flag);  // 長さ（テキストボックス）
-  
-  $("#damage_comment").prop("readonly", flag); // コメント欄（テキストボックス）
-}
-
 // 戻るボタン
 document.querySelector("#return").addEventListener("click", () => {
   // 登録ボタンを無効化
   $("#submit").prop("disabled", true);
   // 入力欄を有効化
-  inputAreaDisable(false);
+  //inputAreaDisable(false);
 
   // 適用「その他」欄に記載の文言を末尾から削除
   var original_val = $('#damage_tekiyo').val();
@@ -260,417 +107,18 @@ document.querySelector("#return").addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-$('#damage_image1').on('change', function (e) {
-  reader.onload = function (e) {
-    img.src = e.target.result;
-
-    img.onload = function() {
-      // 画像サイズ取得
-      var imgW = img.width;
-      var imgH = img.height;
-      // プレビュー画像の幅取得
-      var previewImgW = $('.previewImg').width();
-      var previewImgH = $('.previewImg').height();
-      // 拡縮率の計算
-      var rate = previewImgH / imgH;
-      
-      // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
-      canvas.width = imgW * rate * 4;      // 高画質化のため、4倍に
-      canvas.height = imgH * rate * 4;     // 高画質化のため、4倍に
-      // 画像を canvas に表示
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      // スタイルを設定
-      canvas.style.width = String(imgW * rate) + "px";
-      canvas.style.height = String(imgH * rate) + "px";
-      
-      // 登録ボタンを有効化
-      $("#submit").prop("disabled", false);
-      // 入力欄を無効化
-      inputAreaDisable(true);
-      
-      // 適用「その他」欄に記載の文言を末尾に追加
-      var original_val = $('#damage_tekiyo').val();
-      var other = $('#other').val();
-      $('#damage_tekiyo').val(original_val + other);
-    }
-  }
-  reader.readAsDataURL(e.target.files[0]);
-});
-
-/*
-$('#liveview').on('click', function(e){
-  if(document.getElementById( "arrow_clean" ).checked) {
-    // 初期化
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  } else {
-    // 実際の画像サイズと描画領域の倍率を算出
-    var rate = canvas.width / canvas.clientWidth;
-    let offsetX = e.offsetX * rate; // =>要素左上からのx座標
-    let offsetY = e.offsetY * rate; // =>要素左上からのy座標
-
-    var w=canvas.width*0.05,h=w,w0=w*0.5,h0=h*0.25,x=offsetX,y=offsetY;
-    // 矢印描画     
-    ctx.setTransform(1,0,0,1,0,0);
-    ctx.translate(x,y);
-    ctx.beginPath();
-    ctx.fillStyle = 'red';
-    if ( document.getElementById( "arrow_up" ).checked ) {
-    	// 上
-      ctx.moveTo(-h0,w);
-    	ctx.lineTo(-h0,w0);
-      ctx.lineTo(-w0,w0);
-      ctx.lineTo(0,0);
-      ctx.lineTo(w0,w0);
-      ctx.lineTo(h0,w0);
-      ctx.lineTo(h0,w); 
-      ctx.lineTo(-h0,w);
-    } else if ( document.getElementById( "arrow_right" ).checked ) {
-    	// 右
-      ctx.moveTo(-w,-h0);    	
-    	ctx.lineTo(-w0,-h0);
-      ctx.lineTo(-w0,-w0);
-      ctx.lineTo(0,0);
-      ctx.lineTo(-w0,w0);
-      ctx.lineTo(-w0,h0);
-      ctx.lineTo(-w,h0);
-      ctx.lineTo(-w,-h0);
-    } else if ( document.getElementById( "arrow_down" ).checked ) {
-    	// 下
-      ctx.moveTo(-h0,-w);    	
-    	ctx.lineTo(-h0,-w0);
-      ctx.lineTo(-w0,-w0);
-      ctx.lineTo(0,0);
-      ctx.lineTo(w0,-w0);
-      ctx.lineTo(h0,-w0);
-      ctx.lineTo(h0,-w);
-      ctx.lineTo(-h0,-w);    	
-    } else if ( document.getElementById( "arrow_left" ).checked ) {
-    	// 左
-      ctx.moveTo(w,-h0);
-    	ctx.lineTo(w0,-h0);
-      ctx.lineTo(w0,-w0);
-      ctx.lineTo(0,0);
-      ctx.lineTo(w0,w0);
-      ctx.lineTo(w0,h0);
-      ctx.lineTo(w,h0);
-      ctx.lineTo(w,-h0);
-    }
-    ctx.stroke();
-    ctx.fill();
-    ctx.closePath();
-    ctx.setTransform(1,0,0,1,0,0);
-    
-    //console.log(ctx);
-  }
-});
-*/
-
-function imagingAtCanvas() {
-  // canvasの画像化
-  var canvas_data = canvas.toDataURL('image/jpeg');
-  $('input[name="canvas_data"]').val(canvas_data);
-}
+<%= render 'layouts/common_js_for_takephoto', selector: "damage_image1" %>
 
 //************ 適用を選択順に表記 ************//
-// 現況
-$('#genkyo').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "現況 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("現況 ", ""));
-  }
-});
-// クラック
-$('#crack').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "クラック ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("クラック ", ""));
-  }
-});
-// チリ切レ
-$('#chirigire').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "チリ切レ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("チリ切レ ", ""));
-  }
-});
-// 補修済
-$('#hosyuzumi').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "補修済 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("補修済 ", ""));
-  }
-});
-// 改装済
-$('#kaisouzumi').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "改装済 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("改装済 ", ""));
-  }
-});
-// 隙間
-$('#sukima').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "隙間 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("隙間 ", ""));
-  }
-});
-// 割レ
-$('#ware').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "割レ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("割レ ", ""));
-  }
-});
-// 破損
-$('#hason').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "破損 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("破損 ", ""));
-  }
-});
-// 浮キ
-$('#uki').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "浮キ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("浮キ ", ""));
-  }
-});
-// 欠ケ
-$('#kake').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "欠ケ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("欠ケ ", ""));
-  }
-});
-// タワミ
-$('#tawami').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "タワミ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("タワミ ", ""));
-  }
-});
-// 切レ
-$('#kire').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "切レ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("切レ ", ""));
-  }
-});
-// コスレ
-$('#kosure').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "コスレ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("コスレ ", ""));
-  }
-});
-// キシミ
-$('#kishimi').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "キシミ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("キシミ ", ""));
-  }
-});
-// 下リ
-$('#kudari').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "下リ ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("下リ ", ""));
-  }
-});
-// 剥離
-$('#hakuri').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "剥離 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("剥離 ", ""));
-  }
-});
-// シミ跡
-$('#shimiato').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "シミ跡 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("シミ跡 ", ""));
-  }
-});
-// 補修跡
-$('#hosyuato').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "補修跡 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("補修跡 ", ""));
-  }
-});
-// 白華
-$('#hakka').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "白華 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("白華 ", ""));
-  }
-});
-// 欠落
-$('#ketsuraku').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "欠落 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("欠落 ", ""));
-  }
-});
-// 不陸
-$('#furoku').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "不陸 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("不陸 ", ""));
-  }
-});
-// 目地
-$('#meji').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "目地 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("目地 ", ""));
-  }
-});
-// タイル
-$('#tile').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "タイル ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("タイル ", ""));
-  }
-});
-// クロス
-$('#cross').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "クロス ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("クロス ", ""));
-  }
-});
-// 建具
-$('#tategu').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "建具 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("建具 ", ""));
-  }
-});
-// 床
-$('#yuka').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "床 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("床 ", ""));
-  }
-});
-// コーキング
-$('#caulking').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "コーキング ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("コーキング ", ""));
-  }
-});
-// ブロック
-$('#block').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "ブロック ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("ブロック ", ""));
-  }
-});
-// 壁
-$('#kabe').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "壁 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("壁 ", ""));
-  }
-});
-// 天井
-$('#tenjyo').on('click', function(e){
-  var original_val = $('#damage_tekiyo').val();
-  
-  if($(this).prop('checked') == true) {
-    $('#damage_tekiyo').val(original_val + "天井 ");
-  } else {
-    $('#damage_tekiyo').val(original_val.replace("天井 ", ""));
-  }
-});
+<% $TEKIYO_LIST.each do |t| %>
+  $('#<%= t[1] %>').on('click', function(e){
+    var original_val = $('#damage_tekiyo').val();
+    
+    if($(this).prop('checked') == true) {
+      $('#damage_tekiyo').val(original_val + "<%= t[0] %> ");
+    } else {
+      $('#damage_tekiyo').val(original_val.replace("<%= t[0] %> ", ""));
+    }
+  });
+<% end %>
 </script>

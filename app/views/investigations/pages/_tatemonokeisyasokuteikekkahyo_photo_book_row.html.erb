@@ -8,7 +8,7 @@
     <table class="table table-bordered">
       <% if keisya != nil %>
         <tr class="header"><td>傾斜 <%= disp_alphabet(keisya.number) %></td></tr>
-        <tr class="body">
+        <tr class="header">
           <td>
             <% if keisya.room_name == "その他" %>
               <%= keisya.room_name_other %>
@@ -78,6 +78,7 @@
 </tr>
 
 <style>
+/*
 .photo_book .photo img {
   width: auto;
   height: 330px;
@@ -101,11 +102,12 @@
   border-right: none !important;
   border-bottom: dotted !important;
 }
-/* セルの最小heightを設定 */
+// セルの最小heightを設定
 .photo_book .book table .body td:first-child:before {
   display: block;
   float: left;
   height: 12px;
   content: "";
 }
+*/
 </style>

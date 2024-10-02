@@ -8,7 +8,7 @@
     <table class="table table-bordered">
       <% if sonsyo != nil %>
         <tr class="header"><td>No.<%= sonsyo.number %></td></tr>
-        <tr class="body">
+        <tr class="header">
           <td>
             <% if sonsyo.room_name == "その他" %>
               <%= sonsyo.room_name_other %>
@@ -31,6 +31,13 @@
         </tr>
         <tr class="body">
           <td>
+            <% if damage.width2.present? && damage.height2.present? %>
+              A=<%= damage.width2 %>&nbsp;cm&nbsp;x&nbsp;<%= damage.height2 %>&nbsp;cm
+            <% end %>
+          </td>
+        </tr>        
+        <tr class="body">
+          <td>
             <% if damage.wide.present? %>
               W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm
             <% end %>              
@@ -38,14 +45,31 @@
         </tr>
         <tr class="body">
           <td>
+            <% if damage.wide2.present? %>
+              W&nbsp;=&nbsp;<%= damage.wide2 %>&nbsp;mm
+            <% end %>              
+          </td>
+        </tr>        
+        <tr class="body">
+          <td>
             <% if damage.amimejyo == true %>L=網目状<% end %>  
             <% if damage.zencho == true %>L=全長<% end %>
             <% if damage.zenshu == true %>L=全周<% end %>
             <% if damage.length.present? %>
-              L&nbsp;=&nbsp;<%= damage.length %>
+              L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm
             <% end %>
           </td>
         </tr>
+        <tr class="body">
+          <td>
+            <% if damage.amimejyo2 == true %>L=網目状<% end %>  
+            <% if damage.zencho2 == true %>L=全長<% end %>
+            <% if damage.zenshu2 == true %>L=全周<% end %>
+            <% if damage.length2.present? %>
+              L&nbsp;=&nbsp;<%= damage.length2 %>&nbsp;cm
+            <% end %>
+          </td>
+        </tr>        
         <tr class="body">
           <td>
             <%= damage.comment %>
@@ -57,6 +81,7 @@
 </tr>
 
 <style>
+/*
 .photo_book .photo img {
   width: auto;
   height: 330px;
@@ -73,7 +98,8 @@
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
-  border-bottom: solid 2px !important;  
+  border-bottom: solid 2px !important;
+  font-size:1.2em;
 }
 .photo_book .book table .body td {
   border-top: none !important;
@@ -81,11 +107,12 @@
   border-right: none !important;
   border-bottom: dotted !important;
 }
-/* セルの最小heightを設定 */
+// セルの最小heightを設定
 .photo_book .book table .body td:first-child:before {
   display: block;
   float: left;
   height: 12px;
   content: "";
 }
+*/
 </style>

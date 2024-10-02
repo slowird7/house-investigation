@@ -1,25 +1,25 @@
 <div class="container">
-  <%= form_for(@slope) do |f| %>
+  <%= form_for @slope, :html => { :onsubmit => "imagingAtCanvas()" } do |f| %>
     <%= f.hidden_field :keisya_id, :value => @keisya.id %>
     <%= f.hidden_field :survey_type, :value => @slope.survey_type %>
 
     <div class="row photosArea">
       <div class="col-xs-6">
         <% unless @preview_slope.image1? %>
-          <%= image_tag "bg_img.jpg", class:"previewImg" %>
+          <%= image_tag "bg_img.jpg", id:"previewImg" %>
         <% else %>
-          <%= image_tag @preview_slope.image1, class:"previewImg" %>
+          <%= image_tag @preview_slope.image1, id:"previewImg" %>
         <% end %>      
       </div>
       <div class="col-xs-6" id="keisya-<%= @keisya.id %>">
         <canvas id="liveview"></canvas>
-        <input type="hidden" name="canvas_data" id="canvas_data">
+        <input type="hidden" name="canvas_data">
       </div>
     </div>
   
     <div class="row">
       <div class="col-xs-6" style="text-align: center;">
-        <%= f.submit '登録', :disabled=>"true", :class=>"btn btn-primary", :id=>"submit", method: :delete, data: { confirm: '登録してよろしいでしょうか？' } %>
+        <%= f.submit '登録', :disabled=>"true", :class=>"btn btn-primary", :id=>"submit", data: { confirm: '登録してよろしいでしょうか？' } %>
         <button type="button" id="return" class="btn btn-default">戻る</button>
       </div>
       <div class="col-xs-6">
@@ -46,15 +46,7 @@
   <% end %>
 </div>
 
-<style>
-.photosArea {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.photosArea .previewImg {
-  width: 100%;
-}
-</style>
+<%= render 'layouts/common_css_for_takephoto' %>
 
 <script>
 // グローバル変数
@@ -82,40 +74,7 @@ document.querySelector("#return").addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-$('#slope_image1').on('change', function (e) {
-  reader.onload = function (e) {
-    img.src = e.target.result;
-    // iPad 第6世代
-    //img.width = 3264;
-    //img.height = 2448;
-
-    img.onload = function() {
-      // 画像サイズ取得
-      var imgW = img.width;
-      var imgH = img.height;
-      // プレビュー画像の幅取得
-      var previewImgW = $('.previewImg').width();
-      var previewImgH = $('.previewImg').height();
-      // 拡縮率の計算
-      var rate = previewImgH / imgH;    
-      
-      // 画像ファイルの横幅に拡縮率を掛け、canvasのサイズにセット
-      canvas.width = imgW * rate * 4;      // 高画質化のため、4倍に
-      canvas.height = imgH * rate * 4;     // 高画質化のため、4倍に
-      // 画像を canvas に表示
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      // スタイルを設定
-      canvas.style.width = String(imgW * rate) + "px";
-      canvas.style.height = String(imgH * rate) + "px";
-      
-      // 登録ボタンを有効化
-      $("#submit").prop("disabled", false);
-      // 入力欄を無効化
-      inputAreaDisable(true);
-    }
-  }
-  reader.readAsDataURL(e.target.files[0]);
-});
+<%= render 'layouts/common_js_for_takephoto', selector: "slope_image1" %>
 
 // 垂直傾斜ボタン押下
 function onclick_suichoku(){
@@ -137,10 +96,4 @@ function onclick_suihei(){
     }
   }
 }
-
-$('#submit').on('mousedown', function (e) {
-  // canvasの画像化
-  var canvas_data = canvas.toDataURL('image/jpeg');
-  $("#canvas_data").val(canvas_data);
-});
 </script>

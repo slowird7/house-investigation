@@ -213,13 +213,13 @@ class InvestigationsController < ApplicationController
         send_posts_csv(@investigation, "after")
       end
     end
-  end  
+  end   
 
   private
 
   # Strong Parameter
   def investigation_params
-    params.require(:investigation).permit(:content, :construction_name, :construction_display_name1, :construction_display_name2, :builder, :builder_id, :place, 
+    params.require(:investigation).permit(:content, :construction_name, :construction_display_name1, :construction_display_name2, :builder, :builder_id, :place, :status,
                                           :investigator_pre_survey, :investigator_ongoing_survey, :investigator_after_survey,
                                           :start_pre_survey, :stop_pre_survey, :start_ongoing_survey, :stop_ongoing_survey, :start_after_survey, :stop_after_survey, :code, :password)
   end
@@ -227,7 +227,7 @@ class InvestigationsController < ApplicationController
 
   def send_posts_csv_houses(investigation)
     houses = investigation.houses.order(house_number: "ASC")
-
+   
     if houses.present?
       filename = "data_houses.zip"
       fullpath = "#{Rails.root}/tmp/#{filename}"
@@ -238,7 +238,7 @@ class InvestigationsController < ApplicationController
             CSV.generate(encoding: Encoding::SJIS) do |csv|
               header = %w(工事コード 家屋番号 家屋名 都道府県 市区町村 番地 居住者電話番号 所有者名（フリガナ） 所有者名 都道府県（所有者） 市区町村（所有者） 番地（所有者） 所有者電話番号 構造 階数 延面積 建物が完成した日 用途 建物概要（事前） 建物概要（事中） 建物概要（事後） 調査範囲（事前） 調査範囲（事中） 調査範囲（事後） 調査日（事前） 調査日（事中） 調査日（事後）)
               csv << header
-              
+                  
               houses.each do |house|
                 values = [investigation.code, house.house_number, house.house_name, 
                           house.prefectures, house.city, house.block, 
@@ -283,7 +283,7 @@ class InvestigationsController < ApplicationController
         filename = "data_after.zip"
         dirname = "data_after"
       end
-        
+
       fullpath = "#{Rails.root}/tmp/#{filename}"
       Zip::File.open(fullpath, Zip::File::CREATE) do |zipfile|
         # 損傷情報
@@ -333,13 +333,13 @@ class InvestigationsController < ApplicationController
                       values = [investigation.code, house.id, keisya.number, keisya.room_name, keisya.room_name_other, 
                                 st, angle, slope.east, slope.west, slope.south, slope.north, slope.comment]
                       csv << values              
-                    end
+                    end                    
                   end
                 end
               end
             end
           )
-        end        
+        end
         
         # 測点（レベル）情報
         zipfile.get_output_stream(dirname + "/points.csv") do |f|
@@ -363,7 +363,7 @@ class InvestigationsController < ApplicationController
               end
             end
           )
-        end        
+        end
         
       end
       # zipをダウンロードして、直後に削除する
@@ -371,10 +371,6 @@ class InvestigationsController < ApplicationController
       File.delete(fullpath)
     end
   end
-  
-  
-  
-  
   
   
   def download_images(houses, survey_type, image_type, zippath)

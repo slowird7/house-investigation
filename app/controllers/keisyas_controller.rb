@@ -32,12 +32,12 @@ class KeisyasController < ApplicationController
       slope.save
 
       flash[:success] = '正常に傾斜を登録しました。'
+      redirect_to house_path(@house, anchor: 'keisya_id_'+ @keisya.id.to_s)
     else
       @keisya = @house.keisya.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
+      redirect_to house_path(@house, anchor: 'keisya')
     end
-    #redirect_to @house
-    redirect_to house_path(@house, anchor: 'keisya')
   end
   
   def edit

@@ -4,7 +4,9 @@
     <li class="active"><%= @investigation.construction_name %></li>
   </ol>
   
-  <h2><%= @investigation.construction_name %></h2>
+  <h2>案件情報</h2>
+  <p class="lead"><%= @investigation.construction_name %></p>
+  
   <div style="margin-bottom: 10px;">
     <%= link_to '編集', edit_investigation_path, :class=>"btn btn-default", :style=>"margin-right: 10px" %>
     <%= link_to "削除", @investigation, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
@@ -41,6 +43,11 @@
     <tr>
       <th>調査場所</th>
       <td class="align-middle"><%= @investigation.place %></td>
+    </tr>
+    
+    <tr>
+      <th>ステータス</th>
+      <td class="align-middle"><%= @investigation.status %></td>
     </tr>
   
   </table>
@@ -88,7 +95,7 @@
       </td>
       <td class="text-center">
         <%= link_to 'WB付写真', download_images_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>
-        <%= link_to '元写真', download_originalImages_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>      
+        <%= link_to '元写真', download_originalImages_ongoing_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: '元写真をダウンロードしますか?' } %>
       </td>
       <td class="text-center">
         <%= link_to 'WB付写真', download_images_after_survey_investigation_path, :class=>"btn btn-primary", data: { turbolinks: "false", confirm: 'WB付写真をダウンロードしますか?' } %>

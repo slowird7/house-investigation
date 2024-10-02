@@ -81,20 +81,26 @@
             <td><%= house.area %></td>
             <td>
               <% if survey_type_1 == "事前" %>
-                <%= house.pre_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.pre_survey_day, end_day: house.end_pre_survey_day %>
               <% elsif survey_type_1 == "事中" %>
-                <%= house.ongoing_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.ongoing_survey_day, end_day: house.end_ongoing_survey_day %>
               <% elsif survey_type_1 == "事後" %>
-                <%= house.after_survey_day %>
-              <% end %>              
+                <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.after_survey_day, end_day: house.end_after_survey_day %>
+              <% end %>
             </td>
             <td>
               <% if survey_type_2 == "事前" %>
-                <%= house.pre_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.pre_survey_day, end_day: house.end_pre_survey_day %>
               <% elsif survey_type_2 == "事中" %>
-                <%= house.ongoing_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.ongoing_survey_day, end_day: house.end_ongoing_survey_day %>
               <% elsif survey_type_2 == "事後" %>
-                <%= house.after_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.after_survey_day, end_day: house.end_after_survey_day%>
               <% end %>
             </td>
             <td>

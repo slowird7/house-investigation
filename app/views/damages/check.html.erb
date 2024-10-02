@@ -57,40 +57,61 @@
             <%= @damage.tekiyo %>
           </td>
         </tr>
+        
         <tr>
           <td class="table_header">幅</td>
           <td colspan="4">
-            <% if @damage.wide.present? %>
-              <%= @damage.wide %>&nbsp;mm
+            <% if @damage.wide.present? && @damage.wide2.present? %>
+              <%= @damage.wide %>&nbsp;mm,&nbsp;<%= @damage.wide2 %>&nbsp;mm
+            <% elsif @damage.wide.present? %>
+              <%= @damage.wide %>&nbsp;mm            
+            <% elsif @damage.wide2.present? %>
+              <%= @damage.wide2 %>&nbsp;mm            
             <% end %>
           </td>
         </tr>
         <tr>
           <td class="table_header">長さ</td>
           <td colspan="4">
-            <% if @damage.amimejyo == true %>
-              <span>網目状</span>
-            <% end %>  
-            <% if @damage.zencho == true %>
-              <span>全長</span>
-            <% end %>
-            <% if @damage.zenshu == true %>
-              <span>全周</span>
-            <% end %>
+            <% if @damage.length.present? && @damage.length2.present? %>
+              <% if @damage.amimejyo == true %>網目状<% end %>  
+              <% if @damage.zencho == true %>全長<% end %>
+              <% if @damage.zenshu == true %>全周<% end %>
+              <%= @damage.length %>&nbsp;cm,<br>
+              
+              <% if @damage.amimejyo2 == true %>網目状<% end %>  
+              <% if @damage.zencho2 == true %>全長<% end %>
+              <% if @damage.zenshu2 == true %>全周<% end %>
+              <%= @damage.length2 %>&nbsp;cm            
             
-            <% if @damage.length.present? %>
+            <% elsif @damage.length.present? %>
+              <% if @damage.amimejyo == true %>網目状<% end %>  
+              <% if @damage.zencho == true %>全長<% end %>
+              <% if @damage.zenshu == true %>全周<% end %>
               <%= @damage.length %>&nbsp;cm
+            
+            <% elsif @damage.length2.present? %>
+              <% if @damage.amimejyo2 == true %>網目状<% end %>  
+              <% if @damage.zencho2 == true %>全長<% end %>
+              <% if @damage.zenshu2 == true %>全周<% end %>
+              <%= @damage.length2 %>&nbsp;cm   
             <% end %>
           </td>  
         </tr>
         <tr>
           <td class="table_header">面積</td>
           <td colspan="4">
-            <% if @damage.width.present? && @damage.height.present? %>
+            <% if @damage.width.present? && @damage.height.present? && @damage.width2.present? && @damage.height2.present? %>
+              <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm,<br>
+              <%= @damage.width2 %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height2 %>&nbsp;cm
+            <% elsif @damage.width.present? && @damage.height.present? %>
               <%= @damage.width %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height %>&nbsp;cm
+            <% elsif @damage.width2.present? && @damage.height2.present? %>
+              <%= @damage.width2 %>&nbsp;cm&nbsp;x&nbsp;<%= @damage.height2 %>&nbsp;cm
             <% end %>
           </td>
         </tr>
+        
         <tr>
           <td class="table_header">コメ<br/>ント</td>
           <td colspan="4">

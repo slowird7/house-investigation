@@ -41,14 +41,19 @@ class CreateHouses < ActiveRecord::Migration[5.0]
       t.string :range_pre_survey
       t.string :range_ongoing_survey
       t.string :range_after_survey
-      # 調査日
+      # 調査開始日
       t.date :pre_survey_day, default: nil
       t.date :ongoing_survey_day, default: nil
       t.date :after_survey_day, default: nil
       # 調査終了日
-#      t.date :stop_pre_survey, default: nil
-#      t.date :stop_ongoing_survey, default: nil
-#      t.date :stop_after_survey, default: nil
+      t.date :end_pre_survey_day, default: nil
+      t.date :end_ongoing_survey_day, default: nil
+      t.date :end_after_survey_day, default: nil
+
+      # 並び替えON/OFFフラグ
+#      t.boolean :sort_sonsyos, default: false
+#      t.boolean :sort_keisyas, default: false
+#      t.boolean :sort_points, default: false
       
       t.references :investigation, foreign_key: true
 

@@ -94,10 +94,12 @@
           <%= f.label :range_pre_survey, '調査範囲' %>
           <%= f.text_field :range_pre_survey, :class=>"form-control" %>
         </div>
+        <% if false %><!-- コメントアウト -->
         <div class="form-group">
           <%= f.label :pre_survey_day, '調査日' %>
           <%= f.date_field :pre_survey_day, :class=>"form-control" %>
-        </div>        
+        </div>
+        <% end %><!-- コメントアウト -->
       </div>
       <hr/>      
       <div class="bg-info" style="padding:10px; margin-bottom:10px;">
@@ -110,10 +112,12 @@
           <%= f.label :range_ongoing_survey, '調査範囲' %>
           <%= f.text_field :range_ongoing_survey, :class=>"form-control" %>
         </div>
+        <% if false %><!-- コメントアウト -->
         <div class="form-group">
           <%= f.label :ongoing_survey_day, '調査日' %>
           <%= f.date_field :ongoing_survey_day, :class=>"form-control" %>
-        </div>         
+        </div>
+        <% end %><!-- コメントアウト -->
       </div>     
       <hr/>    
       <div class="bg-info" style="padding:10px; margin-bottom:10px;">
@@ -126,10 +130,12 @@
           <%= f.label :range_after_survey, '調査範囲' %>
           <%= f.text_field :range_after_survey, :class=>"form-control" %>
         </div>
+        <% if false %><!-- コメントアウト -->        
         <div class="form-group">
           <%= f.label :after_survey_day, '調査日' %>
           <%= f.date_field :after_survey_day, :class=>"form-control" %>
-        </div>          
+        </div>
+        <% end %><!-- コメントアウト -->
       </div>       
       <%= f.submit '登録', :class=>"btn btn-primary" %>
     <% end %>

@@ -179,54 +179,75 @@
   <% end %>
 </p>
 
-<table class="table table-striped table-hover">
-  <tr>
-    <th class="text-center"></th>
-    <th class="text-center">調査箇所</th>    
-    <th class="text-center">事前調査</th>
-    <th class="text-center">事中調査</th>
-    <th class="text-center">事後調査</th>
-    <th class="text-center"></th>    
-  </tr>
+<div class="table_inner_scroll_box">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center"><%= link_to "ID", house_path(id:@house, sort_sonsyo: "false", anchor: 'sonsyo') %></th>
+        <th class="text-center"><%= link_to "調査箇所", house_path(id:@house, sort_sonsyo: "true", anchor: 'sonsyo') %></th>    
+        <th class="text-center">事前調査</th>
+        <th class="text-center">事中調査</th>
+        <th class="text-center">事後調査</th>
+        <th class="text-center"></th>    
+      </tr>
+    </thead>
   
-  <% @sonsyos.each do |sonsyo| %>
-    <tr>
-      <td class="text-center align-middle">No.<%= sonsyo.number %></td>
-      <td class="text-center align-middle">
-        <% if sonsyo.room_name_other.present? %>
-          <%= link_to sonsyo.room_name + "/" + sonsyo.room_name_other, edit_sonsyo_path(sonsyo.id) %>
-        <% else %>
-          <%= link_to sonsyo.room_name, edit_sonsyo_path(sonsyo.id) %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
-          <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
-          <%= link_to pre_damage.updated_at.strftime('%Y/%m/%d'), pre_damage, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
-          <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
-          <%= link_to ongoing_damage.updated_at.strftime('%Y/%m/%d'), ongoing_damage, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
-          <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
-          <%= link_to after_damage.updated_at.strftime('%Y/%m/%d'), after_damage, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
-    </tr>
-  <% end %>
-</table>
+    <tbody>
+      <% @sonsyos.each do |sonsyo| %>
+        <tr id="sonsyo_id_<%= sonsyo.id %>">
+          <td class="text-center align-middle">No.<%= sonsyo.number %></td>
+          <td class="text-center align-middle">
+            <% if sonsyo.room_name_other.present? %>
+              <%= link_to sonsyo.room_name + "/" + sonsyo.room_name_other, edit_sonsyo_path(sonsyo.id) %>
+            <% else %>
+              <%= link_to sonsyo.room_name, edit_sonsyo_path(sonsyo.id) %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
+              <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
+              <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
+              <%# link_to pre_damage.updated_at.strftime('%Y/%m/%d'), pre_damage, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事前調査" %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
+              <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
+              <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
+              <%# link_to ongoing_damage.updated_at.strftime('%Y/%m/%d'), ongoing_damage, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事中調査" %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
+              <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+              <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
+              <%# link_to after_damage.updated_at.strftime('%Y/%m/%d'), after_damage, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事後調査" %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <hr/>
 
@@ -258,54 +279,75 @@
   <% end %>
 </p>
 
-<table class="table table-striped table-hover">
-  <tr>
-    <th class="text-center"></th>
-    <th class="text-center">調査箇所</th>    
-    <th class="text-center">事前調査</th>
-    <th class="text-center">事中調査</th>
-    <th class="text-center">事後調査</th>
-    <th class="text-center"></th>    
-  </tr>
-  
-  <% @keisyas.each do |keisya| %>
-    <tr>
-      <td class="text-center align-middle"><%= disp_alphabet(keisya.number) %></td>
-      <td class="text-center align-middle">
-        <% if keisya.room_name_other.present? %>
-          <%= link_to keisya.room_name + "/" + keisya.room_name_other, edit_keisya_path(keisya.id) %>
-        <% else %>
-          <%= link_to keisya.room_name, edit_keisya_path(keisya.id) %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if keisya.slopes.find_by(survey_type: "pre").image1? %>
-          <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
-          <%= link_to pre_slope.updated_at.strftime('%Y/%m/%d'), pre_slope, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if keisya.slopes.find_by(survey_type: "ongoing").image1? %>
-          <% ongoing_slope = keisya.slopes.find_by(survey_type: "ongoing") %>
-          <%= link_to ongoing_slope.updated_at.strftime('%Y/%m/%d'), ongoing_slope, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if keisya.slopes.find_by(survey_type: "after").image1? %>
-          <% after_slope = keisya.slopes.find_by(survey_type: "after") %>
-          <%= link_to after_slope.updated_at.strftime('%Y/%m/%d'), after_slope, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle"><%= link_to "削除", keisya, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="table_inner_scroll_box">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center"><%= link_to "ID", house_path(id:@house, sort_keisya: "false", anchor: 'keisya') %></th>
+        <th class="text-center"><%= link_to "調査箇所", house_path(id:@house, sort_keisya: "true", anchor: 'keisya') %></th>  
+        <th class="text-center">事前調査</th>
+        <th class="text-center">事中調査</th>
+        <th class="text-center">事後調査</th>
+        <th class="text-center"></th>    
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @keisyas.each do |keisya| %>
+        <tr id="keisya_id_<%= keisya.id %>">
+          <td class="text-center align-middle"><%= disp_alphabet(keisya.number) %></td>
+          <td class="text-center align-middle">
+            <% if keisya.room_name_other.present? %>
+              <%= link_to keisya.room_name + "/" + keisya.room_name_other, edit_keisya_path(keisya.id) %>
+            <% else %>
+              <%= link_to keisya.room_name, edit_keisya_path(keisya.id) %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if keisya.slopes.find_by(survey_type: "pre").image1? %>
+              <% pre_slope = keisya.slopes.find_by(survey_type: "pre") %>
+              <%= link_to image_tag(pre_slope.image2, class:"thumbnail"), pre_slope %>
+              <%# link_to pre_slope.updated_at.strftime('%Y/%m/%d'), pre_slope, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事前調査" %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if keisya.slopes.find_by(survey_type: "ongoing").image1? %>
+              <% ongoing_slope = keisya.slopes.find_by(survey_type: "ongoing") %>
+              <%= link_to image_tag(ongoing_slope.image2, class:"thumbnail"), ongoing_slope %>
+              <%# link_to ongoing_slope.updated_at.strftime('%Y/%m/%d'), ongoing_slope, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事中調査" %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if keisya.slopes.find_by(survey_type: "after").image1? %>
+              <% after_slope = keisya.slopes.find_by(survey_type: "after") %>
+              <%= link_to image_tag(after_slope.image2, class:"thumbnail"), after_slope %>
+              <%# link_to after_slope.updated_at.strftime('%Y/%m/%d'), after_slope, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事後調査" %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle"><%= link_to "削除", keisya, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <hr/>
 
@@ -328,60 +370,117 @@
   <% end %>
 </p>
 
-<table class="table table-striped table-hover">
-  <tr>
-    <th class="text-center"></th>
-    <th class="text-center">調査箇所</th>
-    <th class="text-center">事前調査</th>
-    <th class="text-center">事中調査</th>
-    <th class="text-center">事後調査</th>
-    <th class="text-center"></th>    
-  </tr>
-  
-  <% @points.each do |point| %>
-    <tr>
-      <td class="text-center align-middle">P.<%= point.number %></td>
-      <td class="text-center align-middle">
-        <% if point.room_name_other.present? %>
-          <%= link_to point.room_name + "/" + point.room_name_other, edit_point_path(point.id) %>
-        <% else %>
-          <%= link_to point.room_name, edit_point_path(point.id) %>
-        <% end %>        
-      </td>
-      <td class="text-center align-middle">
-        <% if point.posts.find_by(survey_type: "pre").image1? %>
-          <% pre_post = point.posts.find_by(survey_type: "pre") %>
-          <%= link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if point.posts.find_by(survey_type: "ongoing").image1? %>
-          <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
-          <%= link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle">
-        <% if point.posts.find_by(survey_type: "after").image1? %>
-          <% after_post = point.posts.find_by(survey_type: "after") %>
-          <%= link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
-        <% else %>
-          <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
-        <% end %>
-      </td>
-      <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
-    </tr>
-  <% end %>
-</table>
+
+<div class="table_inner_scroll_box">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center"><%= link_to "ID", house_path(id:@house, sort_point: "false", anchor: 'point') %></th>
+        <th class="text-center"><%= link_to "調査箇所", house_path(id:@house, sort_point: "true", anchor: 'point') %></th>  
+        <th class="text-center">事前調査</th>
+        <th class="text-center">事中調査</th>
+        <th class="text-center">事後調査</th>
+        <th class="text-center"></th>    
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @points.each do |point| %>
+        <tr id="point_id_<%= point.id %>">
+          <td class="text-center align-middle">P.<%= point.number %></td>
+          <td class="text-center align-middle">
+            <% if point.room_name_other.present? %>
+              <%= link_to point.room_name + "/" + point.room_name_other, edit_point_path(point.id) %>
+            <% else %>
+              <%= link_to point.room_name, edit_point_path(point.id) %>
+            <% end %>        
+          </td>
+          <td class="text-center align-middle">
+            <% if point.posts.find_by(survey_type: "pre").image1? %>
+              <% pre_post = point.posts.find_by(survey_type: "pre") %>
+              <%= link_to image_tag(pre_post.image2, class:"thumbnail"), pre_post %>
+              <%# link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事前調査" %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if point.posts.find_by(survey_type: "ongoing").image1? %>
+              <% ongoing_post = point.posts.find_by(survey_type: "ongoing") %>
+              <%= link_to image_tag(ongoing_post.image2, class:"thumbnail"), ongoing_post %>
+              <%# link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事中調査" %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if point.posts.find_by(survey_type: "after").image1? %>
+              <% after_post = point.posts.find_by(survey_type: "after") %>
+              <%= link_to image_tag(after_post.image2, class:"thumbnail"), after_post %>
+              <%# link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
+            <% else %>
+              <% if @investigation.status != "事後調査" %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+              <% else %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle"><%= link_to "削除", point, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <style>
 /* クリック・タッチを無効化 */
 .nullify {
   pointer-events: none;
-}  
+}
+
+/* テーブル内スクロール */
+.table_inner_scroll_box {
+  overflow-y: auto;
+  max-height: 400px;
+  -webkit-overflow-scrolling: touch;
+}
+.table_inner_scroll_box thead {
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+.table_inner_scroll_box thead::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  z-index: -1;
+}
+.table_inner_scroll_box th {
+  min-width: 76px;
+}
+.table_inner_scroll_box .thumbnail {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  max-height: 70px;
+  display: block;
+}
+.table_inner_scroll_box a:has(.thumbnail) {
+  display: inline-block;
+}
 </style>
 
 <script>
