@@ -1,0 +1,11 @@
+<% if start_day == end_day %>
+  <%= start_day %>
+<% elsif start_day == (end_day - 1) %>
+  <%= start_day %>, <%= end_day.strftime('%m/%d') %>
+<% else %>
+  <% if start_day.year == end_day.year %>
+    <%= start_day.strftime('%Y/%m/%d') %>～<%= end_day.strftime('%m/%d') %>
+  <% else %>
+    <%= start_day.strftime('%Y/%m/%d') %>～<%= end_day.strftime('%Y/%m/%d') %>
+  <% end %>
+<% end %>
