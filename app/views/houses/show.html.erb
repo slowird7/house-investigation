@@ -203,11 +203,40 @@
               <%= link_to sonsyo.room_name, edit_sonsyo_path(sonsyo.id) %>
             <% end %>
           </td>
+          
+          <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
           <td class="text-center align-middle">
             <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
               <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
               <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
-              <%# link_to pre_damage.updated_at.strftime('%Y/%m/%d'), pre_damage, :class=>"btn btn-default" %>
+            <% else %>
+              <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
+              <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
+              <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
+            <% else %>
+              <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
+              <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
+              <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
+            <% else %>
+              <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
+            <% end %>
+          </td>
+          <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
+          
+<% if false %><!-- コメントアウト -->
+          <!-- 新機能搭載ver -->
+          <td class="text-center align-middle">
+            <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
+              <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
+              <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
@@ -220,7 +249,6 @@
             <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
               <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
               <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
-              <%# link_to ongoing_damage.updated_at.strftime('%Y/%m/%d'), ongoing_damage, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
@@ -233,7 +261,6 @@
             <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
               <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
               <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
-              <%# link_to after_damage.updated_at.strftime('%Y/%m/%d'), after_damage, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
@@ -242,6 +269,9 @@
               <% end %>
             <% end %>
           </td>
+          <!-- 新機能搭載ver -->
+<% end %><!-- コメントアウト -->
+
           <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
         </tr>
       <% end %>
@@ -510,7 +540,7 @@ function setHierarchySelectEvent(parentSelect, childSelect){
           }
       });
     }
-    $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
+    $(childSelect).val('').change();
   });
 }
 ////////////////////////////////////////
