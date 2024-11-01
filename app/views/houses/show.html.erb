@@ -205,30 +205,17 @@
           </td>
           
           <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
+          <!-- 写真表示機能削除ver -->
           <td class="text-center align-middle">
-            <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
-              <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
-              <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
-            <% else %>
-              <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
-            <% end %>
+            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
           </td>
           <td class="text-center align-middle">
-            <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
-              <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
-              <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
-            <% else %>
-              <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
-            <% end %>
+            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
           </td>
           <td class="text-center align-middle">
-            <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
-              <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
-              <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
-            <% else %>
-              <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
-            <% end %>
+            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
           </td>
+          <!-- 写真表示機能削除ver -->
           <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
           
 <% if false %><!-- コメントアウト -->
