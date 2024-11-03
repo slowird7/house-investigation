@@ -206,18 +206,17 @@
           
           <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
           <!-- 写真表示機能削除ver -->
+          <!-- Bootstrapの機能一部削除ver -->
           <td class="text-center align-middle">
-            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
+            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"shooting" %>              
           </td>
           <td class="text-center align-middle">
-            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
+            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"shooting" %>
           </td>
           <td class="text-center align-middle">
-            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
+            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"shooting" %>
           </td>
-          <!-- 写真表示機能削除ver -->
-          <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
-          
+
 <% if false %><!-- コメントアウト -->
           <!-- 新機能搭載ver -->
           <td class="text-center align-middle">
@@ -605,20 +604,20 @@ $(document).ready(function() {
   ////////////////////////////////////
   // ユーザーエージェントの取得
   var userAgentResult = navigator.userAgent;
-  //console.log(userAgentResult);
+  console.log(userAgentResult);
     
   // ユーザーエージェントにより、処理を切り分け
   if(userAgentResult.match(/iPhone/))
   {
-    //console.log("iPhoneです");
+    console.log("iPhoneです");
   }
   else if(userAgentResult.match(/iPad/))
   {
-    //console.log("iPadです");    
+    console.log("iPadです");    
   }
   else
   {
-    //console.log("その他の端末です");
+    console.log("その他の端末です");
     $(".shooting").addClass("nullify");
   }
 });
