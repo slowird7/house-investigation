@@ -193,6 +193,24 @@
     </thead>
   
     <tbody>
+      <tr id="sonsyo_id_1">
+        <td class="text-center align-middle">No.1</td>
+        <td class="text-center align-middle">
+            <a href="/sonsyos/1/edit">全景</a>
+        </td>
+        <td class="text-center align-middle">
+          <a href="/damages/1/edit?sonsyo_id=1&amp;survey_type=pre">撮影</a>              
+        </td>
+        <td class="text-center align-middle">
+          <a href="/damages/1/edit?sonsyo_id=1&amp;survey_type=ongoing">撮影</a>
+        </td>
+        <td class="text-center align-middle">
+          <a href="/damages/1/edit?sonsyo_id=1&amp;survey_type=after">撮影</a>
+        </td>
+        <td class="text-center align-middle"><a class="btn btn-danger" data-confirm="本当に削除してよろしいですか？" rel="nofollow" data-method="delete" href="/sonsyos/1">削除</a></td>
+      </tr>
+        
+<% if false %><!-- コメントアウト -->
       <% @sonsyos.each do |sonsyo| %>
         <tr id="sonsyo_id_<%= sonsyo.id %>">
           <td class="text-center align-middle">No.<%= sonsyo.number %></td>
@@ -204,20 +222,6 @@
             <% end %>
           </td>
           
-          <!-- ステータスによる撮影ボタンの有効無効切り替え機能削除ver -->
-          <!-- 写真表示機能削除ver -->
-          <!-- Bootstrapの機能一部削除ver -->
-          <td class="text-center align-middle">
-            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre") %>              
-          </td>
-          <td class="text-center align-middle">
-            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing") %>
-          </td>
-          <td class="text-center align-middle">
-            <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after") %>
-          </td>
-
-<% if false %><!-- コメントアウト -->
           <!-- 新機能搭載ver -->
           <td class="text-center align-middle">
             <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
@@ -256,11 +260,10 @@
             <% end %>
           </td>
           <!-- 新機能搭載ver -->
-<% end %><!-- コメントアウト -->
-
           <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
         </tr>
       <% end %>
+<% end %><!-- コメントアウト -->
     </tbody>
   </table>
 </div>
