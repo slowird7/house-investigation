@@ -193,24 +193,6 @@
     </thead>
   
     <tbody>
-      <tr id="sonsyo_id_1">
-        <td class="text-center align-middle">No.1</td>
-        <td class="text-center align-middle">
-            <a href="/sonsyos/1/edit">全景</a>
-        </td>
-        <td class="text-center align-middle">
-          <a href="/damages/1/edit?sonsyo_id=1&amp;survey_type=pre">撮影</a>              
-        </td>
-        <td class="text-center align-middle">
-          <a href="/damages/1/edit?sonsyo_id=1&amp;survey_type=ongoing">撮影</a>
-        </td>
-        <td class="text-center align-middle">
-          <a href="/damages/1/edit?sonsyo_id=1&amp;survey_type=after">撮影</a>
-        </td>
-        <td class="text-center align-middle"><a class="btn btn-danger" data-confirm="本当に削除してよろしいですか？" rel="nofollow" data-method="delete" href="/sonsyos/1">削除</a></td>
-      </tr>
-        
-<% if false %><!-- コメントアウト -->
       <% @sonsyos.each do |sonsyo| %>
         <tr id="sonsyo_id_<%= sonsyo.id %>">
           <td class="text-center align-middle">No.<%= sonsyo.number %></td>
@@ -263,7 +245,6 @@
           <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
         </tr>
       <% end %>
-<% end %><!-- コメントアウト -->
     </tbody>
   </table>
 </div>
@@ -466,18 +447,20 @@
   pointer-events: none;
 }
 
-/* テーブル内スクロール */
+/* テーブル内スクロール *
 .table_inner_scroll_box {
   overflow-y: auto;
   max-height: 400px;
   -webkit-overflow-scrolling: touch;
 }
-.table_inner_scroll_box thead {
+.table_inner_scroll_box thead th {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 9;
 }
-.table_inner_scroll_box thead::before {
+.table_inner_scroll_box thead th::before {
   content: "";
   position: absolute;
   top: 0;
@@ -487,6 +470,8 @@
   background: #eee;
   z-index: -1;
 }
+*/
+
 .table_inner_scroll_box th {
   min-width: 76px;
 }
@@ -612,17 +597,17 @@ $(document).ready(function() {
   // ユーザーエージェントにより、処理を切り分け
   if(userAgentResult.match(/iPhone/))
   {
-    alert(userAgentResult + "\niPhoneです");
+    //alert(userAgentResult + "\niPhoneです");
     console.log("iPhoneです");
   }
   else if(userAgentResult.match(/iPad/))
   {
-    alert(userAgentResult + "\niPadです");
+    //alert(userAgentResult + "\niPadです");
     console.log("iPadです");    
   }
   else
   {
-    alert(userAgentResult + "\nその他の端末です");
+    //alert(userAgentResult + "\nその他の端末です");
     console.log("その他の端末です");
     $(".shooting").addClass("nullify");
   }
