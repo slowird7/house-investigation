@@ -9,8 +9,8 @@ $('#<%= selector %>').on('change', function (e) {
       // プレビュー画像のサイズ取得
       var previewImgW = $('#previewImg').width();
       var previewImgH = $('#previewImg').height();
-      // 倍率
-      var ex = 12;
+      // 倍率（高画質化のため）
+      var ex = 1;
       
       if(imgW >= imgH) // 横長
       {       
