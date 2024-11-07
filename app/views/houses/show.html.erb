@@ -203,15 +203,14 @@
               <%= link_to sonsyo.room_name, edit_sonsyo_path(sonsyo.id) %>
             <% end %>
           </td>
-          
-          <!-- 新機能搭載ver -->
           <td class="text-center align-middle">
             <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
               <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
               <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%# link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true, :style=>"pointer-events: none;" %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
               <% end %>
@@ -223,7 +222,8 @@
               <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%# link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true, :style=>"pointer-events: none;" %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -235,13 +235,13 @@
               <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%# link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true, :style=>"pointer-events: none;" %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
             <% end %>
           </td>
-          <!-- 新機能搭載ver -->
           <td class="text-center align-middle"><%= link_to "削除", sonsyo, :class=>"btn btn-danger", method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %></td>
         </tr>
       <% end %>
