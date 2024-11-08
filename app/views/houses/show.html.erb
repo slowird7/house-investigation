@@ -209,8 +209,7 @@
               <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%# link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true, :style=>"pointer-events: none;" %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
               <% end %>
@@ -222,8 +221,7 @@
               <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%# link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true, :style=>"pointer-events: none;" %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -235,8 +233,7 @@
               <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%# link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true, :style=>"pointer-events: none;" %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -310,7 +307,7 @@
               <%# link_to pre_slope.updated_at.strftime('%Y/%m/%d'), pre_slope, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -323,7 +320,7 @@
               <%# link_to ongoing_slope.updated_at.strftime('%Y/%m/%d'), ongoing_slope, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -336,7 +333,7 @@
               <%# link_to after_slope.updated_at.strftime('%Y/%m/%d'), after_slope, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -402,7 +399,7 @@
               <%# link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -415,7 +412,7 @@
               <%# link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -428,7 +425,7 @@
               <%# link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
