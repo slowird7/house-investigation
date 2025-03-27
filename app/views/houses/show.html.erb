@@ -207,10 +207,9 @@
             <% if sonsyo.damages.find_by(survey_type: "pre").image1? %>
               <% pre_damage = sonsyo.damages.find_by(survey_type: "pre") %>
               <%= link_to image_tag(pre_damage.image2, class:"thumbnail"), pre_damage  %>
-              <%# link_to pre_damage.updated_at.strftime('%Y/%m/%d'), pre_damage, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>              
               <% end %>
@@ -220,10 +219,9 @@
             <% if sonsyo.damages.find_by(survey_type: "ongoing").image1? %>
               <% ongoing_damage = sonsyo.damages.find_by(survey_type: "ongoing") %>
               <%= link_to image_tag(ongoing_damage.image2, class:"thumbnail"), ongoing_damage %>
-              <%# link_to ongoing_damage.updated_at.strftime('%Y/%m/%d'), ongoing_damage, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -233,10 +231,9 @@
             <% if sonsyo.damages.find_by(survey_type: "after").image1? %>
               <% after_damage = sonsyo.damages.find_by(survey_type: "after") %>
               <%= link_to image_tag(after_damage.image2, class:"thumbnail"), after_damage %>
-              <%# link_to after_damage.updated_at.strftime('%Y/%m/%d'), after_damage, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_damage_path(sonsyo_id: sonsyo.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -310,7 +307,7 @@
               <%# link_to pre_slope.updated_at.strftime('%Y/%m/%d'), pre_slope, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -323,7 +320,7 @@
               <%# link_to ongoing_slope.updated_at.strftime('%Y/%m/%d'), ongoing_slope, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -336,7 +333,7 @@
               <%# link_to after_slope.updated_at.strftime('%Y/%m/%d'), after_slope, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_slope_path(keisya_id: keisya.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -402,7 +399,7 @@
               <%# link_to pre_post.updated_at.strftime('%Y/%m/%d'), pre_post, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事前調査" %>
-                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "pre"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -415,7 +412,7 @@
               <%# link_to ongoing_post.updated_at.strftime('%Y/%m/%d'), ongoing_post, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事中調査" %>
-                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "ongoing"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -428,7 +425,7 @@
               <%# link_to after_post.updated_at.strftime('%Y/%m/%d'), after_post, :class=>"btn btn-default" %>
             <% else %>
               <% if @investigation.status != "事後調査" %>
-                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting", :disabled => true %>
+                <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary nullify", :disabled => true %>
               <% else %>
                 <%= link_to '撮影', edit_post_path(point_id: point.id, survey_type: "after"), :class=>"btn btn-primary shooting" %>
               <% end %>
@@ -453,12 +450,14 @@
   max-height: 400px;
   -webkit-overflow-scrolling: touch;
 }
-.table_inner_scroll_box thead {
+.table_inner_scroll_box thead th {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 9;
 }
-.table_inner_scroll_box thead::before {
+.table_inner_scroll_box thead th::before {
   content: "";
   position: absolute;
   top: 0;
@@ -468,6 +467,7 @@
   background: #eee;
   z-index: -1;
 }
+
 .table_inner_scroll_box th {
   min-width: 76px;
 }
@@ -510,7 +510,7 @@ function setHierarchySelectEvent(parentSelect, childSelect){
           }
       });
     }
-    $(childSelect).val('').change();//未選択時の値は''じゃない場合は書き換えてね
+    $(childSelect).val('').change();
   });
 }
 ////////////////////////////////////////
@@ -588,20 +588,23 @@ $(document).ready(function() {
   ////////////////////////////////////
   // ユーザーエージェントの取得
   var userAgentResult = navigator.userAgent;
-  //console.log(userAgentResult);
+  console.log(userAgentResult);
     
   // ユーザーエージェントにより、処理を切り分け
   if(userAgentResult.match(/iPhone/))
   {
-    //console.log("iPhoneです");
+    //alert(userAgentResult + "\niPhoneです");
+    console.log("iPhoneです");
   }
   else if(userAgentResult.match(/iPad/))
   {
-    //console.log("iPadです");    
+    //alert(userAgentResult + "\niPadです");
+    console.log("iPadです");    
   }
   else
   {
-    //console.log("その他の端末です");
+    //alert(userAgentResult + "\nその他の端末です");
+    console.log("その他の端末です");
     $(".shooting").addClass("nullify");
   }
 });
