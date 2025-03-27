@@ -32,12 +32,12 @@ class PointsController < ApplicationController
       post.save
       
       flash[:success] = '正常に測点（レベル）を登録しました。'
+      redirect_to house_path(@house, anchor: 'point_id_'+ @point.id.to_s)
     else
       @points = @house.points.order('created_at DESC')
       flash.now[:danger] = '失敗しました。'
+      redirect_to house_path(@house, anchor: 'point')
     end
-    #redirect_to @house
-    redirect_to house_path(@house, anchor: 'point')
   end
   
   def edit

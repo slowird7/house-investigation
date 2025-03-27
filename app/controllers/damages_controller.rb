@@ -83,10 +83,6 @@ class DamagesController < ApplicationController
     exif3 = MiniExiftool.new(@damage.image3.path)    
 
     exif3.date_time_original = exif1.date_time_original
-    datetime = Time.current
-    exif1.date_time_original = datetime
-    exif1.save
-    exif3.date_time_original = datetime
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）
@@ -97,6 +93,9 @@ class DamagesController < ApplicationController
     
     # ハッシュ付き画像も保存
     if @damage.save
+      # 調査日の更新
+      update_survey_day(@house, @damage)
+
       flash[:success] = '正常に更新されました。'
       redirect_to house_path(@house, anchor: 'sonsyo')
     else
@@ -110,6 +109,7 @@ class DamagesController < ApplicationController
   def damage_params
     params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :survey_type, 
       :zenshu, :amimejyo, :zencho, :wide, :length, :width, :height, :comment,
+      :zenshu2, :amimejyo2, :zencho2, :wide2, :length2, :width2, :height2,
       :image1, :image2, :image3, :image1_cache, :image2_cache, :image3_cache, :image_url, :original_image_url)
 #    params.require(:damage).permit(:tekiyo, :sonsyo_id, :position_wb, :genkyo, :sukima, :ware, :kake, :amimejyo, :zencho, :crack, :tile, :kire, :uki, :suhon, :zenshu,
 #                                  :chirigire, :cross, :meji, :tategu, :tasu, :kakusyo, :wide, :length, :width, :height, :comment,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191107125835) do
+ActiveRecord::Schema.define(version: 20241003164543) do
 
   create_table "choices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20191107125835) do
   create_table "damages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "survey_type"
     t.integer  "position_wb",                   default: 0
-    t.string   "tekiyo"
     t.boolean  "genkyo",                        default: false
     t.boolean  "sukima",                        default: false
     t.boolean  "ware",                          default: false
@@ -54,6 +53,14 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.integer  "sonsyo_id"
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
+    t.string   "tekiyo"
+    t.boolean  "amimejyo2",                     default: false
+    t.boolean  "zencho2",                       default: false
+    t.boolean  "zenshu2",                       default: false
+    t.float    "wide2",              limit: 24
+    t.float    "length2",            limit: 24
+    t.float    "width2",             limit: 24
+    t.float    "height2",            limit: 24
     t.index ["sonsyo_id"], name: "index_damages_on_sonsyo_id", using: :btree
   end
 
@@ -87,12 +94,15 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.string   "range_pre_survey"
     t.string   "range_ongoing_survey"
     t.string   "range_after_survey"
-    t.date     "pre_survey_day"
-    t.date     "ongoing_survey_day"
-    t.date     "after_survey_day"
     t.integer  "investigation_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.date     "pre_survey_day"
+    t.date     "ongoing_survey_day"
+    t.date     "after_survey_day"
+    t.date     "end_pre_survey_day"
+    t.date     "end_ongoing_survey_day"
+    t.date     "end_after_survey_day"
     t.index ["investigation_id"], name: "index_houses_on_investigation_id", using: :btree
   end
 
@@ -112,8 +122,11 @@ ActiveRecord::Schema.define(version: 20191107125835) do
     t.date     "stop_pre_survey"
     t.date     "stop_ongoing_survey"
     t.date     "stop_after_survey"
+    t.string   "code"
+    t.string   "password"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "status"
   end
 
   create_table "keisyas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

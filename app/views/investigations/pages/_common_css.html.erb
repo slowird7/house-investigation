@@ -4,6 +4,7 @@ body {
   padding: 0;
   background-color: #FAFAFA;
   font-size: 12pt;
+  font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','Meiryo UI','メイリオ',Verdana,'ＭＳ Ｐゴシック',sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -27,6 +28,47 @@ body {
   
   page-break-after: always;  
 }
+
+/**************************************/
+.photo_book .photo img {
+  width: auto;
+  height: auto;
+  max-width: 460px;
+  max-height: 330px;
+}
+
+.photo_book .book {
+  width: 150px;
+  height: auto !important;
+}
+.photo_book .book table {
+  border: none !important;
+}
+.photo_book .book table td {
+  padding-bottom:0px;
+  padding-left:0px;
+  padding-right:0px;
+  /*
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  */
+}
+.photo_book .book table .header td {
+  border-bottom: solid 1px !important;
+  font-size:1.2em;
+}
+.photo_book .book table .body td {
+  border-bottom: dotted 1px !important;
+}
+/* セルの最小heightを設定 */
+.photo_book .book table .body td:first-child:before {
+  display: block;
+  float: left;
+  height: 12px;
+  content: "";
+}
+/**************************************/
 
 @page {
   size: A4;

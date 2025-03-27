@@ -28,4 +28,15 @@ class ApplicationRecord < ActiveRecord::Base
   $OUTSIDE_NAME = [["", ""], ["外部北面", "外部北面"], ["外部東面", "外部東面"], ["外部南面", "外部南面"], ["外部西面", "外部西面"], ["塀北", "塀北"],
                    ["塀北（内）", "塀北（内）"], ["塀東", "塀東"], ["塀東（内）", "塀東（内）"], ["塀南", "塀南"], ["塀南（内）", "塀南（内）"],
                    ["塀西", "塀西"], ["塀西（内）", "塀西（内）"], ["擁壁", "擁壁"], ["その他", "その他"]]
+  $INVESTIGATION_STATUS = [["事前調査", "事前調査"], ["事中調査", "事中調査"], ["事後調査", "事後調査"]]
+  $TEKIYO_LIST = [["現況", "genkyo"], ["クラック", "crack"], ["チリ切レ", "chirigire"], ["補修済", "hosyuzumi"], ["改装済", "kaisouzumi"], 
+                  ["隙間", "sukima"], ["割レ", "ware"], ["破損", "hason"], ["浮キ", "uki"], ["欠ケ", "kake"],
+                  ["タワミ", "tawami"], ["切レ", "kire"], ["コスレ", "kosure"], ["キシミ", "kishimi"], ["下リ", "kudari"],
+                  ["剥離", "hakuri"], ["シミ跡", "shimiato"], ["補修跡", "hosyuato"], ["白華", "hakka"], ["欠落", "ketsuraku"],
+                  ["不陸", "furoku"], ["目地", "meji"], ["建具", "tategu"], ["H(高さ)", "htakasa"], ["ズレ", "zure"], 
+                  ["段差", "dansa"], ["全長", "zencho"], ["全周", "zensyu"], ["左上中下", "hidarijyougenakasita"], ["中上中下", "nakauenakasita"],
+                  ["右上中下", "migiuenakasita"],
+                  #["タイル", "tile"], ["クロス", "cross"],
+                  #["床", "yuka"], ["コーキング", "caulking"], ["ブロック", "block"], ["壁", "kabe"], ["天井", "tenjyo"],
+                  ]
 end

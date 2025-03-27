@@ -76,10 +76,6 @@ class SlopesController < ApplicationController
     exif1 = MiniExiftool.new(@slope.image1.path)
     exif3 = MiniExiftool.new(@slope.image3.path)
     exif3.date_time_original = exif1.date_time_original
-    datetime = Time.current
-    exif1.date_time_original = datetime
-    exif1.save
-    exif3.date_time_original = datetime
     exif3.save
 
     # 信憑性のチェック（ハッシュ値の付加）
@@ -90,6 +86,9 @@ class SlopesController < ApplicationController
     
     # ハッシュ付き画像も保存
     if @slope.save
+      # 調査日の更新
+      update_survey_day(@house, @slope)
+      
       flash[:success] = '正常に更新されました。'
       redirect_to house_path(@house, anchor: 'keisya')
     else

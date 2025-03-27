@@ -26,6 +26,9 @@ class CreateInvestigations < ActiveRecord::Migration[5.0]
       
       # パスワード
       t.string :password
+      
+      # ステータス
+      t.string :status
 
       t.timestamps
     end
