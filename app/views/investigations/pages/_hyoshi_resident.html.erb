@@ -9,11 +9,17 @@
       <div class="investigation_footer">
         <p>調査日：
           <% if survey_type == 'pre' or survey_type == '事前' %>
-            <%= disp_wareki(house.pre_survey_day) %>
+            <% #disp_wareki(house.pre_survey_day) %>
+            <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.pre_survey_day, end_day: house.end_pre_survey_day, calendar: "wareki" %>
           <% elsif survey_type == 'ongoing' or survey_type == '事中' %>
-            <%= disp_wareki(house.ongoing_survey_day) %>
+            <% #disp_wareki(house.ongoing_survey_day) %>
+            <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.ongoing_survey_day, end_day: house.end_ongoing_survey_day, calendar: "wareki" %>
           <% elsif survey_type == 'after' or survey_type == '事後' %>
-            <%= disp_wareki(house.after_survey_day) %>
+            <% #disp_wareki(house.after_survey_day) %>
+            <%= render 'investigations/pages/disp_chosabi', 
+                start_day: house.after_survey_day, end_day: house.end_after_survey_day, calendar: "wareki" %>
           <% end %>
         </p>
         <p>施工者：<%= @investigation.builder %></p>

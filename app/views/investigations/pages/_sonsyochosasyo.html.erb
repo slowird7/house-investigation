@@ -1,3 +1,9 @@
+<!--
+　23/06/28
+　表の行数を変更
+　きんそく様には未提出
+-->
+
 <% @houses.each do |house| %>
   <!-- 1ページ目 -->
   <div class="page horizontal_parent">
@@ -16,11 +22,17 @@
             <td>調査年月日</td>
             <td>
               <% if survey_type_1 == "事前" %>
-                <%= house.pre_survey_day %>
+                <% #house.pre_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                  start_day: house.pre_survey_day, end_day: house.end_pre_survey_day, calendar: "seireki" %>
               <% elsif survey_type_1 == "事中" %>
-                <%= house.ongoing_survey_day %>
+                <% #house.ongoing_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                  start_day: house.ongoing_survey_day, end_day: house.end_ongoing_survey_day, calendar: "seireki" %>
               <% elsif survey_type_1 == "事後" %>
-                <%= house.after_survey_day %>
+                <% #house.after_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                  start_day: house.after_survey_day, end_day: house.end_after_survey_day, calendar: "seireki" %>                
               <% end %>
             </td>
           </tr>
@@ -50,11 +62,17 @@
             <td>調査年月日</td>
             <td>
               <% if survey_type_2 == "事前" %>
-                <%= house.pre_survey_day %>
+                <% #house.pre_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                  start_day: house.pre_survey_day, end_day: house.end_pre_survey_day, calendar: "seireki" %>
               <% elsif survey_type_2 == "事中" %>
-                <%= house.ongoing_survey_day %>
+                <% #house.ongoing_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                  start_day: house.ongoing_survey_day, end_day: house.end_ongoing_survey_day, calendar: "seireki" %>
               <% elsif survey_type_2 == "事後" %>
-                <%= house.after_survey_day %>
+                <% #house.after_survey_day %>
+                <%= render 'investigations/pages/disp_chosabi', 
+                  start_day: house.after_survey_day, end_day: house.end_after_survey_day, calendar: "seireki" %>
               <% end %> 
             </td>
           </tr>
@@ -74,28 +92,26 @@
         </table>
         
         <table class="table table-bordered table_padding_yon_important" style="font-size:10px;">
-          <thead class="table table-bordered table_header_important text-center align-middle">
           <tr>
-            <td class="align-middle" rowspan="2">名称（室名）</td>
+            <td rowspan="2">名称（室名）</td>
             <td style="width:45%;" colspan="4"><%= survey_type_1 %>調査</td>
             <td style="width:45%;" colspan="3"><%= survey_type_2 %>調査</td>
           </tr>
           <tr>
-            <td width="6%">各部仕上材</td>
-            <td width="6%">写真番号</td>
-            <td width="25%">損傷の状況</td>
-            <td width="10%">備考</td>
-            <td width="6%">写真番号</td>
-            <td width="25%">損傷の状況</td>
-            <td width="10%">備考</td>        
+            <td>各部仕上材</td>
+            <td>写真番号</td>
+            <td>損傷の状況</td>
+            <td>備考</td>
+            <td>写真番号</td>
+            <td>損傷の状況</td>
+            <td>備考</td>        
           </tr>
-          </thead>
           
           <% num_exist = 0 %><!-- 存在したデータ数 -->
-          <% num_per_fist_page = 14 %><!-- 先頭から14件分のデータを1ページ目に表示 -->
+          <% num_per_fist_page = 8 %><!-- 先頭から8件分のデータを1ページ目に表示 -->
           <% house.sonsyos.first(num_per_fist_page).each do |sonsyo| %>
             <tr>
-              <td class="text-center align-middle">
+              <td class="text-center">
                 <% if sonsyo.room_name == "その他" %>
                   <%= sonsyo.room_name_other %>
                 <% else %>
@@ -109,8 +125,8 @@
                   <% end %>
                 <% end %><!-- コメントアウト -->                  
               </td>
-              <td style="width:6%;" class="text-center align-middle">－</td>
-              <td style="width:6%;" class="text-center align-middle"><%= sonsyo.number %></td>
+              <td style="width:6%;" class="text-center">－</td>
+              <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
               <% 
                 if survey_type_1 == "事前"
                   damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -121,16 +137,15 @@
                 end
               %>  
               <td>
-                <%= damage.tekiyo %>&nbsp;&nbsp;
+                <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;<% end %>
+                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
                 <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
-                <br/>
               </td>
               <td><%= damage.comment %></td><!-- 備考 -->
               
-              <td style="width:6%;" class="text-center align-middle"><%= sonsyo.number %></td>
+              <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
               <% 
                 if survey_type_2 == "事前"
                   damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -141,9 +156,9 @@
                 end
               %>
               <td>
-                <%= damage.tekiyo %>&nbsp;&nbsp;
+                <%= damage.tekiyo %><br/>
                 <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;<% end %>
+                <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <br/>
                 <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                 <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
@@ -156,10 +171,10 @@
           <!-- 空欄枠の表示 -->
           <% while num_exist < num_per_fist_page do %>
             <tr>
-              <td>　</td>
-              <td style="width:6%;"  class="text-center align-middle">－<br/>　</td>
-              <td>　</td>
-              <td>　</td>
+              <td class="text-center" style="width:10%;">　</td>
+              <td style="width:6%;" class="text-center">－</td>
+              <td style="width:6%;" class="text-center">　</td>
+              <td>　<br/>　</td>
               <td>　</td>
               <td>　</td>
               <td>　</td>
@@ -174,7 +189,7 @@
   </div>
   
   <!-- 2ページ目以降 -->
-  <% num_per_page = 21 %><!-- 1ページあたり21件表示 -->
+  <% num_per_page = 13 %><!-- 1ページあたり13件表示 -->
   <% sonsyos = house.sonsyos %>
   <% remaining_sonsyos = sonsyos.count - num_per_fist_page %><!-- 1ページ目に表示した分をマイナス -->
   <% if remaining_sonsyos > 0 then %>
@@ -190,30 +205,14 @@
       <div class="page horizontal_parent">
         <div class="horizontal">
           <div class="horizontal_child">  
-            <table class="table table-bordered table_padding_yon_important" style="font-size:10px; margin-bottom: 0;">
-              <thead class="table table-bordered table_header_important text-center align-middle">
-                <tr>
-                  <td class="text-center align-middle" rowspan="2">名称（室名）</td>
-                  <td style="width:45%;" colspan="4"><%= survey_type_1 %>調査</td>
-                  <td style="width:45%;" colspan="3"><%= survey_type_2 %>調査</td>
-                </tr>
-                <tr>
-                  <td width="6%">各部仕上材</td>
-                  <td width="6%">写真番号</td>
-                  <td width="25%">損傷の状況</td>
-                  <td width="10%">備考</td>
-                  <td width="6%">写真番号</td>
-                  <td width="25%">損傷の状況</td>
-                  <td width="10%">備考</td>        
-                </tr>
-              </thead>
+            <table class="table table-bordered" style="font-size:10px;">
               <% num_exist = 0 %><!-- 存在したデータ数 -->
 
               <% sonsyos[start..stop].each do |sonsyo| %>
                 <tr>
-                  <td class="text-center align-middle"><%= sonsyo.room_name %></td>
-                  <td style="width:6%;" class="text-center align-middle">－</td>
-                  <td style="width:6%;" class="text-center align-middle"><%= sonsyo.number %></td>
+                  <td class="text-center" style="width:10%;"><%= sonsyo.room_name %></td>
+                  <td style="width:6%;" class="text-center">－</td>
+                  <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
                   
                   <% 
                     if survey_type_1 == "事前"
@@ -224,17 +223,16 @@
                       damage = sonsyo.damages.find_by(survey_type: "after")
                     end
                   %>  
-                  <td width="25%">
-                    <%= damage.tekiyo %>&nbsp;&nbsp;
+                  <td>
+                    <%= damage.tekiyo %><br/>
                     <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <br/>
                     <% if damage.width.present? && damage.height.present? %>A&nbsp;=&nbsp;<%= damage.width %>&nbsp;x&nbsp;<%= damage.height %>&nbsp;cm<% end %>
-                    <br/>
                   </td>
-                  <td width="10%"><%= damage.comment %></td><!-- 備考 -->
+                  <td><%= damage.comment %></td><!-- 備考 -->
 
-                  <td style="width:6%;" class="text-center align-middle"><%= sonsyo.number %></td>
+                  <td style="width:6%;" class="text-center"><%= sonsyo.number %></td>
                   <% 
                     if survey_type_2 == "事前"
                       damage = sonsyo.damages.find_by(survey_type: "pre")
@@ -244,16 +242,15 @@
                       damage = sonsyo.damages.find_by(survey_type: "after")
                     end
                   %>
-                  <td width="25%">
-                    <%= damage.tekiyo %>&nbsp;&nbsp;
+                  <td>
+                    <%= damage.tekiyo %><br/>
                     <% if damage.wide.present? %>W&nbsp;=&nbsp;<%= damage.wide %>&nbsp;mm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;cm&nbsp;&nbsp;&nbsp;<% end %>
+                    <% if damage.length.present? %>L&nbsp;=&nbsp;<%= damage.length %>&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <br/>
                     <% if damage.width.present? %>Width&nbsp;=&nbsp;<%= damage.width %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
                     <% if damage.height.present? %>Height&nbsp;=&nbsp;<%= damage.height %>&nbsp;cm&nbsp;&nbsp;&nbsp;&nbsp;<% end %>
-                    <br/>
                   </td>
-                  <td width="10%"><%= damage.comment %></td><!-- 備考 -->
+                  <td><%= damage.comment %></td><!-- 備考 -->
                 </tr>
                 
                 <% num_exist+=1 %>
@@ -262,10 +259,10 @@
               <!-- 空欄枠の表示 -->
               <% while num_exist < num_per_page do %>
                 <tr>
-                  <td>　</td>
-                  <td style="width:6%;"  class="text-center align-middle">－<br/>　</td>
-                  <td>　</td>
-                  <td>　</td>
+                  <td class="text-center" style="width:10%;">　</td>
+                  <td style="width:6%;" class="text-center">－</td>
+                  <td style="width:6%;" class="text-center">　</td>
+                  <td>　<br/>　</td>
                   <td>　</td>
                   <td>　</td>
                   <td>　</td>
@@ -349,16 +346,9 @@
 
 <style>
 .table_padding_yon_important td {
-  padding: 1px !important;
-  line-height:1.2 !important;
-}
-
-
-.table_header_important td {
   padding: 4px !important;
-  line-height: normal !important;
+  height: 38px;
 }
-
 .horizontal_parent {
   position: relative;
 }

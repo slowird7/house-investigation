@@ -2,11 +2,23 @@
   <tr>
     <td>調査日</td>
     <% if survey_type == 'pre' or survey_type == '事前' %>
-      <td colspan="2"><%= house.pre_survey_day %></td>
+      <td colspan="2">
+        <% #house.pre_survey_day %>
+        <%= render 'investigations/pages/disp_chosabi', 
+            start_day: house.pre_survey_day, end_day: house.end_pre_survey_day, calendar: "seireki" %>
+      </td>
     <% elsif survey_type == 'ongoing' or survey_type == '事中' %>
-      <td colspan="2"><%= house.ongoing_survey_day %></td>
+      <td colspan="2">
+        <% #house.ongoing_survey_day %>
+        <%= render 'investigations/pages/disp_chosabi', 
+            start_day: house.ongoing_survey_day, end_day: house.end_ongoing_survey_day, calendar: "seireki" %>
+      </td>
     <% elsif survey_type == 'after' or survey_type == '事後' %>
-      <td colspan="2"><%= house.after_survey_day %></td>
+      <td colspan="2">
+        <% #house.after_survey_day %>
+        <%= render 'investigations/pages/disp_chosabi', 
+            start_day: house.after_survey_day, end_day: house.end_after_survey_day, calendar: "seireki" %>
+      </td>
     <% end %>    
     <td>ご承諾印</td>        
   </tr>
