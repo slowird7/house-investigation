@@ -20,29 +20,37 @@ class ApplicationController < ActionController::Base
   
   # 調査日の更新
   def update_survey_day(house, target)
+    #binding.pry
+    
     if target.survey_type == "pre"
       if house.pre_survey_day == nil
         # 調査開始日
-        house.pre_survey_day = target.created_at
+        # house.pre_survey_day = target.created_at
+        house.pre_survey_day = Date.today
       else
         # 調査終了日
-        house.end_pre_survey_day = target.created_at
+        # house.end_pre_survey_day = target.created_at
+        house.end_pre_survey_day = Date.today
       end
     elsif target.survey_type == "ongoing"
       if house.ongoing_survey_day == nil
         # 調査開始日
-        house.ongoing_survey_day = target.created_at
+        # house.ongoing_survey_day = target.created_at
+        house.ongoing_survey_day = Date.today
       else
         # 調査終了日
-        house.end_ongoing_survey_day = target.created_at
+        # house.end_ongoing_survey_day = target.created_at
+        house.end_ongoing_survey_day = Date.today
       end
     elsif target.survey_type == "after"      
       if house.after_survey_day == nil
         # 調査開始日
-        house.after_survey_day = target.created_at
+        # house.after_survey_day = target.created_at
+        house.after_survey_day = Date.today
       else
         # 調査終了日
-        house.end_after_survey_day = target.created_at
+        # house.end_after_survey_day = target.created_at
+        house.end_after_survey_day = Date.today
       end      
     end
     
