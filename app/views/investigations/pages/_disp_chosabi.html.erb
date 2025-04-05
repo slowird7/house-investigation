@@ -1,27 +1,29 @@
-<% if start_day == end_day %>
-  <% if calendar == "seireki" %>
-    <%= start_day.strftime('%Y/%m/%d') %>
-  <% elsif calendar == "wareki" %>
-    <%= disp_wareki(start_day) %>
-  <% end %>
-<% elsif start_day == (end_day - 1) %>
-  <% if calendar == "seireki" %>
-    <%= start_day.strftime('%Y/%m/%d') %>, <%= end_day.strftime('%m/%d') %>
-  <% elsif calendar == "wareki" %>
-    <%= disp_wareki(start_day) %>, <%= disp_wareki(end_day) %>    
-  <% end %>
-<% else %>
-  <% if start_day.year == end_day.year %>
+<% if start_day.present? && end_day.present? %>
+  <% if start_day == end_day %>
     <% if calendar == "seireki" %>
-      <%= start_day.strftime('%Y/%m/%d') %>～<%= end_day.strftime('%m/%d') %>
+      <%= start_day.strftime('%Y/%m/%d') %>
     <% elsif calendar == "wareki" %>
-      <%= disp_wareki(start_day) %>～<%= disp_wareki(end_day) %>
+      <%= disp_wareki(start_day) %>
+    <% end %>
+  <% elsif start_day == (end_day - 1) %>
+    <% if calendar == "seireki" %>
+      <%= start_day.strftime('%Y/%m/%d') %>, <%= end_day.strftime('%m/%d') %>
+    <% elsif calendar == "wareki" %>
+      <%= disp_wareki(start_day) %>, <%= disp_wareki(end_day) %>
     <% end %>
   <% else %>
-    <% if calendar == "seireki" %>
-      <%= start_day.strftime('%Y/%m/%d') %>～<%= end_day.strftime('%Y/%m/%d') %>
-    <% elsif calendar == "wareki" %>
-      <%= disp_wareki(start_day) %>～<%= disp_wareki(end_day) %>    
+    <% if start_day.year == end_day.year %>
+      <% if calendar == "seireki" %>
+        <%= start_day.strftime('%Y/%m/%d') %>～<%= end_day.strftime('%m/%d') %>
+      <% elsif calendar == "wareki" %>
+        <%= disp_wareki(start_day) %>～<%= disp_wareki(end_day) %>
+      <% end %>
+    <% else %>
+      <% if calendar == "seireki" %>
+        <%= start_day.strftime('%Y/%m/%d') %>～<%= end_day.strftime('%Y/%m/%d') %>
+      <% elsif calendar == "wareki" %>
+        <%= disp_wareki(start_day) %>～<%= disp_wareki(end_day) %>    
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
